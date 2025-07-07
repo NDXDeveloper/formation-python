@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# txt extensions
+*.txt
+*.txt.kate-swp
+*.kate-swp
+
 # Distribution / packaging
 .Python
 build/
