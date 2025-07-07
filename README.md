@@ -39,8 +39,8 @@ Formation progressive de **12 modules** avec exemples pratiques, exercices et pr
 ## 🚀 Installation
 
 ```bash
-git clone https://github.com/NDXdev/python-advanced-course.git
-cd python-advanced-course
+git clone https://github.com/NDXdev/formation-python.git
+cd formation-python
 
 # Environnement virtuel (recommandé)
 python -m venv venv
@@ -53,7 +53,7 @@ pip install -r requirements.txt
 ## 🗂️ Structure
 
 ```
-python-advanced-course/
+formation-python/
 ├── 📚 docs/           # Guides markdown
 ├── 💻 examples/       # Code d'exemple
 ├── 🧪 exercises/      # Exercices + solutions
