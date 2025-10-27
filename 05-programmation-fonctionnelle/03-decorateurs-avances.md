@@ -1,265 +1,583 @@
 🔝 Retour au [Sommaire](/SOMMAIRE.md)
 
-# 5.3 : Décorateurs avancés
+# 5.3 Décorateurs avancés
 
 ## Introduction
 
-Les décorateurs sont l'une des fonctionnalités les plus puissantes de Python. Ils permettent de modifier ou d'étendre le comportement d'une fonction sans changer son code source. Dans cette section, nous allons explorer les décorateurs en profondeur, depuis les concepts de base jusqu'aux techniques avancées.
+Les **décorateurs** sont l'une des fonctionnalités les plus puissantes et élégantes de Python. Ils permettent de modifier ou d'étendre le comportement de fonctions ou de classes sans modifier leur code source.
+
+Dans ce chapitre, nous allons explorer les décorateurs en profondeur, des concepts de base aux techniques avancées. Ne vous inquiétez pas si cela semble complexe au début, nous allons progresser étape par étape !
+
+---
 
 ## Rappel : Qu'est-ce qu'un décorateur ?
 
-Un décorateur est une fonction qui prend une autre fonction comme paramètre et retourne une fonction modifiée. C'est une application pratique des fonctions d'ordre supérieur que nous avons vues précédemment.
+Un **décorateur** est une fonction qui prend une autre fonction en paramètre, lui ajoute des fonctionnalités, et retourne la fonction modifiée.
 
-### Syntaxe de base
+### Exemple simple sans décorateur
 
 ```python
-@decorateur
-def ma_fonction():
-    pass
+def dire_bonjour():
+    print("Bonjour !")
 
-# Équivalent à :
-# ma_fonction = decorateur(ma_fonction)
+dire_bonjour()  # Affiche : Bonjour !
 ```
 
-## Décorateurs simples : Révision
+Maintenant, imaginons que nous voulons afficher un message avant et après l'exécution de la fonction, sans modifier son code.
 
-### Exemple de base
+### Avec un décorateur basique
 
 ```python
-def mon_decorateur(func):
-    def wrapper():
-        print("Quelque chose avant la fonction")
-        resultat = func()
-        print("Quelque chose après la fonction")
-        return resultat
-    return wrapper
+def mon_decorateur(fonction):
+    """Décorateur qui ajoute des messages avant et après."""
+    def fonction_modifiee():
+        print("--- Début ---")
+        fonction()
+        print("--- Fin ---")
+    return fonction_modifiee
+
+def dire_bonjour():
+    print("Bonjour !")
+
+# Application du décorateur
+dire_bonjour = mon_decorateur(dire_bonjour)
+dire_bonjour()
+
+# Affiche :
+# --- Début ---
+# Bonjour !
+# --- Fin ---
+```
+
+### Syntaxe avec @
+
+Python offre une syntaxe plus élégante avec le symbole `@` :
+
+```python
+def mon_decorateur(fonction):
+    def fonction_modifiee():
+        print("--- Début ---")
+        fonction()
+        print("--- Fin ---")
+    return fonction_modifiee
 
 @mon_decorateur
 def dire_bonjour():
     print("Bonjour !")
 
-# Utilisation
 dire_bonjour()
-# Sortie :
-# Quelque chose avant la fonction
+
+# Affiche :
+# --- Début ---
 # Bonjour !
-# Quelque chose après la fonction
+# --- Fin ---
 ```
 
-### Problème avec les arguments
+Le `@mon_decorateur` est équivalent à `dire_bonjour = mon_decorateur(dire_bonjour)`.
+
+---
+
+## Décorateurs avec arguments de fonction
+
+### Le problème
+
+Le décorateur précédent ne fonctionne que pour des fonctions sans arguments. Que faire si notre fonction a des paramètres ?
 
 ```python
-def mon_decorateur(func):
-    def wrapper():  # Pas d'arguments !
-        print("Avant")
-        resultat = func()
-        print("Après")
-        return resultat
-    return wrapper
-
 @mon_decorateur
-def saluer(nom):  # Cette fonction prend un argument
+def saluer(nom):
     print(f"Bonjour {nom} !")
 
-# saluer("Alice")  # ❌ Erreur ! wrapper() ne prend pas d'arguments
+# ❌ Ceci produira une erreur
+# saluer("Alice")
 ```
 
-## Décorateurs avec *args et **kwargs
+### La solution : *args et **kwargs
 
-Pour créer des décorateurs qui fonctionnent avec n'importe quelle fonction, nous utilisons `*args` et `**kwargs`.
-
-### Solution universelle
+Utilisons `*args` et `**kwargs` pour accepter n'importe quels arguments :
 
 ```python
-def decorateur_universel(func):
-    def wrapper(*args, **kwargs):
-        print("Avant l'exécution")
-        resultat = func(*args, **kwargs)
-        print("Après l'exécution")
+def mon_decorateur(fonction):
+    def fonction_modifiee(*args, **kwargs):
+        print("--- Début ---")
+        resultat = fonction(*args, **kwargs)
+        print("--- Fin ---")
         return resultat
-    return wrapper
+    return fonction_modifiee
 
-@decorateur_universel
+@mon_decorateur
+def saluer(nom):
+    print(f"Bonjour {nom} !")
+
+@mon_decorateur
 def additionner(a, b):
-    return a + b
+    resultat = a + b
+    print(f"{a} + {b} = {resultat}")
+    return resultat
 
-@decorateur_universel
-def saluer(nom, titre="M."):
-    print(f"Bonjour {titre} {nom} !")
+# Utilisation
+saluer("Alice")
+# --- Début ---
+# Bonjour Alice !
+# --- Fin ---
 
-# Tests
-print(additionner(3, 5))
-saluer("Dupont", titre="Dr.")
+total = additionner(5, 3)
+# --- Début ---
+# 5 + 3 = 8
+# --- Fin ---
+print(f"Total : {total}")  # Total : 8
 ```
 
-### Décorateur de mesure de temps
-
-```python
-import time
-from functools import wraps
-
-def mesurer_temps(func):
-    @wraps(func)  # Préserve les métadonnées de la fonction originale
-    def wrapper(*args, **kwargs):
-        debut = time.time()
-        resultat = func(*args, **kwargs)
-        fin = time.time()
-        print(f"{func.__name__} a pris {fin - debut:.4f} secondes")
-        return resultat
-    return wrapper
-
-@mesurer_temps
-def calcul_lent():
-    time.sleep(1)
-    return "Calcul terminé"
-
-@mesurer_temps
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
-
-# Tests
-print(calcul_lent())
-print(fibonacci(10))
-```
+---
 
 ## Décorateurs avec paramètres
 
-Les décorateurs avec paramètres sont des fonctions qui retournent un décorateur. C'est un niveau d'abstraction supplémentaire.
+Parfois, nous voulons que le décorateur lui-même accepte des paramètres. Pour cela, nous devons créer une fonction qui retourne un décorateur.
 
-### Structure générale
-
-```python
-def decorateur_avec_params(param1, param2):
-    def decorateur_reel(func):
-        def wrapper(*args, **kwargs):
-            # Utiliser param1 et param2 ici
-            return func(*args, **kwargs)
-        return wrapper
-    return decorateur_reel
-
-# Utilisation
-@decorateur_avec_params("valeur1", "valeur2")
-def ma_fonction():
-    pass
-```
-
-### Exemple : Décorateur de répétition
+### Structure à trois niveaux
 
 ```python
-def repeter(nb_fois):
-    def decorateur(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            for i in range(nb_fois):
-                resultat = func(*args, **kwargs)
-            return resultat  # Retourne le résultat de la dernière exécution
-        return wrapper
+def repeter(nombre_fois):
+    """Décorateur qui répète l'exécution d'une fonction."""
+    def decorateur(fonction):
+        def fonction_modifiee(*args, **kwargs):
+            for _ in range(nombre_fois):
+                resultat = fonction(*args, **kwargs)
+            return resultat
+        return fonction_modifiee
     return decorateur
 
-@repeter(3)
-def dire_hello():
-    print("Hello!")
+@repeter(nombre_fois=3)
+def dire_bonjour():
+    print("Bonjour !")
 
-@repeter(5)
-def compter(n):
-    print(f"Comptage : {n}")
-    return n
+dire_bonjour()
 
-# Tests
-dire_hello()
-# Sortie :
-# Hello!
-# Hello!
-# Hello!
-
-print(compter(42))
-# Sortie :
-# Comptage : 42
-# Comptage : 42
-# Comptage : 42
-# Comptage : 42
-# Comptage : 42
-# 42
+# Affiche :
+# Bonjour !
+# Bonjour !
+# Bonjour !
 ```
 
-### Exemple : Décorateur de cache avec TTL
+### Explication du mécanisme
+
+```python
+# Ce qui se passe en coulisses :
+# 1. repeter(3) retourne un décorateur
+# 2. Ce décorateur est appliqué à dire_bonjour
+# 3. dire_bonjour = repeter(3)(dire_bonjour)
+```
+
+### Exemple avec plusieurs paramètres
+
+```python
+def prefixe_suffixe(prefixe=">>>", suffixe="<<<"):
+    """Décorateur qui ajoute un préfixe et un suffixe aux messages."""
+    def decorateur(fonction):
+        def fonction_modifiee(*args, **kwargs):
+            print(prefixe)
+            resultat = fonction(*args, **kwargs)
+            print(suffixe)
+            return resultat
+        return fonction_modifiee
+    return decorateur
+
+@prefixe_suffixe(prefixe="=== DÉBUT ===", suffixe="=== FIN ===")
+def afficher_message(message):
+    print(message)
+
+afficher_message("Python est génial !")
+
+# Affiche :
+# === DÉBUT ===
+# Python est génial !
+# === FIN ===
+```
+
+---
+
+## Décorateurs pratiques
+
+### 1. Mesurer le temps d'exécution
 
 ```python
 import time
-from functools import wraps
 
-def cache_avec_ttl(ttl_secondes):
-    def decorateur(func):
-        cache = {}
+def mesurer_temps(fonction):
+    """Mesure le temps d'exécution d'une fonction."""
+    def fonction_modifiee(*args, **kwargs):
+        debut = time.time()
+        resultat = fonction(*args, **kwargs)
+        fin = time.time()
+        duree = fin - debut
+        print(f"⏱️  {fonction.__name__} a pris {duree:.4f} secondes")
+        return resultat
+    return fonction_modifiee
 
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            # Créer une clé unique pour les arguments
-            cle = str(args) + str(sorted(kwargs.items()))
-            maintenant = time.time()
+@mesurer_temps
+def calculer_somme(n):
+    """Calcule la somme des n premiers nombres."""
+    total = sum(range(n))
+    return total
 
-            # Vérifier si le résultat est en cache et encore valide
-            if cle in cache:
-                resultat, timestamp = cache[cle]
-                if maintenant - timestamp < ttl_secondes:
-                    print(f"Cache hit pour {func.__name__}")
+@mesurer_temps
+def dormir():
+    """Simule une opération longue."""
+    time.sleep(2)
+    print("Réveil !")
+
+resultat = calculer_somme(1000000)
+print(f"Somme : {resultat}")
+# ⏱️  calculer_somme a pris 0.0234 secondes
+# Somme : 499999500000
+
+dormir()
+# Réveil !
+# ⏱️  dormir a pris 2.0012 secondes
+```
+
+### 2. Logger les appels de fonction
+
+```python
+def logger(fonction):
+    """Enregistre les appels de fonction avec leurs arguments."""
+    def fonction_modifiee(*args, **kwargs):
+        args_str = ", ".join([repr(a) for a in args])
+        kwargs_str = ", ".join([f"{k}={repr(v)}" for k, v in kwargs.items()])
+        tous_args = ", ".join(filter(None, [args_str, kwargs_str]))
+
+        print(f"📝 Appel de {fonction.__name__}({tous_args})")
+        resultat = fonction(*args, **kwargs)
+        print(f"✅ {fonction.__name__} a retourné {repr(resultat)}")
+        return resultat
+    return fonction_modifiee
+
+@logger
+def multiplier(a, b):
+    return a * b
+
+@logger
+def saluer(nom, message="Bonjour"):
+    return f"{message} {nom} !"
+
+resultat1 = multiplier(5, 3)
+# 📝 Appel de multiplier(5, 3)
+# ✅ multiplier a retourné 15
+
+resultat2 = saluer("Alice", message="Salut")
+# 📝 Appel de saluer('Alice', message='Salut')
+# ✅ saluer a retourné 'Salut Alice !'
+```
+
+### 3. Cache (mémorisation)
+
+```python
+def cache(fonction):
+    """Mémorise les résultats d'une fonction pour éviter les recalculs."""
+    resultats_sauvegardes = {}
+
+    def fonction_modifiee(*args):
+        if args in resultats_sauvegardes:
+            print(f"💾 Résultat en cache pour {args}")
+            return resultats_sauvegardes[args]
+
+        print(f"🔄 Calcul en cours pour {args}")
+        resultat = fonction(*args)
+        resultats_sauvegardes[args] = resultat
+        return resultat
+
+    return fonction_modifiee
+
+@cache
+def fibonacci(n):
+    """Calcule le n-ième nombre de Fibonacci."""
+    if n < 2:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(5))
+# 🔄 Calcul en cours pour (5,)
+# 🔄 Calcul en cours pour (4,)
+# 🔄 Calcul en cours pour (3,)
+# 🔄 Calcul en cours pour (2,)
+# 🔄 Calcul en cours pour (1,)
+# 🔄 Calcul en cours pour (0,)
+# 💾 Résultat en cache pour (1,)
+# 💾 Résultat en cache pour (2,)
+# 💾 Résultat en cache pour (3,)
+# 5
+
+print(fibonacci(5))  # Deuxième appel
+# 💾 Résultat en cache pour (5,)
+# 5
+```
+
+### 4. Contrôle d'accès
+
+```python
+def necessite_authentification(fonction):
+    """Vérifie qu'un utilisateur est authentifié avant d'exécuter."""
+    def fonction_modifiee(*args, **kwargs):
+        # Simulation d'une vérification d'authentification
+        utilisateur_connecte = True  # À remplacer par une vraie vérification
+
+        if not utilisateur_connecte:
+            print("❌ Accès refusé : vous devez être connecté")
+            return None
+
+        print("✅ Authentification réussie")
+        return fonction(*args, **kwargs)
+
+    return fonction_modifiee
+
+@necessite_authentification
+def voir_profil(nom):
+    print(f"📋 Profil de {nom}")
+    return {"nom": nom, "age": 30}
+
+@necessite_authentification
+def modifier_donnees():
+    print("✏️ Modification des données...")
+
+profil = voir_profil("Alice")
+# ✅ Authentification réussie
+# 📋 Profil de Alice
+```
+
+### 5. Retry (réessayer en cas d'échec)
+
+```python
+import time
+
+def retry(nombre_essais=3, delai=1):
+    """Réessaie l'exécution d'une fonction en cas d'erreur."""
+    def decorateur(fonction):
+        def fonction_modifiee(*args, **kwargs):
+            for tentative in range(1, nombre_essais + 1):
+                try:
+                    print(f"🔄 Tentative {tentative}/{nombre_essais}")
+                    resultat = fonction(*args, **kwargs)
+                    print(f"✅ Succès !")
                     return resultat
-
-            # Calculer et mettre en cache
-            print(f"Calcul en cours pour {func.__name__}")
-            resultat = func(*args, **kwargs)
-            cache[cle] = (resultat, maintenant)
-            return resultat
-
-        return wrapper
+                except Exception as e:
+                    print(f"❌ Erreur : {e}")
+                    if tentative < nombre_essais:
+                        print(f"⏳ Attente de {delai} seconde(s)...")
+                        time.sleep(delai)
+                    else:
+                        print(f"⛔ Échec après {nombre_essais} tentatives")
+                        raise
+        return fonction_modifiee
     return decorateur
 
-@cache_avec_ttl(5)  # Cache valide pendant 5 secondes
-def calcul_complexe(n):
-    time.sleep(2)  # Simulation d'un calcul long
-    return n * n
+@retry(nombre_essais=3, delai=2)
+def operation_instable():
+    """Simule une opération qui peut échouer."""
+    import random
+    if random.random() < 0.7:  # 70% de chances d'échouer
+        raise Exception("Connexion perdue")
+    return "Données récupérées"
 
-# Tests
-print(calcul_complexe(4))  # Calcul en cours
-print(calcul_complexe(4))  # Cache hit
-time.sleep(6)
-print(calcul_complexe(4))  # Cache expiré, nouveau calcul
+# resultat = operation_instable()
 ```
+
+---
+
+## Empiler plusieurs décorateurs
+
+On peut appliquer plusieurs décorateurs à une même fonction. Ils sont appliqués de bas en haut.
+
+```python
+def decorateur_1(fonction):
+    def fonction_modifiee(*args, **kwargs):
+        print(">>> Décorateur 1 - Avant")
+        resultat = fonction(*args, **kwargs)
+        print("<<< Décorateur 1 - Après")
+        return resultat
+    return fonction_modifiee
+
+def decorateur_2(fonction):
+    def fonction_modifiee(*args, **kwargs):
+        print("  >> Décorateur 2 - Avant")
+        resultat = fonction(*args, **kwargs)
+        print("  << Décorateur 2 - Après")
+        return resultat
+    return fonction_modifiee
+
+@decorateur_1
+@decorateur_2
+def ma_fonction():
+    print("    Exécution de la fonction")
+
+ma_fonction()
+
+# Affiche :
+# >>> Décorateur 1 - Avant
+#   >> Décorateur 2 - Avant
+#     Exécution de la fonction
+#   << Décorateur 2 - Après
+# <<< Décorateur 1 - Après
+```
+
+### Exemple pratique : combiner logger et mesurer_temps
+
+```python
+@logger
+@mesurer_temps
+def calculer_factorielle(n):
+    """Calcule la factorielle de n."""
+    if n <= 1:
+        return 1
+    resultat = 1
+    for i in range(2, n + 1):
+        resultat *= i
+    return resultat
+
+resultat = calculer_factorielle(5)
+# 📝 Appel de fonction_modifiee(5)
+# ⏱️  calculer_factorielle a pris 0.0001 secondes
+# ✅ fonction_modifiee a retourné 120
+```
+
+---
+
+## Le module functools.wraps
+
+### Le problème
+
+Quand on utilise un décorateur, la fonction décorée perd ses métadonnées (nom, docstring, etc.) :
+
+```python
+def mon_decorateur(fonction):
+    def fonction_modifiee(*args, **kwargs):
+        return fonction(*args, **kwargs)
+    return fonction_modifiee
+
+@mon_decorateur
+def ma_fonction():
+    """Ceci est ma fonction."""
+    pass
+
+print(ma_fonction.__name__)  # Affiche : fonction_modifiee
+print(ma_fonction.__doc__)   # Affiche : None
+```
+
+### La solution : @wraps
+
+Le décorateur `@wraps` de `functools` préserve les métadonnées :
+
+```python
+from functools import wraps
+
+def mon_decorateur(fonction):
+    @wraps(fonction)
+    def fonction_modifiee(*args, **kwargs):
+        return fonction(*args, **kwargs)
+    return fonction_modifiee
+
+@mon_decorateur
+def ma_fonction():
+    """Ceci est ma fonction."""
+    pass
+
+print(ma_fonction.__name__)  # Affiche : ma_fonction
+print(ma_fonction.__doc__)   # Affiche : Ceci est ma fonction.
+```
+
+### Pourquoi c'est important ?
+
+```python
+from functools import wraps
+
+def mon_decorateur_propre(fonction):
+    @wraps(fonction)
+    def fonction_modifiee(*args, **kwargs):
+        """Wrapper ajouté par le décorateur."""
+        return fonction(*args, **kwargs)
+    return fonction_modifiee
+
+@mon_decorateur_propre
+def calculer_carre(x):
+    """Calcule le carré d'un nombre."""
+    return x ** 2
+
+# Les métadonnées sont préservées
+print(f"Nom : {calculer_carre.__name__}")        # Nom : calculer_carre
+print(f"Doc : {calculer_carre.__doc__}")          # Doc : Calcule le carré d'un nombre.
+print(f"Module : {calculer_carre.__module__}")    # Module : __main__
+
+# Pratique pour l'aide et la documentation
+help(calculer_carre)
+```
+
+### Template de décorateur recommandé
+
+Voici le template recommandé pour créer des décorateurs :
+
+```python
+from functools import wraps
+
+def mon_decorateur(fonction):
+    """Description de ce que fait le décorateur."""
+    @wraps(fonction)
+    def wrapper(*args, **kwargs):
+        # Code avant l'exécution
+        resultat = fonction(*args, **kwargs)
+        # Code après l'exécution
+        return resultat
+    return wrapper
+```
+
+Avec paramètres :
+
+```python
+from functools import wraps
+
+def mon_decorateur(param1, param2="valeur_par_defaut"):
+    """Description de ce que fait le décorateur."""
+    def decorateur(fonction):
+        @wraps(fonction)
+        def wrapper(*args, **kwargs):
+            # Utiliser param1 et param2
+            resultat = fonction(*args, **kwargs)
+            return resultat
+        return wrapper
+    return decorateur
+```
+
+---
 
 ## Décorateurs de classe
 
-Les décorateurs peuvent aussi être appliqués aux classes pour modifier leur comportement.
+Les décorateurs peuvent aussi être appliqués aux classes entières.
 
-### Décorateur simple pour classe
+### Décorateur qui modifie une classe
 
 ```python
-def ajouter_methode_string(cls):
-    def to_string(self):
-        attributs = []
-        for cle, valeur in self.__dict__.items():
-            attributs.append(f"{cle}={valeur}")
-        return f"{cls.__name__}({', '.join(attributs)})"
+def ajouter_methode_str(cls):
+    """Ajoute une méthode __str__ à une classe."""
+    def __str__(self):
+        attributs = ", ".join([f"{k}={v}" for k, v in self.__dict__.items()])
+        return f"{cls.__name__}({attributs})"
 
-    cls.to_string = to_string
+    cls.__str__ = __str__
     return cls
 
-@ajouter_methode_string
+@ajouter_methode_str
 class Personne:
     def __init__(self, nom, age):
         self.nom = nom
         self.age = age
 
-# Test
-p = Personne("Alice", 25)
-print(p.to_string())  # Personne(nom=Alice, age=25)
+p = Personne("Alice", 30)
+print(p)  # Affiche : Personne(nom=Alice, age=30)
 ```
 
-### Décorateur singleton
+### Singleton avec un décorateur
 
 ```python
 def singleton(cls):
+    """Transforme une classe en singleton."""
     instances = {}
 
     @wraps(cls)
@@ -271,431 +589,419 @@ def singleton(cls):
     return get_instance
 
 @singleton
-class DatabaseConnection:
+class Configuration:
     def __init__(self):
-        print("Création de la connexion à la base de données")
-        self.connection_id = id(self)
+        self.parametre = "valeur"
+        print("Configuration créée")
 
-# Test
-db1 = DatabaseConnection()
-db2 = DatabaseConnection()
-print(db1.connection_id == db2.connection_id)  # True
+# Première création
+config1 = Configuration()  # Affiche : Configuration créée
+config1.parametre = "nouvelle valeur"
+
+# Deuxième "création" : retourne la même instance
+config2 = Configuration()  # N'affiche rien
+print(config2.parametre)   # Affiche : nouvelle valeur
+print(config1 is config2)  # Affiche : True
 ```
+
+---
 
 ## Décorateurs comme classes
 
-Vous pouvez également créer des décorateurs en utilisant des classes au lieu de fonctions.
+On peut aussi créer des décorateurs sous forme de classes :
 
-### Décorateur classe de base
+### Exemple basique
 
 ```python
-class CompteurAppels:
-    def __init__(self, func):
-        self.func = func
-        self.nb_appels = 0
-        # Préserver les métadonnées
-        self.__name__ = func.__name__
-        self.__doc__ = func.__doc__
+class Compteur:
+    """Décorateur qui compte le nombre d'appels."""
+    def __init__(self, fonction):
+        self.fonction = fonction
+        self.nombre_appels = 0
 
     def __call__(self, *args, **kwargs):
-        self.nb_appels += 1
-        print(f"{self.func.__name__} appelée {self.nb_appels} fois")
-        return self.func(*args, **kwargs)
+        self.nombre_appels += 1
+        print(f"🔢 Appel n°{self.nombre_appels} de {self.fonction.__name__}")
+        return self.fonction(*args, **kwargs)
 
-@CompteurAppels
-def ma_fonction():
-    print("Exécution de ma fonction")
+@Compteur
+def dire_bonjour(nom):
+    print(f"Bonjour {nom} !")
 
-# Test
-ma_fonction()  # ma_fonction appelée 1 fois
-ma_fonction()  # ma_fonction appelée 2 fois
+dire_bonjour("Alice")  # Appel n°1
+dire_bonjour("Bob")    # Appel n°2
+dire_bonjour("Charlie")  # Appel n°3
 ```
 
-### Décorateur classe avec paramètres
+### Avec paramètres
 
 ```python
-class LimiteurAppels:
-    def __init__(self, max_appels):
-        self.max_appels = max_appels
+class RepeterAction:
+    """Décorateur classe qui répète une action."""
+    def __init__(self, nombre_fois=2):
+        self.nombre_fois = nombre_fois
 
-    def __call__(self, func):
-        @wraps(func)
+    def __call__(self, fonction):
+        @wraps(fonction)
         def wrapper(*args, **kwargs):
-            if not hasattr(wrapper, 'nb_appels'):
-                wrapper.nb_appels = 0
-
-            if wrapper.nb_appels >= self.max_appels:
-                raise Exception(f"Limite de {self.max_appels} appels dépassée")
-
-            wrapper.nb_appels += 1
-            return func(*args, **kwargs)
-
+            for i in range(self.nombre_fois):
+                print(f"⚡ Exécution {i+1}/{self.nombre_fois}")
+                resultat = fonction(*args, **kwargs)
+            return resultat
         return wrapper
 
-@LimiteurAppels(3)
-def fonction_limitee():
-    print("Fonction exécutée")
+@RepeterAction(nombre_fois=3)
+def afficher_message(message):
+    print(f"  📢 {message}")
 
-# Test
-fonction_limitee()  # OK
-fonction_limitee()  # OK
-fonction_limitee()  # OK
-# fonction_limitee()  # ❌ Exception !
+afficher_message("Python")
+# ⚡ Exécution 1/3
+#   📢 Python
+# ⚡ Exécution 2/3
+#   📢 Python
+# ⚡ Exécution 3/3
+#   📢 Python
 ```
 
-## Décorateurs intégrés utiles
-
-### @property
-
-```python
-class Rectangle:
-    def __init__(self, largeur, hauteur):
-        self._largeur = largeur
-        self._hauteur = hauteur
-
-    @property
-    def aire(self):
-        """Calculée dynamiquement"""
-        return self._largeur * self._hauteur
-
-    @property
-    def largeur(self):
-        return self._largeur
-
-    @largeur.setter
-    def largeur(self, valeur):
-        if valeur <= 0:
-            raise ValueError("La largeur doit être positive")
-        self._largeur = valeur
-
-# Test
-rect = Rectangle(5, 3)
-print(rect.aire)  # 15
-rect.largeur = 10
-print(rect.aire)  # 30
-```
-
-### @staticmethod et @classmethod
-
-```python
-class MathUtils:
-    pi = 3.14159
-
-    @staticmethod
-    def additionner(a, b):
-        """Méthode statique - pas d'accès à self ou cls"""
-        return a + b
-
-    @classmethod
-    def aire_cercle(cls, rayon):
-        """Méthode de classe - accès à cls"""
-        return cls.pi * rayon * rayon
-
-    def aire_rectangle(self, largeur, hauteur):
-        """Méthode d'instance normale"""
-        return largeur * hauteur
-
-# Tests
-print(MathUtils.additionner(5, 3))  # 8
-print(MathUtils.aire_cercle(5))     # 78.53975
-```
-
-## Décorateurs multiples
-
-Vous pouvez appliquer plusieurs décorateurs à une même fonction.
-
-```python
-def gras(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return f"**{result}**"
-    return wrapper
-
-def italique(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return f"*{result}*"
-    return wrapper
-
-def souligner(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        result = func(*args, **kwargs)
-        return f"_{result}_"
-    return wrapper
-
-@gras
-@italique
-@souligner
-def dire_hello():
-    return "Hello World"
-
-print(dire_hello())  # **_*Hello World*_**
-
-# L'ordre d'application est de bas en haut :
-# 1. souligner(dire_hello)
-# 2. italique(résultat de 1)
-# 3. gras(résultat de 2)
-```
+---
 
 ## Cas d'usage avancés
 
-### Décorateur de validation d'arguments
+### 1. Validation des arguments
 
 ```python
-def valider_types(**types_attendus):
-    def decorateur(func):
-        @wraps(func)
+from functools import wraps
+
+def valider_types(**type_attendu):
+    """Valide les types des arguments."""
+    def decorateur(fonction):
+        @wraps(fonction)
         def wrapper(*args, **kwargs):
-            # Récupérer les noms des paramètres
-            import inspect
-            sig = inspect.signature(func)
-            noms_params = list(sig.parameters.keys())
-
-            # Valider les arguments positionnels
-            for i, arg in enumerate(args):
-                if i < len(noms_params):
-                    nom_param = noms_params[i]
-                    if nom_param in types_attendus:
-                        type_attendu = types_attendus[nom_param]
-                        if not isinstance(arg, type_attendu):
-                            raise TypeError(f"{nom_param} doit être de type {type_attendu.__name__}")
-
-            # Valider les arguments nommés
-            for nom, valeur in kwargs.items():
-                if nom in types_attendus:
-                    type_attendu = types_attendus[nom]
-                    if not isinstance(valeur, type_attendu):
-                        raise TypeError(f"{nom} doit être de type {type_attendu.__name__}")
-
-            return func(*args, **kwargs)
+            # Vérifier les kwargs
+            for nom_arg, valeur in kwargs.items():
+                if nom_arg in type_attendu:
+                    type_requis = type_attendu[nom_arg]
+                    if not isinstance(valeur, type_requis):
+                        raise TypeError(
+                            f"{nom_arg} doit être de type {type_requis.__name__}, "
+                            f"pas {type(valeur).__name__}"
+                        )
+            return fonction(*args, **kwargs)
         return wrapper
     return decorateur
 
-@valider_types(nom=str, age=int, salaire=float)
-def creer_employe(nom, age, salaire):
-    return f"Employé: {nom}, {age} ans, {salaire}€"
+@valider_types(nom=str, age=int)
+def creer_personne(nom, age):
+    return {"nom": nom, "age": age}
 
-# Tests
-print(creer_employe("Alice", 25, 3000.0))  # OK
-# creer_employe("Alice", "25", 3000.0)     # ❌ TypeError
+# ✅ Fonctionne
+personne1 = creer_personne(nom="Alice", age=30)
+print(personne1)  # {'nom': 'Alice', 'age': 30}
+
+# ❌ Lève une erreur
+# personne2 = creer_personne(nom="Bob", age="trente")
+# TypeError: age doit être de type int, pas str
 ```
 
-### Décorateur de retry avec backoff
-
-```python
-import random
-import time
-from functools import wraps
-
-def retry_avec_backoff(max_tentatives=3, delai_base=1, backoff_factor=2):
-    def decorateur(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            for tentative in range(max_tentatives):
-                try:
-                    return func(*args, **kwargs)
-                except Exception as e:
-                    if tentative == max_tentatives - 1:
-                        print(f"Échec après {max_tentatives} tentatives")
-                        raise e
-
-                    delai = delai_base * (backoff_factor ** tentative)
-                    print(f"Tentative {tentative + 1} échouée: {e}")
-                    print(f"Nouvelle tentative dans {delai} secondes...")
-                    time.sleep(delai)
-
-        return wrapper
-    return decorateur
-
-@retry_avec_backoff(max_tentatives=3, delai_base=0.5)
-def operation_instable():
-    """Simule une opération qui échoue parfois"""
-    if random.random() < 0.7:  # 70% de chance d'échouer
-        raise ConnectionError("Connexion échouée")
-    return "Opération réussie !"
-
-# Test
-try:
-    resultat = operation_instable()
-    print(resultat)
-except Exception as e:
-    print(f"Échec final: {e}")
-```
-
-## Exercices pratiques
-
-### Exercice 1 : Décorateur de logging
-
-Créez un décorateur qui enregistre les appels de fonction avec leurs arguments et résultats.
-
-```python
-import datetime
-from functools import wraps
-
-def logger(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[{timestamp}] Appel de {func.__name__}")
-        print(f"  Arguments: args={args}, kwargs={kwargs}")
-
-        try:
-            resultat = func(*args, **kwargs)
-            print(f"  Résultat: {resultat}")
-            return resultat
-        except Exception as e:
-            print(f"  Exception: {e}")
-            raise
-
-    return wrapper
-
-@logger
-def diviser(a, b):
-    return a / b
-
-# Test
-print(diviser(10, 2))
-print(diviser(10, 0))  # Lèvera une exception
-```
-
-### Exercice 2 : Décorateur de rate limiting
-
-Créez un décorateur qui limite le nombre d'appels par seconde.
+### 2. Rate limiting (limitation du taux d'appel)
 
 ```python
 import time
 from functools import wraps
 
-def rate_limit(appels_par_seconde):
-    def decorateur(func):
-        derniers_appels = []
+def rate_limit(appels_max, periode):
+    """Limite le nombre d'appels dans une période donnée."""
+    def decorateur(fonction):
+        appels = []
 
-        @wraps(func)
+        @wraps(fonction)
         def wrapper(*args, **kwargs):
             maintenant = time.time()
 
-            # Nettoyer les anciens appels (plus vieux qu'une seconde)
-            derniers_appels[:] = [t for t in derniers_appels if maintenant - t < 1.0]
+            # Supprimer les appels trop anciens
+            appels[:] = [t for t in appels if maintenant - t < periode]
 
-            # Vérifier la limite
-            if len(derniers_appels) >= appels_par_seconde:
-                raise Exception(f"Rate limit dépassé: max {appels_par_seconde} appels/seconde")
+            if len(appels) >= appels_max:
+                temps_attente = periode - (maintenant - appels[0])
+                print(f"⏳ Trop de requêtes. Attendez {temps_attente:.1f} secondes")
+                return None
 
-            # Enregistrer cet appel
-            derniers_appels.append(maintenant)
-
-            return func(*args, **kwargs)
+            appels.append(maintenant)
+            return fonction(*args, **kwargs)
 
         return wrapper
     return decorateur
 
-@rate_limit(2)  # Maximum 2 appels par seconde
-def api_call():
-    return "Appel API réussi"
+@rate_limit(appels_max=3, periode=10)  # 3 appels max par 10 secondes
+def rechercher(terme):
+    print(f"🔍 Recherche de : {terme}")
+    return f"Résultats pour {terme}"
 
-# Test
-print(api_call())  # OK
-print(api_call())  # OK
-# print(api_call())  # ❌ Rate limit dépassé
+# Les 3 premiers appels fonctionnent
+rechercher("Python")   # ✅
+rechercher("Django")   # ✅
+rechercher("Flask")    # ✅
+rechercher("FastAPI")  # ⏳ Trop de requêtes...
 ```
 
-### Exercice 3 : Décorateur de memoization avancé
-
-Créez un décorateur de memoization avec une taille limite de cache.
+### 3. Convertir des exceptions
 
 ```python
 from functools import wraps
-from collections import OrderedDict
 
-def memoize_lru(max_size=128):
-    def decorateur(func):
-        cache = OrderedDict()
-
-        @wraps(func)
+def convertir_exceptions(exception_source, exception_cible):
+    """Convertit un type d'exception en un autre."""
+    def decorateur(fonction):
+        @wraps(fonction)
         def wrapper(*args, **kwargs):
-            # Créer une clé unique
-            cle = str(args) + str(sorted(kwargs.items()))
-
-            # Si déjà en cache, déplacer en fin (LRU)
-            if cle in cache:
-                cache.move_to_end(cle)
-                return cache[cle]
-
-            # Calculer le résultat
-            resultat = func(*args, **kwargs)
-
-            # Ajouter au cache
-            cache[cle] = resultat
-            cache.move_to_end(cle)
-
-            # Respecter la taille limite
-            if len(cache) > max_size:
-                cache.popitem(last=False)  # Supprimer le plus ancien
-
-            return resultat
-
-        # Ajouter des méthodes utiles
-        wrapper.cache_info = lambda: f"Cache size: {len(cache)}/{max_size}"
-        wrapper.cache_clear = lambda: cache.clear()
-
+            try:
+                return fonction(*args, **kwargs)
+            except exception_source as e:
+                raise exception_cible(f"Erreur convertie: {e}") from e
         return wrapper
     return decorateur
 
-@memoize_lru(max_size=3)
-def fibonacci(n):
-    if n <= 1:
-        return n
-    return fibonacci(n-1) + fibonacci(n-2)
+class ErreurMetier(Exception):
+    """Exception personnalisée pour la logique métier."""
+    pass
 
-# Test
-print(fibonacci(10))
-print(fibonacci.cache_info())
+@convertir_exceptions(ValueError, ErreurMetier)
+def diviser(a, b):
+    if b == 0:
+        raise ValueError("Division par zéro")
+    return a / b
+
+try:
+    resultat = diviser(10, 0)
+except ErreurMetier as e:
+    print(f"❌ Erreur métier : {e}")
+    # Affiche : ❌ Erreur métier : Erreur convertie: Division par zéro
 ```
+
+### 4. Décorateur de dépréciation
+
+```python
+import warnings
+from functools import wraps
+
+def deprecie(message="Cette fonction est dépréciée"):
+    """Marque une fonction comme dépréciée."""
+    def decorateur(fonction):
+        @wraps(fonction)
+        def wrapper(*args, **kwargs):
+            warnings.warn(
+                f"{fonction.__name__} est déprécié. {message}",
+                category=DeprecationWarning,
+                stacklevel=2
+            )
+            return fonction(*args, **kwargs)
+        return wrapper
+    return decorateur
+
+@deprecie("Utilisez nouvelle_fonction() à la place")
+def ancienne_fonction():
+    """Ancienne implémentation."""
+    return "Ancienne version"
+
+def nouvelle_fonction():
+    """Nouvelle implémentation."""
+    return "Nouvelle version"
+
+# Lors de l'appel, un avertissement sera affiché
+# resultat = ancienne_fonction()
+```
+
+---
+
+## Décorateurs et performances
+
+### Overhead des décorateurs
+
+Chaque décorateur ajoute un léger coût en performance :
+
+```python
+import time
+from functools import wraps
+
+def mesurer_overhead():
+    """Compare les performances avec et sans décorateurs."""
+
+    # Fonction sans décorateur
+    def fonction_simple(x):
+        return x * 2
+
+    # Fonction avec décorateur
+    def decorateur(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            return f(*args, **kwargs)
+        return wrapper
+
+    @decorateur
+    def fonction_decoree(x):
+        return x * 2
+
+    # Test de performance
+    iterations = 1000000
+
+    # Sans décorateur
+    debut = time.time()
+    for i in range(iterations):
+        fonction_simple(i)
+    duree_simple = time.time() - debut
+
+    # Avec décorateur
+    debut = time.time()
+    for i in range(iterations):
+        fonction_decoree(i)
+    duree_decoree = time.time() - debut
+
+    print(f"Sans décorateur : {duree_simple:.4f}s")
+    print(f"Avec décorateur : {duree_decoree:.4f}s")
+    print(f"Overhead : {((duree_decoree - duree_simple) / duree_simple * 100):.2f}%")
+
+# mesurer_overhead()
+# L'overhead est généralement négligeable pour la plupart des applications
+```
+
+---
 
 ## Bonnes pratiques
 
-### ✅ À faire
+### 1. Utilisez toujours @wraps
 
-1. **Utilisez `@wraps`** pour préserver les métadonnées de la fonction originale
-2. **Gérez les exceptions** correctement dans vos décorateurs
-3. **Documentez vos décorateurs** clairement
-4. **Gardez-les simples** : un décorateur = une responsabilité
-5. **Utilisez des noms explicites** pour vos décorateurs
+```python
+from functools import wraps
 
-### ❌ À éviter
+# ✅ Bon
+def bon_decorateur(fonction):
+    @wraps(fonction)
+    def wrapper(*args, **kwargs):
+        return fonction(*args, **kwargs)
+    return wrapper
 
-1. **Décorateurs trop complexes** : Si c'est compliqué, utilisez une classe
-2. **Modifications silencieuses** : Le comportement modifié doit être évident
-3. **Effets de bord cachés** : Évitez les modifications globales
-4. **Performances non considérées** : Attention à l'overhead des décorateurs
+# ❌ Mauvais
+def mauvais_decorateur(fonction):
+    def wrapper(*args, **kwargs):
+        return fonction(*args, **kwargs)
+    return wrapper
+```
 
-## Cas d'usage recommandés
+### 2. Documentez vos décorateurs
 
-Les décorateurs sont parfaits pour :
+```python
+from functools import wraps
 
-- **Logging et monitoring** : Enregistrer les appels de fonction
-- **Authentification** : Vérifier les permissions
-- **Cache** : Mémoriser les résultats de calculs coûteux
-- **Validation** : Vérifier les arguments
-- **Mesure de performance** : Chronométrer l'exécution
-- **Retry logic** : Répéter les opérations échouées
-- **Rate limiting** : Limiter la fréquence d'exécution
+def mon_decorateur(fonction):
+    """
+    Description claire de ce que fait le décorateur.
+
+    Args:
+        fonction: La fonction à décorer
+
+    Returns:
+        La fonction décorée avec des fonctionnalités ajoutées
+
+    Example:
+        @mon_decorateur
+        def ma_fonction():
+            pass
+    """
+    @wraps(fonction)
+    def wrapper(*args, **kwargs):
+        return fonction(*args, **kwargs)
+    return wrapper
+```
+
+### 3. Gardez les décorateurs simples
+
+```python
+# ✅ Bon : décorateur avec une responsabilité claire
+def logger(fonction):
+    @wraps(fonction)
+    def wrapper(*args, **kwargs):
+        print(f"Appel de {fonction.__name__}")
+        return fonction(*args, **kwargs)
+    return wrapper
+
+# ❌ Mauvais : trop de responsabilités
+def super_decorateur(fonction):
+    @wraps(fonction)
+    def wrapper(*args, **kwargs):
+        print("Log")
+        debut = time.time()
+        try:
+            resultat = fonction(*args, **kwargs)
+            # ... validation ...
+            # ... cache ...
+            # ... etc ...
+            return resultat
+        finally:
+            print(f"Temps: {time.time() - debut}")
+    return wrapper
+```
+
+### 4. Attention à l'ordre des décorateurs
+
+```python
+# L'ordre compte !
+@decorateur_A
+@decorateur_B
+def fonction():
+    pass
+
+# Est équivalent à :
+# fonction = decorateur_A(decorateur_B(fonction))
+```
+
+---
 
 ## Résumé
 
-Les décorateurs avancés permettent de :
+Dans ce chapitre, nous avons exploré les décorateurs en profondeur :
 
-- Créer des fonctions qui modifient d'autres fonctions
-- Ajouter des fonctionnalités sans modifier le code source
-- Utiliser des paramètres pour personnaliser le comportement
-- Appliquer plusieurs décorateurs à une même fonction
-- Créer des patterns réutilisables et élégants
+### Concepts clés
 
-Les décorateurs sont un outil puissant qui, une fois maîtrisé, vous permettra d'écrire du code plus propre, plus modulaire et plus maintenable.
+**Décorateurs de base** :
+- Fonctions qui modifient d'autres fonctions
+- Syntaxe `@decorateur` pour une application élégante
+- Utilisent `*args` et `**kwargs` pour accepter tous types d'arguments
 
-Dans la prochaine section, nous découvrirons les générateurs et expressions génératrices, qui nous permettront de créer des itérateurs efficaces en mémoire.
+**Décorateurs avec paramètres** :
+- Structure à trois niveaux (fonction → décorateur → wrapper)
+- Permettent de personnaliser le comportement du décorateur
+- Plus flexibles mais plus complexes
 
-⏭️
+**functools.wraps** :
+- Préserve les métadonnées de la fonction originale
+- Essentiel pour maintenir la documentation et le débogage
+- À utiliser systématiquement dans vos décorateurs
+
+**Décorateurs de classe** :
+- Peuvent modifier ou étendre des classes entières
+- Utiles pour le pattern Singleton et autres patterns
+- Peuvent aussi être implémentés comme des classes
+
+### Cas d'usage courants
+
+✅ **Logging** : Enregistrer les appels de fonctions
+✅ **Timing** : Mesurer les performances
+✅ **Cache** : Mémoriser les résultats
+✅ **Validation** : Vérifier les arguments
+✅ **Authentification** : Contrôler l'accès
+✅ **Retry** : Réessayer en cas d'échec
+✅ **Rate limiting** : Limiter la fréquence d'appels
+
+### Points à retenir
+
+- Les décorateurs augmentent la réutilisabilité du code
+- Ils séparent les préoccupations (séparation des responsabilités)
+- Attention à ne pas abuser : trop de décorateurs nuisent à la lisibilité
+- Toujours utiliser `@wraps` pour préserver les métadonnées
+- Privilégier la simplicité : un décorateur = une responsabilité
+
+Les décorateurs sont un outil puissant qui, utilisé correctement, rend votre code plus élégant, maintenable et réutilisable !
+
+Dans le prochain chapitre, nous explorerons les générateurs et expressions génératrices, une autre technique essentielle de la programmation fonctionnelle en Python.
+
+⏭️ [Générateurs et expressions génératrices](/05-programmation-fonctionnelle/04-generateurs.md)
