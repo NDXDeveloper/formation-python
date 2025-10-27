@@ -1,357 +1,541 @@
 🔝 Retour au [Sommaire](/SOMMAIRE.md)
 
-# 3.1 : Classes et objets
+# 3.1 Classes et Objets en Python
 
-## Introduction
+## Introduction à la Programmation Orientée Objet
 
-Imaginez que vous vouliez créer un programme pour gérer les informations d'une bibliothèque. Vous pourriez avoir des livres, des auteurs, des emprunts... Comment organiser tout cela de manière logique et réutilisable ? C'est exactement le problème que les classes et objets viennent résoudre !
+La **Programmation Orientée Objet (POO)** est un paradigme de programmation qui permet d'organiser votre code de manière plus structurée et réutilisable. Au lieu de manipuler simplement des données et des fonctions séparées, la POO vous permet de créer des **objets** qui regroupent à la fois des données (attributs) et des comportements (méthodes).
 
-## Qu'est-ce qu'une classe ?
+Imaginez que vous voulez modéliser une voiture dans votre programme. Avec la POO, vous pouvez créer un "modèle" de voiture (une **classe**) qui définit ce qu'est une voiture en général, puis créer des voitures spécifiques (des **objets**) à partir de ce modèle.
 
-Une **classe** est comme un plan ou un modèle qui décrit :
-- Les **caractéristiques** (appelées attributs) d'un type d'objet
-- Les **actions** (appelées méthodes) que cet objet peut effectuer
+## Qu'est-ce qu'une Classe ?
 
-Pensez à une classe comme à un plan d'architecte : le plan décrit comment construire une maison, mais ce n'est pas la maison elle-même.
+Une **classe** est comme un plan de construction ou un moule. Elle définit la structure et le comportement d'un type d'objet, mais elle n'est pas l'objet lui-même.
 
-## Qu'est-ce qu'un objet ?
+Par analogie :
+- Une classe est comme un **plan d'architecte** pour une maison
+- Une classe est comme un **moule à gâteau**
+- Une classe est comme une **recette de cuisine**
 
-Un **objet** est une instance concrète d'une classe. Si la classe est le plan, l'objet est la maison construite à partir de ce plan.
+En Python, on définit une classe avec le mot-clé `class` :
 
-Vous pouvez créer plusieurs objets (instances) à partir d'une même classe, chacun avec ses propres valeurs.
+```python
+class Voiture:
+    pass  # On verra le contenu plus tard
+```
 
-## Créer votre première classe
+## Qu'est-ce qu'un Objet ?
 
-Commençons par un exemple simple : une classe `Chien`.
+Un **objet** est une **instance** d'une classe. C'est une réalisation concrète du modèle défini par la classe.
+
+En reprenant les analogies :
+- Un objet est une **maison construite** à partir du plan
+- Un objet est un **gâteau** fait avec le moule
+- Un objet est un **plat cuisiné** suivant la recette
+
+```python
+# Créer un objet à partir de la classe Voiture
+ma_voiture = Voiture()
+```
+
+## Première Classe Simple
+
+Créons notre première classe avec des attributs et des méthodes :
 
 ```python
 class Chien:
-    # Ceci est une classe vide pour l'instant
+    # Ceci est une classe qui représente un chien
     pass
 ```
 
-### Explication :
-- `class` : mot-clé pour déclarer une classe
-- `Chien` : nom de la classe (convention : première lettre en majuscule)
-- `pass` : instruction qui ne fait rien (placeholder)
-
-## Créer des objets (instances)
+Pour créer un objet (une instance) de cette classe :
 
 ```python
-# Créer des objets à partir de la classe Chien
 mon_chien = Chien()
-autre_chien = Chien()
-
-print(type(mon_chien))  # <class '__main__.Chien'>
-print(mon_chien == autre_chien)  # False (objets différents)
+print(mon_chien)  # <__main__.Chien object at 0x...>
 ```
 
-## Ajouter des attributs
+Pour l'instant, notre classe est vide. Ajoutons-lui des caractéristiques !
 
-Les attributs sont les caractéristiques de nos objets. Il y a deux types principaux :
+## Le Constructeur : La Méthode `__init__`
 
-### 1. Attributs d'instance
-
-Chaque objet a ses propres valeurs pour ces attributs.
+Le **constructeur** est une méthode spéciale qui est automatiquement appelée quand on crée un nouvel objet. En Python, cette méthode s'appelle `__init__`.
 
 ```python
 class Chien:
-    def __init__(self, nom, race, age):
-        self.nom = nom      # Attribut d'instance
-        self.race = race    # Attribut d'instance
-        self.age = age      # Attribut d'instance
-```
-
-### La méthode `__init__` (constructeur)
-
-- `__init__` est une méthode spéciale appelée automatiquement lors de la création d'un objet
-- `self` fait référence à l'objet en cours de création
-- Les autres paramètres sont les valeurs à assigner aux attributs
-
-### Exemple complet :
-
-```python
-class Chien:
-    def __init__(self, nom, race, age):
+    def __init__(self, nom, age):
         self.nom = nom
-        self.race = race
+        self.age = age
+```
+
+Maintenant, quand on crée un chien, on peut lui donner un nom et un âge :
+
+```python
+mon_chien = Chien("Rex", 5)
+print(mon_chien.nom)  # Affiche : Rex
+print(mon_chien.age)  # Affiche : 5
+```
+
+### Comprendre `self`
+
+Le mot `self` représente **l'instance elle-même**. C'est une référence à l'objet qui est en train d'être manipulé.
+
+Quand vous écrivez :
+```python
+mon_chien = Chien("Rex", 5)
+```
+
+Python fait en réalité :
+```python
+Chien.__init__(mon_chien, "Rex", 5)
+```
+
+Le `self` dans la définition de la méthode correspond à `mon_chien` lors de l'appel. C'est comme si l'objet disait "moi-même".
+
+**Important** : `self` doit toujours être le premier paramètre de toutes les méthodes d'instance, mais vous n'avez pas besoin de le passer explicitement quand vous appelez la méthode.
+
+## Les Attributs d'Instance
+
+Les **attributs d'instance** sont des variables qui appartiennent à un objet spécifique. Chaque objet a ses propres valeurs d'attributs.
+
+```python
+class Chien:
+    def __init__(self, nom, age, race):
+        self.nom = nom      # Attribut d'instance
+        self.age = age      # Attribut d'instance
+        self.race = race    # Attribut d'instance
+
+# Créer deux chiens différents
+chien1 = Chien("Rex", 5, "Berger Allemand")
+chien2 = Chien("Bella", 3, "Labrador")
+
+print(chien1.nom)   # Rex
+print(chien2.nom)   # Bella
+print(chien1.race)  # Berger Allemand
+print(chien2.race)  # Labrador
+```
+
+Chaque chien a ses propres attributs, indépendants les uns des autres.
+
+## Les Méthodes d'Instance
+
+Les **méthodes** sont des fonctions définies à l'intérieur d'une classe. Elles représentent les comportements ou actions que peut effectuer un objet.
+
+```python
+class Chien:
+    def __init__(self, nom, age):
+        self.nom = nom
         self.age = age
 
-# Créer des objets avec des valeurs
-mon_chien = Chien("Rex", "Berger Allemand", 3)
-autre_chien = Chien("Bella", "Labrador", 2)
+    def aboyer(self):
+        print(f"{self.nom} dit : Wouf wouf !")
 
-# Accéder aux attributs
-print(mon_chien.nom)    # Rex
-print(autre_chien.race) # Labrador
+    def se_presenter(self):
+        print(f"Je m'appelle {self.nom} et j'ai {self.age} ans.")
+
+    def vieillir(self):
+        self.age += 1
+        print(f"{self.nom} a maintenant {self.age} ans.")
+
+# Utilisation
+mon_chien = Chien("Rex", 5)
+mon_chien.aboyer()          # Rex dit : Wouf wouf !
+mon_chien.se_presenter()    # Je m'appelle Rex et j'ai 5 ans.
+mon_chien.vieillir()        # Rex a maintenant 6 ans.
 ```
 
-### 2. Attributs de classe
+Notez que :
+- Les méthodes ont toujours `self` comme premier paramètre
+- On accède aux attributs de l'objet via `self.nom_attribut`
+- On appelle les méthodes avec la notation pointée : `objet.methode()`
 
-Ces attributs sont partagés par toutes les instances de la classe.
+## Les Attributs de Classe
+
+Les **attributs de classe** sont partagés par toutes les instances d'une classe. Ils sont définis directement dans la classe, en dehors de `__init__`.
 
 ```python
 class Chien:
     # Attribut de classe
-    espece = "Canis lupus"
+    espece = "Canis familiaris"
+    nombre_pattes = 4
 
-    def __init__(self, nom, race, age):
+    def __init__(self, nom, age):
+        # Attributs d'instance
         self.nom = nom
-        self.race = race
         self.age = age
 
-# Tous les chiens ont la même espèce
-print(Chien.espece)        # Canis lupus
-print(mon_chien.espece)    # Canis lupus
-print(autre_chien.espece)  # Canis lupus
+chien1 = Chien("Rex", 5)
+chien2 = Chien("Bella", 3)
+
+print(chien1.espece)        # Canis familiaris
+print(chien2.espece)        # Canis familiaris
+print(Chien.espece)         # Canis familiaris
+print(Chien.nombre_pattes)  # 4
 ```
 
-## Ajouter des méthodes
+**Différence clé** :
+- **Attributs de classe** : partagés par tous les objets, même valeur pour tous
+- **Attributs d'instance** : propres à chaque objet, peuvent être différents
 
-Les méthodes sont les actions que peuvent effectuer nos objets.
+## Exemple Complet : Classe Compte Bancaire
 
-```python
-class Chien:
-    espece = "Canis lupus"
-
-    def __init__(self, nom, race, age):
-        self.nom = nom
-        self.race = race
-        self.age = age
-
-    def aboyer(self):
-        return f"{self.nom} dit : Woof!"
-
-    def se_presenter(self):
-        return f"Je suis {self.nom}, un {self.race} de {self.age} ans."
-
-    def vieillir(self):
-        self.age += 1
-        return f"{self.nom} a maintenant {self.age} ans."
-
-# Utilisation
-mon_chien = Chien("Rex", "Berger Allemand", 3)
-
-print(mon_chien.aboyer())        # Rex dit : Woof!
-print(mon_chien.se_presenter())  # Je suis Rex, un Berger Allemand de 3 ans.
-print(mon_chien.vieillir())      # Rex a maintenant 4 ans.
-```
-
-### Points importants sur les méthodes :
-
-1. **`self`** : premier paramètre de toute méthode d'instance
-2. **`self`** fait référence à l'objet qui appelle la méthode
-3. Les méthodes peuvent accéder et modifier les attributs de l'objet
-
-## Exemple pratique : Classe Livre
-
-Créons une classe plus complète pour notre exemple de bibliothèque :
+Voici un exemple plus complet qui illustre tous les concepts :
 
 ```python
-class Livre:
-    def __init__(self, titre, auteur, annee_publication, pages):
-        self.titre = titre
-        self.auteur = auteur
-        self.annee_publication = annee_publication
-        self.pages = pages
-        self.emprunte = False  # État par défaut
-
-    def emprunter(self):
-        if not self.emprunte:
-            self.emprunte = True
-            return f"'{self.titre}' a été emprunté."
-        else:
-            return f"'{self.titre}' est déjà emprunté."
-
-    def rendre(self):
-        if self.emprunte:
-            self.emprunte = False
-            return f"'{self.titre}' a été rendu."
-        else:
-            return f"'{self.titre}' n'était pas emprunté."
-
-    def description(self):
-        statut = "emprunté" if self.emprunte else "disponible"
-        return f"'{self.titre}' par {self.auteur} ({self.annee_publication}) - {self.pages} pages - {statut}"
-
-# Utilisation
-livre1 = Livre("1984", "George Orwell", 1949, 328)
-livre2 = Livre("Le Petit Prince", "Antoine de Saint-Exupéry", 1943, 96)
-
-print(livre1.description())
-# '1984' par George Orwell (1949) - 328 pages - disponible
-
-print(livre1.emprunter())
-# '1984' a été emprunté.
-
-print(livre1.description())
-# '1984' par George Orwell (1949) - 328 pages - emprunté
-```
-
-## Accéder et modifier les attributs
-
-```python
-# Accès direct aux attributs
-print(livre1.titre)      # 1984
-print(livre1.auteur)     # George Orwell
-
-# Modification des attributs
-livre1.pages = 350
-print(livre1.pages)      # 350
-
-# Attention : on peut aussi créer de nouveaux attributs
-livre1.genre = "Science-fiction"
-print(livre1.genre)      # Science-fiction
-```
-
-## Méthodes vs Fonctions
-
-La différence principale :
-
-```python
-# Fonction classique
-def dire_bonjour(nom):
-    return f"Bonjour {nom}!"
-
-# Méthode de classe
-class Personne:
-    def __init__(self, nom):
-        self.nom = nom
-
-    def dire_bonjour(self):
-        return f"Bonjour, je suis {self.nom}!"
-
-# Utilisation
-print(dire_bonjour("Alice"))  # Fonction
-personne = Personne("Bob")
-print(personne.dire_bonjour())  # Méthode
-```
-
-## Exercices pratiques
-
-### Exercice 1 : Classe Voiture
-Créez une classe `Voiture` avec :
-- Attributs : marque, modèle, année, kilométrage
-- Méthodes :
-  - `demarrer()` : affiche "La voiture démarre"
-  - `rouler(distance)` : ajoute la distance au kilométrage
-  - `info()` : affiche toutes les informations
-
-### Exercice 2 : Classe CompteBancaire
-Créez une classe `CompteBancaire` avec :
-- Attributs : titulaire, solde (initial à 0)
-- Méthodes :
-  - `deposer(montant)` : ajoute de l'argent
-  - `retirer(montant)` : retire de l'argent (vérifier que le solde est suffisant)
-  - `consulter_solde()` : affiche le solde actuel
-
-### Solutions :
-
-```python
-# Solution Exercice 1
-class Voiture:
-    def __init__(self, marque, modele, annee, kilometrage=0):
-        self.marque = marque
-        self.modele = modele
-        self.annee = annee
-        self.kilometrage = kilometrage
-
-    def demarrer(self):
-        return "La voiture démarre"
-
-    def rouler(self, distance):
-        self.kilometrage += distance
-        return f"Vous avez roulé {distance} km. Kilométrage total : {self.kilometrage} km"
-
-    def info(self):
-        return f"{self.marque} {self.modele} ({self.annee}) - {self.kilometrage} km"
-
-# Test
-ma_voiture = Voiture("Toyota", "Prius", 2020)
-print(ma_voiture.demarrer())
-print(ma_voiture.rouler(150))
-print(ma_voiture.info())
-
-# Solution Exercice 2
 class CompteBancaire:
-    def __init__(self, titulaire, solde=0):
+    # Attribut de classe
+    taux_interet = 0.02  # 2% d'intérêt
+
+    def __init__(self, titulaire, solde_initial=0):
+        # Attributs d'instance
         self.titulaire = titulaire
-        self.solde = solde
+        self.solde = solde_initial
+        self.historique = []
 
     def deposer(self, montant):
         if montant > 0:
             self.solde += montant
-            return f"Dépôt de {montant}€ effectué. Nouveau solde : {self.solde}€"
+            self.historique.append(f"Dépôt : +{montant}€")
+            print(f"Dépôt de {montant}€ effectué. Nouveau solde : {self.solde}€")
         else:
-            return "Le montant doit être positif"
+            print("Le montant doit être positif.")
 
     def retirer(self, montant):
         if montant > 0:
-            if self.solde >= montant:
+            if montant <= self.solde:
                 self.solde -= montant
-                return f"Retrait de {montant}€ effectué. Nouveau solde : {self.solde}€"
+                self.historique.append(f"Retrait : -{montant}€")
+                print(f"Retrait de {montant}€ effectué. Nouveau solde : {self.solde}€")
             else:
-                return "Solde insuffisant"
+                print("Solde insuffisant !")
         else:
-            return "Le montant doit être positif"
+            print("Le montant doit être positif.")
 
-    def consulter_solde(self):
-        return f"Solde du compte de {self.titulaire} : {self.solde}€"
+    def afficher_solde(self):
+        print(f"Compte de {self.titulaire} : {self.solde}€")
 
-# Test
-compte = CompteBancaire("Alice", 1000)
-print(compte.consulter_solde())
-print(compte.deposer(200))
-print(compte.retirer(50))
-print(compte.consulter_solde())
+    def appliquer_interets(self):
+        interets = self.solde * self.taux_interet
+        self.solde += interets
+        self.historique.append(f"Intérêts : +{interets:.2f}€")
+        print(f"Intérêts de {interets:.2f}€ appliqués.")
+
+    def afficher_historique(self):
+        print(f"Historique du compte de {self.titulaire} :")
+        for operation in self.historique:
+            print(f"  - {operation}")
+
+# Utilisation
+compte1 = CompteBancaire("Alice", 1000)
+compte1.afficher_solde()       # Compte de Alice : 1000€
+compte1.deposer(500)           # Dépôt de 500€ effectué. Nouveau solde : 1500€
+compte1.retirer(200)           # Retrait de 200€ effectué. Nouveau solde : 1300€
+compte1.appliquer_interets()   # Intérêts de 26.00€ appliqués.
+compte1.afficher_historique()  # Affiche tout l'historique
+
+compte2 = CompteBancaire("Bob", 500)
+compte2.afficher_solde()       # Compte de Bob : 500€
 ```
 
-## Bonnes pratiques
+## Exemple : Classe Personne
 
-1. **Nommage des classes** : PascalCase (première lettre de chaque mot en majuscule)
-2. **Nommage des attributs/méthodes** : snake_case (mots séparés par des underscores)
-3. **Docstrings** : documenter vos classes et méthodes
-4. **Initialisation** : toujours initialiser les attributs dans `__init__`
+Un autre exemple classique pour bien comprendre :
 
 ```python
-class Etudiant:
-    """Classe représentant un étudiant."""
-
+class Personne:
     def __init__(self, nom, prenom, age):
-        """Initialise un nouvel étudiant."""
         self.nom = nom
         self.prenom = prenom
         self.age = age
+
+    def se_presenter(self):
+        print(f"Bonjour, je m'appelle {self.prenom} {self.nom} et j'ai {self.age} ans.")
+
+    def avoir_anniversaire(self):
+        self.age += 1
+        print(f"Joyeux anniversaire ! {self.prenom} a maintenant {self.age} ans.")
+
+    def est_majeur(self):
+        return self.age >= 18
+
+# Créer plusieurs personnes
+personne1 = Personne("Dupont", "Marie", 25)
+personne2 = Personne("Martin", "Pierre", 17)
+
+personne1.se_presenter()        # Bonjour, je m'appelle Marie Dupont et j'ai 25 ans.
+personne2.se_presenter()        # Bonjour, je m'appelle Pierre Martin et j'ai 17 ans.
+
+print(personne1.est_majeur())   # True
+print(personne2.est_majeur())   # False
+
+personne2.avoir_anniversaire()  # Joyeux anniversaire ! Pierre a maintenant 18 ans.
+print(personne2.est_majeur())   # True
+```
+
+## Modification des Attributs
+
+Vous pouvez modifier les attributs d'un objet directement :
+
+```python
+class Voiture:
+    def __init__(self, marque, couleur):
+        self.marque = marque
+        self.couleur = couleur
+        self.kilometrage = 0
+
+    def afficher_info(self):
+        print(f"{self.marque} {self.couleur}, {self.kilometrage} km")
+
+ma_voiture = Voiture("Renault", "rouge")
+ma_voiture.afficher_info()      # Renault rouge, 0 km
+
+# Modifier un attribut
+ma_voiture.couleur = "bleu"
+ma_voiture.kilometrage = 15000
+
+ma_voiture.afficher_info()      # Renault bleu, 15000 km
+```
+
+## Plusieurs Instances Indépendantes
+
+Il est important de comprendre que chaque instance est **indépendante** :
+
+```python
+class Compteur:
+    def __init__(self, valeur_initiale=0):
+        self.valeur = valeur_initiale
+
+    def incrementer(self):
+        self.valeur += 1
+
+    def afficher(self):
+        print(f"Valeur : {self.valeur}")
+
+compteur1 = Compteur()
+compteur2 = Compteur(10)
+
+compteur1.incrementer()
+compteur1.incrementer()
+compteur2.incrementer()
+
+compteur1.afficher()  # Valeur : 2
+compteur2.afficher()  # Valeur : 11
+```
+
+Même si les deux objets sont créés à partir de la même classe, leurs attributs sont complètement indépendants.
+
+## Bonnes Pratiques
+
+### 1. Noms de Classe en CamelCase
+Les noms de classes utilisent la convention CamelCase (première lettre de chaque mot en majuscule) :
+
+```python
+class VoitureElectrique:  # ✓ Correct
+    pass
+
+class voiture_electrique:  # ✗ À éviter
+    pass
+```
+
+### 2. Initialiser tous les attributs dans `__init__`
+Il est préférable de définir tous les attributs d'instance dans le constructeur :
+
+```python
+class Livre:
+    def __init__(self, titre, auteur):
+        self.titre = titre
+        self.auteur = auteur
+        self.pages_lues = 0  # Même avec une valeur par défaut
+        self.termine = False
+```
+
+### 3. Utiliser des méthodes pour modifier les attributs
+Plutôt que de modifier directement les attributs, créez des méthodes :
+
+```python
+class Rectangle:
+    def __init__(self, largeur, hauteur):
+        self.largeur = largeur
+        self.hauteur = hauteur
+
+    def modifier_dimensions(self, nouvelle_largeur, nouvelle_hauteur):
+        if nouvelle_largeur > 0 and nouvelle_hauteur > 0:
+            self.largeur = nouvelle_largeur
+            self.hauteur = nouvelle_hauteur
+        else:
+            print("Les dimensions doivent être positives !")
+
+    def calculer_surface(self):
+        return self.largeur * self.hauteur
+```
+
+### 4. Documentation avec des docstrings
+Documentez vos classes et méthodes :
+
+```python
+class Etudiant:
+    """
+    Classe représentant un étudiant.
+
+    Attributs:
+        nom (str): Le nom de famille de l'étudiant
+        prenom (str): Le prénom de l'étudiant
+        notes (list): Liste des notes obtenues
+    """
+
+    def __init__(self, nom, prenom):
+        """Initialise un nouvel étudiant."""
+        self.nom = nom
+        self.prenom = prenom
         self.notes = []
 
     def ajouter_note(self, note):
-        """Ajoute une note à l'étudiant."""
+        """
+        Ajoute une note à l'étudiant.
+
+        Args:
+            note (float): La note à ajouter (entre 0 et 20)
+        """
         if 0 <= note <= 20:
             self.notes.append(note)
-            return f"Note {note} ajoutée"
         else:
-            return "La note doit être entre 0 et 20"
+            print("La note doit être entre 0 et 20.")
 
-    def calculer_moyenne(self):
-        """Calcule la moyenne des notes."""
-        if self.notes:
-            return sum(self.notes) / len(self.notes)
-        else:
+    def moyenne(self):
+        """
+        Calcule la moyenne des notes.
+
+        Returns:
+            float: La moyenne des notes, ou 0 si aucune note
+        """
+        if not self.notes:
             return 0
+        return sum(self.notes) / len(self.notes)
 ```
 
-## Résumé
+## Exemple Pratique : Gestionnaire de Tâches
 
-Dans cette section, vous avez appris :
+Voici un exemple complet d'application des concepts :
 
-✅ **Qu'est-ce qu'une classe** : un modèle pour créer des objets
-✅ **Qu'est-ce qu'un objet** : une instance d'une classe
-✅ **Le constructeur `__init__`** : pour initialiser les objets
-✅ **Les attributs** : les caractéristiques des objets
-✅ **Les méthodes** : les actions que peuvent effectuer les objets
-✅ **La différence entre attributs de classe et d'instance**
-✅ **Les bonnes pratiques** de nommage et de documentation
+```python
+class Tache:
+    """Représente une tâche à accomplir."""
 
-Dans la prochaine section, nous verrons comment les classes peuvent hériter les unes des autres pour créer des hiérarchies plus complexes et réutilisables !
+    def __init__(self, titre, description=""):
+        self.titre = titre
+        self.description = description
+        self.terminee = False
 
-⏭️
+    def marquer_terminee(self):
+        self.terminee = True
+        print(f"✓ Tâche '{self.titre}' marquée comme terminée.")
+
+    def marquer_non_terminee(self):
+        self.terminee = False
+        print(f"○ Tâche '{self.titre}' marquée comme non terminée.")
+
+    def afficher(self):
+        statut = "✓" if self.terminee else "○"
+        print(f"{statut} {self.titre}")
+        if self.description:
+            print(f"  Description : {self.description}")
+
+
+class GestionnaireTaches:
+    """Gère une liste de tâches."""
+
+    def __init__(self):
+        self.taches = []
+
+    def ajouter_tache(self, titre, description=""):
+        nouvelle_tache = Tache(titre, description)
+        self.taches.append(nouvelle_tache)
+        print(f"Tâche '{titre}' ajoutée.")
+
+    def afficher_toutes(self):
+        if not self.taches:
+            print("Aucune tâche.")
+            return
+
+        print("\n=== Liste des tâches ===")
+        for i, tache in enumerate(self.taches, 1):
+            print(f"{i}. ", end="")
+            tache.afficher()
+
+    def afficher_non_terminees(self):
+        taches_non_terminees = [t for t in self.taches if not t.terminee]
+        if not taches_non_terminees:
+            print("Toutes les tâches sont terminées ! 🎉")
+            return
+
+        print("\n=== Tâches à faire ===")
+        for tache in taches_non_terminees:
+            tache.afficher()
+
+    def nombre_taches_terminees(self):
+        return sum(1 for t in self.taches if t.terminee)
+
+    def nombre_taches_total(self):
+        return len(self.taches)
+
+# Utilisation
+gestionnaire = GestionnaireTaches()
+
+gestionnaire.ajouter_tache("Faire les courses", "Acheter du pain et du lait")
+gestionnaire.ajouter_tache("Répondre aux emails")
+gestionnaire.ajouter_tache("Réviser Python", "Chapitre sur les classes")
+
+gestionnaire.afficher_toutes()
+
+# Marquer une tâche comme terminée
+gestionnaire.taches[0].marquer_terminee()
+
+gestionnaire.afficher_non_terminees()
+
+print(f"\nProgress : {gestionnaire.nombre_taches_terminees()}/{gestionnaire.nombre_taches_total()} tâches terminées")
+```
+
+## Résumé des Concepts Clés
+
+### Classe
+- Un modèle ou blueprint pour créer des objets
+- Définit les attributs (données) et méthodes (comportements)
+- Se déclare avec le mot-clé `class`
+
+### Objet (Instance)
+- Une réalisation concrète d'une classe
+- Possède ses propres valeurs d'attributs
+- Se crée en appelant la classe comme une fonction
+
+### `__init__` (Constructeur)
+- Méthode spéciale appelée automatiquement lors de la création d'un objet
+- Permet d'initialiser les attributs de l'objet
+- Toujours le premier paramètre est `self`
+
+### `self`
+- Référence à l'instance courante
+- Premier paramètre de toutes les méthodes d'instance
+- Permet d'accéder aux attributs et méthodes de l'objet
+
+### Attributs
+- **Attributs d'instance** : propres à chaque objet, définis dans `__init__` avec `self`
+- **Attributs de classe** : partagés par toutes les instances, définis directement dans la classe
+
+### Méthodes
+- Fonctions définies dans une classe
+- Représentent les actions/comportements des objets
+- Premier paramètre toujours `self`
+
+## Conclusion
+
+Les classes et objets sont les fondations de la Programmation Orientée Objet en Python. Ils permettent de :
+- **Organiser** le code de manière logique et structurée
+- **Réutiliser** le code facilement
+- **Modéliser** des concepts du monde réel dans votre programme
+- **Encapsuler** les données et les comportements ensemble
+
+Dans les prochaines sections, nous explorerons des concepts plus avancés comme l'héritage, le polymorphisme et les méthodes spéciales qui vous permettront de créer des classes encore plus puissantes et flexibles.
+
+La pratique est essentielle pour maîtriser ces concepts. N'hésitez pas à créer vos propres classes pour modéliser des objets qui vous intéressent : des livres, des films, des recettes de cuisine, des personnages de jeu vidéo, etc. Plus vous pratiquerez, plus ces concepts deviendront naturels !
+
+⏭️ [Héritage et polymorphisme](/03-programmation-orientee-objet/02-heritage-et-polymorphisme.md)
