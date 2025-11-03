@@ -1,0 +1,72 @@
+[tool.poetry]
+name = "formation-python-complete"
+version = "1.0.0"
+description = "Formation Python complète et moderne - Du débutant à l'avancé"
+authors = ["Nicolas DEOUX <NDXDev@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/NDXDeveloper/formation-python-complete"
+repository = "https://github.com/NDXDeveloper/formation-python-complete"
+keywords = ["python", "formation", "tutorial", "fastapi", "data-science"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+# Web Frameworks
+fastapi = {version = "^0.109.0", optional = true}
+uvicorn = {extras = ["standard"], version = "^0.27.0", optional = true}
+flask = {version = "^3.0.0", optional = true}
+requests = {version = "^2.31.0", optional = true}
+
+# Database & ORM
+sqlalchemy = {version = "^2.0.25", optional = true}
+pydantic = {version = "^2.5.0", optional = true}
+
+# Data Science
+numpy = {version = "^1.24.0", optional = true}
+pandas = {version = "^2.1.0", optional = true}
+matplotlib = {version = "^3.8.0", optional = true}
+plotly = {version = "^5.18.0", optional = true}
+
+[tool.poetry.group.dev.dependencies]
+# Type Checking
+mypy = "^1.8.0"
+
+# Testing
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-asyncio = "^0.23.0"
+
+# Code Quality
+ruff = "^0.1.0"
+black = "^23.12.0"
+
+[tool.poetry.extras]
+web = ["fastapi", "uvicorn", "flask", "requests", "sqlalchemy", "pydantic"]
+data = ["numpy", "pandas", "matplotlib", "plotly"]
+all = ["fastapi", "uvicorn", "flask", "requests", "sqlalchemy", "pydantic", "numpy", "pandas", "matplotlib", "plotly"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov --cov-report=html --cov-report=term"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
