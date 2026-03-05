@@ -36,8 +36,8 @@ Prenons un exemple simple : une fonction qui additionne deux nombres.
 def additionner(a, b):
     return a + b
 
-resultat = additionner(5, 3)
-print(resultat)  # Affiche : 8
+resultat = additionner(5, 3)  
+print(resultat)  # Affiche : 8  
 ```
 
 **Avec une fonction lambda :**
@@ -45,8 +45,8 @@ print(resultat)  # Affiche : 8
 ```python
 additionner = lambda a, b: a + b
 
-resultat = additionner(5, 3)
-print(resultat)  # Affiche : 8
+resultat = additionner(5, 3)  
+print(resultat)  # Affiche : 8  
 ```
 
 Les deux approches donnent le même résultat, mais la lambda est plus concise.
@@ -58,8 +58,8 @@ Les deux approches donnent le même résultat, mais la lambda est plus concise.
 ```python
 doubler = lambda x: x * 2
 
-print(doubler(5))   # Affiche : 10
-print(doubler(12))  # Affiche : 24
+print(doubler(5))   # Affiche : 10  
+print(doubler(12))  # Affiche : 24  
 ```
 
 #### Exemple 2 : Vérifier si un nombre est pair
@@ -67,8 +67,8 @@ print(doubler(12))  # Affiche : 24
 ```python
 est_pair = lambda n: n % 2 == 0
 
-print(est_pair(4))   # Affiche : True
-print(est_pair(7))   # Affiche : False
+print(est_pair(4))   # Affiche : True  
+print(est_pair(7))   # Affiche : False  
 ```
 
 #### Exemple 3 : Concaténer deux chaînes
@@ -84,8 +84,8 @@ print(saluer("Marie", "Dupont"))  # Affiche : Bonjour Marie Dupont !
 ```python
 maximum = lambda a, b: a if a > b else b
 
-print(maximum(10, 25))  # Affiche : 25
-print(maximum(50, 30))  # Affiche : 50
+print(maximum(10, 25))  # Affiche : 25  
+print(maximum(50, 30))  # Affiche : 50  
 ```
 
 ### Quand utiliser les fonctions lambda ?
@@ -122,13 +122,13 @@ def appliquer_operation(nombre, operation):
     return operation(nombre)
 
 # Utilisation avec différentes opérations
-doubler = lambda x: x * 2
-tripler = lambda x: x * 3
-carre = lambda x: x ** 2
+doubler = lambda x: x * 2  
+tripler = lambda x: x * 3  
+carre = lambda x: x ** 2  
 
-print(appliquer_operation(5, doubler))   # Affiche : 10
-print(appliquer_operation(5, tripler))   # Affiche : 15
-print(appliquer_operation(5, carre))     # Affiche : 25
+print(appliquer_operation(5, doubler))   # Affiche : 10  
+print(appliquer_operation(5, tripler))   # Affiche : 15  
+print(appliquer_operation(5, carre))     # Affiche : 25  
 ```
 
 Dans cet exemple, `appliquer_operation` est une fonction d'ordre supérieur car elle prend une fonction (`operation`) comme argument.
@@ -143,14 +143,14 @@ def creer_multiplicateur(n):
     return lambda x: x * n
 
 # Création de différentes fonctions
-multiplier_par_2 = creer_multiplicateur(2)
-multiplier_par_5 = creer_multiplicateur(5)
-multiplier_par_10 = creer_multiplicateur(10)
+multiplier_par_2 = creer_multiplicateur(2)  
+multiplier_par_5 = creer_multiplicateur(5)  
+multiplier_par_10 = creer_multiplicateur(10)  
 
 # Utilisation
-print(multiplier_par_2(7))   # Affiche : 14
-print(multiplier_par_5(7))   # Affiche : 35
-print(multiplier_par_10(7))  # Affiche : 70
+print(multiplier_par_2(7))   # Affiche : 14  
+print(multiplier_par_5(7))   # Affiche : 35  
+print(multiplier_par_10(7))  # Affiche : 70  
 ```
 
 Ici, `creer_multiplicateur` retourne une fonction lambda différente selon la valeur de `n`.
@@ -172,16 +172,16 @@ def filtrer(liste, condition):
 nombres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 # Filtrer les nombres pairs
-pairs = filtrer(nombres, lambda x: x % 2 == 0)
-print(f"Nombres pairs : {pairs}")  # Affiche : [2, 4, 6, 8, 10]
+pairs = filtrer(nombres, lambda x: x % 2 == 0)  
+print(f"Nombres pairs : {pairs}")  # Affiche : [2, 4, 6, 8, 10]  
 
 # Filtrer les nombres supérieurs à 5
-superieurs_a_5 = filtrer(nombres, lambda x: x > 5)
-print(f"Nombres > 5 : {superieurs_a_5}")  # Affiche : [6, 7, 8, 9, 10]
+superieurs_a_5 = filtrer(nombres, lambda x: x > 5)  
+print(f"Nombres > 5 : {superieurs_a_5}")  # Affiche : [6, 7, 8, 9, 10]  
 
 # Filtrer les multiples de 3
-multiples_de_3 = filtrer(nombres, lambda x: x % 3 == 0)
-print(f"Multiples de 3 : {multiples_de_3}")  # Affiche : [3, 6, 9]
+multiples_de_3 = filtrer(nombres, lambda x: x % 3 == 0)  
+print(f"Multiples de 3 : {multiples_de_3}")  # Affiche : [3, 6, 9]  
 ```
 
 ### Exemple pratique : Transformer une liste
@@ -197,16 +197,16 @@ def transformer(liste, transformation):
 nombres = [1, 2, 3, 4, 5]
 
 # Doubler chaque nombre
-doubles = transformer(nombres, lambda x: x * 2)
-print(f"Doublés : {doubles}")  # Affiche : [2, 4, 6, 8, 10]
+doubles = transformer(nombres, lambda x: x * 2)  
+print(f"Doublés : {doubles}")  # Affiche : [2, 4, 6, 8, 10]  
 
 # Mettre au carré
-carres = transformer(nombres, lambda x: x ** 2)
-print(f"Carrés : {carres}")  # Affiche : [1, 4, 9, 16, 25]
+carres = transformer(nombres, lambda x: x ** 2)  
+print(f"Carrés : {carres}")  # Affiche : [1, 4, 9, 16, 25]  
 
 # Transformer en chaînes
-chaines = transformer(nombres, lambda x: f"Numéro {x}")
-print(f"Chaînes : {chaines}")  # Affiche : ['Numéro 1', 'Numéro 2', ...]
+chaines = transformer(nombres, lambda x: f"Numéro {x}")  
+print(f"Chaînes : {chaines}")  # Affiche : ['Numéro 1', 'Numéro 2', ...]  
 ```
 
 ### Exemple avancé : Composition de fonctions
@@ -219,14 +219,14 @@ def composer(f, g):
     return lambda x: f(g(x))
 
 # Fonctions de base
-ajouter_5 = lambda x: x + 5
-multiplier_par_2 = lambda x: x * 2
+ajouter_5 = lambda x: x + 5  
+multiplier_par_2 = lambda x: x * 2  
 
 # Composition : d'abord multiplier par 2, puis ajouter 5
 fonction_composee = composer(ajouter_5, multiplier_par_2)
 
-print(fonction_composee(3))  # (3 * 2) + 5 = 11
-print(fonction_composee(10)) # (10 * 2) + 5 = 25
+print(fonction_composee(3))  # (3 * 2) + 5 = 11  
+print(fonction_composee(10)) # (10 * 2) + 5 = 25  
 ```
 
 ---
@@ -247,15 +247,15 @@ personnes = [
 ]
 
 # Trier par âge
-personnes_par_age = sorted(personnes, key=lambda p: p["age"])
-print("Triées par âge :")
-for p in personnes_par_age:
+personnes_par_age = sorted(personnes, key=lambda p: p["age"])  
+print("Triées par âge :")  
+for p in personnes_par_age:  
     print(f"  {p['nom']} : {p['age']} ans")
 
 # Trier par nom
-personnes_par_nom = sorted(personnes, key=lambda p: p["nom"])
-print("\nTriées par nom :")
-for p in personnes_par_nom:
+personnes_par_nom = sorted(personnes, key=lambda p: p["nom"])  
+print("\nTriées par nom :")  
+for p in personnes_par_nom:  
     print(f"  {p['nom']} : {p['age']} ans")
 ```
 
@@ -288,8 +288,8 @@ avec_reduction = appliquer_reduction(
     lambda prix: prix * 0.8
 )
 
-print("Produits avec réduction de 20% :")
-for p in avec_reduction:
+print("Produits avec réduction de 20% :")  
+for p in avec_reduction:  
     print(f"{p['nom']}: {p['prix_original']}€ → {p['prix_reduit']:.2f}€")
 ```
 
@@ -311,11 +311,11 @@ validateurs_mdp = [
 ]
 
 # Tests
-mot_de_passe_1 = "Password123"
-mot_de_passe_2 = "faible"
+mot_de_passe_1 = "Password123"  
+mot_de_passe_2 = "faible"  
 
-print(f"'{mot_de_passe_1}' est valide : {valider_donnees(mot_de_passe_1, validateurs_mdp)}")
-print(f"'{mot_de_passe_2}' est valide : {valider_donnees(mot_de_passe_2, validateurs_mdp)}")
+print(f"'{mot_de_passe_1}' est valide : {valider_donnees(mot_de_passe_1, validateurs_mdp)}")  
+print(f"'{mot_de_passe_2}' est valide : {valider_donnees(mot_de_passe_2, validateurs_mdp)}")  
 ```
 
 ---
@@ -324,21 +324,21 @@ print(f"'{mot_de_passe_2}' est valide : {valider_donnees(mot_de_passe_2, validat
 
 ### Avantages des fonctions lambda
 
-✅ **Concision** : Permet d'écrire du code court pour des opérations simples
-✅ **Lisibilité** : Dans certains contextes (tri, filtrage), rend le code plus clair
+✅ **Concision** : Permet d'écrire du code court pour des opérations simples  
+✅ **Lisibilité** : Dans certains contextes (tri, filtrage), rend le code plus clair  
 ✅ **Pas de pollution** : Ne nécessite pas de définir une fonction nommée pour un usage unique
 
 ### Limitations des fonctions lambda
 
-❌ **Une seule expression** : On ne peut pas écrire de code sur plusieurs lignes
-❌ **Pas de documentation** : Impossible d'ajouter une docstring
-❌ **Débogage difficile** : Les erreurs sont plus difficiles à identifier
+❌ **Une seule expression** : On ne peut pas écrire de code sur plusieurs lignes  
+❌ **Pas de documentation** : Impossible d'ajouter une docstring  
+❌ **Débogage difficile** : Les erreurs sont plus difficiles à identifier  
 ❌ **Lisibilité réduite** : Si l'expression devient trop complexe
 
 ### Avantages des fonctions d'ordre supérieur
 
-✅ **Réutilisabilité** : Permet de créer du code générique et flexible
-✅ **Abstraction** : Sépare la logique d'itération de la logique métier
+✅ **Réutilisabilité** : Permet de créer du code générique et flexible  
+✅ **Abstraction** : Sépare la logique d'itération de la logique métier  
 ✅ **Composition** : Permet de combiner des fonctions simples pour créer des comportements complexes
 
 ---
@@ -349,8 +349,8 @@ print(f"'{mot_de_passe_2}' est valide : {valider_donnees(mot_de_passe_2, validat
 
 ```python
 # ✅ Bon : lambda simple et claire
-nombres = [1, 2, 3, 4, 5]
-pairs = list(filter(lambda x: x % 2 == 0, nombres))
+nombres = [1, 2, 3, 4, 5]  
+pairs = list(filter(lambda x: x % 2 == 0, nombres))  
 
 # ❌ Mauvais : lambda trop complexe
 resultat = list(map(lambda x: x * 2 if x % 2 == 0 else x * 3 if x % 3 == 0 else x, nombres))

@@ -30,8 +30,8 @@ map(fonction, iterable)
 **Approche classique avec une boucle :**
 
 ```python
-nombres = [1, 2, 3, 4, 5]
-nombres_doubles = []
+nombres = [1, 2, 3, 4, 5]  
+nombres_doubles = []  
 
 for nombre in nombres:
     nombres_doubles.append(nombre * 2)
@@ -42,8 +42,8 @@ print(nombres_doubles)  # [2, 4, 6, 8, 10]
 **Avec map() :**
 
 ```python
-nombres = [1, 2, 3, 4, 5]
-nombres_doubles = list(map(lambda x: x * 2, nombres))
+nombres = [1, 2, 3, 4, 5]  
+nombres_doubles = list(map(lambda x: x * 2, nombres))  
 
 print(nombres_doubles)  # [2, 4, 6, 8, 10]
 ```
@@ -62,8 +62,8 @@ celsius_vers_fahrenheit = lambda c: (c * 9/5) + 32
 
 temperatures_fahrenheit = list(map(celsius_vers_fahrenheit, temperatures_celsius))
 
-print(f"Celsius : {temperatures_celsius}")
-print(f"Fahrenheit : {temperatures_fahrenheit}")
+print(f"Celsius : {temperatures_celsius}")  
+print(f"Fahrenheit : {temperatures_fahrenheit}")  
 # Fahrenheit : [32.0, 50.0, 68.0, 86.0, 104.0]
 ```
 
@@ -86,7 +86,7 @@ phrases = ["Bonjour", "Comment allez-vous ?", "Python", "Programmation"]
 
 longueurs = list(map(len, phrases))
 
-print(longueurs)  # [7, 19, 6, 13]
+print(longueurs)  # [7, 20, 6, 13]
 ```
 
 #### Exemple 4 : Formatter des données
@@ -105,8 +105,8 @@ print(prenoms_formatte)  # ['Alice', 'Bob', 'Charlie']
 On peut passer **plusieurs listes** à `map()`. La fonction recevra alors un élément de chaque liste :
 
 ```python
-nombres1 = [1, 2, 3, 4]
-nombres2 = [10, 20, 30, 40]
+nombres1 = [1, 2, 3, 4]  
+nombres2 = [10, 20, 30, 40]  
 
 # Additionner les éléments correspondants
 sommes = list(map(lambda x, y: x + y, nombres1, nombres2))
@@ -117,8 +117,8 @@ print(sommes)  # [11, 22, 33, 44]
 Autre exemple :
 
 ```python
-prenoms = ["Alice", "Bob", "Charlie"]
-ages = [25, 30, 35]
+prenoms = ["Alice", "Bob", "Charlie"]  
+ages = [25, 30, 35]  
 
 # Créer des phrases descriptives
 descriptions = list(map(
@@ -156,8 +156,8 @@ filter(fonction_condition, iterable)
 **Approche classique avec une boucle :**
 
 ```python
-nombres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-nombres_pairs = []
+nombres = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  
+nombres_pairs = []  
 
 for nombre in nombres:
     if nombre % 2 == 0:
@@ -212,8 +212,8 @@ produits = [
 # Produits à moins de 3€
 produits_pas_chers = list(filter(lambda p: p["prix"] < 3, produits))
 
-print("Produits à moins de 3€ :")
-for p in produits_pas_chers:
+print("Produits à moins de 3€ :")  
+for p in produits_pas_chers:  
     print(f"  - {p['nom']}: {p['prix']}€")
 # Pomme: 2.5€
 # Banane: 1.8€
@@ -246,8 +246,8 @@ personnes = [
 
 adultes = list(filter(est_adulte, personnes))
 
-print("Adultes :")
-for p in adultes:
+print("Adultes :")  
+for p in adultes:  
     print(f"  - {p['nom']} ({p['age']} ans)")
 # Alice (25 ans)
 # Charlie (30 ans)
@@ -288,8 +288,8 @@ reduce(fonction, iterable[, valeur_initiale])
 **Approche classique avec une boucle :**
 
 ```python
-nombres = [1, 2, 3, 4, 5]
-somme = 0
+nombres = [1, 2, 3, 4, 5]  
+somme = 0  
 
 for nombre in nombres:
     somme = somme + nombre
@@ -408,8 +408,8 @@ def factorielle(n):
         return 1
     return reduce(lambda acc, x: acc * x, range(1, n + 1))
 
-print(f"5! = {factorielle(5)}")  # 5! = 120
-print(f"7! = {factorielle(7)}")  # 7! = 5040
+print(f"5! = {factorielle(5)}")  # 5! = 120  
+print(f"7! = {factorielle(7)}")  # 7! = 5040  
 ```
 
 ---
@@ -495,8 +495,8 @@ somme = reduce(lambda acc, x: acc + x, notes_valides)
 # Calculer la moyenne
 moyenne = somme / len(notes_valides)
 
-print(f"Notes > 10 : {notes_valides}")
-print(f"Moyenne : {moyenne:.2f}")  # Moyenne : 14.33
+print(f"Notes > 10 : {notes_valides}")  
+print(f"Moyenne : {moyenne:.2f}")  # Moyenne : 14.33  
 ```
 
 ---
@@ -516,8 +516,8 @@ doubles_map = list(map(lambda x: x * 2, nombres))
 # Avec compréhension de liste
 doubles_comp = [x * 2 for x in nombres]
 
-print(doubles_map)  # [2, 4, 6, 8, 10]
-print(doubles_comp)  # [2, 4, 6, 8, 10]
+print(doubles_map)  # [2, 4, 6, 8, 10]  
+print(doubles_comp)  # [2, 4, 6, 8, 10]  
 ```
 
 ### filter() vs compréhension de liste
@@ -531,8 +531,8 @@ pairs_filter = list(filter(lambda x: x % 2 == 0, nombres))
 # Avec compréhension de liste
 pairs_comp = [x for x in nombres if x % 2 == 0]
 
-print(pairs_filter)  # [2, 4, 6, 8, 10]
-print(pairs_comp)    # [2, 4, 6, 8, 10]
+print(pairs_filter)  # [2, 4, 6, 8, 10]  
+print(pairs_comp)    # [2, 4, 6, 8, 10]  
 ```
 
 ### map() + filter() vs compréhension de liste
@@ -549,8 +549,8 @@ resultat_func = list(map(
 # Avec compréhension de liste
 resultat_comp = [x ** 2 for x in nombres if x % 2 == 0]
 
-print(resultat_func)  # [4, 16, 36, 64, 100]
-print(resultat_comp)  # [4, 16, 36, 64, 100]
+print(resultat_func)  # [4, 16, 36, 64, 100]  
+print(resultat_comp)  # [4, 16, 36, 64, 100]  
 ```
 
 ### Quand utiliser quoi ?
@@ -611,8 +611,8 @@ def traiter_ventes(ventes):
 
 ventes_importantes, ca = traiter_ventes(ventes)
 
-print("Ventes importantes (>200€) :")
-for v in ventes_importantes:
+print("Ventes importantes (>200€) :")  
+for v in ventes_importantes:  
     print(f"  {v['produit']}: {v['montant_total']}€")
 print(f"\nChiffre d'affaires : {ca}€")
 ```
@@ -643,8 +643,8 @@ mentions_bien = list(filter(
     etudiants_avec_moyennes
 ))
 
-print("Étudiants avec mention Bien (>=15) :")
-for e in mentions_bien:
+print("Étudiants avec mention Bien (>=15) :")  
+for e in mentions_bien:  
     print(f"  {e['nom']}: {e['moyenne']:.2f}")
 ```
 
@@ -667,9 +667,9 @@ longueur_totale = reduce(lambda acc, x: acc + x, longueurs)
 # Calculer la longueur moyenne
 longueur_moyenne = longueur_totale / len(mots)
 
-print(f"Nombre de mots : {len(mots)}")
-print(f"Longueur totale : {longueur_totale} caractères")
-print(f"Longueur moyenne : {longueur_moyenne:.2f} caractères/mot")
+print(f"Nombre de mots : {len(mots)}")  
+print(f"Longueur totale : {longueur_totale} caractères")  
+print(f"Longueur moyenne : {longueur_moyenne:.2f} caractères/mot")  
 ```
 
 ---
@@ -703,9 +703,9 @@ for n in map(lambda x: x * 2, nombres):
 # - Réutiliser le résultat
 # - Accéder à des éléments spécifiques
 # - Connaître la longueur
-doubles = list(map(lambda x: x * 2, nombres))
-print(len(doubles))  # Nécessite une liste
-print(doubles[2])    # Nécessite une liste
+doubles = list(map(lambda x: x * 2, nombres))  
+print(len(doubles))  # Nécessite une liste  
+print(doubles[2])    # Nécessite une liste  
 ```
 
 ---
@@ -727,8 +727,8 @@ somme_reduce = reduce(lambda acc, x: acc + x, nombres)
 # Plus simple et plus rapide
 somme_native = sum(nombres)
 
-print(somme_reduce)  # 15
-print(somme_native)  # 15
+print(somme_reduce)  # 15  
+print(somme_native)  # 15  
 ```
 
 ### max() et min() au lieu de reduce()
@@ -744,8 +744,8 @@ max_reduce = reduce(lambda acc, x: acc if acc > x else x, nombres)
 # Plus simple et plus rapide
 max_native = max(nombres)
 
-print(max_reduce)  # 89
-print(max_native)  # 89
+print(max_reduce)  # 89  
+print(max_native)  # 89  
 ```
 
 ### any() et all() pour les conditions
@@ -773,11 +773,11 @@ print(tous_pairs)  # True
 resultat = list(map(lambda x: x * 2, filter(lambda x: x % 2 == 0, map(lambda x: x + 1, range(10)))))
 
 # ✅ Plus clair avec des étapes
-nombres = range(10)
-increments = map(lambda x: x + 1, nombres)
-pairs = filter(lambda x: x % 2 == 0, increments)
-doubles = map(lambda x: x * 2, pairs)
-resultat = list(doubles)
+nombres = range(10)  
+increments = map(lambda x: x + 1, nombres)  
+pairs = filter(lambda x: x % 2 == 0, increments)  
+doubles = map(lambda x: x * 2, pairs)  
+resultat = list(doubles)  
 
 # ✅✅ Encore mieux avec compréhension
 resultat = [2 * (x + 1) for x in range(10) if (x + 1) % 2 == 0]
@@ -805,8 +805,8 @@ prix_ttc = list(map(lambda p: p * 1.20, prix_ht))
 nombres = [1, 2, 3, 4, 5]
 
 # ❌ Compliqué avec reduce()
-from functools import reduce
-somme = reduce(lambda acc, x: acc + x, nombres)
+from functools import reduce  
+somme = reduce(lambda acc, x: acc + x, nombres)  
 
 # ✅ Simple et clair
 somme = sum(nombres)
@@ -852,10 +852,10 @@ Dans ce chapitre, nous avons exploré trois fonctions fondamentales de la progra
 
 ### Points clés à retenir
 
-✅ Ces fonctions permettent un style de programmation fonctionnel
-✅ Elles peuvent être combinées pour créer des pipelines de traitement
-✅ Les compréhensions de listes sont souvent plus pythoniques
-✅ Privilégiez toujours la lisibilité du code
+✅ Ces fonctions permettent un style de programmation fonctionnel  
+✅ Elles peuvent être combinées pour créer des pipelines de traitement  
+✅ Les compréhensions de listes sont souvent plus pythoniques  
+✅ Privilégiez toujours la lisibilité du code  
 ✅ Utilisez les alternatives natives quand elles existent (`sum()`, `max()`, etc.)
 
 ### Quand les utiliser ?

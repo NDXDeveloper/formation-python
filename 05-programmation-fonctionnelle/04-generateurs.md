@@ -26,9 +26,9 @@ def creer_liste_nombres(n):
         liste.append(i)
     return liste
 
-nombres = creer_liste_nombres(5)
-print(nombres)  # [0, 1, 2, 3, 4]
-print(type(nombres))  # <class 'list'>
+nombres = creer_liste_nombres(5)  
+print(nombres)  # [0, 1, 2, 3, 4]  
+print(type(nombres))  # <class 'list'>  
 ```
 
 **Générateur :**
@@ -39,9 +39,9 @@ def generer_nombres(n):
     for i in range(n):
         yield i
 
-nombres = generer_nombres(5)
-print(nombres)  # <generator object generer_nombres at 0x...>
-print(type(nombres))  # <class 'generator'>
+nombres = generer_nombres(5)  
+print(nombres)  # <generator object generer_nombres at 0x...>  
+print(type(nombres))  # <class 'generator'>  
 
 # Pour voir les valeurs, il faut itérer
 for nombre in nombres:
@@ -113,8 +113,8 @@ def generer_pairs(debut, fin):
             yield nombre
 
 # Utilisation
-pairs = generer_pairs(1, 10)
-print(list(pairs))  # [2, 4, 6, 8, 10]
+pairs = generer_pairs(1, 10)  
+print(list(pairs))  # [2, 4, 6, 8, 10]  
 ```
 
 ### Exemple 3 : Générateur de Fibonacci
@@ -128,8 +128,8 @@ def fibonacci(n):
         a, b = b, a + b
 
 # Utilisation
-print("Suite de Fibonacci (10 premiers) :")
-for nombre in fibonacci(10):
+print("Suite de Fibonacci (10 premiers) :")  
+for nombre in fibonacci(10):  
     print(nombre, end=" ")  # 0 1 1 2 3 5 8 13 21 34
 ```
 
@@ -147,8 +147,8 @@ def creer_grands_nombres():
     return [i for i in range(1000000)]
 
 # Crée une liste de 1 million d'éléments en mémoire
-liste = creer_grands_nombres()
-print(f"Taille en mémoire : ~{liste.__sizeof__()} bytes")
+liste = creer_grands_nombres()  
+print(f"Taille en mémoire : ~{liste.__sizeof__()} bytes")  
 # Taille en mémoire : ~8000000 bytes (environ 8 MB)
 ```
 
@@ -161,8 +161,8 @@ def generer_grands_nombres():
         yield i
 
 # Ne crée qu'un objet générateur, pas les valeurs
-gen = generer_grands_nombres()
-print(f"Taille en mémoire : ~{gen.__sizeof__()} bytes")
+gen = generer_grands_nombres()  
+print(f"Taille en mémoire : ~{gen.__sizeof__()} bytes")  
 # Taille en mémoire : ~200 bytes
 ```
 
@@ -178,12 +178,12 @@ def generer_avec_traitement(n):
         yield i * 2
 
 # Le générateur est créé, mais aucun traitement n'est effectué
-gen = generer_avec_traitement(5)
-print("Générateur créé")
+gen = generer_avec_traitement(5)  
+print("Générateur créé")  
 
 # Les traitements n'ont lieu que lors de l'itération
-print("\nItération :")
-for valeur in gen:
+print("\nItération :")  
+for valeur in gen:  
     print(f"Reçu : {valeur}")
     if valeur >= 4:  # On peut s'arrêter tôt
         break
@@ -213,8 +213,8 @@ def compteur_infini(debut=0):
         nombre += 1
 
 # Utilisation avec limitation
-compteur = compteur_infini(10)
-for i, valeur in enumerate(compteur):
+compteur = compteur_infini(10)  
+for i, valeur in enumerate(compteur):  
     print(valeur, end=" ")
     if i >= 9:  # Afficher seulement 10 valeurs
         break
@@ -241,14 +241,14 @@ generateur = (x ** 2 for x in range(5))
 
 ```python
 # Compréhension de liste
-carres_liste = [x ** 2 for x in range(5)]
-print(carres_liste)  # [0, 1, 4, 9, 16]
-print(type(carres_liste))  # <class 'list'>
+carres_liste = [x ** 2 for x in range(5)]  
+print(carres_liste)  # [0, 1, 4, 9, 16]  
+print(type(carres_liste))  # <class 'list'>  
 
 # Expression génératrice
-carres_gen = (x ** 2 for x in range(5))
-print(carres_gen)  # <generator object <genexpr> at 0x...>
-print(type(carres_gen))  # <class 'generator'>
+carres_gen = (x ** 2 for x in range(5))  
+print(carres_gen)  # <generator object <genexpr> at 0x...>  
+print(type(carres_gen))  # <class 'generator'>  
 
 # Convertir en liste
 print(list(carres_gen))  # [0, 1, 4, 9, 16]
@@ -312,19 +312,19 @@ Python intègre plusieurs fonctions qui fonctionnent bien avec les générateurs
 nombres = range(10)
 
 # map() retourne un itérateur (similaire à un générateur)
-doubles = map(lambda x: x * 2, nombres)
-print(list(doubles))  # [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+doubles = map(lambda x: x * 2, nombres)  
+print(list(doubles))  # [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]  
 
 # filter() aussi
-pairs = filter(lambda x: x % 2 == 0, nombres)
-print(list(pairs))  # [0, 2, 4, 6, 8]
+pairs = filter(lambda x: x % 2 == 0, nombres)  
+print(list(pairs))  # [0, 2, 4, 6, 8]  
 ```
 
 ### 2. zip()
 
 ```python
-prenoms = ["Alice", "Bob", "Charlie"]
-ages = [25, 30, 35]
+prenoms = ["Alice", "Bob", "Charlie"]  
+ages = [25, 30, 35]  
 
 # zip() retourne un itérateur
 couples = zip(prenoms, ages)
@@ -419,9 +419,9 @@ def multiplier_par_10(nombres):
         yield n * 10
 
 # Pipeline de traitement
-donnees = lire_nombres()
-pairs = filtrer_pairs(donnees)
-resultat = multiplier_par_10(pairs)
+donnees = lire_nombres()  
+pairs = filtrer_pairs(donnees)  
+resultat = multiplier_par_10(pairs)  
 
 print(list(resultat))  # [20, 40, 60, 80, 100]
 ```
@@ -482,8 +482,8 @@ def compteur(debut=0, pas=1):
         valeur += pas
 
 # Utilisation avec limite
-c = compteur(10, 2)
-for _ in range(5):
+c = compteur(10, 2)  
+for _ in range(5):  
     print(next(c), end=" ")  # 10 12 14 16 18
 ```
 
@@ -497,8 +497,8 @@ def cycle(iterable):
             yield element
 
 # Utilisation
-couleurs = cycle(['rouge', 'vert', 'bleu'])
-for _ in range(8):
+couleurs = cycle(['rouge', 'vert', 'bleu'])  
+for _ in range(8):  
     print(next(couleurs), end=" ")
 # rouge vert bleu rouge vert bleu rouge vert
 ```
@@ -519,8 +519,8 @@ def repeter(valeur, n=None):
 # zeros = repeter(0)
 
 # Répétition limitée
-cinq_fois = repeter("Python", 5)
-print(list(cinq_fois))  # ['Python', 'Python', 'Python', 'Python', 'Python']
+cinq_fois = repeter("Python", 5)  
+print(list(cinq_fois))  # ['Python', 'Python', 'Python', 'Python', 'Python']  
 ```
 
 ---
@@ -546,9 +546,9 @@ gen = generateur_avec_send()
 print(next(gen))  # 0
 
 # Envoyer des valeurs
-print(gen.send(10))  # 10
-print(gen.send(5))   # 15
-print(gen.send(3))   # 18
+print(gen.send(10))  # 10  
+print(gen.send(5))   # 15  
+print(gen.send(3))   # 18  
 ```
 
 ### 2. close() - Fermer un générateur
@@ -564,8 +564,8 @@ def mon_generateur():
 
 gen = mon_generateur()
 
-print(next(gen))  # 0
-print(next(gen))  # 1
+print(next(gen))  # 0  
+print(next(gen))  # 1  
 
 # Fermer le générateur
 gen.close()  # Affiche : Générateur fermé
@@ -586,12 +586,12 @@ def generateur_resilient():
         except ValueError:
             print("Erreur ValueError capturée !")
 
-gen = generateur_resilient()
-next(gen)  # Démarrer
+gen = generateur_resilient()  
+next(gen)  # Démarrer  
 
-gen.send(10)  # Reçu : 10
-gen.throw(ValueError, "Une erreur")  # Erreur ValueError capturée !
-gen.send(20)  # Reçu : 20
+gen.send(10)  # Reçu : 10  
+gen.throw(ValueError, "Une erreur")  # Erreur ValueError capturée !  
+gen.send(20)  # Reçu : 20  
 ```
 
 ---
@@ -638,8 +638,8 @@ def aplatir(liste_imbriquee):
             yield element
 
 # Utilisation
-donnees = [1, [2, 3, [4, 5]], 6, [7, [8, 9]]]
-print(list(aplatir(donnees)))  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+donnees = [1, [2, 3, [4, 5]], 6, [7, [8, 9]]]  
+print(list(aplatir(donnees)))  # [1, 2, 3, 4, 5, 6, 7, 8, 9]  
 ```
 
 ### Exemple : parcourir un arbre
@@ -686,10 +686,10 @@ print(list(parcourir_arbre(arbre)))  # [1, 2, 4, 5, 3]
 
 ```python
 # Liste appropriée ici
-nombres = [1, 2, 3, 4, 5]
-print(nombres[2])  # Accès par index
-print(len(nombres))  # Longueur
-print(nombres * 2)  # Duplication
+nombres = [1, 2, 3, 4, 5]  
+print(nombres[2])  # Accès par index  
+print(len(nombres))  # Longueur  
+print(nombres * 2)  # Duplication  
 ```
 
 ### Quand utiliser un générateur ?
@@ -704,7 +704,7 @@ print(nombres * 2)  # Duplication
 ```python
 # Générateur approprié ici
 def lire_grand_fichier():
-    with open('huge_file.txt') as f:
+    with open('huge_file.txt', encoding='utf-8') as f:
         for ligne in f:
             yield ligne.strip()
 
@@ -719,12 +719,12 @@ def lire_grand_fichier():
 import sys
 
 # Liste : toutes les valeurs en mémoire
-liste = [i for i in range(1000000)]
-print(f"Liste : {sys.getsizeof(liste) / 1024 / 1024:.2f} MB")
+liste = [i for i in range(1000000)]  
+print(f"Liste : {sys.getsizeof(liste) / 1024 / 1024:.2f} MB")  
 
 # Générateur : seulement l'objet générateur
-gen = (i for i in range(1000000))
-print(f"Générateur : {sys.getsizeof(gen) / 1024:.2f} KB")
+gen = (i for i in range(1000000))  
+print(f"Générateur : {sys.getsizeof(gen) / 1024:.2f} KB")  
 
 # Différence massive !
 ```
@@ -741,14 +741,14 @@ Python fournit le module `itertools` avec des outils puissants pour travailler a
 import itertools
 
 # count() - Compteur infini
-compteur = itertools.count(10, 2)  # Commence à 10, incrémente de 2
-for i in range(5):
+compteur = itertools.count(10, 2)  # Commence à 10, incrémente de 2  
+for i in range(5):  
     print(next(compteur), end=" ")  # 10 12 14 16 18
 print()
 
 # cycle() - Répète indéfiniment
-couleurs = itertools.cycle(['R', 'G', 'B'])
-for i in range(7):
+couleurs = itertools.cycle(['R', 'G', 'B'])  
+for i in range(7):  
     print(next(couleurs), end=" ")  # R G B R G B R
 print()
 
@@ -758,27 +758,27 @@ for x in itertools.repeat("Python", 3):
 print()
 
 # chain() - Enchaîne des itérables
-liste1 = [1, 2, 3]
-liste2 = [4, 5, 6]
-for x in itertools.chain(liste1, liste2):
+liste1 = [1, 2, 3]  
+liste2 = [4, 5, 6]  
+for x in itertools.chain(liste1, liste2):  
     print(x, end=" ")  # 1 2 3 4 5 6
 print()
 
 # islice() - Découpe un itérable
-nombres = range(100)
-for x in itertools.islice(nombres, 5, 10):  # Éléments 5 à 9
+nombres = range(100)  
+for x in itertools.islice(nombres, 5, 10):  # Éléments 5 à 9  
     print(x, end=" ")  # 5 6 7 8 9
 print()
 
 # takewhile() - Prend tant qu'une condition est vraie
-nombres = [1, 4, 6, 4, 1]
-for x in itertools.takewhile(lambda x: x < 5, nombres):
+nombres = [1, 4, 6, 4, 1]  
+for x in itertools.takewhile(lambda x: x < 5, nombres):  
     print(x, end=" ")  # 1 4
 print()
 
 # dropwhile() - Ignore tant qu'une condition est vraie
-nombres = [1, 4, 6, 4, 1]
-for x in itertools.dropwhile(lambda x: x < 5, nombres):
+nombres = [1, 4, 6, 4, 1]  
+for x in itertools.dropwhile(lambda x: x < 5, nombres):  
     print(x, end=" ")  # 6 4 1
 print()
 ```
@@ -832,7 +832,7 @@ def generer_fibonacci(n):
 def lire_fichier_securise(nom_fichier):
     """Lit un fichier ligne par ligne de manière sécurisée."""
     try:
-        fichier = open(nom_fichier, 'r')
+        fichier = open(nom_fichier, 'r', encoding='utf-8')
         try:
             for ligne in fichier:
                 yield ligne.strip()
@@ -845,7 +845,7 @@ def lire_fichier_securise(nom_fichier):
 # Ou mieux, avec with :
 def lire_fichier_securise_v2(nom_fichier):
     """Version améliorée avec context manager."""
-    with open(nom_fichier, 'r') as fichier:
+    with open(nom_fichier, 'r', encoding='utf-8') as fichier:
         for ligne in fichier:
             yield ligne.strip()
 ```
@@ -854,14 +854,14 @@ def lire_fichier_securise_v2(nom_fichier):
 
 ```python
 # ❌ Inutile de convertir en liste si on itère une fois
-nombres = (x ** 2 for x in range(1000))
-liste_nombres = list(nombres)  # Consomme la mémoire
-for n in liste_nombres:
+nombres = (x ** 2 for x in range(1000))  
+liste_nombres = list(nombres)  # Consomme la mémoire  
+for n in liste_nombres:  
     print(n)
 
 # ✅ Mieux : itérer directement
-nombres = (x ** 2 for x in range(1000))
-for n in nombres:
+nombres = (x ** 2 for x in range(1000))  
+for n in nombres:  
     print(n)
 ```
 
@@ -888,14 +888,14 @@ gen = (x for x in range(5))  # Recréer
 
 ```python
 # ❌ Erreur
-gen = (x for x in range(5))
-somme = sum(gen)
-liste = list(gen)  # Vide !
+gen = (x for x in range(5))  
+somme = sum(gen)  
+liste = list(gen)  # Vide !  
 
 # ✅ Solution
-gen = (x for x in range(5))
-liste = list(gen)  # Convertir d'abord
-somme = sum(liste)
+gen = (x for x in range(5))  
+liste = list(gen)  # Convertir d'abord  
+somme = sum(liste)  
 ```
 
 ### 2. Essayer d'accéder par index
@@ -907,8 +907,8 @@ gen = (x for x in range(10))
 # print(gen[5])  # TypeError
 
 # ✅ Solution : convertir en liste
-liste = list(gen)
-print(liste[5])
+liste = list(gen)  
+print(liste[5])  
 ```
 
 ### 3. Essayer d'obtenir la longueur
@@ -920,8 +920,8 @@ gen = (x for x in range(10))
 # print(len(gen))  # TypeError
 
 # ✅ Solution : convertir en liste (si vraiment nécessaire)
-liste = list(gen)
-print(len(liste))
+liste = list(gen)  
+print(len(liste))  
 ```
 
 ---
@@ -950,10 +950,10 @@ Dans ce chapitre, nous avons exploré les générateurs en profondeur :
 
 ### Avantages principaux
 
-✅ **Efficacité mémoire** : Ne stocke pas toutes les valeurs
-✅ **Performance** : Calcul à la demande
-✅ **Élégance** : Code plus lisible et expressif
-✅ **Flexibilité** : Séquences infinies possibles
+✅ **Efficacité mémoire** : Ne stocke pas toutes les valeurs  
+✅ **Performance** : Calcul à la demande  
+✅ **Élégance** : Code plus lisible et expressif  
+✅ **Flexibilité** : Séquences infinies possibles  
 ✅ **Pipeline** : Facile à chaîner et composer
 
 ### Quand les utiliser ?

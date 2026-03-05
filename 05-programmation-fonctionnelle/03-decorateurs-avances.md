@@ -40,8 +40,8 @@ def dire_bonjour():
     print("Bonjour !")
 
 # Application du décorateur
-dire_bonjour = mon_decorateur(dire_bonjour)
-dire_bonjour()
+dire_bonjour = mon_decorateur(dire_bonjour)  
+dire_bonjour()  
 
 # Affiche :
 # --- Début ---
@@ -226,8 +226,8 @@ def dormir():
     time.sleep(2)
     print("Réveil !")
 
-resultat = calculer_somme(1000000)
-print(f"Somme : {resultat}")
+resultat = calculer_somme(1000000)  
+print(f"Somme : {resultat}")  
 # ⏱️  calculer_somme a pris 0.0234 secondes
 # Somme : 499999500000
 
@@ -311,6 +311,22 @@ print(fibonacci(5))  # Deuxième appel
 # 💾 Résultat en cache pour (5,)
 # 5
 ```
+
+> 💡 **En pratique**, utilisez `functools.cache` (Python 3.9+) ou `functools.lru_cache` plutôt qu'un cache manuel :
+>
+> ```python
+> from functools import cache
+>
+> @cache
+> def fibonacci(n):
+>     if n < 2:
+>         return n
+>     return fibonacci(n-1) + fibonacci(n-2)
+>
+> print(fibonacci(50))  # Instantané grâce au cache
+> ```
+>
+> `lru_cache(maxsize=128)` permet de limiter la taille du cache en mémoire.
 
 ### 4. Contrôle d'accès
 
@@ -458,8 +474,8 @@ def ma_fonction():
     """Ceci est ma fonction."""
     pass
 
-print(ma_fonction.__name__)  # Affiche : fonction_modifiee
-print(ma_fonction.__doc__)   # Affiche : None
+print(ma_fonction.__name__)  # Affiche : fonction_modifiee  
+print(ma_fonction.__doc__)   # Affiche : None  
 ```
 
 ### La solution : @wraps
@@ -480,8 +496,8 @@ def ma_fonction():
     """Ceci est ma fonction."""
     pass
 
-print(ma_fonction.__name__)  # Affiche : ma_fonction
-print(ma_fonction.__doc__)   # Affiche : Ceci est ma fonction.
+print(ma_fonction.__name__)  # Affiche : ma_fonction  
+print(ma_fonction.__doc__)   # Affiche : Ceci est ma fonction.  
 ```
 
 ### Pourquoi c'est important ?
@@ -502,9 +518,9 @@ def calculer_carre(x):
     return x ** 2
 
 # Les métadonnées sont préservées
-print(f"Nom : {calculer_carre.__name__}")        # Nom : calculer_carre
-print(f"Doc : {calculer_carre.__doc__}")          # Doc : Calcule le carré d'un nombre.
-print(f"Module : {calculer_carre.__module__}")    # Module : __main__
+print(f"Nom : {calculer_carre.__name__}")        # Nom : calculer_carre  
+print(f"Doc : {calculer_carre.__doc__}")          # Doc : Calcule le carré d'un nombre.  
+print(f"Module : {calculer_carre.__module__}")    # Module : __main__  
 
 # Pratique pour l'aide et la documentation
 help(calculer_carre)
@@ -569,8 +585,8 @@ class Personne:
         self.nom = nom
         self.age = age
 
-p = Personne("Alice", 30)
-print(p)  # Affiche : Personne(nom=Alice, age=30)
+p = Personne("Alice", 30)  
+print(p)  # Affiche : Personne(nom=Alice, age=30)  
 ```
 
 ### Singleton avec un décorateur
@@ -595,13 +611,13 @@ class Configuration:
         print("Configuration créée")
 
 # Première création
-config1 = Configuration()  # Affiche : Configuration créée
-config1.parametre = "nouvelle valeur"
+config1 = Configuration()  # Affiche : Configuration créée  
+config1.parametre = "nouvelle valeur"  
 
 # Deuxième "création" : retourne la même instance
-config2 = Configuration()  # N'affiche rien
-print(config2.parametre)   # Affiche : nouvelle valeur
-print(config1 is config2)  # Affiche : True
+config2 = Configuration()  # N'affiche rien  
+print(config2.parametre)   # Affiche : nouvelle valeur  
+print(config1 is config2)  # Affiche : True  
 ```
 
 ---
@@ -628,9 +644,9 @@ class Compteur:
 def dire_bonjour(nom):
     print(f"Bonjour {nom} !")
 
-dire_bonjour("Alice")  # Appel n°1
-dire_bonjour("Bob")    # Appel n°2
-dire_bonjour("Charlie")  # Appel n°3
+dire_bonjour("Alice")  # Appel n°1  
+dire_bonjour("Bob")    # Appel n°2  
+dire_bonjour("Charlie")  # Appel n°3  
 ```
 
 ### Avec paramètres
@@ -695,8 +711,8 @@ def creer_personne(nom, age):
     return {"nom": nom, "age": age}
 
 # ✅ Fonctionne
-personne1 = creer_personne(nom="Alice", age=30)
-print(personne1)  # {'nom': 'Alice', 'age': 30}
+personne1 = creer_personne(nom="Alice", age=30)  
+print(personne1)  # {'nom': 'Alice', 'age': 30}  
 
 # ❌ Lève une erreur
 # personne2 = creer_personne(nom="Bob", age="trente")
@@ -706,8 +722,8 @@ print(personne1)  # {'nom': 'Alice', 'age': 30}
 ### 2. Rate limiting (limitation du taux d'appel)
 
 ```python
-import time
-from functools import wraps
+import time  
+from functools import wraps  
 
 def rate_limit(appels_max, periode):
     """Limite le nombre d'appels dans une période donnée."""
@@ -738,10 +754,10 @@ def rechercher(terme):
     return f"Résultats pour {terme}"
 
 # Les 3 premiers appels fonctionnent
-rechercher("Python")   # ✅
-rechercher("Django")   # ✅
-rechercher("Flask")    # ✅
-rechercher("FastAPI")  # ⏳ Trop de requêtes...
+rechercher("Python")   # ✅  
+rechercher("Django")   # ✅  
+rechercher("Flask")    # ✅  
+rechercher("FastAPI")  # ⏳ Trop de requêtes...  
 ```
 
 ### 3. Convertir des exceptions
@@ -781,8 +797,8 @@ except ErreurMetier as e:
 ### 4. Décorateur de dépréciation
 
 ```python
-import warnings
-from functools import wraps
+import warnings  
+from functools import wraps  
 
 def deprecie(message="Cette fonction est dépréciée"):
     """Marque une fonction comme dépréciée."""
@@ -820,8 +836,8 @@ def nouvelle_fonction():
 Chaque décorateur ajoute un léger coût en performance :
 
 ```python
-import time
-from functools import wraps
+import time  
+from functools import wraps  
 
 def mesurer_overhead():
     """Compare les performances avec et sans décorateurs."""
@@ -984,12 +1000,12 @@ Dans ce chapitre, nous avons exploré les décorateurs en profondeur :
 
 ### Cas d'usage courants
 
-✅ **Logging** : Enregistrer les appels de fonctions
-✅ **Timing** : Mesurer les performances
-✅ **Cache** : Mémoriser les résultats
-✅ **Validation** : Vérifier les arguments
-✅ **Authentification** : Contrôler l'accès
-✅ **Retry** : Réessayer en cas d'échec
+✅ **Logging** : Enregistrer les appels de fonctions  
+✅ **Timing** : Mesurer les performances  
+✅ **Cache** : Mémoriser les résultats  
+✅ **Validation** : Vérifier les arguments  
+✅ **Authentification** : Contrôler l'accès  
+✅ **Retry** : Réessayer en cas d'échec  
 ✅ **Rate limiting** : Limiter la fréquence d'appels
 
 ### Points à retenir

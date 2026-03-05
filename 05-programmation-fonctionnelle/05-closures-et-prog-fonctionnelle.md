@@ -30,12 +30,12 @@ def creer_salutation(salut):
     return saluer
 
 # Créer deux fonctions avec des salutations différentes
-saluer_fr = creer_salutation("Bonjour")
-saluer_en = creer_salutation("Hello")
+saluer_fr = creer_salutation("Bonjour")  
+saluer_en = creer_salutation("Hello")  
 
 # Utilisation
-print(saluer_fr("Alice"))  # Bonjour Alice !
-print(saluer_en("Bob"))    # Hello Bob !
+print(saluer_fr("Alice"))  # Bonjour Alice !  
+print(saluer_en("Bob"))    # Hello Bob !  
 ```
 
 **Ce qui se passe :**
@@ -55,14 +55,14 @@ def creer_multiplicateur(facteur):
     return multiplier
 
 # Créer différents multiplicateurs
-double = creer_multiplicateur(2)
-triple = creer_multiplicateur(3)
-dizaine = creer_multiplicateur(10)
+double = creer_multiplicateur(2)  
+triple = creer_multiplicateur(3)  
+dizaine = creer_multiplicateur(10)  
 
 # Chaque fonction se souvient de son propre facteur
-print(double(5))    # 10 (5 * 2)
-print(triple(5))    # 15 (5 * 3)
-print(dizaine(5))   # 50 (5 * 10)
+print(double(5))    # 10 (5 * 2)  
+print(triple(5))    # 15 (5 * 3)  
+print(dizaine(5))   # 50 (5 * 10)  
 ```
 
 ---
@@ -82,8 +82,8 @@ def creer_compteur(debut):
 compteur = creer_compteur(10)
 
 # Inspecter la closure
-print(compteur.__closure__)  # (<cell at 0x...: int object at 0x...>,)
-print(compteur.__code__.co_freevars)  # ('debut',)
+print(compteur.__closure__)  # (<cell at 0x...: int object at 0x...>,)  
+print(compteur.__code__.co_freevars)  # ('debut',)  
 
 # La valeur de la variable libre
 print(compteur.__closure__[0].cell_contents)  # 10
@@ -100,8 +100,8 @@ def fonction_externe(x):  # x sera une variable libre
 
     return fonction_interne
 
-f = fonction_externe(5)
-print(f(3))  # 18 (5 + 10 + 3)
+f = fonction_externe(5)  
+print(f(3))  # 18 (5 + 10 + 3)  
 
 # Variables libres de la closure
 print(f.__code__.co_freevars)  # ('x', 'y')
@@ -127,15 +127,15 @@ def creer_compteur():
 
     return incrementer
 
-compteur1 = creer_compteur()
-print(compteur1())  # 1
-print(compteur1())  # 2
-print(compteur1())  # 3
+compteur1 = creer_compteur()  
+print(compteur1())  # 1  
+print(compteur1())  # 2  
+print(compteur1())  # 3  
 
 # Chaque compteur est indépendant
-compteur2 = creer_compteur()
-print(compteur2())  # 1
-print(compteur1())  # 4
+compteur2 = creer_compteur()  
+print(compteur2())  # 1  
+print(compteur1())  # 4  
 ```
 
 ### Le mot-clé nonlocal
@@ -188,13 +188,13 @@ def creer_puissance(exposant):
         return base ** exposant
     return calculer
 
-carre = creer_puissance(2)
-cube = creer_puissance(3)
-puissance_quatre = creer_puissance(4)
+carre = creer_puissance(2)  
+cube = creer_puissance(3)  
+puissance_quatre = creer_puissance(4)  
 
-print(carre(5))           # 25
-print(cube(3))            # 27
-print(puissance_quatre(2)) # 16
+print(carre(5))           # 25  
+print(cube(3))            # 27  
+print(puissance_quatre(2)) # 16  
 ```
 
 ### 2. Configuration de fonctions
@@ -207,13 +207,13 @@ def creer_formateur(prefixe, suffixe):
     return formater
 
 # Différents formatages
-html_bold = creer_formateur("<b>", "</b>")
-html_italic = creer_formateur("<i>", "</i>")
-parentheses = creer_formateur("(", ")")
+html_bold = creer_formateur("<b>", "</b>")  
+html_italic = creer_formateur("<i>", "</i>")  
+parentheses = creer_formateur("(", ")")  
 
-print(html_bold("Important"))      # <b>Important</b>
-print(html_italic("Emphase"))      # <i>Emphase</i>
-print(parentheses("note"))         # (note)
+print(html_bold("Important"))      # <b>Important</b>  
+print(html_italic("Emphase"))      # <i>Emphase</i>  
+print(parentheses("note"))         # (note)  
 ```
 
 ### 3. Encapsulation de données privées
@@ -248,11 +248,11 @@ def creer_compte_bancaire(solde_initial):
     }
 
 # Utilisation
-compte = creer_compte_bancaire(1000)
-print(compte['solde']())           # Solde actuel : 1000€
-print(compte['deposer'](500))      # Dépôt de 500€. Nouveau solde : 1500€
-print(compte['retirer'](200))      # Retrait de 200€. Nouveau solde : 1300€
-print(compte['solde']())           # Solde actuel : 1300€
+compte = creer_compte_bancaire(1000)  
+print(compte['solde']())           # Solde actuel : 1000€  
+print(compte['deposer'](500))      # Dépôt de 500€. Nouveau solde : 1500€  
+print(compte['retirer'](200))      # Retrait de 200€. Nouveau solde : 1300€  
+print(compte['solde']())           # Solde actuel : 1300€  
 ```
 
 ### 4. Décorateurs (utilisation avancée des closures)
@@ -275,10 +275,10 @@ def compteur_appels(fonction):
 def dire_bonjour(nom):
     return f"Bonjour {nom} !"
 
-print(dire_bonjour("Alice"))  # Appel n°1
-print(dire_bonjour("Bob"))    # Appel n°2
-print(dire_bonjour("Charlie")) # Appel n°3
-print(f"Total d'appels : {dire_bonjour.nombre_appels()}")  # 3
+print(dire_bonjour("Alice"))  # Appel n°1  
+print(dire_bonjour("Bob"))    # Appel n°2  
+print(dire_bonjour("Charlie")) # Appel n°3  
+print(f"Total d'appels : {dire_bonjour.nombre_appels()}")  # 3  
 ```
 
 ### 5. Callbacks avec contexte
@@ -296,13 +296,13 @@ def creer_gestionnaire_evenement(nom_evenement):
     return gestionnaire
 
 # Créer différents gestionnaires
-on_click = creer_gestionnaire_evenement("CLICK")
-on_hover = creer_gestionnaire_evenement("HOVER")
+on_click = creer_gestionnaire_evenement("CLICK")  
+on_hover = creer_gestionnaire_evenement("HOVER")  
 
 # Simulation d'événements
-on_click("Bouton pressé")      # [CLICK] Événement #1: Bouton pressé
-on_hover("Souris sur élément") # [HOVER] Événement #1: Souris sur élément
-on_click("Nouveau clic")       # [CLICK] Événement #2: Nouveau clic
+on_click("Bouton pressé")      # [CLICK] Événement #1: Bouton pressé  
+on_hover("Souris sur élément") # [HOVER] Événement #1: Souris sur élément  
+on_click("Nouveau clic")       # [CLICK] Événement #2: Nouveau clic  
 ```
 
 ---
@@ -332,8 +332,8 @@ def saluer(nom):
     return f"Bonjour {nom} !"
 
 # Assigner la fonction à une variable
-ma_fonction = saluer
-print(ma_fonction("Alice"))  # Bonjour Alice !
+ma_fonction = saluer  
+print(ma_fonction("Alice"))  # Bonjour Alice !  
 ```
 
 ### 2. Passées comme arguments
@@ -349,8 +349,8 @@ def additionner(x, y):
 def multiplier(x, y):
     return x * y
 
-print(executer_operation(additionner, 5, 3))  # 8
-print(executer_operation(multiplier, 5, 3))   # 15
+print(executer_operation(additionner, 5, 3))  # 8  
+print(executer_operation(multiplier, 5, 3))   # 15  
 ```
 
 ### 3. Retournées par d'autres fonctions
@@ -372,8 +372,8 @@ def choisir_operation(type_operation):
     else:
         return lambda x, y: 0
 
-operation = choisir_operation("addition")
-print(operation(10, 5))  # 15
+operation = choisir_operation("addition")  
+print(operation(10, 5))  # 15  
 ```
 
 ### 4. Stockées dans des structures de données
@@ -386,8 +386,8 @@ operations = {
     '/': lambda x, y: x / y if y != 0 else None
 }
 
-print(operations['+'](10, 5))  # 15
-print(operations['*'](10, 5))  # 50
+print(operations['+'](10, 5))  # 15  
+print(operations['*'](10, 5))  # 50  
 ```
 
 ---
@@ -406,8 +406,8 @@ def additionner(a, b):
     """Toujours le même résultat, pas d'effets de bord."""
     return a + b
 
-print(additionner(3, 4))  # Toujours 7
-print(additionner(3, 4))  # Toujours 7
+print(additionner(3, 4))  # Toujours 7  
+print(additionner(3, 4))  # Toujours 7  
 
 # ✅ Fonction pure
 def calculer_carre(n):
@@ -457,18 +457,18 @@ def ajouter_pure(liste, element):
     return liste + [element]
 
 # Utilisation de la version pure
-ma_liste = [1, 2, 3]
-nouvelle_liste = ajouter_pure(ma_liste, 4)
-print(ma_liste)         # [1, 2, 3] - Non modifiée
-print(nouvelle_liste)   # [1, 2, 3, 4]
+ma_liste = [1, 2, 3]  
+nouvelle_liste = ajouter_pure(ma_liste, 4)  
+print(ma_liste)         # [1, 2, 3] - Non modifiée  
+print(nouvelle_liste)   # [1, 2, 3, 4]  
 ```
 
 ### Avantages des fonctions pures
 
-✅ **Testabilité** : Plus faciles à tester
-✅ **Prévisibilité** : Comportement déterministe
-✅ **Parallélisation** : Peuvent être exécutées en parallèle sans danger
-✅ **Mémorisation** : Résultats peuvent être mis en cache
+✅ **Testabilité** : Plus faciles à tester  
+✅ **Prévisibilité** : Comportement déterministe  
+✅ **Parallélisation** : Peuvent être exécutées en parallèle sans danger  
+✅ **Mémorisation** : Résultats peuvent être mis en cache  
 ✅ **Débogage** : Plus simples à déboguer
 
 ---
@@ -481,9 +481,9 @@ L'**immuabilité** signifie que les données ne peuvent pas être modifiées apr
 
 ```python
 # Immuables (ne peuvent pas être modifiés)
-nombre = 42
-texte = "Python"
-tuple_exemple = (1, 2, 3)
+nombre = 42  
+texte = "Python"  
+tuple_exemple = (1, 2, 3)  
 
 # Tentative de modification
 # texte[0] = 'p'  # TypeError: 'str' object does not support item assignment
@@ -493,12 +493,12 @@ tuple_exemple = (1, 2, 3)
 
 ```python
 # Mutables (peuvent être modifiés)
-liste = [1, 2, 3]
-dictionnaire = {'a': 1}
+liste = [1, 2, 3]  
+dictionnaire = {'a': 1}  
 
 # Modification en place
-liste.append(4)  # Modifie la liste originale
-dictionnaire['b'] = 2  # Modifie le dictionnaire original
+liste.append(4)  # Modifie la liste originale  
+dictionnaire['b'] = 2  # Modifie le dictionnaire original  
 ```
 
 ### Travailler de manière immuable
@@ -524,9 +524,9 @@ produits_originaux = [
 ]
 
 # Version immuable
-nouveaux_produits = augmenter_prix_immuable(produits_originaux, 10)
-print("Originaux :", produits_originaux)  # Non modifiés
-print("Nouveaux :", nouveaux_produits)    # Prix augmentés de 10%
+nouveaux_produits = augmenter_prix_immuable(produits_originaux, 10)  
+print("Originaux :", produits_originaux)  # Non modifiés  
+print("Nouveaux :", nouveaux_produits)    # Prix augmentés de 10%  
 ```
 
 ### Créer des copies
@@ -535,16 +535,16 @@ print("Nouveaux :", nouveaux_produits)    # Prix augmentés de 10%
 import copy
 
 # Copie superficielle
-liste_originale = [1, 2, [3, 4]]
-copie_superficielle = liste_originale.copy()
-copie_superficielle[2][0] = 99
-print(liste_originale)  # [1, 2, [99, 4]] - La sous-liste est modifiée !
+liste_originale = [1, 2, [3, 4]]  
+copie_superficielle = liste_originale.copy()  
+copie_superficielle[2][0] = 99  
+print(liste_originale)  # [1, 2, [99, 4]] - La sous-liste est modifiée !  
 
 # Copie profonde
-liste_originale = [1, 2, [3, 4]]
-copie_profonde = copy.deepcopy(liste_originale)
-copie_profonde[2][0] = 99
-print(liste_originale)  # [1, 2, [3, 4]] - Non modifiée
+liste_originale = [1, 2, [3, 4]]  
+copie_profonde = copy.deepcopy(liste_originale)  
+copie_profonde[2][0] = 99  
+print(liste_originale)  # [1, 2, [3, 4]] - Non modifiée  
 ```
 
 ---
@@ -566,9 +566,9 @@ def mettre_au_carre(x):
     return x ** 2
 
 # Composer manuellement
-nombre = 3
-resultat = mettre_au_carre(multiplier_par_2(ajouter_5(nombre)))
-print(resultat)  # ((3 + 5) * 2)² = (16)² = 256
+nombre = 3  
+resultat = mettre_au_carre(multiplier_par_2(ajouter_5(nombre)))  
+print(resultat)  # ((3 + 5) * 2)² = (16)² = 256  
 ```
 
 ### Fonction de composition
@@ -584,8 +584,8 @@ def composer(*fonctions):
     return fonction_composee
 
 # Créer une fonction composée
-traitement = composer(mettre_au_carre, multiplier_par_2, ajouter_5)
-print(traitement(3))  # 256
+traitement = composer(mettre_au_carre, multiplier_par_2, ajouter_5)  
+print(traitement(3))  # 256  
 ```
 
 ### Pipeline de traitement
@@ -617,8 +617,8 @@ pipeline_texte = creer_pipeline(
     entourer_etoiles
 )
 
-resultat = pipeline_texte("python")
-print(resultat)  # *** PYTHON!!! ***
+resultat = pipeline_texte("python")  
+print(resultat)  # *** PYTHON!!! ***  
 ```
 
 ---
@@ -642,9 +642,9 @@ def additionner_currifie(a):
         return a + b
     return ajouter_b
 
-ajouter_3 = additionner_currifie(3)
-print(ajouter_3(5))  # 8
-print(ajouter_3(10))  # 13
+ajouter_3 = additionner_currifie(3)  
+print(ajouter_3(5))  # 8  
+print(ajouter_3(10))  # 13  
 ```
 
 ### Curryfication générique
@@ -661,11 +661,11 @@ def multiplier(a, b, c):
     return a * b * c
 
 # Currification partielle
-multiplier_par_2 = curryfier(multiplier, 2)
-print(multiplier_par_2(3, 4))  # 2 * 3 * 4 = 24
+multiplier_par_2 = curryfier(multiplier, 2)  
+print(multiplier_par_2(3, 4))  # 2 * 3 * 4 = 24  
 
-multiplier_par_2_et_3 = curryfier(multiplier, 2, 3)
-print(multiplier_par_2_et_3(5))  # 2 * 3 * 5 = 30
+multiplier_par_2_et_3 = curryfier(multiplier, 2, 3)  
+print(multiplier_par_2_et_3(5))  # 2 * 3 * 5 = 30  
 ```
 
 ### Application pratique
@@ -676,11 +676,11 @@ def creer_url(protocole, domaine, chemin):
     return f"{protocole}://{domaine}/{chemin}"
 
 # Créer des fonctions spécialisées
-creer_url_https = curryfier(creer_url, "https")
-creer_url_site = curryfier(creer_url, "https", "example.com")
+creer_url_https = curryfier(creer_url, "https")  
+creer_url_site = curryfier(creer_url, "https", "example.com")  
 
-print(creer_url_https("example.com", "api/users"))  # https://example.com/api/users
-print(creer_url_site("products"))  # https://example.com/products
+print(creer_url_https("example.com", "api/users"))  # https://example.com/api/users  
+print(creer_url_site("products"))  # https://example.com/products  
 ```
 
 ---
@@ -696,15 +696,15 @@ def puissance(base, exposant):
     return base ** exposant
 
 # Créer des fonctions spécialisées
-carre = partial(puissance, exposant=2)
-cube = partial(puissance, exposant=3)
+carre = partial(puissance, exposant=2)  
+cube = partial(puissance, exposant=3)  
 
-print(carre(5))  # 25
-print(cube(3))   # 27
+print(carre(5))  # 25  
+print(cube(3))   # 27  
 
 # Exemple pratique avec print
-print_avec_prefix = partial(print, "[LOG]", sep=" - ")
-print_avec_prefix("Message important")  # [LOG] - Message important
+print_avec_prefix = partial(print, "[LOG]", sep=" - ")  
+print_avec_prefix("Message important")  # [LOG] - Message important  
 ```
 
 ---
@@ -762,6 +762,8 @@ def factorielle_tail(n, acc=1):
 print(factorielle_tail(5))  # 120
 ```
 
+> ⚠️ **Attention** : contrairement à des langages comme Scheme ou Haskell, Python **n'optimise pas** la récursion terminale. La pile d'appels croît à chaque appel récursif, et la limite par défaut est d'environ 1 000 appels (`sys.getrecursionlimit()`). Pour les grandes valeurs, préférez une version itérative.
+
 ---
 
 ## Techniques fonctionnelles en Python
@@ -772,8 +774,8 @@ print(factorielle_tail(5))  # 120
 nombres = [1, 2, 3, 4, 5]
 
 # ❌ Style impératif avec boucle
-carres = []
-for n in nombres:
+carres = []  
+for n in nombres:  
     carres.append(n ** 2)
 
 # ✅ Style fonctionnel avec map
@@ -787,8 +789,8 @@ carres = [x ** 2 for x in nombres]
 
 ```python
 # ❌ Avec effets de bord
-total = 0
-def ajouter_au_total(x):
+total = 0  
+def ajouter_au_total(x):  
     global total
     total += x
     return total
@@ -812,9 +814,9 @@ p1 = Point(3, 4)
 # p1.x = 5  # AttributeError: impossible de modifier
 
 # Pour "modifier", créer un nouveau point
-p2 = Point(p1.x + 1, p1.y)
-print(p1)  # Point(x=3, y=4)
-print(p2)  # Point(x=4, y=4)
+p2 = Point(p1.x + 1, p1.y)  
+print(p1)  # Point(x=3, y=4)  
+print(p2)  # Point(x=4, y=4)  
 ```
 
 ---
@@ -849,9 +851,9 @@ def extraire_nom(etudiant):
     return etudiant['nom']
 
 # Pipeline complet
-etudiants_avec_moyenne = list(map(ajouter_moyenne, etudiants))
-etudiants_admis = list(filter(est_admis, etudiants_avec_moyenne))
-noms_admis = list(map(extraire_nom, etudiants_admis))
+etudiants_avec_moyenne = list(map(ajouter_moyenne, etudiants))  
+etudiants_admis = list(filter(est_admis, etudiants_avec_moyenne))  
+noms_admis = list(map(extraire_nom, etudiants_admis))  
 
 print("Étudiants admis :", noms_admis)
 # Étudiants admis : ['Alice', 'Bob', 'Charlie']
@@ -893,8 +895,8 @@ def filtrer_pairs(nombres):
     return [n for n in nombres if n % 2 == 0]
 
 # Tests simples
-assert filtrer_pairs([1, 2, 3, 4]) == [2, 4]
-assert filtrer_pairs([]) == []
+assert filtrer_pairs([1, 2, 3, 4]) == [2, 4]  
+assert filtrer_pairs([]) == []  
 ```
 
 ### 3. Parallélisation simplifiée
@@ -924,9 +926,9 @@ def est_positif(n):
 def combiner_predicats(pred1, pred2):
     return lambda x: pred1(x) and pred2(x)
 
-est_pair_et_positif = combiner_predicats(est_pair, est_positif)
-nombres = [-2, -1, 0, 1, 2, 3, 4]
-print(list(filter(est_pair_et_positif, nombres)))  # [2, 4]
+est_pair_et_positif = combiner_predicats(est_pair, est_positif)  
+nombres = [-2, -1, 0, 1, 2, 3, 4]  
+print(list(filter(est_pair_et_positif, nombres)))  # [2, 4]  
 ```
 
 ---
@@ -965,10 +967,10 @@ resultat = reduce(
 )
 
 # ✅ Plus clair avec des étapes
-nombres = range(-5, 5)
-carres = [x ** 2 for x in nombres]
-positifs = [x for x in carres if x > 0]
-resultat = sum(positifs)
+nombres = range(-5, 5)  
+carres = [x ** 2 for x in nombres]  
+positifs = [x for x in carres if x > 0]  
+resultat = sum(positifs)  
 ```
 
 ### 3. Python n'est pas purement fonctionnel
@@ -994,8 +996,8 @@ def traiter_donnees(donnees):
 ### 2. Utiliser les outils de Python
 
 ```python
-from functools import reduce, partial
-from itertools import chain, starmap
+from functools import reduce, partial  
+from itertools import chain, starmap  
 
 # Python fournit des outils pour la programmation fonctionnelle
 # Utilisez-les quand approprié
@@ -1042,9 +1044,9 @@ Dans ce chapitre, nous avons exploré les closures et la programmation fonctionn
 - Récursion
 
 **Avantages** :
-✅ Code prévisible et testable
-✅ Meilleure modularité
-✅ Parallélisation facilitée
+✅ Code prévisible et testable  
+✅ Meilleure modularité  
+✅ Parallélisation facilitée  
 ✅ Raisonnement simplifié
 
 **Techniques** :
