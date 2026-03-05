@@ -33,8 +33,8 @@ print("Bonjour"
 # SyntaxError: unexpected EOF while parsing
 
 # Indentation incorrecte
-def ma_fonction():
-print("Erreur")
+def ma_fonction():  
+print("Erreur")  
 # IndentationError: expected an indented block
 ```
 
@@ -56,13 +56,13 @@ nombre = int("abc")
 # ValueError: invalid literal for int() with base 10: 'abc'
 
 # Accès à un index qui n'existe pas
-liste = [1, 2, 3]
-element = liste[10]
+liste = [1, 2, 3]  
+element = liste[10]  
 # IndexError: list index out of range
 
 # Clé inexistante dans un dictionnaire
-personne = {"nom": "Alice"}
-age = personne["age"]
+personne = {"nom": "Alice"}  
+age = personne["age"]  
 # KeyError: 'age'
 
 # Fichier introuvable
@@ -92,8 +92,8 @@ except:
 Sans gestion d'erreur, le programme plante :
 
 ```python
-nombre = int(input("Entrez un nombre : "))
-print(f"Le double est : {nombre * 2}")
+nombre = int(input("Entrez un nombre : "))  
+print(f"Le double est : {nombre * 2}")  
 ```
 
 Si l'utilisateur entre "abc", le programme s'arrête avec une erreur.
@@ -132,9 +132,9 @@ print("Le programme continue")
 
 **Résultat** :
 ```
-Début du try
-Une erreur s'est produite
-Le programme continue
+Début du try  
+Une erreur s'est produite  
+Le programme continue  
 ```
 
 ---
@@ -284,8 +284,8 @@ finally:
 ### Exemple : fermer un fichier
 
 ```python
-fichier = None
-try:
+fichier = None  
+try:  
     fichier = open("donnees.txt", "r")
     contenu = fichier.read()
     print(contenu)
@@ -357,8 +357,8 @@ def diviser_nombres():
         print("Opération terminée")
 
 # Utilisation
-resultat = diviser_nombres()
-if resultat:
+resultat = diviser_nombres()  
+if resultat:  
     print(f"Résultat stocké : {resultat}")
 ```
 
@@ -416,8 +416,8 @@ Voici les exceptions que vous rencontrerez le plus souvent :
 Se produit quand une fonction reçoit un argument du bon type mais avec une valeur inappropriée.
 
 ```python
-int("abc")        # ValueError
-float("xyz")      # ValueError
+int("abc")        # ValueError  
+float("xyz")      # ValueError  
 ```
 
 ### TypeError
@@ -434,8 +434,8 @@ len(42)           # TypeError (int n'a pas de longueur)
 Se produit lors de l'accès à un index qui n'existe pas.
 
 ```python
-liste = [1, 2, 3]
-element = liste[10]  # IndexError
+liste = [1, 2, 3]  
+element = liste[10]  # IndexError  
 ```
 
 ### KeyError
@@ -443,8 +443,8 @@ element = liste[10]  # IndexError
 Se produit lors de l'accès à une clé de dictionnaire inexistante.
 
 ```python
-dico = {"nom": "Alice"}
-age = dico["age"]  # KeyError
+dico = {"nom": "Alice"}  
+age = dico["age"]  # KeyError  
 ```
 
 ### FileNotFoundError
@@ -468,8 +468,8 @@ resultat = 10 / 0  # ZeroDivisionError
 Se produit quand on accède à un attribut ou une méthode inexistant.
 
 ```python
-texte = "Bonjour"
-texte.append("!")  # AttributeError (str n'a pas de méthode append)
+texte = "Bonjour"  
+texte.append("!")  # AttributeError (str n'a pas de méthode append)  
 ```
 
 ### ImportError / ModuleNotFoundError
@@ -626,8 +626,8 @@ with open("fichier.txt", "r") as f:
 
 ✅ **Bon** : Utiliser finally
 ```python
-f = None
-try:
+f = None  
+try:  
     f = open("fichier.txt", "r")
     contenu = f.read()
 finally:
@@ -637,9 +637,9 @@ finally:
 
 ❌ **Risqué** : Ne pas garantir la fermeture
 ```python
-f = open("fichier.txt", "r")
-contenu = f.read()  # Si erreur ici, le fichier reste ouvert !
-f.close()
+f = open("fichier.txt", "r")  
+contenu = f.read()  # Si erreur ici, le fichier reste ouvert !  
+f.close()  
 ```
 
 ### 6. Documentez les exceptions dans les docstrings
@@ -773,8 +773,8 @@ def demander_nombre(message, min_val=None, max_val=None):
             return None
 
 # Utilisation
-age = demander_nombre("Entrez votre âge : ", min_val=0, max_val=150)
-if age:
+age = demander_nombre("Entrez votre âge : ", min_val=0, max_val=150)  
+if age:  
     print(f"Votre âge : {age} ans")
 ```
 
@@ -813,8 +813,8 @@ def lire_fichier_securise(nom_fichier):
         return None
 
 # Utilisation
-contenu = lire_fichier_securise("donnees.txt")
-if contenu:
+contenu = lire_fichier_securise("donnees.txt")  
+if contenu:  
     print(contenu)
 else:
     print("Impossible de lire le fichier")
@@ -979,14 +979,14 @@ def creer_utilisateur(nom, email, age):
         return None
 
 # Exemples d'utilisation
-print("Test 1:")
-creer_utilisateur("Alice", "alice@example.com", 25)
+print("Test 1:")  
+creer_utilisateur("Alice", "alice@example.com", 25)  
 
-print("\nTest 2:")
-creer_utilisateur("B", "email_invalide", -5)
+print("\nTest 2:")  
+creer_utilisateur("B", "email_invalide", -5)  
 
-print("\nTest 3:")
-creer_utilisateur("Charlie", "charlie@domain.com", 200)
+print("\nTest 3:")  
+creer_utilisateur("Charlie", "charlie@domain.com", 200)  
 ```
 
 ### Exemple 5 : Gestionnaire de configuration
@@ -1170,8 +1170,8 @@ def obtenir_premier_element(liste):
 
 ❌ **Risqué**
 ```python
-f = open("fichier.txt")
-try:
+f = open("fichier.txt")  
+try:  
     # Traitement
     pass
 except:
@@ -1182,8 +1182,8 @@ f.close()  # Ne sera pas exécuté si erreur dans except !
 
 ✅ **Correct**
 ```python
-f = open("fichier.txt")
-try:
+f = open("fichier.txt")  
+try:  
     # Traitement
     pass
 except:
@@ -1216,8 +1216,8 @@ def calculer_moyenne(notes):
     assert len(notes) > 0, "La liste ne peut pas être vide"
     return sum(notes) / len(notes)
 
-age = 25
-assert 0 <= age <= 150, "Âge invalide"
+age = 25  
+assert 0 <= age <= 150, "Âge invalide"  
 ```
 
 ### Quand utiliser assert ?
@@ -1232,8 +1232,8 @@ def process(data):
 ❌ **Mauvais usage** : Valider les entrées utilisateur
 ```python
 # Ne PAS faire cela
-age = int(input("Âge : "))
-assert age >= 0, "Âge invalide"  # Les assertions peuvent être désactivées !
+age = int(input("Âge : "))  
+assert age >= 0, "Âge invalide"  # Les assertions peuvent être désactivées !  
 ```
 
 **Important** : Les assertions peuvent être désactivées avec `python -O script.py`, donc ne les utilisez **jamais** pour valider des données externes ou utilisateur.
@@ -1244,16 +1244,16 @@ assert age >= 0, "Âge invalide"  # Les assertions peuvent être désactivées !
 
 Dans cette section, nous avons appris :
 
-✅ **Types d'erreurs** : Syntaxe vs Exceptions
-✅ **try/except** : Capturer et gérer les exceptions
-✅ **Exceptions spécifiques** : ValueError, TypeError, etc.
-✅ **else** : Code à exécuter si pas d'erreur
-✅ **finally** : Code toujours exécuté (nettoyage)
-✅ **raise** : Lever des exceptions volontairement
-✅ **Exceptions personnalisées** : Créer ses propres types d'erreurs
-✅ **Hiérarchie des exceptions** : Comprendre l'héritage
-✅ **Bonnes pratiques** : Code robuste et maintenable
-✅ **EAFP vs LBYL** : Deux philosophies de programmation
+✅ **Types d'erreurs** : Syntaxe vs Exceptions  
+✅ **try/except** : Capturer et gérer les exceptions  
+✅ **Exceptions spécifiques** : ValueError, TypeError, etc.  
+✅ **else** : Code à exécuter si pas d'erreur  
+✅ **finally** : Code toujours exécuté (nettoyage)  
+✅ **raise** : Lever des exceptions volontairement  
+✅ **Exceptions personnalisées** : Créer ses propres types d'erreurs  
+✅ **Hiérarchie des exceptions** : Comprendre l'héritage  
+✅ **Bonnes pratiques** : Code robuste et maintenable  
+✅ **EAFP vs LBYL** : Deux philosophies de programmation  
 ✅ **Assertions** : Vérifications pour le débogage
 
 ---

@@ -56,8 +56,8 @@ dire_bonjour()
 
 **Résultat** :
 ```
-Bonjour !
-Comment allez-vous ?
+Bonjour !  
+Comment allez-vous ?  
 ```
 
 ### Réutilisation
@@ -68,16 +68,16 @@ La force des fonctions est qu'on peut les appeler plusieurs fois :
 def dire_bonjour():
     print("Bonjour !")
 
-dire_bonjour()
-dire_bonjour()
-dire_bonjour()
+dire_bonjour()  
+dire_bonjour()  
+dire_bonjour()  
 ```
 
 **Résultat** :
 ```
-Bonjour !
-Bonjour !
-Bonjour !
+Bonjour !  
+Bonjour !  
+Bonjour !  
 ```
 
 ---
@@ -92,16 +92,16 @@ Les **paramètres** permettent de passer des informations à une fonction.
 def saluer(nom):
     print(f"Bonjour {nom} !")
 
-saluer("Alice")
-saluer("Bob")
-saluer("Charlie")
+saluer("Alice")  
+saluer("Bob")  
+saluer("Charlie")  
 ```
 
 **Résultat** :
 ```
-Bonjour Alice !
-Bonjour Bob !
-Bonjour Charlie !
+Bonjour Alice !  
+Bonjour Bob !  
+Bonjour Charlie !  
 ```
 
 Ici, `nom` est un **paramètre** : une variable qui reçoit une valeur quand on appelle la fonction.
@@ -112,14 +112,14 @@ Ici, `nom` est un **paramètre** : une variable qui reçoit une valeur quand on 
 def saluer_complet(prenom, nom):
     print(f"Bonjour {prenom} {nom} !")
 
-saluer_complet("Alice", "Dupont")
-saluer_complet("Bob", "Martin")
+saluer_complet("Alice", "Dupont")  
+saluer_complet("Bob", "Martin")  
 ```
 
 **Résultat** :
 ```
-Bonjour Alice Dupont !
-Bonjour Bob Martin !
+Bonjour Alice Dupont !  
+Bonjour Bob Martin !  
 ```
 
 ### Paramètres et calculs
@@ -129,8 +129,8 @@ def additionner(a, b):
     somme = a + b
     print(f"{a} + {b} = {somme}")
 
-additionner(5, 3)
-additionner(10, 20)
+additionner(5, 3)  
+additionner(10, 20)  
 ```
 
 **Résultat** :
@@ -146,8 +146,8 @@ def diviser(dividende, diviseur):
     resultat = dividende / diviseur
     print(f"{dividende} / {diviseur} = {resultat}")
 
-diviser(10, 2)  # 10 / 2 = 5.0
-diviser(2, 10)  # 2 / 10 = 0.2 (ordre différent !)
+diviser(10, 2)  # 10 / 2 = 5.0  
+diviser(2, 10)  # 2 / 10 = 0.2 (ordre différent !)  
 ```
 
 ---
@@ -172,12 +172,12 @@ def additionner(a, b):
     return resultat
 
 # Utiliser la valeur retournée
-somme = additionner(5, 3)
-print(somme)  # Affiche : 8
+somme = additionner(5, 3)  
+print(somme)  # Affiche : 8  
 
 # On peut l'utiliser dans un calcul
-total = additionner(10, 20) + additionner(5, 5)
-print(total)  # Affiche : 40 (30 + 10)
+total = additionner(10, 20) + additionner(5, 5)  
+print(total)  # Affiche : 40 (30 + 10)  
 ```
 
 ### Différence entre print() et return
@@ -187,8 +187,8 @@ print(total)  # Affiche : 40 (30 + 10)
 def additionner_print(a, b):
     print(a + b)
 
-resultat = additionner_print(5, 3)  # Affiche : 8
-print(resultat)  # Affiche : None (la fonction ne retourne rien !)
+resultat = additionner_print(5, 3)  # Affiche : 8  
+print(resultat)  # Affiche : None (la fonction ne retourne rien !)  
 ```
 
 **Avec return** : renvoie une valeur utilisable
@@ -196,8 +196,8 @@ print(resultat)  # Affiche : None (la fonction ne retourne rien !)
 def additionner_return(a, b):
     return a + b
 
-resultat = additionner_return(5, 3)  # Ne s'affiche pas automatiquement
-print(resultat)  # Affiche : 8
+resultat = additionner_return(5, 3)  # Ne s'affiche pas automatiquement  
+print(resultat)  # Affiche : 8  
 ```
 
 ### Retourner différents types
@@ -210,11 +210,11 @@ def obtenir_info():
     return "Alice", 25, "France"
 
 # Utilisation
-majeur = est_majeur(20)
-print(majeur)  # Affiche : True
+majeur = est_majeur(20)  
+print(majeur)  # Affiche : True  
 
-nom, age, pays = obtenir_info()
-print(f"{nom}, {age} ans, {pays}")  # Affiche : Alice, 25 ans, France
+nom, age, pays = obtenir_info()  
+print(f"{nom}, {age} ans, {pays}")  # Affiche : Alice, 25 ans, France  
 ```
 
 ### Return arrête l'exécution de la fonction
@@ -229,9 +229,9 @@ def verifier_age(age):
 
     return "Majeur"
 
-print(verifier_age(25))   # Affiche : Majeur
-print(verifier_age(15))   # Affiche : Mineur
-print(verifier_age(-5))   # Affiche : Âge invalide
+print(verifier_age(25))   # Affiche : Majeur  
+print(verifier_age(15))   # Affiche : Mineur  
+print(verifier_age(-5))   # Affiche : Âge invalide  
 ```
 
 Une fois qu'un `return` est exécuté, la fonction s'arrête immédiatement et aucun code après n'est exécuté.
@@ -244,8 +244,8 @@ Si une fonction n'a pas de `return`, elle retourne automatiquement `None` :
 def dire_bonjour():
     print("Bonjour !")
 
-resultat = dire_bonjour()
-print(resultat)  # Affiche : None
+resultat = dire_bonjour()  
+print(resultat)  # Affiche : None  
 ```
 
 ---
@@ -260,14 +260,14 @@ Vous pouvez donner des valeurs par défaut aux paramètres. Si aucune valeur n'e
 def saluer(nom, message="Bonjour"):
     print(f"{message} {nom} !")
 
-saluer("Alice")              # Utilise la valeur par défaut
-saluer("Bob", "Bonsoir")     # Remplace la valeur par défaut
+saluer("Alice")              # Utilise la valeur par défaut  
+saluer("Bob", "Bonsoir")     # Remplace la valeur par défaut  
 ```
 
 **Résultat** :
 ```
-Bonjour Alice !
-Bonsoir Bob !
+Bonjour Alice !  
+Bonsoir Bob !  
 ```
 
 ### Exemples pratiques
@@ -276,17 +276,17 @@ Bonsoir Bob !
 def puissance(nombre, exposant=2):
     return nombre ** exposant
 
-print(puissance(5))        # 5^2 = 25
-print(puissance(5, 3))     # 5^3 = 125
-print(puissance(2, 10))    # 2^10 = 1024
+print(puissance(5))        # 5^2 = 25  
+print(puissance(5, 3))     # 5^3 = 125  
+print(puissance(2, 10))    # 2^10 = 1024  
 ```
 
 ```python
 def afficher_info(nom, age, ville="Paris"):
     print(f"{nom}, {age} ans, habite à {ville}")
 
-afficher_info("Alice", 25)              # Paris par défaut
-afficher_info("Bob", 30, "Lyon")        # Ville spécifiée
+afficher_info("Alice", 25)              # Paris par défaut  
+afficher_info("Bob", 30, "Lyon")        # Ville spécifiée  
 ```
 
 ### Règle importante
@@ -319,15 +319,15 @@ def presenter(nom, age, ville):
 presenter("Alice", 25, "Paris")
 
 # Appel avec arguments nommés (ordre n'importe pas)
-presenter(ville="Lyon", nom="Bob", age=30)
-presenter(age=35, ville="Marseille", nom="Charlie")
+presenter(ville="Lyon", nom="Bob", age=30)  
+presenter(age=35, ville="Marseille", nom="Charlie")  
 ```
 
 **Résultat** :
 ```
-Alice, 25 ans, Paris
-Bob, 30 ans, Lyon
-Charlie, 35 ans, Marseille
+Alice, 25 ans, Paris  
+Bob, 30 ans, Lyon  
+Charlie, 35 ans, Marseille  
 ```
 
 ### Mélanger positionnels et nommés
@@ -339,10 +339,10 @@ def creer_profil(nom, age, ville="Paris", pays="France"):
     print(f"{nom}, {age} ans, {ville}, {pays}")
 
 # ✅ Correct
-creer_profil("Alice", 25)
-creer_profil("Bob", 30, ville="Lyon")
-creer_profil("Charlie", 35, pays="Belgique")
-creer_profil("David", 40, "Marseille", pays="France")
+creer_profil("Alice", 25)  
+creer_profil("Bob", 30, ville="Lyon")  
+creer_profil("Charlie", 35, pays="Belgique")  
+creer_profil("David", 40, "Marseille", pays="France")  
 
 # ❌ Incorrect
 # creer_profil(nom="Eve", 28)  # SyntaxError (argument positionnel après nommé)
@@ -363,9 +363,9 @@ def additionner(*nombres):
         total += nombre
     return total
 
-print(additionner(1, 2, 3))           # Affiche : 6
-print(additionner(10, 20, 30, 40))    # Affiche : 100
-print(additionner(5))                  # Affiche : 5
+print(additionner(1, 2, 3))           # Affiche : 6  
+print(additionner(10, 20, 30, 40))    # Affiche : 100  
+print(additionner(5))                  # Affiche : 5  
 ```
 
 `*args` crée un **tuple** contenant tous les arguments positionnels.
@@ -384,9 +384,9 @@ afficher_infos(nom="Alice", age=25, ville="Paris")
 
 **Résultat** :
 ```
-nom: Alice
-age: 25
-ville: Paris
+nom: Alice  
+age: 25  
+ville: Paris  
 ```
 
 `**kwargs` crée un **dictionnaire** contenant tous les arguments nommés.
@@ -406,11 +406,11 @@ fonction_complete(1, 2, 3, 4, 5, option1="test", extra1="a", extra2="b")
 
 **Résultat** :
 ```
-param1: 1
-param2: 2
-args: (3, 4, 5)
-option1: test
-kwargs: {'extra1': 'a', 'extra2': 'b'}
+param1: 1  
+param2: 2  
+args: (3, 4, 5)  
+option1: test  
+kwargs: {'extra1': 'a', 'extra2': 'b'}  
 ```
 
 **Ordre obligatoire** : paramètres normaux, `*args`, paramètres avec défaut, `**kwargs`
@@ -515,8 +515,8 @@ x = 10  # Variable globale
 def afficher_x():
     print(f"x = {x}")  # On peut lire x
 
-afficher_x()  # Affiche : x = 10
-print(x)      # Affiche : 10
+afficher_x()  # Affiche : x = 10  
+print(x)      # Affiche : 10  
 ```
 
 ### Modification d'une variable globale
@@ -530,8 +530,8 @@ def modifier_x():
     x = 20  # Crée une nouvelle variable LOCALE x
     print(f"Dans la fonction : x = {x}")
 
-modifier_x()  # Affiche : Dans la fonction : x = 20
-print(f"En dehors : x = {x}")  # Affiche : En dehors : x = 10 (inchangé !)
+modifier_x()  # Affiche : Dans la fonction : x = 20  
+print(f"En dehors : x = {x}")  # Affiche : En dehors : x = 10 (inchangé !)  
 ```
 
 Pour **vraiment modifier** une variable globale, utilisez le mot-clé `global` :
@@ -544,8 +544,8 @@ def modifier_x_global():
     x = 20
     print(f"Dans la fonction : x = {x}")
 
-modifier_x_global()  # Affiche : Dans la fonction : x = 20
-print(f"En dehors : x = {x}")  # Affiche : En dehors : x = 20 (modifié !)
+modifier_x_global()  # Affiche : Dans la fonction : x = 20  
+print(f"En dehors : x = {x}")  # Affiche : En dehors : x = 20 (modifié !)  
 ```
 
 ### Bonne pratique : éviter les variables globales
@@ -564,8 +564,8 @@ def incrementer():
 def incrementer(compteur):
     return compteur + 1
 
-compteur = 0
-compteur = incrementer(compteur)
+compteur = 0  
+compteur = incrementer(compteur)  
 ```
 
 ### Règles de résolution des noms (LEGB)
@@ -589,15 +589,15 @@ def externe():
     interne()
     print(x)
 
-externe()
-print(x)
+externe()  
+print(x)  
 ```
 
 **Résultat** :
 ```
-local
-enclosing
-global
+local  
+enclosing  
+global  
 ```
 
 ---
@@ -621,8 +621,8 @@ fonction_externe()
 
 **Résultat** :
 ```
-Dans fonction_externe
-Dans fonction_interne
+Dans fonction_externe  
+Dans fonction_interne  
 ```
 
 ### Utilité des fonctions imbriquées
@@ -640,13 +640,13 @@ def creer_salutation(salut):
     return saluer
 
 # Créer des fonctions personnalisées
-bonjour = creer_salutation("Bonjour")
-bonsoir = creer_salutation("Bonsoir")
-hello = creer_salutation("Hello")
+bonjour = creer_salutation("Bonjour")  
+bonsoir = creer_salutation("Bonsoir")  
+hello = creer_salutation("Hello")  
 
-print(bonjour("Alice"))   # Affiche : Bonjour Alice !
-print(bonsoir("Bob"))     # Affiche : Bonsoir Bob !
-print(hello("Charlie"))   # Affiche : Hello Charlie !
+print(bonjour("Alice"))   # Affiche : Bonjour Alice !  
+print(bonsoir("Bob"))     # Affiche : Bonsoir Bob !  
+print(hello("Charlie"))   # Affiche : Hello Charlie !  
 ```
 
 ---
@@ -683,8 +683,8 @@ def doubler(x):
 def tripler(x):
     return x * 3
 
-print(appliquer_operation(doubler, 5))  # Affiche : 10
-print(appliquer_operation(tripler, 5))  # Affiche : 15
+print(appliquer_operation(doubler, 5))  # Affiche : 10  
+print(appliquer_operation(tripler, 5))  # Affiche : 15  
 ```
 
 ### Exemple pratique : fonction de transformation
@@ -704,8 +704,8 @@ def double(x):
 
 nombres = [1, 2, 3, 4, 5]
 
-print(transformer_liste(nombres, carre))   # [1, 4, 9, 16, 25]
-print(transformer_liste(nombres, double))  # [2, 4, 6, 8, 10]
+print(transformer_liste(nombres, carre))   # [1, 4, 9, 16, 25]  
+print(transformer_liste(nombres, double))  # [2, 4, 6, 8, 10]  
 ```
 
 ---
@@ -731,8 +731,8 @@ def factorielle(n):
     # Appel récursif
     return n * factorielle(n - 1)
 
-print(factorielle(5))  # 5! = 5 × 4 × 3 × 2 × 1 = 120
-print(factorielle(0))  # 0! = 1
+print(factorielle(5))  # 5! = 5 × 4 × 3 × 2 × 1 = 120  
+print(factorielle(0))  # 0! = 1  
 ```
 
 **Comment ça marche ?**
@@ -777,8 +777,8 @@ def somme_recursive(liste):
     # Appel récursif : premier élément + somme du reste
     return liste[0] + somme_recursive(liste[1:])
 
-nombres = [1, 2, 3, 4, 5]
-print(somme_recursive(nombres))  # Affiche : 15
+nombres = [1, 2, 3, 4, 5]  
+print(somme_recursive(nombres))  # Affiche : 15  
 ```
 
 ### ⚠️ Attention : limite de récursion
@@ -822,18 +822,18 @@ def doubler(x):
 # Équivalent en lambda
 doubler_lambda = lambda x: x * 2
 
-print(doubler(5))         # Affiche : 10
-print(doubler_lambda(5))  # Affiche : 10
+print(doubler(5))         # Affiche : 10  
+print(doubler_lambda(5))  # Affiche : 10  
 ```
 
 ### Lambda avec plusieurs paramètres
 
 ```python
-additionner = lambda a, b: a + b
-print(additionner(3, 5))  # Affiche : 8
+additionner = lambda a, b: a + b  
+print(additionner(3, 5))  # Affiche : 8  
 
-maximum = lambda a, b: a if a > b else b
-print(maximum(10, 20))  # Affiche : 20
+maximum = lambda a, b: a if a > b else b  
+print(maximum(10, 20))  # Affiche : 20  
 ```
 
 ### Utilisation typique : avec des fonctions d'ordre supérieur
@@ -844,17 +844,17 @@ Les lambdas sont souvent utilisées comme arguments de fonctions comme `map()`, 
 nombres = [1, 2, 3, 4, 5]
 
 # Doubler chaque nombre
-doubles = list(map(lambda x: x * 2, nombres))
-print(doubles)  # [2, 4, 6, 8, 10]
+doubles = list(map(lambda x: x * 2, nombres))  
+print(doubles)  # [2, 4, 6, 8, 10]  
 
 # Garder seulement les nombres pairs
-pairs = list(filter(lambda x: x % 2 == 0, nombres))
-print(pairs)  # [2, 4]
+pairs = list(filter(lambda x: x % 2 == 0, nombres))  
+print(pairs)  # [2, 4]  
 
 # Trier des tuples par le deuxième élément
-personnes = [("Alice", 25), ("Bob", 20), ("Charlie", 30)]
-par_age = sorted(personnes, key=lambda p: p[1])
-print(par_age)  # [('Bob', 20), ('Alice', 25), ('Charlie', 30)]
+personnes = [("Alice", 25), ("Bob", 20), ("Charlie", 30)]  
+par_age = sorted(personnes, key=lambda p: p[1])  
+print(par_age)  # [('Bob', 20), ('Alice', 25), ('Charlie', 30)]  
 ```
 
 ### Quand utiliser lambda ?
@@ -881,7 +881,7 @@ def calcul(x):
 
 ## Annotations de Type (Type Hints)
 
-Python 3.5+ permet d'ajouter des **annotations de type** pour indiquer le type attendu des paramètres et du retour. Ces annotations n'ont **aucun effet** sur l'exécution (Python reste dynamique), mais elles améliorent la lisibilité et permettent aux outils de détecter des erreurs.
+Python permet d'ajouter des **annotations de type** pour indiquer le type attendu des paramètres et du retour. Ces annotations n'ont **aucun effet** sur l'exécution (Python reste dynamique), mais elles améliorent la lisibilité et permettent aux outils (comme mypy) de détecter des erreurs.
 
 ### Syntaxe de base
 
@@ -908,20 +908,18 @@ def diviser(a: float, b: float) -> float:
 
 ### Types complexes
 
-Pour les types plus complexes, utilisez le module `typing` :
+Depuis Python 3.10, les types génériques s'écrivent directement avec les types natifs (plus besoin d'importer depuis `typing`) :
 
 ```python
-from typing import List, Dict, Tuple, Optional
-
-def traiter_nombres(nombres: List[int]) -> int:
+def traiter_nombres(nombres: list[int]) -> int:
     """Retourne la somme d'une liste d'entiers."""
     return sum(nombres)
 
-def obtenir_info() -> Tuple[str, int]:
+def obtenir_info() -> tuple[str, int]:
     """Retourne un tuple (nom, age)."""
     return "Alice", 25
 
-def chercher_utilisateur(id: int) -> Optional[Dict[str, str]]:
+def chercher_utilisateur(id: int) -> dict[str, str] | None:
     """
     Cherche un utilisateur par ID.
     Retourne un dictionnaire ou None si non trouvé.
@@ -929,6 +927,8 @@ def chercher_utilisateur(id: int) -> Optional[Dict[str, str]]:
     # ... code de recherche ...
     return None  # ou un dictionnaire
 ```
+
+> 💡 La syntaxe `X | None` remplace l'ancien `Optional[X]` depuis Python 3.10. Elle se lit "X ou None".
 
 ### Types pour paramètres avec valeur par défaut
 
@@ -1132,9 +1132,9 @@ def valider_email(email: str) -> bool:
     return True
 
 # Tests
-print(valider_email("alice@example.com"))  # True
-print(valider_email("bob@"))               # False
-print(valider_email("charlie"))            # False
+print(valider_email("alice@example.com"))  # True  
+print(valider_email("bob@"))               # False  
+print(valider_email("charlie"))            # False  
 ```
 
 ### Exemple 2 : Calculateur de prix avec remise
@@ -1174,15 +1174,15 @@ def calculer_prix_final(prix_ht: float,
     }
 
 # Utilisation
-resultat = calculer_prix_final(100, quantite=5, taux_remise=0.1)
-print(f"Prix TTC : {resultat['montant_ttc']:.2f}€")
+resultat = calculer_prix_final(100, quantite=5, taux_remise=0.1)  
+print(f"Prix TTC : {resultat['montant_ttc']:.2f}€")  
 ```
 
 ### Exemple 3 : Générateur de mot de passe
 
 ```python
-import random
-import string
+import random  
+import string  
 
 def generer_mot_de_passe(longueur: int = 12,
                          avec_majuscules: bool = True,
@@ -1215,9 +1215,9 @@ def generer_mot_de_passe(longueur: int = 12,
     return mot_de_passe
 
 # Tests
-print(generer_mot_de_passe())
-print(generer_mot_de_passe(8, avec_symboles=False))
-print(generer_mot_de_passe(16))
+print(generer_mot_de_passe())  
+print(generer_mot_de_passe(8, avec_symboles=False))  
+print(generer_mot_de_passe(16))  
 ```
 
 ### Exemple 4 : Calculateur de statistiques
@@ -1265,8 +1265,8 @@ def calculer_statistiques(nombres: list) -> dict:
     }
 
 # Utilisation
-notes = [12, 15, 10, 18, 14, 16, 11, 13]
-stats = calculer_statistiques(notes)
+notes = [12, 15, 10, 18, 14, 16, 11, 13]  
+stats = calculer_statistiques(notes)  
 
 for cle, valeur in stats.items():
     print(f"{cle}: {valeur}")
@@ -1284,8 +1284,8 @@ def additionner(a, b):
     somme = a + b
     # Oublié de retourner la somme !
 
-resultat = additionner(5, 3)
-print(resultat)  # Affiche : None
+resultat = additionner(5, 3)  
+print(resultat)  # Affiche : None  
 ```
 
 ✅ **Correct**
@@ -1302,9 +1302,9 @@ def ajouter_element(liste, element):
     liste.append(element)
     return liste
 
-ma_liste = [1, 2, 3]
-nouvelle_liste = ajouter_element(ma_liste, 4)
-print(ma_liste)  # [1, 2, 3, 4] - modifié !
+ma_liste = [1, 2, 3]  
+nouvelle_liste = ajouter_element(ma_liste, 4)  
+print(ma_liste)  # [1, 2, 3, 4] - modifié !  
 ```
 
 ✅ **Mieux**
@@ -1323,8 +1323,8 @@ def ajouter_a_liste(element, liste=[]):
     liste.append(element)
     return liste
 
-print(ajouter_a_liste(1))  # [1]
-print(ajouter_a_liste(2))  # [1, 2] - la liste est partagée !
+print(ajouter_a_liste(1))  # [1]  
+print(ajouter_a_liste(2))  # [1, 2] - la liste est partagée !  
 ```
 
 ✅ **Correct**
@@ -1352,8 +1352,8 @@ def incrementer():
 def incrementer(valeur):
     return valeur + 1
 
-compteur = 0
-compteur = incrementer(compteur)
+compteur = 0  
+compteur = incrementer(compteur)  
 ```
 
 ---
@@ -1362,15 +1362,15 @@ compteur = incrementer(compteur)
 
 Dans cette section, nous avons appris :
 
-✅ **Définir des fonctions** : avec `def`, paramètres et `return`
-✅ **Paramètres** : positionnels, par défaut, nommés, *args, **kwargs
-✅ **Portée des variables** : locales vs globales, règle LEGB
-✅ **Fonctions imbriquées** : fonctions dans des fonctions
-✅ **Fonctions de première classe** : passer et retourner des fonctions
-✅ **Récursivité** : fonctions qui s'appellent elles-mêmes
-✅ **Fonctions lambda** : fonctions anonymes courtes
-✅ **Annotations de type** : type hints pour améliorer la lisibilité
-✅ **Docstrings** : documenter vos fonctions
+✅ **Définir des fonctions** : avec `def`, paramètres et `return`  
+✅ **Paramètres** : positionnels, par défaut, nommés, *args, **kwargs  
+✅ **Portée des variables** : locales vs globales, règle LEGB  
+✅ **Fonctions imbriquées** : fonctions dans des fonctions  
+✅ **Fonctions de première classe** : passer et retourner des fonctions  
+✅ **Récursivité** : fonctions qui s'appellent elles-mêmes  
+✅ **Fonctions lambda** : fonctions anonymes courtes  
+✅ **Annotations de type** : type hints pour améliorer la lisibilité  
+✅ **Docstrings** : documenter vos fonctions  
 ✅ **Bonnes pratiques** : code propre et maintenable
 
 ---

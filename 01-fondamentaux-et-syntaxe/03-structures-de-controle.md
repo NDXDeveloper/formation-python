@@ -45,9 +45,9 @@ print("Ce message s'affiche toujours")
 
 **Résultat** :
 ```
-Vous êtes majeur !
-Vous pouvez voter.
-Ce message s'affiche toujours
+Vous êtes majeur !  
+Vous pouvez voter.  
+Ce message s'affiche toujours  
 ```
 
 Si `age` était 15, seule la dernière ligne s'afficherait car la condition serait fausse.
@@ -69,8 +69,8 @@ print("Ligne en dehors du if")
 
 ❌ **Erreur d'indentation** :
 ```python
-if age >= 18:
-print("Erreur !")  # ❌ IndentationError : pas indenté
+if age >= 18:  
+print("Erreur !")  # ❌ IndentationError : pas indenté  
 ```
 
 ---
@@ -102,8 +102,8 @@ print("Programme terminé")
 
 **Résultat** :
 ```
-Vous êtes mineur
-Programme terminé
+Vous êtes mineur  
+Programme terminé  
 ```
 
 ### Exemple interactif
@@ -188,8 +188,8 @@ Vous pouvez combiner plusieurs conditions avec les opérateurs logiques `and`, `
 Les **deux** conditions doivent être vraies.
 
 ```python
-age = 25
-a_permis = True
+age = 25  
+a_permis = True  
 
 if age >= 18 and a_permis:
     print("Vous pouvez conduire")
@@ -226,9 +226,9 @@ else:
 ### Combiner plusieurs opérateurs
 
 ```python
-age = 25
-a_permis = True
-a_voiture = False
+age = 25  
+a_permis = True  
+a_voiture = False  
 
 if age >= 18 and a_permis and a_voiture:
     print("Vous pouvez conduire votre voiture")
@@ -252,8 +252,8 @@ if (age >= 18 and a_permis) or est_accompagne:
 Vous pouvez mettre des `if` à l'intérieur d'autres `if`.
 
 ```python
-age = 20
-a_argent = True
+age = 20  
+a_argent = True  
 
 if age >= 18:
     print("Vous êtes majeur")
@@ -296,9 +296,9 @@ valeur_si_vrai if condition else valeur_si_faux
 ### Exemple
 
 ```python
-age = 20
-statut = "majeur" if age >= 18 else "mineur"
-print(statut)  # Affiche : majeur
+age = 20  
+statut = "majeur" if age >= 18 else "mineur"  
+print(statut)  # Affiche : majeur  
 ```
 
 C'est équivalent à :
@@ -313,20 +313,20 @@ else:
 
 ```python
 # Trouver le maximum de deux nombres
-a = 10
-b = 20
-maximum = a if a > b else b
-print(maximum)  # Affiche : 20
+a = 10  
+b = 20  
+maximum = a if a > b else b  
+print(maximum)  # Affiche : 20  
 
 # Affichage conditionnel
-temperature = 25
-print("Il fait chaud" if temperature > 20 else "Il fait froid")
+temperature = 25  
+print("Il fait chaud" if temperature > 20 else "Il fait froid")  
 
 # Prix avec réduction
-prix = 100
-membre = True
-prix_final = prix * 0.9 if membre else prix
-print(f"Prix : {prix_final}€")  # Affiche : Prix : 90.0€
+prix = 100  
+membre = True  
+prix_final = prix * 0.9 if membre else prix  
+print(f"Prix : {prix_final}€")  # Affiche : Prix : 90.0€  
 ```
 
 **Attention** : N'abusez pas de l'opérateur ternaire pour des conditions complexes. Il est fait pour les cas simples !
@@ -365,12 +365,12 @@ print("Boucle terminée")
 
 **Résultat** :
 ```
-Compteur : 1
-Compteur : 2
-Compteur : 3
-Compteur : 4
-Compteur : 5
-Boucle terminée
+Compteur : 1  
+Compteur : 2  
+Compteur : 3  
+Compteur : 4  
+Compteur : 5  
+Boucle terminée  
 ```
 
 ### Fonctionnement de la boucle while
@@ -406,8 +406,8 @@ Décollage ! 🚀
 ### Exemple interactif : deviner un nombre
 
 ```python
-nombre_secret = 42
-devine = 0
+nombre_secret = 42  
+devine = 0  
 
 while devine != nombre_secret:
     devine = int(input("Devinez le nombre : "))
@@ -426,8 +426,8 @@ Si la condition reste toujours vraie, la boucle ne s'arrête jamais !
 
 ```python
 # ❌ BOUCLE INFINIE - N'exécutez pas ce code !
-compteur = 1
-while compteur <= 5:
+compteur = 1  
+while compteur <= 5:  
     print(compteur)
     # Oups, on a oublié d'incrémenter compteur !
     # compteur += 1
@@ -437,8 +437,8 @@ while compteur <= 5:
 
 **Solution** : Assurez-vous que la condition finira par devenir fausse :
 ```python
-compteur = 1
-while compteur <= 5:
+compteur = 1  
+while compteur <= 5:  
     print(compteur)
     compteur += 1  # ✓ Important : on modifie compteur !
 ```
@@ -466,12 +466,12 @@ for lettre in mot:
 
 **Résultat** :
 ```
-P
-y
-t
-h
-o
-n
+P  
+y  
+t  
+h  
+o  
+n  
 ```
 
 ### La fonction `range()`
@@ -571,8 +571,8 @@ print(f"La somme de 1 à 10 est : {somme}")
 ```python
 nombre = 7
 
-print(f"Table de multiplication de {nombre} :")
-for i in range(1, 11):
+print(f"Table de multiplication de {nombre} :")  
+for i in range(1, 11):  
     resultat = nombre * i
     print(f"{nombre} × {i} = {resultat}")
 ```
@@ -597,10 +597,10 @@ for i in range(1, 6):
 **Résultat** :
 ```
 *
-**
-***
-****
-*****
+**  
+***  
+****  
+*****  
 ```
 
 ---
@@ -635,8 +635,8 @@ for i in range(5):
     print(i)
 
 # Avec while (plus flexible mais plus verbeux)
-i = 0
-while i < 5:
+i = 0  
+while i < 5:  
     print(i)
     i += 1
 ```
@@ -750,8 +750,8 @@ for i in range(5):
 ```python
 temperatures = [23, -999, 25, 28, -999, 22]  # -999 = valeur manquante
 
-somme = 0
-count = 0
+somme = 0  
+count = 0  
 
 for temp in temperatures:
     if temp == -999:
@@ -760,8 +760,8 @@ for temp in temperatures:
     somme += temp
     count += 1
 
-moyenne = somme / count
-print(f"Température moyenne : {moyenne}°C")
+moyenne = somme / count  
+print(f"Température moyenne : {moyenne}°C")  
 # Affiche : Température moyenne : 24.5°C
 ```
 
@@ -837,8 +837,8 @@ for i in range(1, 4):
 ### Exemple : dessiner un rectangle
 
 ```python
-hauteur = 4
-largeur = 6
+hauteur = 4  
+largeur = 6  
 
 for i in range(hauteur):
     for j in range(largeur):
@@ -848,10 +848,10 @@ for i in range(hauteur):
 
 **Résultat** :
 ```
-******
-******
-******
-******
+******  
+******  
+******  
+******  
 ```
 
 ### Exemple : motif en escalier
@@ -921,9 +921,9 @@ else:
 ### Avec une boucle while
 
 ```python
-tentatives = 0
-max_tentatives = 3
-mot_de_passe = "python123"
+tentatives = 0  
+max_tentatives = 3  
+mot_de_passe = "python123"  
 
 while tentatives < max_tentatives:
     mdp = input("Mot de passe : ")
@@ -938,6 +938,82 @@ else:
 ```
 
 **Note** : Cette fonctionnalité est peu utilisée en pratique car elle peut rendre le code moins lisible. Elle est surtout utile dans des algorithmes de recherche.
+
+---
+
+## L'instruction `match/case` (Python 3.10+)
+
+Introduite dans Python 3.10, l'instruction `match/case` permet de comparer une valeur à plusieurs motifs. C'est une alternative élégante aux longues chaînes de `if/elif`.
+
+**Syntaxe** :
+```python
+match valeur:
+    case motif1:
+        # Code si valeur correspond à motif1
+    case motif2:
+        # Code si valeur correspond à motif2
+    case _:
+        # Code par défaut (si aucun motif ne correspond)
+```
+
+### Exemple simple : commande de menu
+
+```python
+commande = input("Votre commande : ")
+
+match commande:
+    case "café":
+        print("Voici votre café ☕")
+    case "thé":
+        print("Voici votre thé 🍵")
+    case "jus":
+        print("Voici votre jus 🧃")
+    case _:
+        print("Commande non disponible")
+```
+
+Le motif `_` (underscore) joue le rôle du `else` : il capture tout ce qui n'a pas été traité.
+
+### Exemple avec des motifs multiples
+
+```python
+jour = input("Quel jour ? ")
+
+match jour:
+    case "samedi" | "dimanche":
+        print("C'est le weekend !")
+    case "lundi" | "mardi" | "mercredi" | "jeudi" | "vendredi":
+        print("C'est un jour de semaine")
+    case _:
+        print("Jour non reconnu")
+```
+
+L'opérateur `|` permet de combiner plusieurs motifs dans un même `case`.
+
+### Exemple : code HTTP
+
+```python
+code = 404
+
+match code:
+    case 200:
+        print("Succès")
+    case 301 | 302:
+        print("Redirection")
+    case 404:
+        print("Page non trouvée")
+    case 500:
+        print("Erreur serveur")
+    case _:
+        print(f"Code HTTP : {code}")
+```
+
+### Quand utiliser match/case ?
+
+- **Utilisez `match/case`** quand vous comparez une valeur à plusieurs cas distincts (menus, codes d'erreur, commandes, etc.)
+- **Préférez `if/elif`** pour des conditions avec des comparaisons complexes (`>=`, `<`, combinaisons avec `and`/`or`)
+
+> 💡 `match/case` est bien plus puissant que ces exemples simples. Il supporte le *pattern matching* structurel (décomposition de listes, objets, etc.), que nous verrons dans les chapitres avancés.
 
 ---
 
@@ -985,8 +1061,8 @@ if age >= 18:
 
 ✅ **Bon**
 ```python
-est_majeur = age >= 18
-a_permis = True
+est_majeur = age >= 18  
+a_permis = True  
 
 if est_majeur and a_permis:
     print("Peut conduire")
@@ -1036,8 +1112,8 @@ for i in range(10):
     print(i)
 
 # ❌ Moins bon : while pour un nombre fixe d'itérations
-i = 0
-while i < 10:
+i = 0  
+while i < 10:  
     print(i)
     i += 1
 ```
@@ -1085,12 +1161,12 @@ while True:
 ```python
 import random
 
-nombre_secret = random.randint(1, 100)
-tentatives = 0
-max_tentatives = 10
+nombre_secret = random.randint(1, 100)  
+tentatives = 0  
+max_tentatives = 10  
 
-print("=== Jeu du Plus ou Moins ===")
-print(f"Devinez le nombre entre 1 et 100 (vous avez {max_tentatives} tentatives)")
+print("=== Jeu du Plus ou Moins ===")  
+print(f"Devinez le nombre entre 1 et 100 (vous avez {max_tentatives} tentatives)")  
 
 while tentatives < max_tentatives:
     tentatives += 1
@@ -1110,8 +1186,8 @@ else:
 ### Exemple 3 : Calculer le PGCD (algorithme d'Euclide)
 
 ```python
-a = int(input("Premier nombre : "))
-b = int(input("Deuxième nombre : "))
+a = int(input("Premier nombre : "))  
+b = int(input("Deuxième nombre : "))  
 
 # Algorithme d'Euclide
 while b != 0:
@@ -1193,8 +1269,8 @@ if age >= 18:
 
 ❌ **Erreur**
 ```python
-if age >= 18:
-print("Majeur")  # Pas indenté !
+if age >= 18:  
+print("Majeur")  # Pas indenté !  
 ```
 
 ✅ **Correct**
@@ -1221,16 +1297,16 @@ if age == 18:
 
 ❌ **Erreur**
 ```python
-i = 0
-while i < 10:
+i = 0  
+while i < 10:  
     print(i)
     # Oublié d'incrémenter i !
 ```
 
 ✅ **Correct**
 ```python
-i = 0
-while i < 10:
+i = 0  
+while i < 10:  
     print(i)
     i += 1
 ```
@@ -1253,15 +1329,16 @@ for i in range(1, 6):
 
 Dans cette section, nous avons appris :
 
-✅ **Structures conditionnelles** : if, elif, else pour prendre des décisions
-✅ **Conditions multiples** : and, or, not pour combiner des conditions
-✅ **Opérateur ternaire** : condition sur une ligne pour les cas simples
-✅ **Boucle while** : répéter tant qu'une condition est vraie
-✅ **Boucle for** : parcourir une séquence ou répéter un nombre défini de fois
-✅ **Fonction range()** : générer des séquences de nombres
-✅ **break** : sortir d'une boucle
-✅ **continue** : passer à l'itération suivante
-✅ **pass** : placeholder pour du code à venir
+✅ **Structures conditionnelles** : if, elif, else pour prendre des décisions  
+✅ **Conditions multiples** : and, or, not pour combiner des conditions  
+✅ **Opérateur ternaire** : condition sur une ligne pour les cas simples  
+✅ **match/case** : comparer une valeur à plusieurs motifs (Python 3.10+)  
+✅ **Boucle while** : répéter tant qu'une condition est vraie  
+✅ **Boucle for** : parcourir une séquence ou répéter un nombre défini de fois  
+✅ **Fonction range()** : générer des séquences de nombres  
+✅ **break** : sortir d'une boucle  
+✅ **continue** : passer à l'itération suivante  
+✅ **pass** : placeholder pour du code à venir  
 ✅ **Boucles imbriquées** : boucles dans des boucles
 
 ---

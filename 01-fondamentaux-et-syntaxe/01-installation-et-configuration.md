@@ -16,7 +16,7 @@ Actuellement, il existe deux grandes versions de Python :
 - **Python 2.x** : ancienne version, qui n'est plus maintenue depuis 2020
 - **Python 3.x** : version moderne et activement maintenue
 
-**Recommandation** : Installez toujours Python 3.x (la version la plus récente, actuellement Python 3.12 ou 3.13). Python 2 est obsolète et ne devrait plus être utilisé pour de nouveaux projets.
+**Recommandation** : Installez toujours Python 3.x (la version la plus récente, Python 3.13 au moment de la rédaction). Python 2 est obsolète et ne devrait plus être utilisé pour de nouveaux projets.
 
 ---
 
@@ -47,12 +47,12 @@ Actuellement, il existe deux grandes versions de Python :
 #### Méthode 2 : Installation via le Microsoft Store
 
 1. Ouvrez le Microsoft Store
-2. Recherchez "Python 3.12" (ou la version la plus récente)
+2. Recherchez "Python 3.13" (ou la version la plus récente disponible)
 3. Cliquez sur "Obtenir" ou "Installer"
 4. Cette méthode configure automatiquement le PATH
 
-**Avantages** : Installation simple et mises à jour automatiques
-**Inconvénients** : Moins de contrôle sur la configuration
+**Avantages** : Installation simple et mises à jour automatiques  
+**Inconvénients** : Moins de contrôle sur la configuration  
 
 ---
 
@@ -60,11 +60,12 @@ Actuellement, il existe deux grandes versions de Python :
 
 #### Vérifier si Python est déjà installé
 
-macOS inclut souvent une version de Python, mais il s'agit généralement de Python 2.x (obsolète). Pour vérifier :
+Les versions récentes de macOS n'incluent plus Python par défaut. Pour vérifier si Python 3 est déjà installé :
 
 1. Ouvrez le Terminal (Applications > Utilitaires > Terminal)
 2. Tapez : `python3 --version`
 3. Si une version 3.x s'affiche, Python 3 est déjà installé
+4. Si le système vous propose d'installer les "Command Line Developer Tools", acceptez — cela installera Python 3
 
 #### Installer ou mettre à jour Python
 
@@ -261,8 +262,8 @@ Cette extension vous fournira :
 
 - **PyCharm** : IDE complet et puissant, spécialisé pour Python (version Community gratuite disponible)
 - **Sublime Text** : Éditeur léger et rapide
-- **Atom** : Éditeur open-source et personnalisable
 - **Jupyter Notebook** : Excellent pour l'apprentissage et la data science (nécessite une installation séparée)
+- **Zed** : Éditeur moderne et ultra-rapide, avec support Python intégré
 
 ---
 
@@ -320,7 +321,8 @@ Dans VS Code, vous pouvez configurer quelques paramètres utiles :
 1. Ouvrez les paramètres : `Fichier > Préférences > Paramètres` (ou `Ctrl+,`)
 2. Recherchez et configurez :
    - **"Format On Save"** : Cochez cette option pour formater automatiquement votre code à la sauvegarde
-   - **"Python Linting"** : Activez le linting pour détecter les erreurs de code
+
+Pour la détection d'erreurs et le formatage avancé, installez l'extension **Ruff** (`charliermarsh.ruff`) depuis le marketplace. Consultez le fichier [VSCODE-SETUP.md](/VSCODE-SETUP.md) pour une configuration complète.
 
 ---
 
@@ -359,6 +361,13 @@ pip uninstall nom_du_paquet
 ```
 
 **Note** : Sur certains systèmes (surtout Linux et macOS), vous devrez peut-être utiliser `pip3` au lieu de `pip`.
+
+> ⚠️ **Important (Python 3.12+)** : Sur les distributions Linux récentes, pip refuse d'installer des paquets en dehors d'un environnement virtuel pour protéger le système (PEP 668). Si vous voyez l'erreur `externally-managed-environment`, créez d'abord un environnement virtuel (voir section 6.4) :
+> ```bash
+> python3 -m venv mon_env
+> source mon_env/bin/activate
+> pip install nom_du_paquet
+> ```
 
 ---
 
@@ -408,10 +417,10 @@ Ou, mieux encore, utilisez un environnement virtuel (que nous verrons plus tard)
 
 Félicitations ! Vous avez maintenant :
 
-✅ Installé Python sur votre ordinateur
-✅ Vérifié que l'installation fonctionne correctement
-✅ Installé un éditeur de code (VS Code)
-✅ Créé et exécuté votre premier programme Python
+✅ Installé Python sur votre ordinateur  
+✅ Vérifié que l'installation fonctionne correctement  
+✅ Installé un éditeur de code (VS Code)  
+✅ Créé et exécuté votre premier programme Python  
 ✅ Appris les bases de pip pour installer des bibliothèques
 
 Vous êtes maintenant prêt à commencer votre apprentissage de Python ! Dans la prochaine section, nous découvrirons les variables, les types de données et les opérateurs de base.

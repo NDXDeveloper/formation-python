@@ -8,9 +8,9 @@ Python est un langage à **typage dynamique** : vous n'avez pas besoin de décla
 
 ```python
 # Python détermine automatiquement les types
-age = 25        # int
-nom = "Alice"   # str
-prix = 19.99    # float
+age = 25        # int  
+nom = "Alice"   # str  
+prix = 19.99    # float  
 ```
 
 Cependant, cette flexibilité peut aussi être source de confusion, surtout dans les grands projets. C'est là qu'interviennent les **type hints** (indications de type).
@@ -69,21 +69,21 @@ Depuis Python 3.6, vous pouvez annoter les variables :
 
 ```python
 # Syntaxe : nom_variable: type = valeur
-age: int = 25
-nom: str = "Alice"
-prix: float = 19.99
-est_actif: bool = True
+age: int = 25  
+nom: str = "Alice"  
+prix: float = 19.99  
+est_actif: bool = True  
 ```
 
 **Note** : Vous pouvez aussi annoter sans assigner immédiatement :
 
 ```python
-age: int
-nom: str
+age: int  
+nom: str  
 
 # Plus tard dans le code
-age = 25
-nom = "Alice"
+age = 25  
+nom = "Alice"  
 ```
 
 ### Type Hints pour les Fonctions
@@ -136,127 +136,102 @@ def exemples_types_base():
 
 ---
 
-## Le Module `typing`
+## Types Génériques (Collections)
 
-Pour des types plus complexes, Python fournit le module `typing` (disponible depuis Python 3.5).
+Depuis Python 3.10, les types génériques s'écrivent directement avec les types natifs. Plus besoin d'importer depuis le module `typing` pour les cas courants.
 
-```python
-from typing import List, Dict, Tuple, Set, Optional, Union, Any
-```
+> 💡 Dans du code plus ancien (Python < 3.9), vous verrez `from typing import List, Dict, Tuple, Set`. C'est la même chose, juste l'ancienne syntaxe.
 
-### List (Liste)
+### list (Liste)
 
 Pour indiquer une liste d'éléments d'un type spécifique :
 
 ```python
-from typing import List
-
 # Liste d'entiers
-nombres: List[int] = [1, 2, 3, 4, 5]
+nombres: list[int] = [1, 2, 3, 4, 5]
 
 # Liste de chaînes
-noms: List[str] = ["Alice", "Bob", "Charlie"]
+noms: list[str] = ["Alice", "Bob", "Charlie"]
 
 # Liste de nombres décimaux
-prix: List[float] = [19.99, 29.99, 9.99]
+prix: list[float] = [19.99, 29.99, 9.99]
 
-def calculer_moyenne(notes: List[float]) -> float:
+def calculer_moyenne(notes: list[float]) -> float:
     """Calcule la moyenne d'une liste de notes."""
     return sum(notes) / len(notes)
 ```
 
-**Note** : Depuis Python 3.9, vous pouvez utiliser directement `list[int]` au lieu de `List[int]` :
-
-```python
-# Python 3.9+
-nombres: list[int] = [1, 2, 3, 4, 5]
-```
-
-### Dict (Dictionnaire)
+### dict (Dictionnaire)
 
 Pour indiquer un dictionnaire avec types de clés et de valeurs :
 
 ```python
-from typing import Dict
-
 # Dictionnaire : clés str, valeurs int
-ages: Dict[str, int] = {
+ages: dict[str, int] = {
     "Alice": 25,
     "Bob": 30,
     "Charlie": 35
 }
 
 # Dictionnaire : clés str, valeurs float
-prix: Dict[str, float] = {
+prix: dict[str, float] = {
     "pomme": 2.50,
     "banane": 1.80,
     "orange": 3.20
 }
 
-def compter_occurrences(texte: str) -> Dict[str, int]:
+def compter_occurrences(texte: str) -> dict[str, int]:
     """Compte les occurrences de chaque mot."""
     mots = texte.split()
-    compteur: Dict[str, int] = {}
+    compteur: dict[str, int] = {}
     for mot in mots:
         compteur[mot] = compteur.get(mot, 0) + 1
     return compteur
 ```
 
-**Note** : Depuis Python 3.9, vous pouvez utiliser `dict[str, int]`.
-
-### Tuple (Tuple)
+### tuple (Tuple)
 
 Pour des tuples, vous pouvez spécifier le type de chaque élément :
 
 ```python
-from typing import Tuple
-
 # Tuple de deux éléments : str et int
-personne: Tuple[str, int] = ("Alice", 25)
+personne: tuple[str, int] = ("Alice", 25)
 
 # Tuple de trois éléments
-coordonnees: Tuple[float, float, float] = (10.5, 20.3, 5.8)
+coordonnees: tuple[float, float, float] = (10.5, 20.3, 5.8)
 
-def obtenir_info() -> Tuple[str, int, str]:
+def obtenir_info() -> tuple[str, int, str]:
     """Retourne (nom, age, ville)."""
     return "Alice", 25, "Paris"
 
 # Pour un tuple de longueur variable avec le même type
-nombres: Tuple[int, ...] = (1, 2, 3, 4, 5, 6, 7, 8)
+nombres: tuple[int, ...] = (1, 2, 3, 4, 5, 6, 7, 8)
 ```
 
-**Note** : Depuis Python 3.9, vous pouvez utiliser `tuple[str, int]`.
-
-### Set (Ensemble)
+### set (Ensemble)
 
 ```python
-from typing import Set
-
 # Ensemble d'entiers
-nombres_uniques: Set[int] = {1, 2, 3, 4, 5}
+nombres_uniques: set[int] = {1, 2, 3, 4, 5}
 
 # Ensemble de chaînes
-tags: Set[str] = {"python", "programming", "tutorial"}
+tags: set[str] = {"python", "programming", "tutorial"}
 
-def obtenir_lettres_uniques(texte: str) -> Set[str]:
+def obtenir_lettres_uniques(texte: str) -> set[str]:
     """Retourne l'ensemble des lettres uniques dans un texte."""
     return set(texte.lower())
 ```
 
-**Note** : Depuis Python 3.9, vous pouvez utiliser `set[int]`.
-
 ---
 
-## Optional et Union
+## Types Optionnels et Union
 
-### Optional
+### Type | None (valeur optionnelle)
 
-`Optional[Type]` signifie qu'une valeur peut être du type spécifié **ou** `None`.
+La syntaxe `Type | None` signifie qu'une valeur peut être du type spécifié **ou** `None`.
 
 ```python
-from typing import Optional
-
-def chercher_utilisateur(id: int) -> Optional[str]:
+def chercher_utilisateur(id: int) -> str | None:
     """
     Cherche un utilisateur par ID.
     Retourne le nom ou None si non trouvé.
@@ -265,49 +240,35 @@ def chercher_utilisateur(id: int) -> Optional[str]:
     return utilisateurs.get(id)
 
 # Variables optionnelles
-nom: Optional[str] = None  # Peut être str ou None
-nom = "Alice"  # Maintenant c'est une str
+nom: str | None = None  # Peut être str ou None  
+nom = "Alice"  # Maintenant c'est une str  
 
-age: Optional[int] = None
-age = 25
+age: int | None = None  
+age = 25  
 ```
 
-**Note** : `Optional[Type]` est équivalent à `Union[Type, None]`.
+> 💡 Dans du code plus ancien, vous verrez `Optional[str]` (importé de `typing`). C'est équivalent à `str | None`.
 
-**Python 3.10+** : Vous pouvez utiliser la syntaxe `Type | None` :
+### Union de types (Type1 | Type2)
 
-```python
-def chercher_utilisateur(id: int) -> str | None:
-    # ...
-```
-
-### Union
-
-`Union[Type1, Type2, ...]` signifie qu'une valeur peut être de plusieurs types différents.
+L'opérateur `|` permet d'indiquer qu'une valeur peut être de plusieurs types différents.
 
 ```python
-from typing import Union
-
 # Peut être int ou float
-nombre: Union[int, float] = 42
-nombre = 3.14  # OK aussi
+nombre: int | float = 42  
+nombre = 3.14  # OK aussi  
 
-def diviser(a: Union[int, float], b: Union[int, float]) -> float:
+def diviser(a: int | float, b: int | float) -> float:
     """Divise deux nombres (entiers ou décimaux)."""
     return a / b
 
 # Fonction qui peut retourner str ou int
-def obtenir_valeur(cle: str) -> Union[str, int]:
+def obtenir_valeur(cle: str) -> str | int:
     valeurs = {"nom": "Alice", "age": 25}
     return valeurs.get(cle, "inconnu")
 ```
 
-**Python 3.10+** : Vous pouvez utiliser l'opérateur `|` :
-
-```python
-def diviser(a: int | float, b: int | float) -> float:
-    return a / b
-```
+> 💡 Dans du code plus ancien, vous verrez `Union[int, float]` (importé de `typing`). C'est équivalent à `int | float`.
 
 ---
 
@@ -326,9 +287,9 @@ def traiter_donnee(donnee: Any) -> Any:
     return donnee
 
 # Variables de type quelconque
-valeur: Any = 42
-valeur = "texte"  # OK
-valeur = [1, 2, 3]  # OK aussi
+valeur: Any = 42  
+valeur = "texte"  # OK  
+valeur = [1, 2, 3]  # OK aussi  
 ```
 
 **Conseil** : Utilisez `Any` avec modération. C'est utile quand vous ne connaissez vraiment pas le type, mais trop l'utiliser annule les bénéfices des type hints.
@@ -373,28 +334,28 @@ def doubler(x: int) -> int:
 def tripler(x: int) -> int:
     return x * 3
 
-resultat1 = appliquer_operation(5, doubler)  # 10
-resultat2 = appliquer_operation(5, tripler)  # 15
+resultat1 = appliquer_operation(5, doubler)  # 10  
+resultat2 = appliquer_operation(5, tripler)  # 15  
 ```
 
 ### Exemple avec map et filter
 
 ```python
-from typing import Callable, List
+from collections.abc import Callable
 
 def transformer_liste(
-    liste: List[int],
+    liste: list[int],
     fonction: Callable[[int], int]
-) -> List[int]:
+) -> list[int]:
     """Transforme chaque élément d'une liste."""
     return [fonction(x) for x in liste]
 
 def carre(x: int) -> int:
     return x ** 2
 
-nombres = [1, 2, 3, 4, 5]
-carres = transformer_liste(nombres, carre)
-print(carres)  # [1, 4, 9, 16, 25]
+nombres = [1, 2, 3, 4, 5]  
+carres = transformer_liste(nombres, carre)  
+print(carres)  # [1, 4, 9, 16, 25]  
 ```
 
 ---
@@ -404,12 +365,16 @@ print(carres)  # [1, 4, 9, 16, 25]
 Pour des types complexes répétés, vous pouvez créer des alias :
 
 ```python
-from typing import List, Dict, Tuple
+from typing import Any
 
-# Créer un alias
-Vector = List[float]
-Matrix = List[List[float]]
-JSON = Dict[str, Any]
+# Créer un alias avec l'affectation simple (Python 3.10+)
+Vector = list[float]  
+Matrix = list[list[float]]  
+JSON = dict[str, Any]  
+
+# Python 3.12+ introduit le mot-clé type :
+# type Vector = list[float]
+# type Matrix = list[list[float]]
 
 # Utiliser les alias
 def additionner_vecteurs(v1: Vector, v2: Vector) -> Vector:
@@ -419,8 +384,8 @@ def traiter_json(data: JSON) -> None:
     print(data)
 
 # Alias pour des tuples complexes
-Coordonnees = Tuple[float, float, float]
-Personne = Tuple[str, int, str]  # (nom, age, ville)
+Coordonnees = tuple[float, float, float]  
+Personne = tuple[str, int, str]  # (nom, age, ville)  
 
 def calculer_distance(p1: Coordonnees, p2: Coordonnees) -> float:
     """Calcule la distance entre deux points 3D."""
@@ -462,13 +427,13 @@ afficher_personne(alice)
 ### TypedDict avec champs optionnels
 
 ```python
-from typing import TypedDict, Optional
+from typing import TypedDict
 
 class Utilisateur(TypedDict, total=False):
     nom: str  # Obligatoire
     age: int  # Obligatoire
-    email: Optional[str]  # Optionnel
-    telephone: Optional[str]  # Optionnel
+    email: str | None  # Optionnel
+    telephone: str | None  # Optionnel
 ```
 
 ---
@@ -480,43 +445,43 @@ Les génériques permettent de créer des fonctions et classes qui fonctionnent 
 ### TypeVar
 
 ```python
-from typing import TypeVar, List
+from typing import TypeVar
 
 # Créer une variable de type générique
 T = TypeVar('T')
 
-def premier_element(liste: List[T]) -> T:
+def premier_element(liste: list[T]) -> T:
     """Retourne le premier élément d'une liste, quel que soit son type."""
     return liste[0]
 
 # Fonctionne avec n'importe quel type
-nombres = [1, 2, 3]
-premier = premier_element(nombres)  # Type inféré : int
+nombres = [1, 2, 3]  
+premier = premier_element(nombres)  # Type inféré : int  
 
-mots = ["hello", "world"]
-premier_mot = premier_element(mots)  # Type inféré : str
+mots = ["hello", "world"]  
+premier_mot = premier_element(mots)  # Type inféré : str  
 ```
 
 ### Fonction générique avec plusieurs types
 
 ```python
-from typing import TypeVar, Tuple
+from typing import TypeVar
 
-T = TypeVar('T')
-U = TypeVar('U')
+T = TypeVar('T')  
+U = TypeVar('U')  
 
-def creer_paire(premier: T, second: U) -> Tuple[T, U]:
+def creer_paire(premier: T, second: U) -> tuple[T, U]:
     """Crée une paire de deux éléments de types potentiellement différents."""
     return (premier, second)
 
-paire1 = creer_paire("Alice", 25)  # Tuple[str, int]
-paire2 = creer_paire(3.14, True)   # Tuple[float, bool]
+paire1 = creer_paire("Alice", 25)  # Tuple[str, int]  
+paire2 = creer_paire(3.14, True)   # Tuple[float, bool]  
 ```
 
 ### Classes génériques
 
 ```python
-from typing import TypeVar, Generic, List
+from typing import TypeVar, Generic
 
 T = TypeVar('T')
 
@@ -524,7 +489,7 @@ class Pile(Generic[T]):
     """Pile générique qui peut contenir n'importe quel type."""
 
     def __init__(self) -> None:
-        self._items: List[T] = []
+        self._items: list[T] = []
 
     def empiler(self, item: T) -> None:
         self._items.append(item)
@@ -536,15 +501,15 @@ class Pile(Generic[T]):
         return len(self._items) == 0
 
 # Utilisation
-pile_nombres: Pile[int] = Pile()
-pile_nombres.empiler(1)
-pile_nombres.empiler(2)
-print(pile_nombres.depiler())  # 2
+pile_nombres: Pile[int] = Pile()  
+pile_nombres.empiler(1)  
+pile_nombres.empiler(2)  
+print(pile_nombres.depiler())  # 2  
 
-pile_mots: Pile[str] = Pile()
-pile_mots.empiler("hello")
-pile_mots.empiler("world")
-print(pile_mots.depiler())  # "world"
+pile_mots: Pile[str] = Pile()  
+pile_mots.empiler("hello")  
+pile_mots.empiler("world")  
+print(pile_mots.depiler())  # "world"  
 ```
 
 ---
@@ -560,8 +525,8 @@ def definir_mode(mode: Literal["debug", "production"]) -> None:
     """Le mode doit être exactement 'debug' ou 'production'."""
     print(f"Mode : {mode}")
 
-definir_mode("debug")       # OK
-definir_mode("production")  # OK
+definir_mode("debug")       # OK  
+definir_mode("production")  # OK  
 # definir_mode("test")      # Erreur détectée par mypy !
 
 # Avec des nombres
@@ -581,8 +546,8 @@ definir_niveau(2)  # OK
 ```python
 from typing import Final
 
-PI: Final = 3.14159
-MAX_TENTATIVES: Final[int] = 3
+PI: Final = 3.14159  
+MAX_TENTATIVES: Final[int] = 3  
 
 # PI = 3.14  # mypy détectera cette erreur !
 
@@ -611,9 +576,9 @@ class Compteur:
     def incrementer(self) -> None:
         self.valeur += 1
 
-c1 = Compteur(10)
-c2 = Compteur(20)
-print(Compteur.total)  # 2
+c1 = Compteur(10)  
+c2 = Compteur(20)  
+print(Compteur.total)  # 2  
 ```
 
 ---
@@ -623,12 +588,10 @@ print(Compteur.total)  # 2
 Combiner type hints et valeurs par défaut :
 
 ```python
-from typing import Optional, List
-
 def creer_liste(
-    elements: Optional[List[int]] = None,
+    elements: list[int] | None = None,
     taille: int = 10
-) -> List[int]:
+) -> list[int]:
     """Crée une liste avec des éléments ou une liste vide."""
     if elements is None:
         return [0] * taille
@@ -692,8 +655,8 @@ mypy mon_projet/
 def additionner(a: int, b: int) -> int:
     return a + b
 
-resultat = additionner(5, 3)
-print(resultat)
+resultat = additionner(5, 3)  
+print(resultat)  
 
 # Cette ligne provoquera une erreur mypy
 resultat2 = additionner("5", "3")  # Erreur !
@@ -702,8 +665,8 @@ resultat2 = additionner("5", "3")  # Erreur !
 **Exécution de mypy** :
 ```bash
 $ mypy calcul.py
-calcul.py:7: error: Argument 1 to "additionner" has incompatible type "str"; expected "int"
-calcul.py:7: error: Argument 2 to "additionner" has incompatible type "str"; expected "int"
+calcul.py:7: error: Argument 1 to "additionner" has incompatible type "str"; expected "int"  
+calcul.py:7: error: Argument 2 to "additionner" has incompatible type "str"; expected "int"  
 ```
 
 ### Configuration de mypy
@@ -712,10 +675,10 @@ Créez un fichier `mypy.ini` ou `setup.cfg` :
 
 ```ini
 [mypy]
-python_version = 3.9
-warn_return_any = True
-warn_unused_configs = True
-disallow_untyped_defs = True
+python_version = 3.10  
+warn_return_any = True  
+warn_unused_configs = True  
+disallow_untyped_defs = True  
 ```
 
 ---
@@ -725,16 +688,14 @@ disallow_untyped_defs = True
 Vous ne pouvez pas annoter directement les compréhensions, mais vous pouvez annoter la variable résultante :
 
 ```python
-from typing import List, Dict
-
 # Compréhension de liste
-carres: List[int] = [x**2 for x in range(10)]
+carres: list[int] = [x**2 for x in range(10)]
 
 # Compréhension de dictionnaire
-ages: Dict[str, int] = {nom: age for nom, age in [("Alice", 25), ("Bob", 30)]}
+ages: dict[str, int] = {nom: age for nom, age in [("Alice", 25), ("Bob", 30)]}
 
 # Ou annoter dans une fonction
-def generer_carres(n: int) -> List[int]:
+def generer_carres(n: int) -> list[int]:
     return [x**2 for x in range(n)]
 ```
 
@@ -760,63 +721,55 @@ def _arrondir(valeur):
 ### 2. Utilisez des alias pour les types complexes
 
 ```python
-from typing import Dict, List
-
 # ❌ Difficile à lire
-def traiter(data: Dict[str, List[Dict[str, int]]]) -> List[str]:
+def traiter(data: dict[str, list[dict[str, int]]]) -> list[str]:
     pass
 
 # ✅ Plus clair avec un alias
-DonneesComplexes = Dict[str, List[Dict[str, int]]]
+DonneesComplexes = dict[str, list[dict[str, int]]]
 
-def traiter(data: DonneesComplexes) -> List[str]:
+def traiter(data: DonneesComplexes) -> list[str]:
     pass
 ```
 
 ### 3. Évitez l'abus de Any
 
 ```python
+from typing import Any
+
 # ❌ Trop de Any annule les bénéfices
 def traiter(data: Any) -> Any:
     pass
 
 # ✅ Soyez aussi spécifique que possible
-def traiter(data: Dict[str, int]) -> List[str]:
+def traiter(data: dict[str, int]) -> list[str]:
     pass
 
-# ✅ Si vraiment variable, utilisez Union
-def traiter(data: Union[str, int, float]) -> str:
+# ✅ Si vraiment variable, utilisez |
+def traiter(data: str | int | float) -> str:
     pass
 ```
 
-### 4. Préférez Optional à Union[Type, None]
+### 4. Utilisez la syntaxe `| None`
 
 ```python
-# ❌ Moins lisible
-def chercher(id: int) -> Union[str, None]:
-    pass
-
-# ✅ Plus clair
-def chercher(id: int) -> Optional[str]:
-    pass
-
-# ✅✅ Encore mieux en Python 3.10+
+# ✅ Syntaxe moderne et claire
 def chercher(id: int) -> str | None:
     pass
 ```
+
+> 💡 `Optional[str]` importé de `typing` est équivalent mais moins lisible.
 
 ### 5. Annotez les variables quand le type n'est pas évident
 
 ```python
 # Type évident : pas besoin d'annotation
-nom = "Alice"
-age = 25
+nom = "Alice"  
+age = 25  
 
 # Type non évident : annotation utile
-from typing import List, Optional
-
-resultats: List[int] = []
-utilisateur: Optional[str] = None
+resultats: list[int] = []  
+utilisateur: str | None = None  
 ```
 
 ### 6. Utilisez des type hints progressivement
@@ -849,10 +802,8 @@ x = 5  # type: int
 Quand vous référencez une classe avant qu'elle soit définie :
 
 ```python
-from typing import Optional
-
 class Noeud:
-    def __init__(self, valeur: int, suivant: Optional["Noeud"] = None):
+    def __init__(self, valeur: int, suivant: "Noeud | None" = None):
         self.valeur = valeur
         self.suivant = suivant
 ```
@@ -861,10 +812,9 @@ class Noeud:
 
 ```python
 from __future__ import annotations
-from typing import Optional
 
 class Noeud:
-    def __init__(self, valeur: int, suivant: Optional[Noeud] = None):
+    def __init__(self, valeur: int, suivant: Noeud | None = None):
         self.valeur = valeur
         self.suivant = suivant
 ```
@@ -876,7 +826,6 @@ class Noeud:
 ### Exemple 1 : Système de gestion d'utilisateurs
 
 ```python
-from typing import List, Dict, Optional
 from dataclasses import dataclass
 
 @dataclass
@@ -888,7 +837,7 @@ class Utilisateur:
 
 class GestionnaireUtilisateurs:
     def __init__(self) -> None:
-        self._utilisateurs: Dict[int, Utilisateur] = {}
+        self._utilisateurs: dict[int, Utilisateur] = {}
         self._prochain_id: int = 1
 
     def ajouter_utilisateur(
@@ -908,11 +857,11 @@ class GestionnaireUtilisateurs:
         self._prochain_id += 1
         return utilisateur
 
-    def obtenir_utilisateur(self, id: int) -> Optional[Utilisateur]:
+    def obtenir_utilisateur(self, id: int) -> Utilisateur | None:
         """Retourne un utilisateur ou None s'il n'existe pas."""
         return self._utilisateurs.get(id)
 
-    def lister_utilisateurs(self) -> List[Utilisateur]:
+    def lister_utilisateurs(self) -> list[Utilisateur]:
         """Retourne la liste de tous les utilisateurs."""
         return list(self._utilisateurs.values())
 
@@ -920,7 +869,7 @@ class GestionnaireUtilisateurs:
         self,
         age_min: int,
         age_max: int
-    ) -> List[Utilisateur]:
+    ) -> list[Utilisateur]:
         """Filtre les utilisateurs par tranche d'âge."""
         return [
             user for user in self._utilisateurs.values()
@@ -928,28 +877,27 @@ class GestionnaireUtilisateurs:
         ]
 
 # Utilisation
-gestionnaire = GestionnaireUtilisateurs()
-alice = gestionnaire.ajouter_utilisateur("Alice", "alice@example.com", 25)
-bob = gestionnaire.ajouter_utilisateur("Bob", "bob@example.com", 30)
+gestionnaire = GestionnaireUtilisateurs()  
+alice = gestionnaire.ajouter_utilisateur("Alice", "alice@example.com", 25)  
+bob = gestionnaire.ajouter_utilisateur("Bob", "bob@example.com", 30)  
 
-user = gestionnaire.obtenir_utilisateur(1)
-if user:
+user = gestionnaire.obtenir_utilisateur(1)  
+if user:  
     print(f"Utilisateur trouvé : {user.nom}")
 
-jeunes = gestionnaire.filtrer_par_age(20, 27)
-print(f"Utilisateurs entre 20 et 27 ans : {len(jeunes)}")
+jeunes = gestionnaire.filtrer_par_age(20, 27)  
+print(f"Utilisateurs entre 20 et 27 ans : {len(jeunes)}")  
 ```
 
 ### Exemple 2 : Calculateur de statistiques
 
 ```python
-from typing import List, Dict, Union, Tuple
 from statistics import mean, median, stdev
 
-Nombre = Union[int, float]
-Statistiques = Dict[str, Nombre]
+Nombre = int | float  
+Statistiques = dict[str, Nombre]  
 
-def calculer_statistiques(donnees: List[Nombre]) -> Statistiques:
+def calculer_statistiques(donnees: list[Nombre]) -> Statistiques:
     """
     Calcule diverses statistiques sur une liste de nombres.
 
@@ -973,7 +921,7 @@ def calculer_statistiques(donnees: List[Nombre]) -> Statistiques:
         "ecart_type": stdev(donnees) if len(donnees) > 1 else 0.0
     }
 
-def analyser_notes(notes: List[int]) -> Tuple[float, List[str]]:
+def analyser_notes(notes: list[int]) -> tuple[float, list[str]]:
     """
     Analyse une liste de notes et retourne la moyenne et les appréciations.
 
@@ -986,7 +934,7 @@ def analyser_notes(notes: List[int]) -> Tuple[float, List[str]]:
     stats = calculer_statistiques(notes)
     moyenne = stats["moyenne"]
 
-    appreciations: List[str] = []
+    appreciations: list[str] = []
     for note in notes:
         if note >= 16:
             appreciations.append("Très bien")
@@ -1002,19 +950,19 @@ def analyser_notes(notes: List[int]) -> Tuple[float, List[str]]:
     return moyenne, appreciations
 
 # Utilisation
-notes_classe = [12, 15, 8, 18, 14, 11, 16, 13]
-moyenne, appreciations = analyser_notes(notes_classe)
-print(f"Moyenne de la classe : {moyenne:.2f}")
+notes_classe = [12, 15, 8, 18, 14, 11, 16, 13]  
+moyenne, appreciations = analyser_notes(notes_classe)  
+print(f"Moyenne de la classe : {moyenne:.2f}")  
 ```
 
 ### Exemple 3 : Cache générique
 
 ```python
-from typing import TypeVar, Generic, Optional, Callable
-from datetime import datetime, timedelta
+from typing import TypeVar, Generic, Callable  
+from datetime import datetime, timedelta  
 
-K = TypeVar('K')  # Type de clé
-V = TypeVar('V')  # Type de valeur
+K = TypeVar('K')  # Type de clé  
+V = TypeVar('V')  # Type de valeur  
 
 class Cache(Generic[K, V]):
     """Cache générique avec expiration."""
@@ -1024,14 +972,14 @@ class Cache(Generic[K, V]):
         Args:
             duree_vie: Durée de vie en secondes (défaut: 5 minutes)
         """
-        self._cache: Dict[K, Tuple[V, datetime]] = {}
+        self._cache: dict[K, tuple[V, datetime]] = {}
         self._duree_vie = timedelta(seconds=duree_vie)
 
     def set(self, cle: K, valeur: V) -> None:
         """Ajoute ou met à jour une entrée dans le cache."""
         self._cache[cle] = (valeur, datetime.now())
 
-    def get(self, cle: K) -> Optional[V]:
+    def get(self, cle: K) -> V | None:
         """
         Récupère une valeur du cache.
 
@@ -1072,13 +1020,13 @@ class Cache(Generic[K, V]):
         return valeur
 
 # Utilisation avec différents types
-cache_str: Cache[str, str] = Cache()
-cache_str.set("user_1", "Alice")
-print(cache_str.get("user_1"))
+cache_str: Cache[str, str] = Cache()  
+cache_str.set("user_1", "Alice")  
+print(cache_str.get("user_1"))  
 
-cache_int: Cache[int, List[int]] = Cache()
-cache_int.set(1, [1, 2, 3, 4, 5])
-print(cache_int.get(1))
+cache_int: Cache[int, list[int]] = Cache()  
+cache_int.set(1, [1, 2, 3, 4, 5])  
+print(cache_int.get(1))  
 ```
 
 ---
@@ -1088,13 +1036,11 @@ print(cache_int.get(1))
 Les type hints complètent la documentation, mais ne la remplacent pas :
 
 ```python
-from typing import List, Optional
-
 def rechercher_utilisateur(
     nom: str,
-    age_min: Optional[int] = None,
-    age_max: Optional[int] = None
-) -> List[Dict[str, Union[str, int]]]:
+    age_min: int | None = None,
+    age_max: int | None = None
+) -> list[dict[str, str | int]]:
     """
     Recherche des utilisateurs selon des critères.
 
@@ -1145,9 +1091,11 @@ Les type hints ont un **impact minimal** sur les performances. Ils sont chargés
 
 ### 3. Compatibilité
 
-- Python 3.5+ : typing basique
-- Python 3.9+ : syntaxe simplifiée (list, dict, tuple au lieu de List, Dict, Tuple)
-- Python 3.10+ : opérateur `|` pour Union
+- Python 3.9+ : syntaxe simplifiée (`list[int]`, `dict[str, int]` au lieu de `List[int]`, `Dict[str, int]`)
+- Python 3.10+ : opérateur `|` pour les unions (`str | None` au lieu de `Optional[str]`)
+- Python 3.12+ : instruction `type` pour les alias de types
+
+> 💡 Cette formation utilise la syntaxe Python 3.10+ (types natifs + opérateur `|`). Si vous travaillez sur un projet ciblant Python < 3.9, utilisez les imports de `typing`.
 
 ### 4. Courbe d'apprentissage
 
@@ -1162,15 +1110,16 @@ Les type hints ajoutent de la complexité. Pour les débutants :
 
 Dans cette section, nous avons appris :
 
-✅ **Type hints de base** : int, str, float, bool
-✅ **Module typing** : List, Dict, Tuple, Set, Optional, Union
-✅ **Callable** : Annoter les fonctions en paramètres
-✅ **Type aliases** : Simplifier les types complexes
-✅ **TypedDict** : Dictionnaires avec structure fixe
-✅ **Génériques** : TypeVar et Generic
-✅ **Literal et Final** : Valeurs spécifiques et constantes
-✅ **mypy** : Vérification statique des types
-✅ **Bonnes pratiques** : Quand et comment utiliser les type hints
+✅ **Type hints de base** : int, str, float, bool  
+✅ **Types génériques** : list[int], dict[str, int], tuple[str, int], set[str]  
+✅ **Types optionnels** : str | None, int | float  
+✅ **Callable** : Annoter les fonctions en paramètres  
+✅ **Type aliases** : Simplifier les types complexes  
+✅ **TypedDict** : Dictionnaires avec structure fixe  
+✅ **Génériques** : TypeVar et Generic  
+✅ **Literal et Final** : Valeurs spécifiques et constantes  
+✅ **mypy** : Vérification statique des types  
+✅ **Bonnes pratiques** : Quand et comment utiliser les type hints  
 ✅ **Exemples pratiques** : Applications concrètes
 
 ---
@@ -1183,7 +1132,7 @@ Dans cette section, nous avons appris :
 4. **Ne sont pas forcés à l'exécution** : Python reste dynamique
 5. **Utilisez-les progressivement** : commencez par les fonctions publiques
 6. **mypy vérifie la cohérence** : installez-le pour un feedback
-7. **La syntaxe évolue** : Python 3.9+ a une syntaxe simplifiée
+7. **Utilisez la syntaxe moderne** : `list[int]` et `str | None` depuis Python 3.10+
 8. **Documentez quand même** : type hints ≠ documentation complète
 
 ---

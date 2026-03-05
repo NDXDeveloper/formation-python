@@ -288,14 +288,14 @@ Tout au long du tutoriel, vous verrez ces symboles :
 
 À la fin de ce chapitre, vous serez capable de :
 
-✅ **Installer et configurer** un environnement Python professionnel
-✅ **Comprendre** les types de données et leur manipulation
-✅ **Écrire** des programmes avec des conditions et des boucles
-✅ **Créer** des fonctions réutilisables et bien structurées
-✅ **Gérer** les erreurs de manière élégante
-✅ **Annoter** votre code avec des type hints pour plus de clarté
-✅ **Lire et comprendre** du code Python simple
-✅ **Déboguer** vos propres programmes
+✅ **Installer et configurer** un environnement Python professionnel  
+✅ **Comprendre** les types de données et leur manipulation  
+✅ **Écrire** des programmes avec des conditions et des boucles  
+✅ **Créer** des fonctions réutilisables et bien structurées  
+✅ **Gérer** les erreurs de manière élégante  
+✅ **Annoter** votre code avec des type hints pour plus de clarté  
+✅ **Lire et comprendre** du code Python simple  
+✅ **Déboguer** vos propres programmes  
 ✅ **Appliquer** les bonnes pratiques de programmation Python
 
 Ces compétences constituent la **fondation solide** sur laquelle vous construirez toutes vos futures connaissances en Python.
@@ -322,7 +322,7 @@ La programmation est une compétence qui se développe avec le temps et la prati
 
 **Voici quelques principes à garder à l'esprit :**
 
-1. **La persévérance paie** : Ne abandonnez pas face aux difficultés
+1. **La persévérance paie** : N'abandonnez pas face aux difficultés
 2. **Les erreurs sont vos amies** : Elles vous apprennent et vous rendent meilleur
 3. **La pratique est essentielle** : Codez un peu chaque jour plutôt que beaucoup d'un coup
 4. **Amusez-vous** : La programmation devrait être stimulante et gratifiante
