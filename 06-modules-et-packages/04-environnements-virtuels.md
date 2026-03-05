@@ -26,8 +26,8 @@ Installation système (globale)
 ├── requests 2.28.0
 └── pandas 1.5.0
 
-Projet A → nécessite Django 3.2 ✅
-Projet B → nécessite Django 4.2 ❌ Conflit !
+Projet A → nécessite Django 3.2 ✅  
+Projet B → nécessite Django 4.2 ❌ Conflit !  
 ```
 
 Si vous mettez à jour Django pour le Projet B, vous cassez le Projet A.
@@ -89,8 +89,8 @@ python3 -m venv nom_environnement
 
 **Étape 1 : Créer un dossier pour votre projet**
 ```bash
-mkdir mon_projet
-cd mon_projet
+mkdir mon_projet  
+cd mon_projet  
 ```
 
 **Étape 2 : Créer l'environnement virtuel**
@@ -162,8 +162,8 @@ Quand l'environnement est activé, vous verrez son nom entre parenthèses dans v
 
 Pour vérifier quel Python est utilisé :
 ```bash
-which python    # Linux/macOS
-where python    # Windows
+which python    # Linux/macOS  
+where python    # Windows  
 ```
 
 Résultat attendu :
@@ -196,21 +196,21 @@ Résultat (environnement nouvellement créé) :
 ```
 Package    Version
 ---------- -------
-pip        23.2.1
-setuptools 68.0.0
+pip        23.2.1  
+setuptools 68.0.0  
 ```
 
 Après installation de packages :
 ```
 Package    Version
 ---------- -------
-certifi    2023.7.22
-charset-normalizer  3.2.0
-idna       3.4
-pip        23.2.1
-requests   2.31.0
-setuptools 68.0.0
-urllib3    2.0.4
+certifi    2023.7.22  
+charset-normalizer  3.2.0  
+idna       3.4  
+pip        23.2.1  
+requests   2.31.0  
+setuptools 68.0.0  
+urllib3    2.0.4  
 ```
 
 ### Créer requirements.txt
@@ -221,11 +221,11 @@ urllib3    2.0.4
 
 Contenu de `requirements.txt` :
 ```
-certifi==2023.7.22
-charset-normalizer==3.2.0
-idna==3.4
-requests==2.31.0
-urllib3==2.0.4
+certifi==2023.7.22  
+charset-normalizer==3.2.0  
+idna==3.4  
+requests==2.31.0  
+urllib3==2.0.4  
 ```
 
 ### Exécuter des scripts Python
@@ -283,8 +283,8 @@ Ou simplement supprimer le dossier manuellement dans l'explorateur de fichiers.
 
 ```bash
 # 1. Créer le dossier du projet
-mkdir mon_nouveau_projet
-cd mon_nouveau_projet
+mkdir mon_nouveau_projet  
+cd mon_nouveau_projet  
 
 # 2. Créer l'environnement virtuel
 python -m venv venv
@@ -329,8 +329,8 @@ python app.py
 
 ```bash
 # 1. Sauvegarder votre travail
-git add .
-git commit -m "Ajout de nouvelles fonctionnalités"
+git add .  
+git commit -m "Ajout de nouvelles fonctionnalités"  
 
 # 2. Désactiver l'environnement
 deactivate
@@ -347,12 +347,12 @@ deactivate
 **Fichier : `.gitignore`**
 ```
 # Environnements virtuels
-venv/
-env/
+venv/  
+env/  
 .venv/
-ENV/
-env.bak/
-venv.bak/
+ENV/  
+env.bak/  
+venv.bak/  
 
 # Fichiers Python
 __pycache__/
@@ -362,18 +362,18 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
+build/  
+develop-eggs/  
+dist/  
+downloads/  
+eggs/  
 .eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
+lib/  
+lib64/  
+parts/  
+sdist/  
+var/  
+wheels/  
 *.egg-info/
 .installed.cfg
 *.egg
@@ -459,15 +459,15 @@ projets/
 
 ```bash
 # ✅ BON
-cd mon_projet
-source venv/bin/activate
-pip install requests
-python app.py
+cd mon_projet  
+source venv/bin/activate  
+pip install requests  
+python app.py  
 
 # ❌ MAUVAIS
-cd mon_projet
-pip install requests  # S'installe dans le système !
-python app.py
+cd mon_projet  
+pip install requests  # S'installe dans le système !  
+python app.py  
 ```
 
 ### 3. Nommer l'environnement de manière standard
@@ -496,33 +496,33 @@ Après chaque installation de package :
 Ou créer manuellement pour ne lister que les dépendances directes :
 ```
 # requirements.txt
-flask==2.3.0
-requests==2.31.0
-pandas==2.0.0
+flask==2.3.0  
+requests==2.31.0  
+pandas==2.0.0  
 ```
 
 ### 6. Documenter les prérequis
 
 Dans votre README.md :
 
-```markdown
+````markdown
 ## Installation
 
 ### Prérequis
-- Python 3.8 ou supérieur
+- Python 3.10 ou supérieur
 
 ### Setup
 1. Cloner le repository
 ```bash
-git clone https://github.com/username/projet.git
-cd projet
+git clone https://github.com/username/projet.git  
+cd projet  
 ```
 
 2. Créer et activer l'environnement virtuel
 ```bash
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
+python -m venv venv  
+source venv/bin/activate  # Linux/macOS  
+venv\Scripts\activate     # Windows  
 ```
 
 3. Installer les dépendances
@@ -534,7 +534,7 @@ pip install -r requirements.txt
 ```bash
 python app.py
 ```
-```
+````
 
 ### 7. Utiliser .env pour les variables d'environnement
 
@@ -546,27 +546,27 @@ Ne stockez jamais de secrets dans le code. Utilisez python-dotenv :
 
 **Fichier : `.env`** (ignoré par Git)
 ```
-DATABASE_URL=postgresql://localhost/mabase
-SECRET_KEY=super_secret_key_123
-API_KEY=abc123xyz789
+DATABASE_URL=postgresql://localhost/mabase  
+SECRET_KEY=super_secret_key_123  
+API_KEY=abc123xyz789  
 ```
 
 **Fichier : `.env.example`** (committé dans Git)
 ```
-DATABASE_URL=postgresql://localhost/mabase
-SECRET_KEY=your_secret_key_here
-API_KEY=your_api_key_here
+DATABASE_URL=postgresql://localhost/mabase  
+SECRET_KEY=your_secret_key_here  
+API_KEY=your_api_key_here  
 ```
 
 **Utilisation dans le code :**
 ```python
-from dotenv import load_dotenv
-import os
+from dotenv import load_dotenv  
+import os  
 
 load_dotenv()
 
-database_url = os.getenv('DATABASE_URL')
-secret_key = os.getenv('SECRET_KEY')
+database_url = os.getenv('DATABASE_URL')  
+secret_key = os.getenv('SECRET_KEY')  
 ```
 
 ---
@@ -635,8 +635,8 @@ python3.11 -m venv venv311
 ### Vérifier la version de Python
 
 ```bash
-source venv/bin/activate
-python --version
+source venv/bin/activate  
+python --version  
 ```
 
 ### Cas d'usage
@@ -670,8 +670,8 @@ sudo apt-get install python3-venv
 **Solution (autres systèmes) :**
 Installer virtualenv :
 ```bash
-pip install virtualenv
-virtualenv venv
+pip install virtualenv  
+virtualenv venv  
 ```
 
 ### Problème 2 : Permission refusée sur Windows (PowerShell)
@@ -694,8 +694,8 @@ Ou utilisez Command Prompt au lieu de PowerShell.
 
 **Vérification :**
 ```bash
-which python  # Linux/macOS
-where python  # Windows
+which python  # Linux/macOS  
+where python  # Windows  
 ```
 
 Si le résultat ne pointe pas vers `venv/bin/python`, réactivez :
@@ -715,8 +715,8 @@ pip freeze > requirements_system.txt
 
 2. Créer et activer venv :
 ```bash
-python -m venv venv
-source venv/bin/activate
+python -m venv venv  
+source venv/bin/activate  
 ```
 
 3. Installer les packages nécessaires :
@@ -730,11 +730,11 @@ pip install -r requirements_system.txt
 
 **Solution :** Recréer l'environnement :
 ```bash
-deactivate
-rm -rf venv
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+deactivate  
+rm -rf venv  
+python -m venv venv  
+source venv/bin/activate  
+pip install -r requirements.txt  
 ```
 
 ### Problème 6 : Espace disque insuffisant
@@ -750,8 +750,8 @@ pip install -r requirements.txt
 
 **Solution :**
 ```bash
-export VIRTUAL_ENV_DISABLE_PROMPT=0
-source venv/bin/activate
+export VIRTUAL_ENV_DISABLE_PROMPT=0  
+source venv/bin/activate  
 ```
 
 Ou vérifier manuellement :
@@ -768,9 +768,9 @@ echo $VIRTUAL_ENV
 Plus flexible que venv, avec plus d'options :
 
 ```bash
-pip install virtualenv
-virtualenv venv
-virtualenv -p python3.9 venv39
+pip install virtualenv  
+virtualenv venv  
+virtualenv -p python3.9 venv39  
 ```
 
 ### virtualenvwrapper
@@ -801,10 +801,10 @@ rmvirtualenv mon_projet
 Populaire en data science :
 
 ```bash
-conda create -n mon_env python=3.11
-conda activate mon_env
-conda install pandas numpy matplotlib
-conda deactivate
+conda create -n mon_env python=3.11  
+conda activate mon_env  
+conda install pandas numpy matplotlib  
+conda deactivate  
 ```
 
 **Avantages de conda :**
@@ -862,8 +862,8 @@ else
     echo "⚠️  requirements.txt introuvable"
 fi
 
-echo "✅ Environnement prêt !"
-echo "Pour activer : source venv/bin/activate"
+echo "✅ Environnement prêt !"  
+echo "Pour activer : source venv/bin/activate"  
 ```
 
 Utilisation :
@@ -879,25 +879,25 @@ chmod +x setup.sh
 @echo off
 echo Configuration de l'environnement...
 
-REM Créer l'environnement virtuel
-python -m venv venv
+REM Créer l'environnement virtuel  
+python -m venv venv  
 
-REM Activer l'environnement
-call venv\Scripts\activate.bat
+REM Activer l'environnement  
+call venv\Scripts\activate.bat  
 
-REM Mettre à jour pip
-pip install --upgrade pip
+REM Mettre à jour pip  
+pip install --upgrade pip  
 
-REM Installer les dépendances
-if exist requirements.txt (
+REM Installer les dépendances  
+if exist requirements.txt (  
     pip install -r requirements.txt
     echo Dependances installees
 ) else (
     echo requirements.txt introuvable
 )
 
-echo Environnement pret !
-echo Pour activer : venv\Scripts\activate
+echo Environnement pret !  
+echo Pour activer : venv\Scripts\activate  
 ```
 
 ### Makefile pour automatiser
@@ -928,10 +928,10 @@ dev:
 
 Utilisation :
 ```bash
-make install  # Créer l'environnement et installer
-make run      # Lancer l'application
-make test     # Lancer les tests
-make clean    # Nettoyer
+make install  # Créer l'environnement et installer  
+make run      # Lancer l'application  
+make test     # Lancer les tests  
+make clean    # Nettoyer  
 ```
 
 ---
@@ -961,8 +961,8 @@ mon_app_flask/
 
 ```bash
 # 1. Créer le projet
-mkdir mon_app_flask
-cd mon_app_flask
+mkdir mon_app_flask  
+cd mon_app_flask  
 
 # 2. Créer l'environnement virtuel
 python -m venv venv
@@ -981,14 +981,14 @@ pip freeze > requirements.txt
 
 **Fichier : `app.py`**
 ```python
-from flask import Flask
-from dotenv import load_dotenv
-import os
+from flask import Flask  
+from dotenv import load_dotenv  
+import os  
 
 load_dotenv()
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
+app = Flask(__name__)  
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')  
 
 @app.route('/')
 def home():
@@ -1008,24 +1008,24 @@ if __name__ == '__main__':
 
 **requirements.txt :**
 ```
-blinker==1.6.2
-click==8.1.7
-Flask==2.3.3
-itsdangerous==2.1.2
-Jinja2==3.1.2
-MarkupSafe==2.1.3
-python-dotenv==1.0.0
-Werkzeug==2.3.7
+blinker==1.6.2  
+click==8.1.7  
+Flask==2.3.3  
+itsdangerous==2.1.2  
+Jinja2==3.1.2  
+MarkupSafe==2.1.3  
+python-dotenv==1.0.0  
+Werkzeug==2.3.7  
 ```
 
 Un autre développeur peut recréer l'environnement avec :
 ```bash
-git clone https://github.com/username/mon_app_flask.git
-cd mon_app_flask
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python app.py
+git clone https://github.com/username/mon_app_flask.git  
+cd mon_app_flask  
+python -m venv venv  
+source venv/bin/activate  
+pip install -r requirements.txt  
+python app.py  
 ```
 
 ---

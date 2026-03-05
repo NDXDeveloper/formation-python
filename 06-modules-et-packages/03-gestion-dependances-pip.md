@@ -100,8 +100,8 @@ Une fois installé, vous pouvez importer le package dans votre code Python :
 # Après avoir fait : pip install requests
 import requests
 
-response = requests.get('https://api.github.com')
-print(response.status_code)
+response = requests.get('https://api.github.com')  
+print(response.status_code)  
 ```
 
 ---
@@ -120,11 +120,11 @@ Résultat :
 ```
 Package         Version
 --------------- -------
-certifi         2023.7.22
-charset-normalizer  3.2.0
-idna            3.4
-requests        2.31.0
-urllib3         2.0.4
+certifi         2023.7.22  
+charset-normalizer  3.2.0  
+idna            3.4  
+requests        2.31.0  
+urllib3         2.0.4  
 ```
 
 ### Afficher les détails d'un package
@@ -137,16 +137,16 @@ pip show requests
 
 Résultat :
 ```
-Name: requests
-Version: 2.31.0
-Summary: Python HTTP for Humans.
-Home-page: https://requests.readthedocs.io
-Author: Kenneth Reitz
-Author-email: me@kennethreitz.org
-License: Apache 2.0
-Location: /usr/lib/python3.11/site-packages
-Requires: certifi, charset-normalizer, idna, urllib3
-Required-by:
+Name: requests  
+Version: 2.31.0  
+Summary: Python HTTP for Humans.  
+Home-page: https://requests.readthedocs.io  
+Author: Kenneth Reitz  
+Author-email: me@kennethreitz.org  
+License: Apache 2.0  
+Location: /usr/lib/python3.11/site-packages  
+Requires: certifi, charset-normalizer, idna, urllib3  
+Required-by:  
 ```
 
 ### Afficher les packages obsolètes
@@ -161,8 +161,8 @@ Résultat :
 ```
 Package    Version  Latest   Type
 ---------- -------- -------- -----
-requests   2.28.0   2.31.0   wheel
-numpy      1.24.0   1.25.2   wheel
+requests   2.28.0   2.31.0   wheel  
+numpy      1.24.0   1.25.2   wheel  
 ```
 
 ---
@@ -238,11 +238,11 @@ pip freeze > requirements.txt
 
 Cela crée un fichier `requirements.txt` contenant :
 ```
-certifi==2023.7.22
-charset-normalizer==3.2.0
-idna==3.4
-requests==2.31.0
-urllib3==2.0.4
+certifi==2023.7.22  
+charset-normalizer==3.2.0  
+idna==3.4  
+requests==2.31.0  
+urllib3==2.0.4  
 ```
 
 **Méthode 2 : Créer manuellement**
@@ -251,10 +251,10 @@ Vous pouvez créer le fichier manuellement en listant uniquement vos dépendance
 
 ```
 # requirements.txt
-requests==2.31.0
-pandas>=1.5.0
-matplotlib==3.7.2
-numpy>=1.24.0,<2.0.0
+requests==2.31.0  
+pandas>=1.5.0  
+matplotlib==3.7.2  
+numpy>=1.24.0,<2.0.0  
 ```
 
 **Bonnes pratiques :**
@@ -269,12 +269,12 @@ numpy>=1.24.0,<2.0.0
 requests==2.31.0
 
 # Analyse de données
-pandas>=1.5.0
-numpy>=1.24.0
+pandas>=1.5.0  
+numpy>=1.24.0  
 
 # Visualisation
-matplotlib==3.7.2
-seaborn>=0.12.0
+matplotlib==3.7.2  
+seaborn>=0.12.0  
 ```
 
 ### Installer depuis requirements.txt
@@ -305,8 +305,8 @@ requirements/
 **Fichier : `requirements/base.txt`**
 ```
 # Dépendances nécessaires partout
-requests==2.31.0
-python-dotenv==1.0.0
+requests==2.31.0  
+python-dotenv==1.0.0  
 ```
 
 **Fichier : `requirements/dev.txt`**
@@ -315,10 +315,10 @@ python-dotenv==1.0.0
 -r base.txt
 
 # Outils de développement
-pytest==7.4.0
-black==23.7.0
-flake8==6.0.0
-ipython==8.14.0
+pytest==7.4.0  
+black==23.7.0  
+flake8==6.0.0  
+ipython==8.14.0  
 ```
 
 **Fichier : `requirements/prod.txt`**
@@ -462,15 +462,17 @@ mon_package/
         module.py
 
 # Installation en mode éditable
-cd mon_package
-pip install -e .
+cd mon_package  
+pip install -e .  
 ```
 
 ---
 
 ## Fichier setup.py (création de package)
 
-Pour distribuer votre propre package, créez un fichier `setup.py` :
+> 💡 **Note :** `setup.py` est l'approche historique pour configurer un package Python. L'approche moderne utilise `pyproject.toml` (voir section 6.5 sur Poetry). Pour de nouveaux projets, préférez `pyproject.toml`.
+
+Pour distribuer votre propre package, vous pouvez créer un fichier `setup.py` :
 
 ```python
 from setuptools import setup, find_packages
@@ -487,15 +489,15 @@ setup(
         "requests>=2.25.0",
         "pandas>=1.3.0",
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.10",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
 )
 ```
@@ -517,35 +519,35 @@ pip install -e .
 
 ```bash
 # Installation
-pip install package_name
-pip install package_name==1.0.0
-pip install -r requirements.txt
+pip install package_name  
+pip install package_name==1.0.0  
+pip install -r requirements.txt  
 
 # Mise à jour
-pip install --upgrade package_name
-pip install --upgrade pip
+pip install --upgrade package_name  
+pip install --upgrade pip  
 
 # Désinstallation
-pip uninstall package_name
-pip uninstall -y package_name
+pip uninstall package_name  
+pip uninstall -y package_name  
 
 # Information
-pip list
-pip list --outdated
-pip show package_name
-pip freeze
-pip freeze > requirements.txt
+pip list  
+pip list --outdated  
+pip show package_name  
+pip freeze  
+pip freeze > requirements.txt  
 
 # Recherche (deprecated, utiliser PyPI.org)
 # pip search était disponible mais est désormais désactivé
 
 # Cache
-pip cache list
-pip cache purge
+pip cache list  
+pip cache purge  
 
 # Aide
-pip help
-pip help install
+pip help  
+pip help install  
 ```
 
 ### Options utiles
@@ -586,16 +588,16 @@ Nous verrons les environnements virtuels en détail dans la section suivante (6.
 
 ```bash
 # ✅ BON : Versions fixées
-requests==2.31.0
-pandas==1.5.3
+requests==2.31.0  
+pandas==1.5.3  
 
 # ⚠️ Risqué : Sans version
-requests
-pandas
+requests  
+pandas  
 
 # 🔄 Compromis : Version minimale
-requests>=2.31.0
-pandas>=1.5.0,<2.0.0
+requests>=2.31.0  
+pandas>=1.5.0,<2.0.0  
 ```
 
 ### 3. Séparer les dépendances de développement
@@ -606,23 +608,23 @@ Créez des fichiers requirements séparés :
 
 ```bash
 # requirements.txt
-requests==2.31.0
-flask==2.3.0
+requests==2.31.0  
+flask==2.3.0  
 
 # requirements-dev.txt
-pytest==7.4.0
-black==23.7.0
-flake8==6.0.0
+pytest==7.4.0  
+black==23.7.0  
+flake8==6.0.0  
 ```
 
 ### 4. Documenter les versions de Python supportées
 
 Dans votre README ou documentation, spécifiez :
 
-```markdown
+````markdown
 ## Prérequis
 
-- Python 3.8 ou supérieur
+- Python 3.10 ou supérieur
 - pip 21.0 ou supérieur
 
 ## Installation
@@ -630,7 +632,7 @@ Dans votre README ou documentation, spécifiez :
 ```bash
 pip install -r requirements.txt
 ```
-```
+````
 
 ### 5. Mettre à jour régulièrement
 
@@ -656,8 +658,8 @@ pip install pip-tools
 Créer un fichier `requirements.in` avec vos dépendances directes :
 ```
 # requirements.in
-flask
-requests
+flask  
+requests  
 ```
 
 Compiler pour générer `requirements.txt` avec toutes les dépendances :
@@ -670,8 +672,8 @@ pip-compile requirements.in
 Utilisez des outils comme `safety` pour détecter les vulnérabilités :
 
 ```bash
-pip install safety
-safety check
+pip install safety  
+safety check  
 ```
 
 ---
@@ -687,6 +689,8 @@ ERROR: Could not install packages due to an OSError: [Errno 13] Permission denie
 
 **Solution :**
 N'utilisez JAMAIS `sudo pip install`. Utilisez un environnement virtuel à la place.
+
+> 📝 **PEP 668 :** Sur les distributions Linux récentes (Ubuntu 23.04+, Fedora 38+, etc.), `pip install` en dehors d'un environnement virtuel est **bloqué** par défaut avec l'erreur `externally-managed-environment`. C'est un comportement voulu pour protéger les packages système. La solution est toujours d'utiliser un environnement virtuel (voir section 6.4).
 
 Si vous devez absolument installer globalement :
 ```bash
@@ -736,8 +740,8 @@ Mettre à jour les certificats de votre système.
 
 **Solution :**
 ```bash
-pip cache purge
-pip install --no-cache-dir package_name
+pip cache purge  
+pip install --no-cache-dir package_name  
 ```
 
 ### Problème 6 : Installation lente
@@ -807,8 +811,8 @@ Utiliser un fichier de contraintes pour limiter les versions :
 
 ```bash
 # constraints.txt
-numpy<2.0.0
-pandas>=1.0.0,<2.0.0
+numpy<2.0.0  
+pandas>=1.0.0,<2.0.0  
 
 # Installation avec contraintes
 pip install -c constraints.txt requests
@@ -818,8 +822,8 @@ pip install -c constraints.txt requests
 
 ```bash
 # Afficher l'arbre des dépendances
-pip install pipdeptree
-pipdeptree
+pip install pipdeptree  
+pipdeptree  
 ```
 
 Résultat :
@@ -838,15 +842,15 @@ requests==2.31.0
 ### Étape 1 : Créer la structure du projet
 
 ```bash
-mkdir mon_projet
-cd mon_projet
+mkdir mon_projet  
+cd mon_projet  
 ```
 
 ### Étape 2 : Créer un environnement virtuel (section 6.4)
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
+python -m venv venv  
+source venv/bin/activate  # Linux/Mac  
 # ou
 venv\Scripts\activate  # Windows
 ```
@@ -867,9 +871,9 @@ pip freeze > requirements.txt
 
 ```python
 # app.py
-import requests
-import pandas as pd
-from flask import Flask
+import requests  
+import pandas as pd  
+from flask import Flask  
 
 app = Flask(__name__)
 

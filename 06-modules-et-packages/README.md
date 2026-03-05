@@ -133,12 +133,12 @@ Vous apprendrez :
 **Exemple de ce que vous saurez faire :**
 ```python
 # Importer et utiliser le module math
-import math
-resultat = math.sqrt(16)
+import math  
+resultat = math.sqrt(16)  
 
 # Créer et utiliser votre propre module
-from mes_calculs import calculer_moyenne
-moyenne = calculer_moyenne([1, 2, 3, 4, 5])
+from mes_calculs import calculer_moyenne  
+moyenne = calculer_moyenne([1, 2, 3, 4, 5])  
 ```
 
 ### Section 6.2 : Structure des packages
@@ -170,9 +170,9 @@ Vous maîtriserez :
 
 **Exemple de commandes que vous utiliserez :**
 ```bash
-pip install requests
-pip install pandas numpy matplotlib
-pip freeze > requirements.txt
+pip install requests  
+pip install pandas numpy matplotlib  
+pip freeze > requirements.txt  
 ```
 
 ### Section 6.4 : Environnements virtuels (venv)
@@ -184,10 +184,10 @@ Vous comprendrez :
 
 **Exemple de workflow que vous appliquerez :**
 ```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python app.py
+python -m venv venv  
+source venv/bin/activate  
+pip install -r requirements.txt  
+python app.py  
 ```
 
 ### Section 6.5 : Outils modernes (Poetry, Pipenv)
@@ -199,9 +199,9 @@ Vous explorerez :
 
 **Exemple de commandes modernes :**
 ```bash
-poetry new mon_projet
-poetry add requests flask
-poetry run python app.py
+poetry new mon_projet  
+poetry add requests flask  
+poetry run python app.py  
 ```
 
 ---
@@ -242,13 +242,13 @@ Un environnement virtuel est comme avoir une étagère personnelle pour chaque p
 
 À la fin de ce chapitre, vous serez capable de :
 
-✅ **Organiser** votre code en modules et packages réutilisables
-✅ **Importer** et utiliser des bibliothèques Python externes
-✅ **Gérer** les dépendances de vos projets
-✅ **Créer** des environnements isolés pour chaque projet
-✅ **Structurer** des projets Python professionnels
-✅ **Collaborer** efficacement avec d'autres développeurs
-✅ **Publier** vos propres packages (avec Poetry)
+✅ **Organiser** votre code en modules et packages réutilisables  
+✅ **Importer** et utiliser des bibliothèques Python externes  
+✅ **Gérer** les dépendances de vos projets  
+✅ **Créer** des environnements isolés pour chaque projet  
+✅ **Structurer** des projets Python professionnels  
+✅ **Collaborer** efficacement avec d'autres développeurs  
+✅ **Publier** vos propres packages (avec Poetry)  
 ✅ **Choisir** les bons outils pour vos besoins
 
 ---
@@ -270,7 +270,7 @@ Si vous n'êtes pas encore à l'aise avec ces concepts, nous vous recommandons d
 
 Pour suivre ce chapitre, assurez-vous d'avoir :
 
-- ✅ Python 3.7 ou supérieur installé
+- ✅ Python 3.10 ou supérieur installé
 - ✅ pip installé (généralement inclus avec Python)
 - ✅ Un éditeur de texte ou IDE (VS Code, PyCharm, etc.)
 - ✅ Accès au terminal / invite de commandes
@@ -295,14 +295,14 @@ Pour faciliter votre apprentissage, nous utiliserons les conventions suivantes :
 
 **Commandes du terminal :**
 ```bash
-pip install requests
-python app.py
+pip install requests  
+python app.py  
 ```
 
 **Code Python :**
 ```python
-import math
-resultat = math.sqrt(16)
+import math  
+resultat = math.sqrt(16)  
 ```
 
 **Structure de fichiers et dossiers :**
@@ -365,9 +365,9 @@ def afficher_resultat(resultat):
 # ... beaucoup d'autres fonctions ...
 
 # Code principal
-donnees = [1, 2, 3, 4, 5]
-moyenne = calculer_moyenne(donnees)
-afficher_resultat(moyenne)
+donnees = [1, 2, 3, 4, 5]  
+moyenne = calculer_moyenne(donnees)  
+afficher_resultat(moyenne)  
 ```
 
 ### Étape 2 : Avec modules (intermédiaire)
@@ -381,12 +381,12 @@ mon_projet/
 
 ```python
 # main.py
-from calculs import calculer_moyenne
-from affichage import afficher_resultat
+from calculs import calculer_moyenne  
+from affichage import afficher_resultat  
 
-donnees = [1, 2, 3, 4, 5]
-moyenne = calculer_moyenne(donnees)
-afficher_resultat(moyenne)
+donnees = [1, 2, 3, 4, 5]  
+moyenne = calculer_moyenne(donnees)  
+afficher_resultat(moyenne)  
 ```
 
 ### Étape 3 : Avec packages (avancé)
@@ -410,12 +410,12 @@ mon_application/
 
 ```python
 # main.py
-from core.calculs import calculer_moyenne
-from interface.console import afficher_resultat
-from utils.validation import valider_donnees
+from core.calculs import calculer_moyenne  
+from interface.console import afficher_resultat  
+from utils.validation import valider_donnees  
 
-donnees = [1, 2, 3, 4, 5]
-if valider_donnees(donnees):
+donnees = [1, 2, 3, 4, 5]  
+if valider_donnees(donnees):  
     moyenne = calculer_moyenne(donnees)
     afficher_resultat(moyenne)
 ```
@@ -458,9 +458,9 @@ Avec un environnement virtuel, des tests automatisés, une documentation, et une
 **Les modules et packages sont partout en Python.** Même si vous ne le réalisez pas encore, vous les utilisez déjà chaque fois que vous écrivez :
 
 ```python
-import math
-import random
-import datetime
+import math  
+import random  
+import datetime  
 ```
 
 Ces trois lignes utilisent des modules ! Ce chapitre vous apprendra non seulement à les utiliser, mais aussi à créer les vôtres et à structurer vos projets de manière professionnelle.

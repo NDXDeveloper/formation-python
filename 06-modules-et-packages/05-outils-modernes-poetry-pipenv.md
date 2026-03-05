@@ -24,8 +24,8 @@ Les outils modernes comme **Poetry** et **Pipenv** ont été créés pour simpli
 **Problème 1 : Résolution de dépendances**
 ```
 # requirements.txt
-django==3.2.0
-requests==2.28.0
+django==3.2.0  
+requests==2.28.0  
 
 # Mais si Django nécessite requests>=2.25.0,<2.29.0 ?
 # pip n'avertit pas des conflits potentiels
@@ -41,11 +41,11 @@ requests==2.28.0
 **Problème 3 : Gestion manuelle de venv**
 ```bash
 # Workflow traditionnel (plusieurs étapes)
-python -m venv venv
-source venv/bin/activate
-pip install flask
-pip freeze > requirements.txt
-deactivate
+python -m venv venv  
+source venv/bin/activate  
+pip install flask  
+pip freeze > requirements.txt  
+deactivate  
 ```
 
 ### Ce que les outils modernes apportent
@@ -102,8 +102,8 @@ pipenv, version 2023.10.20
 
 Pipenv utilise deux fichiers principaux :
 
-**1. Pipfile** : Fichier de configuration (équivalent amélioré de requirements.txt)
-**2. Pipfile.lock** : Fichier de verrouillage (versions exactes de toutes les dépendances)
+**1. Pipfile** : Fichier de configuration (équivalent amélioré de requirements.txt)  
+**2. Pipfile.lock** : Fichier de verrouillage (versions exactes de toutes les dépendances)  
 
 ---
 
@@ -113,8 +113,8 @@ Pipenv utilise deux fichiers principaux :
 
 ```bash
 # Créer le dossier du projet
-mkdir mon_projet
-cd mon_projet
+mkdir mon_projet  
+cd mon_projet  
 
 # Initialiser Pipenv
 pipenv install
@@ -128,9 +128,9 @@ Cette commande :
 **Fichier généré : `Pipfile`**
 ```toml
 [[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+url = "https://pypi.org/simple"  
+verify_ssl = true  
+name = "pypi"  
 
 [packages]
 
@@ -156,16 +156,16 @@ pipenv install django==4.2.0
 Après installation, le `Pipfile` est mis à jour :
 ```toml
 [[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+url = "https://pypi.org/simple"  
+verify_ssl = true  
+name = "pypi"  
 
 [packages]
-requests = "*"
-flask = "*"
-pandas = "*"
-numpy = "*"
-django = "==4.2.0"
+requests = "*"  
+flask = "*"  
+pandas = "*"  
+numpy = "*"  
+django = "==4.2.0"  
 
 [dev-packages]
 
@@ -188,13 +188,13 @@ pipenv install -d pytest
 Le `Pipfile` devient :
 ```toml
 [packages]
-requests = "*"
-flask = "*"
+requests = "*"  
+flask = "*"  
 
 [dev-packages]
-pytest = "*"
-black = "*"
-flake8 = "*"
+pytest = "*"  
+black = "*"  
+flake8 = "*"  
 ```
 
 ### Activer l'environnement virtuel
@@ -398,8 +398,8 @@ export PATH="$HOME/.local/bin:$PATH"
 
 Poetry utilise principalement :
 
-**1. pyproject.toml** : Fichier de configuration du projet (standard PEP 518)
-**2. poetry.lock** : Fichier de verrouillage des dépendances
+**1. pyproject.toml** : Fichier de configuration du projet (standard PEP 518)  
+**2. poetry.lock** : Fichier de verrouillage des dépendances  
 
 ---
 
@@ -425,22 +425,22 @@ mon_projet/
 
 **Ou initialiser dans un dossier existant :**
 ```bash
-mkdir mon_projet
-cd mon_projet
-poetry init
+mkdir mon_projet  
+cd mon_projet  
+poetry init  
 ```
 
 Poetry pose des questions interactives :
 ```
-Package name [mon_projet]:
-Version [0.1.0]:
-Description []:
-Author [Nom <email@example.com>, n to skip]:
-License []:
-Compatible Python versions [^3.11]:
+Package name [mon_projet]:  
+Version [0.1.0]:  
+Description []:  
+Author [Nom <email@example.com>, n to skip]:  
+License []:  
+Compatible Python versions [^3.11]:  
 
-Would you like to define your main dependencies interactively? (yes/no) [yes]
-Would you like to define your development dependencies interactively? (yes/no) [yes]
+Would you like to define your main dependencies interactively? (yes/no) [yes]  
+Would you like to define your development dependencies interactively? (yes/no) [yes]  
 ```
 
 ### Le fichier pyproject.toml
@@ -448,11 +448,11 @@ Would you like to define your development dependencies interactively? (yes/no) [
 **Fichier généré : `pyproject.toml`**
 ```toml
 [tool.poetry]
-name = "mon-projet"
-version = "0.1.0"
-description = ""
-authors = ["Votre Nom <email@example.com>"]
-readme = "README.md"
+name = "mon-projet"  
+version = "0.1.0"  
+description = ""  
+authors = ["Votre Nom <email@example.com>"]  
+readme = "README.md"  
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -460,8 +460,8 @@ python = "^3.11"
 [tool.poetry.group.dev.dependencies]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]  
+build-backend = "poetry.core.masonry.api"  
 ```
 
 ### Installer des dépendances
@@ -483,12 +483,12 @@ poetry add "requests>=2.28.0,<3.0.0"
 Le `pyproject.toml` est mis à jour :
 ```toml
 [tool.poetry.dependencies]
-python = "^3.11"
-requests = "^2.31.0"
-flask = "^2.3.3"
-pandas = "^2.0.3"
-numpy = "^1.25.2"
-django = "4.2.0"
+python = "^3.11"  
+requests = "^2.31.0"  
+flask = "^2.3.3"  
+pandas = "^2.0.3"  
+numpy = "^1.25.2"  
+django = "4.2.0"  
 ```
 
 **Note sur les versions :** `^2.31.0` signifie `>=2.31.0,<3.0.0` (compatible avec la version majeure)
@@ -506,13 +506,13 @@ poetry add -D pytest
 Le `pyproject.toml` devient :
 ```toml
 [tool.poetry.dependencies]
-python = "^3.11"
-requests = "^2.31.0"
+python = "^3.11"  
+requests = "^2.31.0"  
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-black = "^23.7.0"
-flake8 = "^6.0.0"
+pytest = "^7.4.0"  
+black = "^23.7.0"  
+flake8 = "^6.0.0"  
 ```
 
 ### Installer toutes les dépendances
@@ -643,15 +643,15 @@ poetry add $(cat requirements.txt)
 
 Si vous avez un `requirements.txt` :
 ```
-flask==2.3.3
-requests==2.31.0
-pandas==2.0.3
+flask==2.3.3  
+requests==2.31.0  
+pandas==2.0.3  
 ```
 
 Créez un projet Poetry et ajoutez les dépendances :
 ```bash
-poetry init
-poetry add flask@2.3.3 requests@2.31.0 pandas@2.0.3
+poetry init  
+poetry add flask@2.3.3 requests@2.31.0 pandas@2.0.3  
 ```
 
 ### Exporter vers requirements.txt
@@ -671,21 +671,21 @@ poetry export -f requirements.txt --output requirements.txt --with dev
 
 ## Fonctionnalités avancées de Poetry
 
-### Scripts personnalisés
+### Scripts personnalisés (entry points)
 
-Vous pouvez définir des scripts dans `pyproject.toml` :
+Vous pouvez définir des points d'entrée console dans `pyproject.toml`. Le format est `nom = "module:fonction"` :
 
 ```toml
 [tool.poetry.scripts]
 start = "mon_projet.main:run"
-test = "pytest"
 ```
 
 Exécution :
 ```bash
 poetry run start
-poetry run test
 ```
+
+> ⚠️ **Attention :** `[tool.poetry.scripts]` crée des **points d'entrée console** (comme `setuptools` `console_scripts`). Ce ne sont pas des alias pour des commandes shell. Le format doit être `module:fonction`. Pour exécuter des outils comme pytest ou ruff, utilisez directement `poetry run pytest` ou un `Makefile`.
 
 ### Groupes de dépendances
 
@@ -696,22 +696,22 @@ Organisez vos dépendances par groupe :
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^5.0.0"
-sphinx-rtd-theme = "^1.0.0"
+sphinx = "^5.0.0"  
+sphinx-rtd-theme = "^1.0.0"  
 
 [tool.poetry.group.lint]
 optional = true
 
 [tool.poetry.group.lint.dependencies]
-pylint = "^2.17.0"
-mypy = "^1.4.0"
+pylint = "^2.17.0"  
+mypy = "^1.4.0"  
 ```
 
 Installation par groupe :
 ```bash
-poetry install --with docs
-poetry install --with lint,docs
-poetry install --without dev
+poetry install --with docs  
+poetry install --with lint,docs  
+poetry install --without dev  
 ```
 
 ### Créer un package distribuable
@@ -817,9 +817,9 @@ Poetry stocke sa configuration dans :
 **Exemple de configuration :**
 ```toml
 [virtualenvs]
-create = true
-in-project = true
-path = "{cache-dir}/virtualenvs"
+create = true  
+in-project = true  
+path = "{cache-dir}/virtualenvs"  
 
 [repositories.testpypi]
 url = "https://test.pypi.org/legacy/"
@@ -848,17 +848,17 @@ Pipenv charge automatiquement les variables depuis `.env` :
 
 **Fichier : `.env`**
 ```
-DEBUG=True
-DATABASE_URL=postgresql://localhost/mabase
-SECRET_KEY=super_secret
+DEBUG=True  
+DATABASE_URL=postgresql://localhost/mabase  
+SECRET_KEY=super_secret  
 ```
 
 ```python
 import os
 
 # Pipenv charge automatiquement .env
-debug = os.getenv('DEBUG')
-database_url = os.getenv('DATABASE_URL')
+debug = os.getenv('DEBUG')  
+database_url = os.getenv('DATABASE_URL')  
 ```
 
 ---
@@ -892,7 +892,7 @@ mon_api/
 poetry add fastapi uvicorn sqlalchemy pydantic-settings
 
 # Dépendances de développement
-poetry add --group dev pytest black mypy httpx
+poetry add --group dev pytest ruff mypy httpx
 
 # Dépendances de documentation
 poetry add --group docs sphinx
@@ -902,44 +902,43 @@ poetry add --group docs sphinx
 
 ```toml
 [tool.poetry]
-name = "mon-api"
-version = "0.1.0"
-description = "Une API RESTful avec FastAPI"
-authors = ["Votre Nom <email@example.com>"]
-readme = "README.md"
+name = "mon-api"  
+version = "0.1.0"  
+description = "Une API RESTful avec FastAPI"  
+authors = ["Votre Nom <email@example.com>"]  
+readme = "README.md"  
 
 [tool.poetry.dependencies]
-python = "^3.11"
-fastapi = "^0.104.0"
-uvicorn = {extras = ["standard"], version = "^0.24.0"}
-sqlalchemy = "^2.0.0"
-pydantic-settings = "^2.0.0"
+python = "^3.11"  
+fastapi = "^0.104.0"  
+uvicorn = {extras = ["standard"], version = "^0.24.0"}  
+sqlalchemy = "^2.0.0"  
+pydantic-settings = "^2.0.0"  
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-black = "^23.7.0"
-mypy = "^1.5.0"
-httpx = "^0.25.0"
+pytest = "^7.4.0"  
+ruff = "^0.1.0"  
+mypy = "^1.5.0"  
+httpx = "^0.25.0"  
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^7.0.0"
 
 [tool.poetry.scripts]
-dev = "uvicorn mon_api.main:app --reload"
-test = "pytest"
+mon-api = "mon_api.main:start"
 
-[tool.black]
-line-length = 88
-target-version = ['py311']
+[tool.ruff]
+line-length = 88  
+target-version = "py311"  
 
 [tool.mypy]
-python_version = "3.11"
-warn_return_any = true
-warn_unused_configs = true
+python_version = "3.11"  
+warn_return_any = true  
+warn_unused_configs = true  
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]  
+build-backend = "poetry.core.masonry.api"  
 ```
 
 ### Code de l'API
@@ -966,16 +965,14 @@ async def read_item(item_id: int):
 poetry install
 
 # Lancer le serveur de développement
-poetry run dev
-
-# Ou
 poetry run uvicorn mon_api.main:app --reload
 
 # Exécuter les tests
-poetry run test
+poetry run pytest
 
-# Formater le code
-poetry run black mon_api/
+# Linter et formateur (ruff remplace black + flake8)
+poetry run ruff check mon_api/  
+poetry run ruff format mon_api/  
 
 # Vérifier les types
 poetry run mypy mon_api/
@@ -998,9 +995,9 @@ poetry install --without dev
 ### Initialisation
 
 ```bash
-mkdir mon_app
-cd mon_app
-pipenv install
+mkdir mon_app  
+cd mon_app  
+pipenv install  
 ```
 
 ### Installation des dépendances
@@ -1017,19 +1014,19 @@ pipenv install --dev pytest black flake8
 
 ```toml
 [[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+url = "https://pypi.org/simple"  
+verify_ssl = true  
+name = "pypi"  
 
 [packages]
-flask = "*"
-flask-sqlalchemy = "*"
-python-dotenv = "*"
+flask = "*"  
+flask-sqlalchemy = "*"  
+python-dotenv = "*"  
 
 [dev-packages]
-pytest = "*"
-black = "*"
-flake8 = "*"
+pytest = "*"  
+black = "*"  
+flake8 = "*"  
 
 [requires]
 python_version = "3.11"
@@ -1039,14 +1036,14 @@ python_version = "3.11"
 
 **Fichier : `app.py`**
 ```python
-from flask import Flask
-from dotenv import load_dotenv
-import os
+from flask import Flask  
+from dotenv import load_dotenv  
+import os  
 
 load_dotenv()
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
+app = Flask(__name__)  
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')  
 
 @app.route('/')
 def home():
@@ -1058,8 +1055,8 @@ if __name__ == '__main__':
 
 **Fichier : `.env`**
 ```
-SECRET_KEY=super_secret_key_123
-DEBUG=True
+SECRET_KEY=super_secret_key_123  
+DEBUG=True  
 ```
 
 ### Utilisation
@@ -1165,7 +1162,7 @@ __pycache__/
 
 Dans votre README.md :
 
-```markdown
+````markdown
 ## Installation
 
 Ce projet utilise Poetry pour la gestion des dépendances.
@@ -1185,7 +1182,7 @@ poetry install
 # Lancer l'application
 poetry run python app.py
 ```
-```
+````
 
 ### 4. Séparer dev et production
 
@@ -1214,19 +1211,22 @@ poetry show --outdated
 
 Définissez des scripts pour les tâches courantes :
 
-**Poetry :**
-```toml
-[tool.poetry.scripts]
-dev = "uvicorn app.main:app --reload"
-test = "pytest tests/"
-lint = "black . && flake8"
+**Poetry :** utilisez directement `poetry run` avec les outils installés :
+
+```bash
+poetry run uvicorn app.main:app --reload  
+poetry run pytest tests/  
+poetry run ruff check .  
 ```
 
-**Utilisation :**
-```bash
-poetry run dev
-poetry run test
-poetry run lint
+Ou combinez avec un `Makefile` pour des raccourcis :
+```makefile
+dev:
+	poetry run uvicorn app.main:app --reload
+test:
+	poetry run pytest tests/
+lint:
+	poetry run ruff check .
 ```
 
 ---
@@ -1255,8 +1255,8 @@ export PIPENV_TIMEOUT=600
 pipenv install --skip-lock
 
 # Nettoyer et réinstaller
-pipenv --rm
-pipenv install
+pipenv --rm  
+pipenv install  
 ```
 
 **Poetry :**

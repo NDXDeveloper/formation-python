@@ -32,8 +32,8 @@ La façon la plus basique d'importer un module est d'utiliser le mot-clé `impor
 import math
 
 # Utilisation des fonctions du module
-resultat = math.sqrt(16)
-print(resultat)  # Affiche : 4.0
+resultat = math.sqrt(16)  
+print(resultat)  # Affiche : 4.0  
 
 print(math.pi)   # Affiche : 3.141592653589793
 ```
@@ -47,8 +47,8 @@ Pour raccourcir le nom d'un module, vous pouvez lui donner un alias avec le mot-
 ```python
 import math as m
 
-resultat = m.sqrt(25)
-print(resultat)  # Affiche : 5.0
+resultat = m.sqrt(25)  
+print(resultat)  # Affiche : 5.0  
 
 print(m.pi)      # Affiche : 3.141592653589793
 ```
@@ -63,8 +63,8 @@ Si vous n'avez besoin que de certains éléments d'un module, vous pouvez les im
 from math import sqrt, pi
 
 # Utilisation directe sans préfixe
-resultat = sqrt(36)
-print(resultat)  # Affiche : 6.0
+resultat = sqrt(36)  
+print(resultat)  # Affiche : 6.0  
 
 print(pi)        # Affiche : 3.141592653589793
 ```
@@ -74,8 +74,8 @@ Vous pouvez également donner un alias aux éléments importés :
 ```python
 from math import sqrt as racine_carree
 
-resultat = racine_carree(49)
-print(resultat)  # Affiche : 7.0
+resultat = racine_carree(49)  
+print(resultat)  # Affiche : 7.0  
 ```
 
 ### Importation de tous les éléments (à éviter)
@@ -85,8 +85,8 @@ Il est possible d'importer tous les éléments d'un module avec `*` :
 ```python
 from math import *
 
-resultat = sqrt(64)
-print(resultat)  # Affiche : 8.0
+resultat = sqrt(64)  
+print(resultat)  # Affiche : 8.0  
 ```
 
 **⚠️ Attention :** Cette pratique est généralement déconseillée car :
@@ -102,27 +102,27 @@ Python possède de nombreux modules intégrés. Voici quelques exemples courants
 # Module pour les dates et heures
 import datetime
 
-maintenant = datetime.datetime.now()
-print(maintenant)
+maintenant = datetime.datetime.now()  
+print(maintenant)  
 
 # Module pour les nombres aléatoires
 import random
 
-nombre_aleatoire = random.randint(1, 10)
-print(nombre_aleatoire)
+nombre_aleatoire = random.randint(1, 10)  
+print(nombre_aleatoire)  
 
 # Module pour les opérations sur les fichiers et dossiers
 import os
 
-chemin_actuel = os.getcwd()
-print(chemin_actuel)
+chemin_actuel = os.getcwd()  
+print(chemin_actuel)  
 
 # Module pour les expressions régulières
 import re
 
-texte = "Mon email est exemple@email.com"
-email = re.search(r'\S+@\S+', texte)
-print(email.group())
+texte = "Mon email est exemple@email.com"  
+email = re.search(r'\S+@\S+', texte)  
+print(email.group())  
 ```
 
 ---
@@ -167,11 +167,11 @@ PI = 3.14159
 
 import operations
 
-resultat1 = operations.addition(10, 5)
-print(f"10 + 5 = {resultat1}")
+resultat1 = operations.addition(10, 5)  
+print(f"10 + 5 = {resultat1}")  
 
-resultat2 = operations.multiplication(7, 3)
-print(f"7 × 3 = {resultat2}")
+resultat2 = operations.multiplication(7, 3)  
+print(f"7 × 3 = {resultat2}")  
 
 print(f"Valeur de PI : {operations.PI}")
 ```
@@ -222,13 +222,13 @@ Utilisation :
 
 from geometrie import Rectangle, Cercle
 
-rect = Rectangle(5, 3)
-print(f"Aire du rectangle : {rect.aire()}")
-print(f"Périmètre du rectangle : {rect.perimetre()}")
+rect = Rectangle(5, 3)  
+print(f"Aire du rectangle : {rect.aire()}")  
+print(f"Périmètre du rectangle : {rect.perimetre()}")  
 
-cercle = Cercle(7)
-print(f"Aire du cercle : {cercle.aire()}")
-print(f"Circonférence du cercle : {cercle.circonference()}")
+cercle = Cercle(7)  
+print(f"Aire du cercle : {cercle.aire()}")  
+print(f"Circonférence du cercle : {cercle.circonference()}")  
 ```
 
 ---
@@ -264,8 +264,8 @@ Si vous exécutez `python calculs.py`, les tests s'afficheront. Mais si vous imp
 
 import calculs  # Les tests ne s'affichent pas
 
-resultat = calculs.carre(10)
-print(resultat)  # Affiche : 100
+resultat = calculs.carre(10)  
+print(resultat)  # Affiche : 100  
 ```
 
 ---
@@ -280,13 +280,13 @@ Un module bien organisé suit généralement cette structure :
 """
 Module de gestion des utilisateurs.
 
-Ce module fournit des fonctions pour créer, modifier et supprimer
-des utilisateurs dans l'application.
+Ce module fournit des fonctions pour créer, modifier et supprimer  
+des utilisateurs dans l'application.  
 """
 
 # Imports de la bibliothèque standard
-import os
-import datetime
+import os  
+import datetime  
 
 # Imports de bibliothèques tierces
 # import requests
@@ -295,8 +295,8 @@ import datetime
 # from .database import connexion
 
 # Constantes du module
-VERSION = "1.0.0"
-MAX_UTILISATEURS = 1000
+VERSION = "1.0.0"  
+MAX_UTILISATEURS = 1000  
 
 # Classes
 class Utilisateur:
@@ -335,8 +335,8 @@ Chaque module devrait avoir une docstring au début du fichier pour expliquer so
 """
 Module utilitaires.
 
-Ce module contient diverses fonctions utilitaires pour
-le traitement de texte et les conversions de données.
+Ce module contient diverses fonctions utilitaires pour  
+le traitement de texte et les conversions de données.  
 
 Fonctions principales:
     - nettoyer_texte : Supprime les espaces superflus
@@ -430,14 +430,14 @@ Utilisez des noms descriptifs en minuscules, avec des underscores si nécessaire
 
 ```python
 # ✅ BON
-import gestion_utilisateurs
-import traitement_images
-import calculs_statistiques
+import gestion_utilisateurs  
+import traitement_images  
+import calculs_statistiques  
 
 # ❌ MAUVAIS
-import Gu
-import stuff
-import myModule123
+import Gu  
+import stuff  
+import myModule123  
 ```
 
 ### 3. Éviter les imports circulaires
@@ -480,17 +480,17 @@ Organisez vos imports par catégories :
 
 ```python
 # Imports de la bibliothèque standard
-import os
-import sys
-import datetime
+import os  
+import sys  
+import datetime  
 
 # Imports de bibliothèques tierces
-import numpy as np
-import pandas as pd
+import numpy as np  
+import pandas as pd  
 
 # Imports locaux
-from mon_projet import config
-from mon_projet.utils import helpers
+from mon_projet import config  
+from mon_projet.utils import helpers  
 ```
 
 ---
@@ -500,8 +500,8 @@ from mon_projet.utils import helpers
 Pendant le développement, si vous modifiez un module déjà importé, vous devez le recharger :
 
 ```python
-import mon_module
-import importlib
+import mon_module  
+import importlib  
 
 # Après avoir modifié mon_module.py
 importlib.reload(mon_module)

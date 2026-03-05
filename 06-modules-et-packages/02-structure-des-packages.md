@@ -104,26 +104,26 @@ def perimetre_rectangle(largeur, hauteur):
 **Fichier : `main.py`**
 ```python
 # Méthode 1 : Importer le module complet
-import mathematiques.operations
-import mathematiques.geometrie
+import mathematiques.operations  
+import mathematiques.geometrie  
 
-resultat1 = mathematiques.operations.addition(10, 5)
-print(f"10 + 5 = {resultat1}")
+resultat1 = mathematiques.operations.addition(10, 5)  
+print(f"10 + 5 = {resultat1}")  
 
-aire = mathematiques.geometrie.aire_cercle(7)
-print(f"Aire du cercle : {aire}")
+aire = mathematiques.geometrie.aire_cercle(7)  
+print(f"Aire du cercle : {aire}")  
 
 # Méthode 2 : Importer le module avec un alias
 import mathematiques.operations as ops
 
-resultat2 = ops.multiplication(6, 7)
-print(f"6 × 7 = {resultat2}")
+resultat2 = ops.multiplication(6, 7)  
+print(f"6 × 7 = {resultat2}")  
 
 # Méthode 3 : Importer des fonctions spécifiques
 from mathematiques.geometrie import aire_rectangle
 
-aire_rect = aire_rectangle(5, 3)
-print(f"Aire du rectangle : {aire_rect}")
+aire_rect = aire_rectangle(5, 3)  
+print(f"Aire du rectangle : {aire_rect}")  
 ```
 
 ---
@@ -145,8 +145,8 @@ Le fichier `__init__.py` s'exécute lors de l'importation du package. Vous pouve
 """Package de fonctions mathématiques."""
 
 # Importer les fonctions des sous-modules
-from .operations import addition, soustraction, multiplication, division
-from .geometrie import aire_cercle, aire_rectangle, perimetre_rectangle
+from .operations import addition, soustraction, multiplication, division  
+from .geometrie import aire_cercle, aire_rectangle, perimetre_rectangle  
 
 # Version du package
 __version__ = "1.0.0"
@@ -170,8 +170,8 @@ Maintenant, l'utilisation devient plus simple :
 # On peut écrire :
 from mathematiques import addition, multiplication
 
-resultat = addition(10, 5)
-print(resultat)
+resultat = addition(10, 5)  
+print(resultat)  
 ```
 
 2. **Définir des variables ou constantes du package**
@@ -182,8 +182,8 @@ print(resultat)
 """Package mathématiques."""
 
 # Constantes du package
-VERSION = "1.0.0"
-PRECISION = 10
+VERSION = "1.0.0"  
+PRECISION = 10  
 
 # Configuration par défaut
 CONFIG = {
@@ -192,8 +192,8 @@ CONFIG = {
 }
 
 # Imports simplifiés
-from .operations import *
-from .geometrie import *
+from .operations import *  
+from .geometrie import *  
 ```
 
 3. **Exécuter du code d'initialisation**
@@ -208,12 +208,12 @@ print("Initialisation du package mathématiques...")
 # Vérifications ou configurations
 import sys
 
-if sys.version_info < (3, 6):
-    raise RuntimeError("Ce package nécessite Python 3.6 ou supérieur")
+if sys.version_info < (3, 10):
+    raise RuntimeError("Ce package nécessite Python 3.10 ou supérieur")
 
 # Imports
-from .operations import addition, soustraction
-from .geometrie import aire_cercle
+from .operations import addition, soustraction  
+from .geometrie import aire_cercle  
 
 print("Package mathématiques chargé avec succès !")
 ```
@@ -334,8 +334,8 @@ __all__ = [
 __version__ = "1.0.0"
 
 # Faciliter l'accès aux sous-packages
-from . import texte
-from . import fichiers
+from . import texte  
+from . import fichiers  
 ```
 
 ### Utilisation des sous-packages
@@ -344,27 +344,27 @@ from . import fichiers
 # Méthode 1 : Import complet
 import utilitaires.texte.formatage
 
-texte = "bonjour le monde"
-resultat = utilitaires.texte.formatage.mettre_en_majuscules(texte)
-print(resultat)  # BONJOUR LE MONDE
+texte = "bonjour le monde"  
+resultat = utilitaires.texte.formatage.mettre_en_majuscules(texte)  
+print(resultat)  # BONJOUR LE MONDE  
 
 # Méthode 2 : Import avec alias
 from utilitaires.texte import formatage as fmt
 
-resultat = fmt.capitaliser("bonjour le monde")
-print(resultat)  # Bonjour Le Monde
+resultat = fmt.capitaliser("bonjour le monde")  
+print(resultat)  # Bonjour Le Monde  
 
 # Méthode 3 : Import direct des fonctions
 from utilitaires.texte import mettre_en_majuscules, est_email_valide
 
-print(mettre_en_majuscules("python"))  # PYTHON
-print(est_email_valide("test@example.com"))  # True
+print(mettre_en_majuscules("python"))  # PYTHON  
+print(est_email_valide("test@example.com"))  # True  
 
 # Méthode 4 : Import du sous-package
 from utilitaires import texte
 
-resultat = texte.nettoyer("  trop    d'espaces  ")
-print(resultat)  # "trop d'espaces"
+resultat = texte.nettoyer("  trop    d'espaces  ")  
+print(resultat)  # "trop d'espaces"  
 ```
 
 ---
@@ -660,7 +660,8 @@ CONSTANTE = 42
 ```
 
 ```python
-# Importe tout (y compris _fonction_privee)
+# Importe fonction_publique et CONSTANTE, mais PAS _fonction_privee
+# (les noms commençant par _ sont exclus de l'import *)
 from module import *
 ```
 
@@ -691,8 +692,8 @@ from module import *
 ```python
 """Mon package avec exports contrôlés."""
 
-from .module1 import fonction_a, fonction_b
-from .module2 import classe_c
+from .module1 import fonction_a, fonction_b  
+from .module2 import classe_c  
 
 # Contrôler ce qui est accessible avec "from mon_package import *"
 __all__ = [
@@ -762,8 +763,8 @@ Chaque package doit avoir une documentation claire dans son `__init__.py` :
 """
 Package de gestion des utilisateurs.
 
-Ce package fournit des outils pour créer, modifier et gérer
-les utilisateurs de l'application.
+Ce package fournit des outils pour créer, modifier et gérer  
+les utilisateurs de l'application.  
 
 Modules:
     - models : Définitions des modèles de données
@@ -779,8 +780,8 @@ Exemple d'utilisation:
 __version__ = "1.0.0"
 __author__ = "Votre Nom"
 
-from .services import creer_utilisateur, modifier_utilisateur
-from .models import Utilisateur
+from .services import creer_utilisateur, modifier_utilisateur  
+from .models import Utilisateur  
 
 __all__ = ['creer_utilisateur', 'modifier_utilisateur', 'Utilisateur']
 ```
@@ -871,8 +872,8 @@ Ce package permet de gérer une bibliothèque : livres, auteurs et emprunts.
 __version__ = "1.0.0"
 
 # Exports principaux
-from .models import Livre, Auteur, Emprunt
-from .services import (
+from .models import Livre, Auteur, Emprunt  
+from .services import (  
     ajouter_livre,
     rechercher_livre,
     emprunter_livre,
@@ -940,12 +941,12 @@ def lister_livres():
 from bibliotheque import ajouter_livre, rechercher_livre
 
 # Ajouter des livres
-livre1 = ajouter_livre("Python pour débutants", "John Doe", "123-456")
-livre2 = ajouter_livre("JavaScript avancé", "Jane Smith", "789-012")
+livre1 = ajouter_livre("Python pour débutants", "John Doe", "123-456")  
+livre2 = ajouter_livre("JavaScript avancé", "Jane Smith", "789-012")  
 
 # Rechercher un livre
-livre = rechercher_livre("Python")
-print(livre)  # Python pour débutants par John Doe (disponible)
+livre = rechercher_livre("Python")  
+print(livre)  # Python pour débutants par John Doe (disponible)  
 ```
 
 ---
