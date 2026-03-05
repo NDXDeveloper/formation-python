@@ -52,7 +52,7 @@ FastAPI exploite pleinement les **annotations de type** Python (type hints) intr
 
 ```python
 @app.get("/items/{item_id}")
-def lire_item(item_id: int, q: str = None):
+def lire_item(item_id: int, q: str | None = None):
     return {"item_id": item_id, "q": q}
 ```
 
@@ -204,7 +204,7 @@ ASGI supporte :
 - La programmation asynchrone
 - Les connexions longues
 
-**Note :** Django et Flask utilisent WSGI (synchrone), tandis que FastAPI utilise ASGI (asynchrone).
+**Note :** Flask utilise WSGI (synchrone), tandis que FastAPI utilise ASGI (asynchrone). Django supporte les deux (WSGI et ASGI).
 
 ### Uvicorn
 
@@ -495,8 +495,5 @@ Dans la prochaine section, nous allons mettre les mains dans le code et créer v
 **Prêt à coder ? Allons-y ! 🚀**
 
 ---
-
-**Section précédente :** [11.1 Introduction aux frameworks web](11.1_introduction_frameworks_web.md)
-**Prochaine section :** [11.2.1 Installation et premier projet FastAPI](11.2.1_installation_premier_projet_fastapi.md)
 
 ⏭️ [Installation et premier projet FastAPI](/11-developpement-web-et-apis/02.1-installation-premier-projet-fastapi.md)

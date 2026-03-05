@@ -99,8 +99,8 @@ Si Git est installé, vous verrez la version (ex : `git version 2.42.0`).
 
 **Linux (Ubuntu/Debian) :**
 ```bash
-sudo apt update
-sudo apt install git
+sudo apt update  
+sudo apt install git  
 ```
 
 **macOS :**
@@ -161,8 +161,8 @@ git config --global pull.rebase false
 
 ```bash
 # Créer un dossier pour votre projet
-mkdir mon_projet
-cd mon_projet
+mkdir mon_projet  
+cd mon_projet  
 
 # Initialiser Git
 git init
@@ -198,8 +198,8 @@ Cette commande est votre meilleure amie ! Elle affiche :
 
 **Exemple de sortie :**
 ```
-On branch main
-Changes not staged for commit:
+On branch main  
+Changes not staged for commit:  
   modified:   README.md
 
 Untracked files:
@@ -347,8 +347,8 @@ echo "def add(a, b): return a + b" > calculatrice.py
 git diff calculatrice.py
 
 # Vous ajoutez et commitez
-git add calculatrice.py
-git commit -m "Ajout de la fonction addition"
+git add calculatrice.py  
+git commit -m "Ajout de la fonction addition"  
 ```
 
 ---
@@ -380,8 +380,8 @@ git checkout ma-nouvelle-fonctionnalite
 git checkout -b ma-nouvelle-fonctionnalite
 
 # Version moderne (Git 2.23+)
-git switch ma-nouvelle-fonctionnalite
-git switch -c ma-nouvelle-fonctionnalite  # créer et changer
+git switch ma-nouvelle-fonctionnalite  
+git switch -c ma-nouvelle-fonctionnalite  # créer et changer  
 ```
 
 ### Fusionner des branches (merge)
@@ -407,13 +407,13 @@ git checkout main
 git checkout -b feature/ajouter-export-pdf
 
 # Travailler sur la fonctionnalité
-echo "def export_pdf(): pass" > export.py
-git add export.py
-git commit -m "Ajout de la fonction export PDF"
+echo "def export_pdf(): pass" > export.py  
+git add export.py  
+git commit -m "Ajout de la fonction export PDF"  
 
 # Faire plusieurs commits si nécessaire
-echo "# Amélioration" >> export.py
-git commit -am "Amélioration de export_pdf"
+echo "# Amélioration" >> export.py  
+git commit -am "Amélioration de export_pdf"  
 
 # Retourner sur main
 git checkout main
@@ -428,13 +428,13 @@ git branch -d feature/ajouter-export-pdf
 ### Visualisation des branches
 
 ```
-Avant fusion :
-main        : A --- B --- C
+Avant fusion :  
+main        : A --- B --- C  
                        \
 feature     :           D --- E
 
-Après fusion :
-main        : A --- B --- C ------- F
+Après fusion :  
+main        : A --- B --- C ------- F  
                        \           /
 feature     :           D --- E
 ```
@@ -505,15 +505,15 @@ git pull
 
 # Travailler sur votre code
 # ... modifications ...
-git add .
-git commit -m "Ajout de la nouvelle fonctionnalité"
+git add .  
+git commit -m "Ajout de la nouvelle fonctionnalité"  
 
 # Pousser vos modifications
 git push
 
 # Si quelqu'un a poussé avant vous
-git pull  # Récupérer d'abord
-git push  # Puis pousser
+git pull  # Récupérer d'abord  
+git push  # Puis pousser  
 ```
 
 ---
@@ -541,26 +541,26 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
+build/  
+develop-eggs/  
+dist/  
+downloads/  
+eggs/  
 .eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
+lib/  
+lib64/  
+parts/  
+sdist/  
+var/  
+wheels/  
 *.egg-info/
 .installed.cfg
 *.egg
 
 # Environnements virtuels
-venv/
-env/
-ENV/
+venv/  
+env/  
+ENV/  
 .venv
 
 # IDEs
@@ -595,8 +595,8 @@ htmlcov/
 Thumbs.db
 
 # Données sensibles
-secrets.py
-config.local.py
+secrets.py  
+config.local.py  
 ```
 
 ### Ignorer un fichier déjà tracké
@@ -668,9 +668,9 @@ git commit -m "refactor: amélioration de la performance de la fonction search
 
 ```bash
 # Trop vague
-git commit -m "fix bug"
-git commit -m "modifications"
-git commit -m "update"
+git commit -m "fix bug"  
+git commit -m "modifications"  
+git commit -m "update"  
 
 # Trop long sur une ligne
 git commit -m "j'ai corrigé le bug qui faisait planter l'application quand on cliquait sur le bouton de validation du formulaire dans certaines conditions spécifiques"
@@ -681,7 +681,7 @@ git commit -m "fix login, ajout feature export, update readme"
 
 ### Règles d'or pour les messages de commit
 
-1. **Utilisez l'impératif** : "Ajoute" plutôt que "Ajouté" ou "Ajoute"
+1. **Utilisez l'impératif** : "Ajoute" plutôt que "Ajouté" ou "A ajouté"
 2. **Soyez concis** : 50 caractères maximum pour la première ligne
 3. **Expliquez le "pourquoi"**, pas le "quoi" (le code montre le "quoi")
 4. **Un commit = une modification logique** : ne mélangez pas plusieurs changements
@@ -719,8 +719,8 @@ git restore --staged fichier.py
 git commit --amend -m "Nouveau message"
 
 # Ajouter des fichiers oubliés au dernier commit
-git add fichier_oublie.py
-git commit --amend --no-edit
+git add fichier_oublie.py  
+git commit --amend --no-edit  
 ```
 
 **⚠️ Attention** : n'utilisez jamais `--amend` sur un commit déjà poussé sur le distant !
@@ -784,9 +784,9 @@ Les conflits surviennent quand deux personnes modifient la même partie d'un fic
 ```bash
 git pull
 # Output:
-Auto-merging fichier.py
-CONFLICT (content): Merge conflict in fichier.py
-Automatic merge failed; fix conflicts and then commit the result.
+Auto-merging fichier.py  
+CONFLICT (content): Merge conflict in fichier.py  
+Automatic merge failed; fix conflicts and then commit the result.  
 ```
 
 #### Étape 2 : Identifier les fichiers en conflit
@@ -893,16 +893,16 @@ git checkout -b feature/nom-de-la-fonctionnalite
 # ...
 
 # Fusionnez quand c'est terminé
-git checkout main
-git merge feature/nom-de-la-fonctionnalite
+git checkout main  
+git merge feature/nom-de-la-fonctionnalite  
 ```
 
 ### 4. Tirez avant de pousser
 
 ```bash
 # Toujours récupérer les dernières modifications avant de pousser
-git pull
-git push
+git pull  
+git push  
 ```
 
 ### 5. Ne commitez jamais de fichiers sensibles
@@ -918,8 +918,8 @@ git push
 
 ```bash
 # Vérifiez ce que vous allez commiter
-git status
-git diff --staged
+git status  
+git diff --staged  
 
 # Puis commitez
 git commit -m "message"
@@ -974,9 +974,9 @@ main          : Production (toujours stable)
   ↓
 develop       : Développement (intégration)
   ↓
-feature/*     : Nouvelles fonctionnalités
-hotfix/*      : Corrections urgentes
-release/*     : Préparation de release
+feature/*     : Nouvelles fonctionnalités  
+hotfix/*      : Corrections urgentes  
+release/*     : Préparation de release  
 ```
 
 ### GitHub Flow (projets web modernes)
@@ -1047,14 +1047,14 @@ git branch --merged
 
 ```bash
 # Créer des raccourcis pour les commandes fréquentes
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.ci commit
-git config --global alias.st status
+git config --global alias.co checkout  
+git config --global alias.br branch  
+git config --global alias.ci commit  
+git config --global alias.st status  
 
 # Utilisation
-git co main        # au lieu de git checkout main
-git br             # au lieu de git branch
+git co main        # au lieu de git checkout main  
+git br             # au lieu de git branch  
 ```
 
 ### Cherrypick (appliquer un commit spécifique)
@@ -1100,7 +1100,7 @@ git cherry-pick a1b2c3d
 
 - **Learn Git Branching** : [learngitbranching.js.org](https://learngitbranching.js.org/)
 - **Git-it** : tutoriel en ligne de commande
-- **GitHub Learning Lab** : [lab.github.com](https://lab.github.com/)
+- **GitHub Skills** : [skills.github.com](https://skills.github.com/)
 
 ---
 
@@ -1109,67 +1109,67 @@ git cherry-pick a1b2c3d
 ### Configuration
 
 ```bash
-git config --global user.name "Nom"
-git config --global user.email "email@example.com"
-git config --list
+git config --global user.name "Nom"  
+git config --global user.email "email@example.com"  
+git config --list  
 ```
 
 ### Création de repository
 
 ```bash
-git init                                    # Nouveau repo local
-git clone URL                               # Cloner un repo distant
+git init                                    # Nouveau repo local  
+git clone URL                               # Cloner un repo distant  
 ```
 
 ### Modifications
 
 ```bash
-git status                                  # État du repo
-git add fichier.py                          # Ajouter au staging
-git add .                                   # Ajouter tous les fichiers
-git commit -m "message"                     # Créer un commit
-git commit -am "message"                    # Add + commit (fichiers trackés)
+git status                                  # État du repo  
+git add fichier.py                          # Ajouter au staging  
+git add .                                   # Ajouter tous les fichiers  
+git commit -m "message"                     # Créer un commit  
+git commit -am "message"                    # Add + commit (fichiers trackés)  
 ```
 
 ### Branches
 
 ```bash
-git branch                                  # Lister les branches
-git branch nom                              # Créer une branche
-git checkout nom                            # Changer de branche
-git checkout -b nom                         # Créer et changer
-git merge nom                               # Fusionner une branche
-git branch -d nom                           # Supprimer une branche
+git branch                                  # Lister les branches  
+git branch nom                              # Créer une branche  
+git checkout nom                            # Changer de branche  
+git checkout -b nom                         # Créer et changer  
+git merge nom                               # Fusionner une branche  
+git branch -d nom                           # Supprimer une branche  
 ```
 
 ### Synchronisation
 
 ```bash
-git remote add origin URL                   # Ajouter un distant
-git push -u origin main                     # Pousser (première fois)
-git push                                    # Pousser
-git pull                                    # Tirer (fetch + merge)
-git fetch                                   # Récupérer sans merger
+git remote add origin URL                   # Ajouter un distant  
+git push -u origin main                     # Pousser (première fois)  
+git push                                    # Pousser  
+git pull                                    # Tirer (fetch + merge)  
+git fetch                                   # Récupérer sans merger  
 ```
 
 ### Historique
 
 ```bash
-git log                                     # Historique complet
-git log --oneline                           # Historique condensé
-git log --graph --all                       # Avec graphique
-git diff                                    # Différences non stagées
-git diff --staged                           # Différences stagées
+git log                                     # Historique complet  
+git log --oneline                           # Historique condensé  
+git log --graph --all                       # Avec graphique  
+git diff                                    # Différences non stagées  
+git diff --staged                           # Différences stagées  
 ```
 
 ### Annulation
 
 ```bash
-git restore fichier.py                      # Annuler modifications
-git restore --staged fichier.py             # Retirer du staging
-git reset HEAD~1                            # Annuler dernier commit (garder modifs)
-git reset --hard HEAD~1                     # Annuler dernier commit (supprimer modifs)
-git revert a1b2c3d                          # Créer commit qui annule
+git restore fichier.py                      # Annuler modifications  
+git restore --staged fichier.py             # Retirer du staging  
+git reset HEAD~1                            # Annuler dernier commit (garder modifs)  
+git reset --hard HEAD~1                     # Annuler dernier commit (supprimer modifs)  
+git revert a1b2c3d                          # Créer commit qui annule  
 ```
 
 ---

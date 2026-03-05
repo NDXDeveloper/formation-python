@@ -20,19 +20,19 @@ Python possède déjà une bibliothèque intégrée pour faire des requêtes HTT
 
 ```python
 # Avec urllib (bibliothèque standard)
-import urllib.request
-import json
+import urllib.request  
+import json  
 
-req = urllib.request.Request('https://api.example.com/data')
-req.add_header('Content-Type', 'application/json')
-response = urllib.request.urlopen(req)
-data = json.loads(response.read().decode('utf-8'))
+req = urllib.request.Request('https://api.example.com/data')  
+req.add_header('Content-Type', 'application/json')  
+response = urllib.request.urlopen(req)  
+data = json.loads(response.read().decode('utf-8'))  
 
 # Avec requests (beaucoup plus simple !)
 import requests
 
-response = requests.get('https://api.example.com/data')
-data = response.json()
+response = requests.get('https://api.example.com/data')  
+data = response.json()  
 ```
 
 La différence est frappante ! `requests` rend le code beaucoup plus lisible et maintenable.
@@ -57,8 +57,8 @@ pip install requests
 ### Vérifier l'installation
 
 ```python
-import requests
-print(requests.__version__)
+import requests  
+print(requests.__version__)  
 ```
 
 Vous devriez voir la version installée (par exemple, 2.31.0).
@@ -144,8 +144,8 @@ data = {
 # Requête POST
 response = requests.post('https://httpbin.org/post', json=data)
 
-print(f"Code de statut : {response.status_code}")
-print(response.json())
+print(f"Code de statut : {response.status_code}")  
+print(response.json())  
 ```
 
 **Note :** Le paramètre `json=data` convertit automatiquement le dictionnaire en JSON et définit le bon header Content-Type.
@@ -284,8 +284,8 @@ response = requests.get('https://api.github.com')
 print(response.headers)
 
 # Accéder à un header spécifique
-print(f"Content-Type : {response.headers['Content-Type']}")
-print(f"Date : {response.headers['Date']}")
+print(f"Content-Type : {response.headers['Content-Type']}")  
+print(f"Date : {response.headers['Date']}")  
 ```
 
 ### Envoyer des headers personnalisés
@@ -389,10 +389,10 @@ response = requests.get('https://api.github.com/users/torvalds')
 data = response.json()
 
 # Accéder aux données
-print(f"Nom : {data['name']}")
-print(f"Bio : {data['bio']}")
-print(f"Repos publics : {data['public_repos']}")
-print(f"Followers : {data['followers']}")
+print(f"Nom : {data['name']}")  
+print(f"Bio : {data['bio']}")  
+print(f"Repos publics : {data['public_repos']}")  
+print(f"Followers : {data['followers']}")  
 ```
 
 **Attention :** Si la réponse n'est pas du JSON valide, `response.json()` lèvera une exception.
@@ -451,20 +451,7 @@ Le paramètre `data=` envoie les données en format `application/x-www-form-urle
 
 ### Envoyer des fichiers
 
-```python
-import requests
-
-# Ouvrir et envoyer un fichier
-files = {
-    'file': open('document.pdf', 'rb')
-}
-
-response = requests.post('https://httpbin.org/post', files=files)
-
-print(f"Fichier envoyé : {response.status_code}")
-```
-
-**Avec contexte manager (recommandé) :**
+**Avec context manager (recommandé) :**
 
 ```python
 import requests
@@ -481,13 +468,15 @@ print("Fichier envoyé")
 ```python
 import requests
 
-files = {
-    'file1': open('document1.pdf', 'rb'),
-    'file2': open('document2.pdf', 'rb'),
-    'photo': open('image.jpg', 'rb')
-}
-
-response = requests.post('https://httpbin.org/post', files=files)
+with open('document1.pdf', 'rb') as f1, \
+     open('document2.pdf', 'rb') as f2, \
+     open('image.jpg', 'rb') as f3:
+    files = {
+        'file1': f1,
+        'file2': f2,
+        'photo': f3
+    }
+    response = requests.post('https://httpbin.org/post', files=files)
 ```
 
 ### Spécifier le nom du fichier
@@ -495,11 +484,11 @@ response = requests.post('https://httpbin.org/post', files=files)
 ```python
 import requests
 
-files = {
-    'file': ('mon_document.pdf', open('document.pdf', 'rb'), 'application/pdf')
-}
-
-response = requests.post('https://httpbin.org/post', files=files)
+with open('document.pdf', 'rb') as f:
+    files = {
+        'file': ('mon_document.pdf', f, 'application/pdf')
+    }
+    response = requests.post('https://httpbin.org/post', files=files)
 ```
 
 ## Authentification
@@ -509,8 +498,8 @@ De nombreuses APIs nécessitent une authentification.
 ### Basic Authentication
 
 ```python
-import requests
-from requests.auth import HTTPBasicAuth
+import requests  
+from requests.auth import HTTPBasicAuth  
 
 # Méthode 1 : Avec HTTPBasicAuth
 response = requests.get(
@@ -604,9 +593,9 @@ import requests
 
 headers = {'Authorization': 'Bearer token123'}
 
-response1 = requests.get('https://api.example.com/users', headers=headers)
-response2 = requests.get('https://api.example.com/posts', headers=headers)
-response3 = requests.get('https://api.example.com/comments', headers=headers)
+response1 = requests.get('https://api.example.com/users', headers=headers)  
+response2 = requests.get('https://api.example.com/posts', headers=headers)  
+response3 = requests.get('https://api.example.com/comments', headers=headers)  
 ```
 
 Avec une session, c'est plus simple :
@@ -614,12 +603,12 @@ Avec une session, c'est plus simple :
 ```python
 import requests
 
-session = requests.Session()
-session.headers.update({'Authorization': 'Bearer token123'})
+session = requests.Session()  
+session.headers.update({'Authorization': 'Bearer token123'})  
 
-response1 = session.get('https://api.example.com/users')
-response2 = session.get('https://api.example.com/posts')
-response3 = session.get('https://api.example.com/comments')
+response1 = session.get('https://api.example.com/users')  
+response2 = session.get('https://api.example.com/posts')  
+response3 = session.get('https://api.example.com/comments')  
 ```
 
 ### Avantages des sessions
@@ -731,8 +720,8 @@ RequestException (classe de base)
 ### Gestion complète des erreurs
 
 ```python
-import requests
-from requests.exceptions import RequestException, ConnectionError, Timeout, HTTPError
+import requests  
+from requests.exceptions import RequestException, ConnectionError, Timeout, HTTPError  
 
 def fetch_data(url):
     try:
@@ -758,8 +747,8 @@ def fetch_data(url):
     return None
 
 # Utilisation
-data = fetch_data('https://api.example.com/data')
-if data:
+data = fetch_data('https://api.example.com/data')  
+if data:  
     print("Données récupérées avec succès")
 ```
 
@@ -793,8 +782,8 @@ import requests
 # Suit automatiquement les redirections
 response = requests.get('https://github.com')
 
-print(f"URL finale : {response.url}")
-print(f"Nombre de redirections : {len(response.history)}")
+print(f"URL finale : {response.url}")  
+print(f"Nombre de redirections : {len(response.history)}")  
 
 # Historique des redirections
 for resp in response.history:
@@ -817,8 +806,11 @@ if response.status_code in (301, 302, 303, 307, 308):
 ```python
 import requests
 
+session = requests.Session()  
+session.max_redirects = 3  
+
 try:
-    response = requests.get('https://example.com', max_redirects=3)
+    response = session.get('https://example.com')
 except requests.exceptions.TooManyRedirects:
     print("Trop de redirections")
 ```
@@ -838,8 +830,8 @@ response = requests.get('https://www.example.com')
 print(response.cookies)
 
 # Accéder à un cookie spécifique
-session_id = response.cookies.get('session_id')
-print(f"Session ID : {session_id}")
+session_id = response.cookies.get('session_id')  
+print(f"Session ID : {session_id}")  
 ```
 
 ### Envoyer des cookies
@@ -936,13 +928,13 @@ print("Fichier téléchargé")
 ### Avec barre de progression
 
 ```python
-import requests
-from tqdm import tqdm
+import requests  
+from tqdm import tqdm  
 
 url = 'https://example.com/big_file.zip'
 
-response = requests.get(url, stream=True)
-total_size = int(response.headers.get('content-length', 0))
+response = requests.get(url, stream=True)  
+total_size = int(response.headers.get('content-length', 0))  
 
 with open('big_file.zip', 'wb') as f:
     with tqdm(total=total_size, unit='B', unit_scale=True) as progress_bar:
@@ -958,8 +950,8 @@ print("Téléchargement terminé !")
 Créons un script qui utilise l'API publique de GitHub pour obtenir des informations.
 
 ```python
-import requests
-import json
+import requests  
+import json  
 
 class GitHubAPI:
     def __init__(self, token=None):
@@ -972,7 +964,7 @@ class GitHubAPI:
             })
 
         self.session.headers.update({
-            'Accept': 'application/vnd.github.v3+json'
+            'Accept': 'application/vnd.github+json'
         })
 
     def get_user(self, username):
@@ -1028,8 +1020,8 @@ class GitHubAPI:
 api = GitHubAPI()
 
 # Obtenir les infos d'un utilisateur
-user = api.get_user('torvalds')
-if user:
+user = api.get_user('torvalds')  
+if user:  
     print(f"Nom : {user['name']}")
     print(f"Bio : {user['bio']}")
     print(f"Repos publics : {user['public_repos']}")
@@ -1037,16 +1029,16 @@ if user:
     print()
 
 # Obtenir les repos d'un utilisateur
-print("Repositories récents de torvalds :")
-repos = api.get_user_repos('torvalds')
-for repo in repos[:5]:
+print("Repositories récents de torvalds :")  
+repos = api.get_user_repos('torvalds')  
+for repo in repos[:5]:  
     print(f"- {repo['name']} : {repo['description']}")
 print()
 
 # Rechercher des repos Python
-print("Repos Python les plus populaires :")
-search_results = api.search_repositories('machine learning', language='python')
-if search_results:
+print("Repos Python les plus populaires :")  
+search_results = api.search_repositories('machine learning', language='python')  
+if search_results:  
     for repo in search_results['items']:
         print(f"- {repo['full_name']} : {repo['stargazers_count']} ⭐")
 ```
@@ -1054,8 +1046,8 @@ if search_results:
 ## Exemple pratique : API de météo
 
 ```python
-import requests
-from datetime import datetime
+import requests  
+from datetime import datetime  
 
 class WeatherAPI:
     def __init__(self, api_key):
@@ -1097,10 +1089,10 @@ class WeatherAPI:
         print(f"💨 Vent : {data['wind']['speed']} m/s")
 
 # Utilisation
-api = WeatherAPI('VOTRE_CLE_API')
-api.display_weather('Paris')
-api.display_weather('London')
-api.display_weather('Tokyo')
+api = WeatherAPI('VOTRE_CLE_API')  
+api.display_weather('Paris')  
+api.display_weather('London')  
+api.display_weather('Tokyo')  
 ```
 
 ## Bonnes pratiques
@@ -1136,8 +1128,8 @@ with requests.Session() as session:
     response2 = session.get(url2)
 
 # ❌ Moins efficace
-response1 = requests.get(url1, headers={'Authorization': 'Bearer token'})
-response2 = requests.get(url2, headers={'Authorization': 'Bearer token'})
+response1 = requests.get(url1, headers={'Authorization': 'Bearer token'})  
+response2 = requests.get(url2, headers={'Authorization': 'Bearer token'})  
 ```
 
 ### 4. Ne pas exposer les clés API dans le code
@@ -1167,20 +1159,20 @@ else:
 
 ```python
 # ✅ Bon
-response = requests.get(url)
-response.raise_for_status()  # Lève une exception si erreur
-data = response.json()
+response = requests.get(url)  
+response.raise_for_status()  # Lève une exception si erreur  
+data = response.json()  
 
 # ❌ Moins robuste
-response = requests.get(url)
-data = response.json()  # Peut échouer si erreur HTTP
+response = requests.get(url)  
+data = response.json()  # Peut échouer si erreur HTTP  
 ```
 
 ### 7. Respecter les limites de taux (rate limiting)
 
 ```python
-import time
-import requests
+import time  
+import requests  
 
 def api_call_with_rate_limit(url, delay=1):
     response = requests.get(url)
@@ -1199,18 +1191,18 @@ def call_api(url):
 ### 8. Logger les requêtes en développement
 
 ```python
-import requests
-import logging
+import requests  
+import logging  
 
 # Activer les logs HTTP
-import http.client as http_client
-http_client.HTTPConnection.debuglevel = 1
+import http.client as http_client  
+http_client.HTTPConnection.debuglevel = 1  
 
-logging.basicConfig()
-logging.getLogger().setLevel(logging.DEBUG)
-requests_log = logging.getLogger("requests.packages.urllib3")
-requests_log.setLevel(logging.DEBUG)
-requests_log.propagate = True
+logging.basicConfig()  
+logging.getLogger().setLevel(logging.DEBUG)  
+requests_log = logging.getLogger("urllib3")  
+requests_log.setLevel(logging.DEBUG)  
+requests_log.propagate = True  
 
 # Maintenant, toutes les requêtes sont loggées
 response = requests.get('https://api.github.com')
@@ -1238,8 +1230,8 @@ async def fetch_data():
 ### aiohttp : Complètement asynchrone
 
 ```python
-import aiohttp
-import asyncio
+import aiohttp  
+import asyncio  
 
 async def fetch_data():
     async with aiohttp.ClientSession() as session:
@@ -1253,15 +1245,15 @@ asyncio.run(fetch_data())
 
 Dans cette section, vous avez appris :
 
-✅ Comment installer et utiliser la bibliothèque requests
-✅ Les différentes méthodes HTTP (GET, POST, PUT, PATCH, DELETE)
-✅ Comment envoyer des paramètres de requête et des headers
-✅ Comment gérer les réponses et parser le JSON
-✅ Comment envoyer des données (JSON, formulaires, fichiers)
-✅ Les différents types d'authentification (Basic, Bearer, API Key)
-✅ Comment utiliser les sessions pour optimiser les requêtes
-✅ L'importance des timeouts et la gestion des erreurs
-✅ Comment télécharger des fichiers
+✅ Comment installer et utiliser la bibliothèque requests  
+✅ Les différentes méthodes HTTP (GET, POST, PUT, PATCH, DELETE)  
+✅ Comment envoyer des paramètres de requête et des headers  
+✅ Comment gérer les réponses et parser le JSON  
+✅ Comment envoyer des données (JSON, formulaires, fichiers)  
+✅ Les différents types d'authentification (Basic, Bearer, API Key)  
+✅ Comment utiliser les sessions pour optimiser les requêtes  
+✅ L'importance des timeouts et la gestion des erreurs  
+✅ Comment télécharger des fichiers  
 ✅ Les bonnes pratiques pour des requêtes HTTP robustes
 
 La bibliothèque requests est un outil essentiel pour tout développeur Python travaillant avec des APIs web. Elle vous permet de consommer facilement n'importe quelle API REST et d'intégrer des services externes dans vos applications.

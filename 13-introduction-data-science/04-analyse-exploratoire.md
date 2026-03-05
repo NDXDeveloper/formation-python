@@ -75,10 +75,10 @@ Nous allons explorer chacune de ces étapes avec des exemples pratiques.
 ### Chargement d'un dataset
 
 ```python
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+import pandas as pd  
+import numpy as np  
+import matplotlib.pyplot as plt  
+import seaborn as sns  
 
 # Chargement depuis un fichier CSV
 df = pd.read_csv('donnees.csv')
@@ -100,23 +100,23 @@ df = sns.load_dataset('iris')
 ### 2.1 Vue d'ensemble du dataset
 
 ```python
-import pandas as pd
-import seaborn as sns
+import pandas as pd  
+import seaborn as sns  
 
 # Chargement du dataset Iris
 df = sns.load_dataset('iris')
 
 # Afficher les premières lignes
-print("Premières lignes :")
-print(df.head())
+print("Premières lignes :")  
+print(df.head())  
 
 # Afficher les dernières lignes
-print("\nDernières lignes :")
-print(df.tail())
+print("\nDernières lignes :")  
+print(df.tail())  
 
 # Afficher un échantillon aléatoire
-print("\nÉchantillon aléatoire :")
-print(df.sample(5))
+print("\nÉchantillon aléatoire :")  
+print(df.sample(5))  
 ```
 
 **Questions à se poser :**
@@ -128,42 +128,42 @@ print(df.sample(5))
 
 ```python
 # Dimensions du dataset
-print(f"Nombre de lignes : {df.shape[0]}")
-print(f"Nombre de colonnes : {df.shape[1]}")
-print(f"Dimensions : {df.shape}")
+print(f"Nombre de lignes : {df.shape[0]}")  
+print(f"Nombre de colonnes : {df.shape[1]}")  
+print(f"Dimensions : {df.shape}")  
 
 # Informations détaillées
-print("\nInformations sur le dataset :")
-print(df.info())
+print("\nInformations sur le dataset :")  
+print(df.info())  
 
 # Types de données
-print("\nTypes de données :")
-print(df.dtypes)
+print("\nTypes de données :")  
+print(df.dtypes)  
 
 # Noms des colonnes
-print("\nNoms des colonnes :")
-print(df.columns.tolist())
+print("\nNoms des colonnes :")  
+print(df.columns.tolist())  
 ```
 
 ### 2.3 Valeurs manquantes
 
 ```python
 # Comptage des valeurs manquantes
-print("Valeurs manquantes par colonne :")
-print(df.isnull().sum())
+print("Valeurs manquantes par colonne :")  
+print(df.isnull().sum())  
 
 # Pourcentage de valeurs manquantes
-print("\nPourcentage de valeurs manquantes :")
-print((df.isnull().sum() / len(df)) * 100)
+print("\nPourcentage de valeurs manquantes :")  
+print((df.isnull().sum() / len(df)) * 100)  
 
 # Visualisation des valeurs manquantes
-import matplotlib.pyplot as plt
-import seaborn as sns
+import matplotlib.pyplot as plt  
+import seaborn as sns  
 
-plt.figure(figsize=(10, 6))
-sns.heatmap(df.isnull(), cbar=False, yticklabels=False, cmap='viridis')
-plt.title('Carte des valeurs manquantes')
-plt.show()
+plt.figure(figsize=(10, 6))  
+sns.heatmap(df.isnull(), cbar=False, yticklabels=False, cmap='viridis')  
+plt.title('Carte des valeurs manquantes')  
+plt.show()  
 ```
 
 ### 2.4 Valeurs dupliquées
@@ -173,9 +173,9 @@ plt.show()
 print(f"Nombre de lignes dupliquées : {df.duplicated().sum()}")
 
 # Afficher les doublons
-doublons = df[df.duplicated()]
-print("\nLignes dupliquées :")
-print(doublons)
+doublons = df[df.duplicated()]  
+print("\nLignes dupliquées :")  
+print(doublons)  
 
 # Supprimer les doublons (si nécessaire)
 df_sans_doublons = df.drop_duplicates()
@@ -192,8 +192,8 @@ Le nettoyage est une étape cruciale qui peut prendre 60-80% du temps d'un proje
 df_clean = df.dropna()
 
 # Stratégie 2 : Suppression des colonnes avec trop de valeurs manquantes
-seuil = 0.5  # 50% de valeurs manquantes
-df_clean = df.dropna(thresh=len(df) * seuil, axis=1)
+seuil = 0.5  # 50% de valeurs manquantes  
+df_clean = df.dropna(thresh=len(df) * seuil, axis=1)  
 
 # Stratégie 3 : Remplacement par la moyenne (pour variables numériques)
 df['colonne'] = df['colonne'].fillna(df['colonne'].mean())
@@ -232,11 +232,11 @@ def detecter_outliers_zscore(df, colonne, seuil=3):
     return outliers
 
 # Visualisation des outliers avec box plot
-plt.figure(figsize=(10, 6))
-plt.boxplot(df['colonne_numerique'])
-plt.title('Détection des valeurs aberrantes')
-plt.ylabel('Valeur')
-plt.show()
+plt.figure(figsize=(10, 6))  
+plt.boxplot(df['colonne_numerique'])  
+plt.title('Détection des valeurs aberrantes')  
+plt.ylabel('Valeur')  
+plt.show()  
 ```
 
 ### 3.3 Conversion de types de données
@@ -263,38 +263,38 @@ L'analyse descriptive résume les caractéristiques principales des données.
 
 ```python
 # Statistiques descriptives complètes
-print("Statistiques descriptives :")
-print(df.describe())
+print("Statistiques descriptives :")  
+print(df.describe())  
 
 # Statistiques pour une colonne spécifique
-print("\nStatistiques pour une colonne :")
-print(df['sepal_length'].describe())
+print("\nStatistiques pour une colonne :")  
+print(df['sepal_length'].describe())  
 
 # Statistiques individuelles
-moyenne = df['sepal_length'].mean()
-mediane = df['sepal_length'].median()
-mode = df['sepal_length'].mode()[0]
-std = df['sepal_length'].std()
-variance = df['sepal_length'].var()
-minimum = df['sepal_length'].min()
-maximum = df['sepal_length'].max()
+moyenne = df['sepal_length'].mean()  
+mediane = df['sepal_length'].median()  
+mode = df['sepal_length'].mode()[0]  
+std = df['sepal_length'].std()  
+variance = df['sepal_length'].var()  
+minimum = df['sepal_length'].min()  
+maximum = df['sepal_length'].max()  
 
-print(f"Moyenne : {moyenne:.2f}")
-print(f"Médiane : {mediane:.2f}")
-print(f"Mode : {mode:.2f}")
-print(f"Écart-type : {std:.2f}")
-print(f"Variance : {variance:.2f}")
-print(f"Min : {minimum:.2f}")
-print(f"Max : {maximum:.2f}")
+print(f"Moyenne : {moyenne:.2f}")  
+print(f"Médiane : {mediane:.2f}")  
+print(f"Mode : {mode:.2f}")  
+print(f"Écart-type : {std:.2f}")  
+print(f"Variance : {variance:.2f}")  
+print(f"Min : {minimum:.2f}")  
+print(f"Max : {maximum:.2f}")  
 
 # Quartiles
-Q1 = df['sepal_length'].quantile(0.25)
-Q2 = df['sepal_length'].quantile(0.50)  # = médiane
-Q3 = df['sepal_length'].quantile(0.75)
+Q1 = df['sepal_length'].quantile(0.25)  
+Q2 = df['sepal_length'].quantile(0.50)  # = médiane  
+Q3 = df['sepal_length'].quantile(0.75)  
 
-print(f"\nQ1 (25%) : {Q1:.2f}")
-print(f"Q2 (50%) : {Q2:.2f}")
-print(f"Q3 (75%) : {Q3:.2f}")
+print(f"\nQ1 (25%) : {Q1:.2f}")  
+print(f"Q2 (50%) : {Q2:.2f}")  
+print(f"Q3 (75%) : {Q3:.2f}")  
 ```
 
 **Interprétation des statistiques :**
@@ -311,12 +311,12 @@ print(f"Q3 (75%) : {Q3:.2f}")
 
 ```python
 # Comptage des valeurs uniques
-print("Valeurs uniques :")
-print(df['species'].value_counts())
+print("Valeurs uniques :")  
+print(df['species'].value_counts())  
 
 # Proportions
-print("\nProportions :")
-print(df['species'].value_counts(normalize=True))
+print("\nProportions :")  
+print(df['species'].value_counts(normalize=True))  
 
 # Nombre de valeurs uniques
 print(f"\nNombre de catégories : {df['species'].nunique()}")
@@ -332,15 +332,15 @@ print(f"Catégorie la plus fréquente : {df['species'].mode()[0]}")
 # skewness > 0 : distribution asymétrique à droite (queue à droite)
 # skewness < 0 : distribution asymétrique à gauche (queue à gauche)
 # skewness ≈ 0 : distribution symétrique
-asymetrie = df['sepal_length'].skew()
-print(f"Asymétrie : {asymetrie:.2f}")
+asymetrie = df['sepal_length'].skew()  
+print(f"Asymétrie : {asymetrie:.2f}")  
 
 # Aplatissement (Kurtosis)
 # kurtosis > 0 : distribution pointue (leptokurtique)
 # kurtosis < 0 : distribution aplatie (platikurtique)
 # kurtosis ≈ 0 : distribution normale (mésokurtique)
-aplatissement = df['sepal_length'].kurtosis()
-print(f"Aplatissement : {aplatissement:.2f}")
+aplatissement = df['sepal_length'].kurtosis()  
+print(f"Aplatissement : {aplatissement:.2f}")  
 ```
 
 ## 5. Visualisation des données
@@ -350,93 +350,93 @@ La visualisation est le cœur de l'EDA. "Un graphique vaut mille tableaux."
 ### 5.1 Distribution des variables numériques
 
 ```python
-import matplotlib.pyplot as plt
-import seaborn as sns
+import matplotlib.pyplot as plt  
+import seaborn as sns  
 
 # Configuration de style
 sns.set_style("whitegrid")
 
 # Histogramme
-plt.figure(figsize=(10, 6))
-plt.hist(df['sepal_length'], bins=30, edgecolor='black', alpha=0.7)
-plt.xlabel('Longueur du sépale')
-plt.ylabel('Fréquence')
-plt.title('Distribution de la longueur du sépale')
-plt.axvline(df['sepal_length'].mean(), color='red', linestyle='--',
+plt.figure(figsize=(10, 6))  
+plt.hist(df['sepal_length'], bins=30, edgecolor='black', alpha=0.7)  
+plt.xlabel('Longueur du sépale')  
+plt.ylabel('Fréquence')  
+plt.title('Distribution de la longueur du sépale')  
+plt.axvline(df['sepal_length'].mean(), color='red', linestyle='--',  
             label=f'Moyenne: {df["sepal_length"].mean():.2f}')
-plt.legend()
-plt.show()
+plt.legend()  
+plt.show()  
 
 # Courbe de densité (KDE)
-plt.figure(figsize=(10, 6))
-df['sepal_length'].plot(kind='kde')
-plt.xlabel('Longueur du sépale')
-plt.ylabel('Densité')
-plt.title('Courbe de densité')
-plt.show()
+plt.figure(figsize=(10, 6))  
+df['sepal_length'].plot(kind='kde')  
+plt.xlabel('Longueur du sépale')  
+plt.ylabel('Densité')  
+plt.title('Courbe de densité')  
+plt.show()  
 
 # Histogramme + KDE combinés
-plt.figure(figsize=(10, 6))
-sns.histplot(df['sepal_length'], kde=True, bins=30)
-plt.title('Distribution avec courbe de densité')
-plt.show()
+plt.figure(figsize=(10, 6))  
+sns.histplot(df['sepal_length'], kde=True, bins=30)  
+plt.title('Distribution avec courbe de densité')  
+plt.show()  
 ```
 
 ### 5.2 Box plots pour détecter les outliers
 
 ```python
 # Box plot simple
-plt.figure(figsize=(10, 6))
-sns.boxplot(data=df['sepal_length'])
-plt.title('Box plot - Longueur du sépale')
-plt.show()
+plt.figure(figsize=(10, 6))  
+sns.boxplot(data=df['sepal_length'])  
+plt.title('Box plot - Longueur du sépale')  
+plt.show()  
 
 # Box plots multiples (par catégorie)
-plt.figure(figsize=(12, 6))
-sns.boxplot(x='species', y='sepal_length', data=df)
-plt.title('Distribution de la longueur du sépale par espèce')
-plt.show()
+plt.figure(figsize=(12, 6))  
+sns.boxplot(x='species', y='sepal_length', data=df)  
+plt.title('Distribution de la longueur du sépale par espèce')  
+plt.show()  
 
 # Violin plot (combine box plot et KDE)
-plt.figure(figsize=(12, 6))
-sns.violinplot(x='species', y='sepal_length', data=df)
-plt.title('Violin plot - Longueur du sépale par espèce')
-plt.show()
+plt.figure(figsize=(12, 6))  
+sns.violinplot(x='species', y='sepal_length', data=df)  
+plt.title('Violin plot - Longueur du sépale par espèce')  
+plt.show()  
 ```
 
 ### 5.3 Variables catégorielles
 
 ```python
 # Diagramme à barres
-plt.figure(figsize=(10, 6))
-df['species'].value_counts().plot(kind='bar')
-plt.xlabel('Espèce')
-plt.ylabel('Nombre d\'observations')
-plt.title('Distribution des espèces')
-plt.xticks(rotation=45)
-plt.show()
+plt.figure(figsize=(10, 6))  
+df['species'].value_counts().plot(kind='bar')  
+plt.xlabel('Espèce')  
+plt.ylabel('Nombre d\'observations')  
+plt.title('Distribution des espèces')  
+plt.xticks(rotation=45)  
+plt.show()  
 
 # Diagramme circulaire
-plt.figure(figsize=(8, 8))
-df['species'].value_counts().plot(kind='pie', autopct='%1.1f%%')
-plt.title('Répartition des espèces')
-plt.ylabel('')
-plt.show()
+plt.figure(figsize=(8, 8))  
+df['species'].value_counts().plot(kind='pie', autopct='%1.1f%%')  
+plt.title('Répartition des espèces')  
+plt.ylabel('')  
+plt.show()  
 ```
 
 ### 5.4 Matrices de distribution
 
 ```python
 # Histogrammes multiples
-df.hist(figsize=(15, 12), bins=30, edgecolor='black')
-plt.suptitle('Distribution de toutes les variables numériques')
-plt.tight_layout()
-plt.show()
+df.hist(figsize=(15, 12), bins=30, edgecolor='black')  
+plt.suptitle('Distribution de toutes les variables numériques')  
+plt.tight_layout()  
+plt.show()  
 
 # Pairplot : visualisation de toutes les relations
-sns.pairplot(df, hue='species', diag_kind='kde')
-plt.suptitle('Matrice de relations entre variables', y=1.02)
-plt.show()
+sns.pairplot(df, hue='species', diag_kind='kde')  
+plt.suptitle('Matrice de relations entre variables', y=1.02)  
+plt.show()  
 ```
 
 ## 6. Analyse des corrélations
@@ -449,15 +449,15 @@ Les corrélations révèlent les relations entre variables.
 # Calcul de la matrice de corrélation
 correlation_matrix = df.select_dtypes(include=[np.number]).corr()
 
-print("Matrice de corrélation :")
-print(correlation_matrix)
+print("Matrice de corrélation :")  
+print(correlation_matrix)  
 
 # Visualisation avec heatmap
-plt.figure(figsize=(10, 8))
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',
+plt.figure(figsize=(10, 8))  
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',  
             center=0, square=True, linewidths=1)
-plt.title('Matrice de corrélation')
-plt.show()
+plt.title('Matrice de corrélation')  
+plt.show()  
 ```
 
 **Interprétation des corrélations :**
@@ -475,30 +475,30 @@ plt.show()
 
 ```python
 # Scatter plot simple
-plt.figure(figsize=(10, 6))
-plt.scatter(df['sepal_length'], df['sepal_width'], alpha=0.6)
-plt.xlabel('Longueur du sépale')
-plt.ylabel('Largeur du sépale')
-plt.title('Relation entre longueur et largeur du sépale')
-plt.show()
+plt.figure(figsize=(10, 6))  
+plt.scatter(df['sepal_length'], df['sepal_width'], alpha=0.6)  
+plt.xlabel('Longueur du sépale')  
+plt.ylabel('Largeur du sépale')  
+plt.title('Relation entre longueur et largeur du sépale')  
+plt.show()  
 
 # Scatter plot avec couleurs par catégorie
-plt.figure(figsize=(10, 6))
-for species in df['species'].unique():
+plt.figure(figsize=(10, 6))  
+for species in df['species'].unique():  
     subset = df[df['species'] == species]
     plt.scatter(subset['sepal_length'], subset['sepal_width'],
                 label=species, alpha=0.6)
-plt.xlabel('Longueur du sépale')
-plt.ylabel('Largeur du sépale')
-plt.title('Relation entre longueur et largeur par espèce')
-plt.legend()
-plt.show()
+plt.xlabel('Longueur du sépale')  
+plt.ylabel('Largeur du sépale')  
+plt.title('Relation entre longueur et largeur par espèce')  
+plt.legend()  
+plt.show()  
 
 # Scatter plot avec ligne de régression
 sns.lmplot(x='sepal_length', y='sepal_width', data=df,
            hue='species', height=6, aspect=1.5)
-plt.title('Relation avec ligne de régression')
-plt.show()
+plt.title('Relation avec ligne de régression')  
+plt.show()  
 ```
 
 ## 7. Analyse par groupes
@@ -514,42 +514,42 @@ stats_par_espece = df.groupby('species').agg({
     'sepal_width': ['mean', 'median', 'std', 'min', 'max']
 })
 
-print("Statistiques par espèce :")
-print(stats_par_espece)
+print("Statistiques par espèce :")  
+print(stats_par_espece)  
 
 # Résumé plus simple
-print("\nMoyennes par espèce :")
-print(df.groupby('species').mean())
+print("\nMoyennes par espèce :")  
+print(df.groupby('species').mean(numeric_only=True))  
 ```
 
 ### 7.2 Visualisations comparatives
 
 ```python
 # Bar plot des moyennes
-df.groupby('species')['sepal_length'].mean().plot(kind='bar', figsize=(10, 6))
-plt.xlabel('Espèce')
-plt.ylabel('Longueur moyenne du sépale')
-plt.title('Comparaison des moyennes par espèce')
-plt.xticks(rotation=45)
-plt.show()
+df.groupby('species')['sepal_length'].mean().plot(kind='bar', figsize=(10, 6))  
+plt.xlabel('Espèce')  
+plt.ylabel('Longueur moyenne du sépale')  
+plt.title('Comparaison des moyennes par espèce')  
+plt.xticks(rotation=45)  
+plt.show()  
 
 # Box plots côte à côte
 fig, axes = plt.subplots(2, 2, figsize=(15, 12))
 
-sns.boxplot(x='species', y='sepal_length', data=df, ax=axes[0, 0])
-axes[0, 0].set_title('Longueur du sépale')
+sns.boxplot(x='species', y='sepal_length', data=df, ax=axes[0, 0])  
+axes[0, 0].set_title('Longueur du sépale')  
 
-sns.boxplot(x='species', y='sepal_width', data=df, ax=axes[0, 1])
-axes[0, 1].set_title('Largeur du sépale')
+sns.boxplot(x='species', y='sepal_width', data=df, ax=axes[0, 1])  
+axes[0, 1].set_title('Largeur du sépale')  
 
-sns.boxplot(x='species', y='petal_length', data=df, ax=axes[1, 0])
-axes[1, 0].set_title('Longueur du pétale')
+sns.boxplot(x='species', y='petal_length', data=df, ax=axes[1, 0])  
+axes[1, 0].set_title('Longueur du pétale')  
 
-sns.boxplot(x='species', y='petal_width', data=df, ax=axes[1, 1])
-axes[1, 1].set_title('Largeur du pétale')
+sns.boxplot(x='species', y='petal_width', data=df, ax=axes[1, 1])  
+axes[1, 1].set_title('Largeur du pétale')  
 
-plt.tight_layout()
-plt.show()
+plt.tight_layout()  
+plt.show()  
 ```
 
 ## 8. Exemple complet : EDA sur le dataset Titanic
@@ -557,34 +557,34 @@ plt.show()
 Appliquons tous ces concepts sur un cas réel : le dataset Titanic.
 
 ```python
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+import pandas as pd  
+import numpy as np  
+import matplotlib.pyplot as plt  
+import seaborn as sns  
 
 # Chargement des données
 titanic = sns.load_dataset('titanic')
 
-print("=" * 80)
-print("ANALYSE EXPLORATOIRE DU DATASET TITANIC")
-print("=" * 80)
+print("=" * 80)  
+print("ANALYSE EXPLORATOIRE DU DATASET TITANIC")  
+print("=" * 80)  
 
 # 1. PREMIÈRES OBSERVATIONS
-print("\n1. PREMIÈRES OBSERVATIONS")
-print("-" * 80)
-print(f"Dimensions : {titanic.shape[0]} lignes, {titanic.shape[1]} colonnes")
-print("\nPremières lignes :")
-print(titanic.head())
+print("\n1. PREMIÈRES OBSERVATIONS")  
+print("-" * 80)  
+print(f"Dimensions : {titanic.shape[0]} lignes, {titanic.shape[1]} colonnes")  
+print("\nPremières lignes :")  
+print(titanic.head())  
 
-print("\nTypes de données :")
-print(titanic.dtypes)
+print("\nTypes de données :")  
+print(titanic.dtypes)  
 
 # 2. VALEURS MANQUANTES
-print("\n2. VALEURS MANQUANTES")
-print("-" * 80)
-missing = titanic.isnull().sum()
-missing_percent = (missing / len(titanic)) * 100
-missing_df = pd.DataFrame({
+print("\n2. VALEURS MANQUANTES")  
+print("-" * 80)  
+missing = titanic.isnull().sum()  
+missing_percent = (missing / len(titanic)) * 100  
+missing_df = pd.DataFrame({  
     'Colonne': missing.index,
     'Valeurs manquantes': missing.values,
     'Pourcentage': missing_percent.values
@@ -592,135 +592,135 @@ missing_df = pd.DataFrame({
 print(missing_df[missing_df['Valeurs manquantes'] > 0])
 
 # Visualisation
-plt.figure(figsize=(10, 6))
-sns.heatmap(titanic.isnull(), cbar=False, yticklabels=False, cmap='viridis')
-plt.title('Carte des valeurs manquantes - Titanic')
-plt.show()
+plt.figure(figsize=(10, 6))  
+sns.heatmap(titanic.isnull(), cbar=False, yticklabels=False, cmap='viridis')  
+plt.title('Carte des valeurs manquantes - Titanic')  
+plt.show()  
 
 # 3. STATISTIQUES DESCRIPTIVES
-print("\n3. STATISTIQUES DESCRIPTIVES")
-print("-" * 80)
-print(titanic.describe())
+print("\n3. STATISTIQUES DESCRIPTIVES")  
+print("-" * 80)  
+print(titanic.describe())  
 
 # 4. ANALYSE DE LA SURVIE (variable cible)
-print("\n4. ANALYSE DE LA SURVIE")
-print("-" * 80)
-print(f"Taux de survie global : {titanic['survived'].mean():.2%}")
-print(f"\nNombre de survivants : {titanic['survived'].sum()}")
-print(f"Nombre de décédés : {(1 - titanic['survived']).sum()}")
+print("\n4. ANALYSE DE LA SURVIE")  
+print("-" * 80)  
+print(f"Taux de survie global : {titanic['survived'].mean():.2%}")  
+print(f"\nNombre de survivants : {titanic['survived'].sum()}")  
+print(f"Nombre de décédés : {(1 - titanic['survived']).sum()}")  
 
 # Visualisation
 fig, axes = plt.subplots(1, 2, figsize=(15, 5))
 
 # Diagramme à barres
-titanic['survived'].value_counts().plot(kind='bar', ax=axes[0])
-axes[0].set_title('Distribution de la survie')
-axes[0].set_xlabel('Survie (0 = Non, 1 = Oui)')
-axes[0].set_ylabel('Nombre de passagers')
-axes[0].set_xticklabels(['Décédé', 'Survécu'], rotation=0)
+titanic['survived'].value_counts().plot(kind='bar', ax=axes[0])  
+axes[0].set_title('Distribution de la survie')  
+axes[0].set_xlabel('Survie (0 = Non, 1 = Oui)')  
+axes[0].set_ylabel('Nombre de passagers')  
+axes[0].set_xticklabels(['Décédé', 'Survécu'], rotation=0)  
 
 # Diagramme circulaire
 titanic['survived'].value_counts().plot(kind='pie', ax=axes[1],
                                         autopct='%1.1f%%',
                                         labels=['Décédé', 'Survécu'])
-axes[1].set_title('Proportion de survie')
-axes[1].set_ylabel('')
+axes[1].set_title('Proportion de survie')  
+axes[1].set_ylabel('')  
 
-plt.tight_layout()
-plt.show()
+plt.tight_layout()  
+plt.show()  
 
 # 5. ANALYSE PAR SEXE
-print("\n5. ANALYSE PAR SEXE")
-print("-" * 80)
-print(titanic.groupby('sex')['survived'].agg(['count', 'sum', 'mean']))
+print("\n5. ANALYSE PAR SEXE")  
+print("-" * 80)  
+print(titanic.groupby('sex')['survived'].agg(['count', 'sum', 'mean']))  
 
-plt.figure(figsize=(10, 6))
-sns.barplot(x='sex', y='survived', data=titanic)
-plt.title('Taux de survie par sexe')
-plt.ylabel('Taux de survie')
-plt.xlabel('Sexe')
-plt.show()
+plt.figure(figsize=(10, 6))  
+sns.barplot(x='sex', y='survived', data=titanic)  
+plt.title('Taux de survie par sexe')  
+plt.ylabel('Taux de survie')  
+plt.xlabel('Sexe')  
+plt.show()  
 
 # 6. ANALYSE PAR CLASSE
-print("\n6. ANALYSE PAR CLASSE")
-print("-" * 80)
-print(titanic.groupby('pclass')['survived'].agg(['count', 'sum', 'mean']))
+print("\n6. ANALYSE PAR CLASSE")  
+print("-" * 80)  
+print(titanic.groupby('pclass')['survived'].agg(['count', 'sum', 'mean']))  
 
-plt.figure(figsize=(10, 6))
-sns.barplot(x='pclass', y='survived', data=titanic)
-plt.title('Taux de survie par classe')
-plt.ylabel('Taux de survie')
-plt.xlabel('Classe')
-plt.show()
+plt.figure(figsize=(10, 6))  
+sns.barplot(x='pclass', y='survived', data=titanic)  
+plt.title('Taux de survie par classe')  
+plt.ylabel('Taux de survie')  
+plt.xlabel('Classe')  
+plt.show()  
 
 # 7. ANALYSE PAR ÂGE
-print("\n7. ANALYSE PAR ÂGE")
-print("-" * 80)
-print(f"Âge moyen : {titanic['age'].mean():.2f} ans")
-print(f"Âge médian : {titanic['age'].median():.2f} ans")
-print(f"Âge min : {titanic['age'].min():.2f} ans")
-print(f"Âge max : {titanic['age'].max():.2f} ans")
+print("\n7. ANALYSE PAR ÂGE")  
+print("-" * 80)  
+print(f"Âge moyen : {titanic['age'].mean():.2f} ans")  
+print(f"Âge médian : {titanic['age'].median():.2f} ans")  
+print(f"Âge min : {titanic['age'].min():.2f} ans")  
+print(f"Âge max : {titanic['age'].max():.2f} ans")  
 
 fig, axes = plt.subplots(1, 2, figsize=(15, 5))
 
 # Distribution de l'âge
-titanic['age'].hist(bins=30, ax=axes[0], edgecolor='black')
-axes[0].set_title('Distribution de l\'âge')
-axes[0].set_xlabel('Âge')
-axes[0].set_ylabel('Fréquence')
+titanic['age'].hist(bins=30, ax=axes[0], edgecolor='black')  
+axes[0].set_title('Distribution de l\'âge')  
+axes[0].set_xlabel('Âge')  
+axes[0].set_ylabel('Fréquence')  
 
 # Âge par survie
-sns.boxplot(x='survived', y='age', data=titanic, ax=axes[1])
-axes[1].set_title('Distribution de l\'âge par survie')
-axes[1].set_xticklabels(['Décédé', 'Survécu'])
+sns.boxplot(x='survived', y='age', data=titanic, ax=axes[1])  
+axes[1].set_title('Distribution de l\'âge par survie')  
+axes[1].set_xticklabels(['Décédé', 'Survécu'])  
 
-plt.tight_layout()
-plt.show()
+plt.tight_layout()  
+plt.show()  
 
 # 8. ANALYSE CROISÉE : Sexe, Classe et Survie
-print("\n8. ANALYSE CROISÉE")
-print("-" * 80)
+print("\n8. ANALYSE CROISÉE")  
+print("-" * 80)  
 
 # Tableau croisé
 cross_tab = pd.crosstab([titanic['pclass'], titanic['sex']],
                         titanic['survived'],
                         margins=True)
-print("Tableau croisé Classe x Sexe x Survie :")
-print(cross_tab)
+print("Tableau croisé Classe x Sexe x Survie :")  
+print(cross_tab)  
 
 # Visualisation
-plt.figure(figsize=(12, 6))
-sns.catplot(x='pclass', y='survived', hue='sex', data=titanic,
+plt.figure(figsize=(12, 6))  
+sns.catplot(x='pclass', y='survived', hue='sex', data=titanic,  
             kind='bar', height=6, aspect=1.5)
-plt.title('Taux de survie par classe et par sexe')
-plt.ylabel('Taux de survie')
-plt.xlabel('Classe')
-plt.show()
+plt.title('Taux de survie par classe et par sexe')  
+plt.ylabel('Taux de survie')  
+plt.xlabel('Classe')  
+plt.show()  
 
 # 9. CORRÉLATIONS
-print("\n9. MATRICE DE CORRÉLATION")
-print("-" * 80)
+print("\n9. MATRICE DE CORRÉLATION")  
+print("-" * 80)  
 
 # Sélection des variables numériques
-numeric_cols = titanic.select_dtypes(include=[np.number]).columns
-correlation_matrix = titanic[numeric_cols].corr()
+numeric_cols = titanic.select_dtypes(include=[np.number]).columns  
+correlation_matrix = titanic[numeric_cols].corr()  
 
-plt.figure(figsize=(10, 8))
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',
+plt.figure(figsize=(10, 8))  
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',  
             center=0, square=True, linewidths=1)
-plt.title('Matrice de corrélation - Titanic')
-plt.show()
+plt.title('Matrice de corrélation - Titanic')  
+plt.show()  
 
 # 10. INSIGHTS PRINCIPAUX
-print("\n10. INSIGHTS PRINCIPAUX")
-print("=" * 80)
-print("1. Taux de survie global : ~38%")
-print("2. Les femmes ont un taux de survie beaucoup plus élevé (~74%) que les hommes (~19%)")
-print("3. Les passagers de 1ère classe ont survécu davantage (~63%) que ceux de 3e classe (~24%)")
-print("4. L'âge influence la survie : les enfants ont un meilleur taux de survie")
-print("5. Il y a des valeurs manquantes importantes dans 'age' et 'deck'")
-print("6. Le facteur le plus discriminant semble être le sexe, suivi de la classe")
-print("=" * 80)
+print("\n10. INSIGHTS PRINCIPAUX")  
+print("=" * 80)  
+print("1. Taux de survie global : ~38%")  
+print("2. Les femmes ont un taux de survie beaucoup plus élevé (~74%) que les hommes (~19%)")  
+print("3. Les passagers de 1ère classe ont survécu davantage (~63%) que ceux de 3e classe (~24%)")  
+print("4. L'âge influence la survie : les enfants ont un meilleur taux de survie")  
+print("5. Il y a des valeurs manquantes importantes dans 'age' et 'deck'")  
+print("6. Le facteur le plus discriminant semble être le sexe, suivi de la classe")  
+print("=" * 80)  
 ```
 
 ## 9. Checklist complète de l'EDA
@@ -782,30 +782,30 @@ Utilisez cette checklist pour ne rien oublier :
 
 ```python
 # Manipulation de données
-import pandas as pd
-import numpy as np
+import pandas as pd  
+import numpy as np  
 
 # Visualisation
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
+import matplotlib.pyplot as plt  
+import seaborn as sns  
+import plotly.express as px  
 
 # Statistiques
 from scipy import stats
 
 # Outils spécialisés pour l'EDA
-import pandas_profiling  # Rapports automatiques
-import sweetviz  # Comparaison de datasets
-import dtale  # Interface interactive
+import ydata_profiling  # Rapports automatiques (anciennement pandas-profiling)  
+import sweetviz  # Comparaison de datasets  
+import dtale  # Interface interactive  
 ```
 
-### Pandas Profiling : EDA automatique
+### YData Profiling : EDA automatique
 
-Pandas Profiling génère un rapport complet d'EDA en une seule ligne :
+YData Profiling (anciennement Pandas Profiling) génère un rapport complet d'EDA en une seule ligne :
 
 ```python
-# Installation : pip install pandas-profiling
-from pandas_profiling import ProfileReport
+# Installation : pip install ydata-profiling
+from ydata_profiling import ProfileReport
 
 # Génération du rapport
 profile = ProfileReport(df, title='Rapport EDA', explorative=True)
@@ -832,12 +832,12 @@ Le rapport inclut automatiquement :
 import sweetviz as sv
 
 # Analyse d'un seul dataset
-report = sv.analyze(df)
-report.show_html("rapport_sweetviz.html")
+report = sv.analyze(df)  
+report.show_html("rapport_sweetviz.html")  
 
 # Comparaison de deux datasets (ex: train vs test)
-compare = sv.compare([train_df, "Training"], [test_df, "Test"])
-compare.show_html("comparaison.html")
+compare = sv.compare([train_df, "Training"], [test_df, "Test"])  
+compare.show_html("comparaison.html")  
 ```
 
 ## 11. Bonnes pratiques de l'EDA

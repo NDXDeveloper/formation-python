@@ -50,9 +50,9 @@ def fonction_lente():
     return "Terminé"
 
 # Mesurer le temps d'exécution
-start = time.time()
-resultat = fonction_lente()
-end = time.time()
+start = time.time()  
+resultat = fonction_lente()  
+end = time.time()  
 
 print(f"Temps d'exécution : {end - start:.4f} secondes")
 # Temps d'exécution : 1.0001 secondes
@@ -64,8 +64,8 @@ print(f"Temps d'exécution : {end - start:.4f} secondes")
 import timeit
 
 # Mesurer une ligne de code
-temps = timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)
-print(f"Temps moyen : {temps/10000:.6f} secondes")
+temps = timeit.timeit('"-".join(str(n) for n in range(100))', number=10000)  
+print(f"Temps moyen : {temps/10000:.6f} secondes")  
 
 # Comparer deux approches
 def approche1():
@@ -78,19 +78,19 @@ def approche2():
     return [i * 2 for i in range(1000)]
 
 # Comparer
-temps1 = timeit.timeit(approche1, number=10000)
-temps2 = timeit.timeit(approche2, number=10000)
+temps1 = timeit.timeit(approche1, number=10000)  
+temps2 = timeit.timeit(approche2, number=10000)  
 
-print(f"Approche 1 : {temps1:.4f}s")
-print(f"Approche 2 : {temps2:.4f}s")
-print(f"Approche 2 est {temps1/temps2:.2f}x plus rapide")
+print(f"Approche 1 : {temps1:.4f}s")  
+print(f"Approche 2 : {temps2:.4f}s")  
+print(f"Approche 2 est {temps1/temps2:.2f}x plus rapide")  
 ```
 
 ### Décorateur pour mesurer facilement
 
 ```python
-import time
-from functools import wraps
+import time  
+from functools import wraps  
 
 def measure_time(func):
     """Décorateur qui mesure le temps d'exécution"""
@@ -120,9 +120,9 @@ Le **profiling** permet d'analyser en détail où votre programme passe son temp
 ### Profiling avec `cProfile`
 
 ```python
-import cProfile
-import pstats
-from io import StringIO
+import cProfile  
+import pstats  
+from io import StringIO  
 
 def fonction_complexe():
     result = []
@@ -139,17 +139,17 @@ def main():
     autre_fonction()
 
 # Profiler le code
-profiler = cProfile.Profile()
-profiler.enable()
+profiler = cProfile.Profile()  
+profiler.enable()  
 
 main()
 
 profiler.disable()
 
 # Afficher les résultats
-stats = pstats.Stats(profiler)
-stats.sort_stats('cumulative')
-stats.print_stats(10)  # Top 10 des fonctions les plus lentes
+stats = pstats.Stats(profiler)  
+stats.sort_stats('cumulative')  
+stats.print_stats(10)  # Top 10 des fonctions les plus lentes  
 ```
 
 ### Profiling ligne par ligne avec `line_profiler`
@@ -213,18 +213,18 @@ def recherche_liste(item):
     return item in data
 
 # ✅ Recherche dans un set : O(1)
-data_set = set(data)
-def recherche_set(item):
+data_set = set(data)  
+def recherche_set(item):  
     return item in data_set
 
 # Comparer
-start = time.time()
-for i in range(1000):
+start = time.time()  
+for i in range(1000):  
     recherche_liste(9999)
 print(f"Liste : {time.time() - start:.4f}s")
 
-start = time.time()
-for i in range(1000):
+start = time.time()  
+for i in range(1000):  
     recherche_set(9999)
 print(f"Set : {time.time() - start:.4f}s")
 # Set est BEAUCOUP plus rapide !
@@ -279,34 +279,34 @@ from collections import defaultdict, Counter, deque
 
 # defaultdict : évite les vérifications d'existence
 # ❌ Avec dict normal
-word_count = {}
-for word in ["apple", "banana", "apple"]:
+word_count = {}  
+for word in ["apple", "banana", "apple"]:  
     if word in word_count:
         word_count[word] += 1
     else:
         word_count[word] = 1
 
 # ✅ Avec defaultdict
-from collections import defaultdict
-word_count = defaultdict(int)
-for word in ["apple", "banana", "apple"]:
+from collections import defaultdict  
+word_count = defaultdict(int)  
+for word in ["apple", "banana", "apple"]:  
     word_count[word] += 1  # Plus simple !
 
 # Counter : encore plus simple pour compter
-from collections import Counter
-word_count = Counter(["apple", "banana", "apple"])
-print(word_count)  # Counter({'apple': 2, 'banana': 1})
+from collections import Counter  
+word_count = Counter(["apple", "banana", "apple"])  
+print(word_count)  # Counter({'apple': 2, 'banana': 1})  
 
 # deque : optimisé pour ajout/retrait aux extrémités
 from collections import deque
 
 # ❌ Liste : insert(0) est lent O(n)
-liste = []
-liste.insert(0, "élément")  # Doit déplacer tous les éléments !
+liste = []  
+liste.insert(0, "élément")  # Doit déplacer tous les éléments !  
 
 # ✅ deque : appendleft est rapide O(1)
-file = deque()
-file.appendleft("élément")  # Rapide !
+file = deque()  
+file.appendleft("élément")  # Rapide !  
 ```
 
 ---
@@ -335,9 +335,9 @@ def avec_comprehension():
 def avec_map():
     return list(map(lambda x: x * 2, range(1000)))
 
-print(f"Boucle : {timeit.timeit(avec_boucle, number=10000):.4f}s")
-print(f"Comprehension : {timeit.timeit(avec_comprehension, number=10000):.4f}s")
-print(f"Map : {timeit.timeit(avec_map, number=10000):.4f}s")
+print(f"Boucle : {timeit.timeit(avec_boucle, number=10000):.4f}s")  
+print(f"Comprehension : {timeit.timeit(avec_comprehension, number=10000):.4f}s")  
+print(f"Map : {timeit.timeit(avec_map, number=10000):.4f}s")  
 ```
 
 ### Éviter les recherches répétées
@@ -397,10 +397,10 @@ def sum_builtin(numbers):
 # Autres fonctions built-in rapides
 numbers = [1, 2, 3, 4, 5]
 
-max_value = max(numbers)      # Plus rapide qu'une boucle
-min_value = min(numbers)      # Plus rapide qu'une boucle
-all_true = all(numbers)       # Plus rapide qu'une boucle
-any_true = any(numbers)       # Plus rapide qu'une boucle
+max_value = max(numbers)      # Plus rapide qu'une boucle  
+min_value = min(numbers)      # Plus rapide qu'une boucle  
+all_true = all(numbers)       # Plus rapide qu'une boucle  
+any_true = any(numbers)       # Plus rapide qu'une boucle  
 ```
 
 ### Éviter les concaténations de strings dans les boucles
@@ -418,10 +418,10 @@ def concat_fast(words):
     return " ".join(words)
 
 # Test
-words = ["mot"] * 10000
-import timeit
-print(f"Lent : {timeit.timeit(lambda: concat_slow(words), number=10):.4f}s")
-print(f"Rapide : {timeit.timeit(lambda: concat_fast(words), number=10):.4f}s")
+words = ["mot"] * 10000  
+import timeit  
+print(f"Lent : {timeit.timeit(lambda: concat_slow(words), number=10):.4f}s")  
+print(f"Rapide : {timeit.timeit(lambda: concat_fast(words), number=10):.4f}s")  
 ```
 
 ### Variables locales vs globales
@@ -475,11 +475,11 @@ def get_numbers_generator(n):
         yield i
 
 # Comparaison mémoire
-liste = get_numbers_list(1000000)
-print(f"Taille liste : {sys.getsizeof(liste) / 1024 / 1024:.2f} MB")
+liste = get_numbers_list(1000000)  
+print(f"Taille liste : {sys.getsizeof(liste) / 1024 / 1024:.2f} MB")  
 
-generateur = get_numbers_generator(1000000)
-print(f"Taille générateur : {sys.getsizeof(generateur)} bytes")
+generateur = get_numbers_generator(1000000)  
+print(f"Taille générateur : {sys.getsizeof(generateur)} bytes")  
 
 # Le générateur est BEAUCOUP plus petit !
 ```
@@ -489,7 +489,7 @@ print(f"Taille générateur : {sys.getsizeof(generateur)} bytes")
 ```python
 # ❌ Lent et gourmand en mémoire
 def process_file_slow(filename):
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8') as f:
         lines = f.readlines()  # Charge TOUT en mémoire !
 
     for line in lines:
@@ -497,7 +497,7 @@ def process_file_slow(filename):
 
 # ✅ Rapide et efficace
 def process_file_fast(filename):
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8') as f:
         for line in f:  # Lit ligne par ligne
             process_line(line)
 
@@ -550,14 +550,14 @@ def fibonacci_fast(n):
     return result
 
 # Test
-import time
-start = time.time()
-print(fibonacci_slow(35))  # Très lent !
-print(f"Sans cache : {time.time() - start:.4f}s")
+import time  
+start = time.time()  
+print(fibonacci_slow(35))  # Très lent !  
+print(f"Sans cache : {time.time() - start:.4f}s")  
 
-start = time.time()
-print(fibonacci_fast(35))  # Très rapide !
-print(f"Avec cache : {time.time() - start:.4f}s")
+start = time.time()  
+print(fibonacci_fast(35))  # Très rapide !  
+print(f"Avec cache : {time.time() - start:.4f}s")  
 ```
 
 ### Cache avec `@lru_cache`
@@ -604,9 +604,9 @@ result2 = calcul_lourd(2, 10, 5)
 ### Exemple pratique : Cache pour API
 
 ```python
-import time
-from functools import lru_cache
-from datetime import datetime, timedelta
+import time  
+from functools import lru_cache  
+from datetime import datetime, timedelta  
 
 @lru_cache(maxsize=100)
 def fetch_user_data(user_id):
@@ -616,14 +616,14 @@ def fetch_user_data(user_id):
     return {"id": user_id, "name": f"User {user_id}"}
 
 # Premier appel : lent (2 secondes)
-start = time.time()
-data = fetch_user_data(123)
-print(f"Premier appel : {time.time() - start:.2f}s")
+start = time.time()  
+data = fetch_user_data(123)  
+print(f"Premier appel : {time.time() - start:.2f}s")  
 
 # Deuxième appel : instantané (cache)
-start = time.time()
-data = fetch_user_data(123)
-print(f"Deuxième appel : {time.time() - start:.2f}s")
+start = time.time()  
+data = fetch_user_data(123)  
+print(f"Deuxième appel : {time.time() - start:.2f}s")  
 ```
 
 ---
@@ -701,8 +701,8 @@ for i, item in enumerate(items):
 Pour les **calculs numériques intensifs**, NumPy est **10-100x plus rapide** que le Python pur !
 
 ```python
-import numpy as np
-import time
+import numpy as np  
+import time  
 
 # ❌ Lent : boucle Python pure
 def python_sum(n):
@@ -720,13 +720,13 @@ def numpy_sum(n):
 # Comparaison
 n = 1000000
 
-start = time.time()
-result1 = python_sum(n)
-print(f"Python pur : {time.time() - start:.4f}s")
+start = time.time()  
+result1 = python_sum(n)  
+print(f"Python pur : {time.time() - start:.4f}s")  
 
-start = time.time()
-result2 = numpy_sum(n)
-print(f"NumPy : {time.time() - start:.4f}s")
+start = time.time()  
+result2 = numpy_sum(n)  
+print(f"NumPy : {time.time() - start:.4f}s")  
 # NumPy est BEAUCOUP plus rapide !
 ```
 
@@ -736,14 +736,14 @@ print(f"NumPy : {time.time() - start:.4f}s")
 import numpy as np
 
 # ❌ Lent : boucle
-data = [1, 2, 3, 4, 5]
-result = []
-for x in data:
+data = [1, 2, 3, 4, 5]  
+result = []  
+for x in data:  
     result.append(x * 2 + 10)
 
 # ✅ Rapide : vectorisé
-data_np = np.array([1, 2, 3, 4, 5])
-result_np = data_np * 2 + 10  # Appliqué à tous les éléments en une fois !
+data_np = np.array([1, 2, 3, 4, 5])  
+result_np = data_np * 2 + 10  # Appliqué à tous les éléments en une fois !  
 
 print(result_np)  # [12 14 16 18 20]
 ```
@@ -759,8 +759,8 @@ Python a le **GIL** (Global Interpreter Lock) qui empêche le vrai parallélisme
 Bon pour : requêtes réseau, lecture/écriture fichiers
 
 ```python
-import time
-import threading
+import time  
+import threading  
 
 def download_file(url):
     """Simule un téléchargement"""
@@ -771,15 +771,15 @@ def download_file(url):
 urls = [f"http://example.com/file{i}" for i in range(5)]
 
 # ❌ Séquentiel : 10 secondes
-start = time.time()
-for url in urls:
+start = time.time()  
+for url in urls:  
     download_file(url)
 print(f"Séquentiel : {time.time() - start:.2f}s")
 
 # ✅ Avec threads : ~2 secondes
-start = time.time()
-threads = []
-for url in urls:
+start = time.time()  
+threads = []  
+for url in urls:  
     thread = threading.Thread(target=download_file, args=(url,))
     thread.start()
     threads.append(thread)
@@ -795,8 +795,8 @@ print(f"Avec threads : {time.time() - start:.2f}s")
 Bon pour : calculs mathématiques, traitement d'images, machine learning
 
 ```python
-from multiprocessing import Pool
-import time
+from multiprocessing import Pool  
+import time  
 
 def calcul_lourd(n):
     """Calcul CPU-intensif"""
@@ -808,13 +808,13 @@ def calcul_lourd(n):
 numbers = [10000000, 10000000, 10000000, 10000000]
 
 # ❌ Séquentiel
-start = time.time()
-results = [calcul_lourd(n) for n in numbers]
-print(f"Séquentiel : {time.time() - start:.2f}s")
+start = time.time()  
+results = [calcul_lourd(n) for n in numbers]  
+print(f"Séquentiel : {time.time() - start:.2f}s")  
 
 # ✅ Parallèle
-start = time.time()
-with Pool(processes=4) as pool:
+start = time.time()  
+with Pool(processes=4) as pool:  
     results = pool.map(calcul_lourd, numbers)
 print(f"Parallèle : {time.time() - start:.2f}s")
 ```
@@ -835,8 +835,8 @@ print(f"Parallèle : {time.time() - start:.2f}s")
 `asyncio` est encore plus efficace que `threading` pour l'I/O car il utilise moins de ressources.
 
 ```python
-import asyncio
-import time
+import asyncio  
+import time  
 
 async def fetch_data(url):
     """Simule une requête asynchrone"""
@@ -855,9 +855,9 @@ async def main():
     return results
 
 # Exécution
-start = time.time()
-results = asyncio.run(main())
-print(f"Temps total : {time.time() - start:.2f}s")
+start = time.time()  
+results = asyncio.run(main())  
+print(f"Temps total : {time.time() - start:.2f}s")  
 # ~2 secondes au lieu de 10 !
 ```
 
@@ -885,11 +885,11 @@ class PersonSlots:
         self.age = age
 
 # Comparaison mémoire
-p1 = PersonNormal("Alice", 30)
-p2 = PersonSlots("Alice", 30)
+p1 = PersonNormal("Alice", 30)  
+p2 = PersonSlots("Alice", 30)  
 
-print(f"Sans slots : {sys.getsizeof(p1.__dict__)} bytes")
-print(f"Avec slots : {sys.getsizeof(p2)} bytes")
+print(f"Sans slots : {sys.getsizeof(p1.__dict__)} bytes")  
+print(f"Avec slots : {sys.getsizeof(p2)} bytes")  
 
 # Avec des milliers d'instances, l'économie est significative !
 ```
@@ -935,15 +935,18 @@ def process_large_data():
 
 Installation :
 ```bash
-# Linux/Mac
-pip install pypy
+# Ubuntu/Debian
+sudo apt install pypy3
+
+# macOS
+brew install pypy3
 
 # Ou télécharger depuis pypy.org
 ```
 
 Utilisation :
 ```bash
-pypy mon_script.py  # Au lieu de python mon_script.py
+pypy3 mon_script.py  # Au lieu de python mon_script.py
 ```
 
 **Quand utiliser PyPy ?**
@@ -969,9 +972,9 @@ def calcul_lourd(int n):
 
 ```bash
 # Compiler
-cython calcul.pyx
-gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing \
-    -I/usr/include/python3.9 -o calcul.so calcul.c
+cython calcul.pyx  
+gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing \  
+    -I/usr/include/python3.10 -o calcul.so calcul.c
 ```
 
 ### Numba : JIT compilation
@@ -979,8 +982,8 @@ gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing \
 **Numba** compile les fonctions Python en code machine à la volée.
 
 ```python
-from numba import jit
-import numpy as np
+from numba import jit  
+import numpy as np  
 
 # Sans Numba
 def function_slow(x):
@@ -1147,12 +1150,12 @@ Suivez cette checklist dans l'ordre :
 ### Exemple 1 : Traitement de fichier CSV
 
 ```python
-import csv
-import pandas as pd
+import csv  
+import pandas as pd  
 
 # ❌ Lent : charge tout en mémoire
 def process_csv_slow(filename):
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8') as f:
         data = list(csv.reader(f))
 
     total = 0
@@ -1163,7 +1166,7 @@ def process_csv_slow(filename):
 # ✅ Rapide : traitement ligne par ligne
 def process_csv_fast(filename):
     total = 0
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
         next(reader)  # Skip header
         for row in reader:
@@ -1198,8 +1201,8 @@ def get_user_total_slow(user_id):
 from collections import defaultdict
 
 # Créer un index une seule fois
-user_totals = defaultdict(int)
-for transaction in transactions:
+user_totals = defaultdict(int)  
+for transaction in transactions:  
     user_totals[transaction["user_id"]] += transaction["amount"]
 
 def get_user_total_fast(user_id):

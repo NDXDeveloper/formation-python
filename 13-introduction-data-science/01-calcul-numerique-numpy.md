@@ -28,21 +28,21 @@ NumPy est beaucoup plus rapide que les listes Python pour les calculs numérique
 # Avec des listes Python (lent)
 import time
 
-liste = list(range(1000000))
-debut = time.time()
-resultat = [x * 2 for x in liste]
-temps_liste = time.time() - debut
-print(f"Temps avec liste Python: {temps_liste:.4f} secondes")
+liste = list(range(1000000))  
+debut = time.time()  
+resultat = [x * 2 for x in liste]  
+temps_liste = time.time() - debut  
+print(f"Temps avec liste Python: {temps_liste:.4f} secondes")  
 
 # Avec NumPy (rapide)
 import numpy as np
 
-arr = np.array(liste)
-debut = time.time()
-resultat = arr * 2
-temps_numpy = time.time() - debut
-print(f"Temps avec NumPy: {temps_numpy:.4f} secondes")
-print(f"NumPy est {temps_liste/temps_numpy:.1f}x plus rapide!")
+arr = np.array(liste)  
+debut = time.time()  
+resultat = arr * 2  
+temps_numpy = time.time() - debut  
+print(f"Temps avec NumPy: {temps_numpy:.4f} secondes")  
+print(f"NumPy est {temps_liste/temps_numpy:.1f}x plus rapide!")  
 ```
 
 **Résultat typique** : NumPy est 10 à 100 fois plus rapide !
@@ -53,19 +53,19 @@ NumPy permet d'écrire du code plus concis et lisible :
 
 ```python
 # Sans NumPy : multiplication élément par élément
-liste1 = [1, 2, 3, 4, 5]
-liste2 = [10, 20, 30, 40, 50]
-resultat = []
-for i in range(len(liste1)):
+liste1 = [1, 2, 3, 4, 5]  
+liste2 = [10, 20, 30, 40, 50]  
+resultat = []  
+for i in range(len(liste1)):  
     resultat.append(liste1[i] * liste2[i])
 print(resultat)  # [10, 40, 90, 160, 250]
 
 # Avec NumPy : une seule ligne !
-import numpy as np
-arr1 = np.array([1, 2, 3, 4, 5])
-arr2 = np.array([10, 20, 30, 40, 50])
-resultat = arr1 * arr2
-print(resultat)  # [10  40  90 160 250]
+import numpy as np  
+arr1 = np.array([1, 2, 3, 4, 5])  
+arr2 = np.array([10, 20, 30, 40, 50])  
+resultat = arr1 * arr2  
+print(resultat)  # [10  40  90 160 250]  
 ```
 
 ### 3. Fonctionnalités riches
@@ -83,20 +83,20 @@ NumPy offre une multitude de fonctions pour :
 Les arrays NumPy utilisent moins de mémoire que les listes Python :
 
 ```python
-import sys
-import numpy as np
+import sys  
+import numpy as np  
 
 # Liste Python
-liste_python = list(range(10000))
-taille_liste = sys.getsizeof(liste_python)
+liste_python = list(range(10000))  
+taille_liste = sys.getsizeof(liste_python)  
 
 # Array NumPy
-array_numpy = np.array(range(10000))
-taille_array = array_numpy.nbytes
+array_numpy = np.array(range(10000))  
+taille_array = array_numpy.nbytes  
 
-print(f"Taille liste Python: {taille_liste} bytes")
-print(f"Taille array NumPy: {taille_array} bytes")
-print(f"NumPy utilise {taille_liste/taille_array:.1f}x moins de mémoire")
+print(f"Taille liste Python: {taille_liste} bytes")  
+print(f"Taille array NumPy: {taille_array} bytes")  
+print(f"NumPy utilise {taille_liste/taille_array:.1f}x moins de mémoire")  
 ```
 
 ## Installation de NumPy
@@ -122,8 +122,8 @@ conda install numpy
 Pour vérifier que NumPy est correctement installé :
 
 ```python
-import numpy as np
-print("Version de NumPy:", np.__version__)
+import numpy as np  
+print("Version de NumPy:", np.__version__)  
 ```
 
 ## Importation de NumPy
@@ -142,8 +142,8 @@ import numpy as np
 **❌ À éviter :**
 ```python
 # N'utilisez pas ces formes
-from numpy import *  # Pollue l'espace de noms
-import numpy          # Trop long à écrire
+from numpy import *  # Pollue l'espace de noms  
+import numpy          # Trop long à écrire  
 ```
 
 **✅ Recommandé :**
@@ -163,8 +163,8 @@ Le cœur de NumPy est l'objet **ndarray** (n-dimensional array) :
 import numpy as np
 
 # Array 1D (vecteur)
-vecteur = np.array([1, 2, 3, 4, 5])
-print("Vecteur:", vecteur)
+vecteur = np.array([1, 2, 3, 4, 5])  
+print("Vecteur:", vecteur)  
 
 # Array 2D (matrice)
 matrice = np.array([[1, 2, 3],
@@ -183,16 +183,16 @@ NumPy utilise des types de données spécifiques pour optimiser la mémoire et l
 
 ```python
 # Entiers
-arr_int = np.array([1, 2, 3], dtype=np.int32)
-print("Type:", arr_int.dtype)  # int32
+arr_int = np.array([1, 2, 3], dtype=np.int32)  
+print("Type:", arr_int.dtype)  # int32  
 
 # Nombres à virgule flottante
-arr_float = np.array([1.0, 2.5, 3.7], dtype=np.float64)
-print("Type:", arr_float.dtype)  # float64
+arr_float = np.array([1.0, 2.5, 3.7], dtype=np.float64)  
+print("Type:", arr_float.dtype)  # float64  
 
 # Booléens
-arr_bool = np.array([True, False, True], dtype=np.bool_)
-print("Type:", arr_bool.dtype)  # bool
+arr_bool = np.array([True, False, True], dtype=np.bool_)  
+print("Type:", arr_bool.dtype)  # bool  
 ```
 
 ### Dimensions et formes
@@ -203,21 +203,21 @@ Les arrays peuvent avoir différentes dimensions :
 import numpy as np
 
 # 1D : vecteur
-arr_1d = np.array([1, 2, 3, 4])
-print("Shape 1D:", arr_1d.shape)  # (4,)
-print("Dimensions:", arr_1d.ndim)  # 1
+arr_1d = np.array([1, 2, 3, 4])  
+print("Shape 1D:", arr_1d.shape)  # (4,)  
+print("Dimensions:", arr_1d.ndim)  # 1  
 
 # 2D : matrice
 arr_2d = np.array([[1, 2, 3],
                    [4, 5, 6]])
-print("Shape 2D:", arr_2d.shape)  # (2, 3) - 2 lignes, 3 colonnes
-print("Dimensions:", arr_2d.ndim)  # 2
+print("Shape 2D:", arr_2d.shape)  # (2, 3) - 2 lignes, 3 colonnes  
+print("Dimensions:", arr_2d.ndim)  # 2  
 
 # 3D : tenseur
 arr_3d = np.array([[[1, 2], [3, 4]],
                    [[5, 6], [7, 8]]])
-print("Shape 3D:", arr_3d.shape)  # (2, 2, 2)
-print("Dimensions:", arr_3d.ndim)  # 3
+print("Shape 3D:", arr_3d.shape)  # (2, 2, 2)  
+print("Dimensions:", arr_3d.ndim)  # 3  
 ```
 
 ## Premier programme avec NumPy
@@ -228,39 +228,39 @@ Créons un petit programme qui illustre la puissance de NumPy :
 import numpy as np
 
 # Créer des données de température (en Celsius)
-temperatures_celsius = np.array([0, 10, 20, 25, 30, 35, 40])
-print("Températures en Celsius:", temperatures_celsius)
+temperatures_celsius = np.array([0, 10, 20, 25, 30, 35, 40])  
+print("Températures en Celsius:", temperatures_celsius)  
 
 # Convertir en Fahrenheit avec une seule opération
-temperatures_fahrenheit = temperatures_celsius * 9/5 + 32
-print("Températures en Fahrenheit:", temperatures_fahrenheit)
+temperatures_fahrenheit = temperatures_celsius * 9/5 + 32  
+print("Températures en Fahrenheit:", temperatures_fahrenheit)  
 
 # Calculer des statistiques
-print("\n--- Statistiques ---")
-print(f"Température moyenne: {np.mean(temperatures_celsius):.1f}°C")
-print(f"Température minimale: {np.min(temperatures_celsius)}°C")
-print(f"Température maximale: {np.max(temperatures_celsius)}°C")
-print(f"Écart-type: {np.std(temperatures_celsius):.2f}°C")
+print("\n--- Statistiques ---")  
+print(f"Température moyenne: {np.mean(temperatures_celsius):.1f}°C")  
+print(f"Température minimale: {np.min(temperatures_celsius)}°C")  
+print(f"Température maximale: {np.max(temperatures_celsius)}°C")  
+print(f"Écart-type: {np.std(temperatures_celsius):.2f}°C")  
 
 # Filtrer les températures > 25°C
-jours_chauds = temperatures_celsius[temperatures_celsius > 25]
-print(f"\nJours chauds (>25°C): {jours_chauds}")
-print(f"Nombre de jours chauds: {len(jours_chauds)}")
+jours_chauds = temperatures_celsius[temperatures_celsius > 25]  
+print(f"\nJours chauds (>25°C): {jours_chauds}")  
+print(f"Nombre de jours chauds: {len(jours_chauds)}")  
 ```
 
 **Sortie :**
 ```
-Températures en Celsius: [ 0 10 20 25 30 35 40]
-Températures en Fahrenheit: [ 32.  50.  68.  77.  86.  95. 104.]
+Températures en Celsius: [ 0 10 20 25 30 35 40]  
+Températures en Fahrenheit: [ 32.  50.  68.  77.  86.  95. 104.]  
 
 --- Statistiques ---
-Température moyenne: 22.9°C
-Température minimale: 0°C
-Température maximale: 40°C
-Écart-type: 13.80°C
+Température moyenne: 22.9°C  
+Température minimale: 0°C  
+Température maximale: 40°C  
+Écart-type: 13.05°C
 
-Jours chauds (>25°C): [30 35 40]
-Nombre de jours chauds: 3
+Jours chauds (>25°C): [30 35 40]  
+Nombre de jours chauds: 3  
 ```
 
 ## Comparaison : Listes Python vs Arrays NumPy
@@ -340,9 +340,9 @@ NumPy est utilisé dans de nombreux domaines :
 import numpy as np
 
 # Normalisation de données
-donnees = np.array([10, 20, 30, 40, 50])
-donnees_normalisees = (donnees - np.mean(donnees)) / np.std(donnees)
-print("Données normalisées:", donnees_normalisees)
+donnees = np.array([10, 20, 30, 40, 50])  
+donnees_normalisees = (donnees - np.mean(donnees)) / np.std(donnees)  
+print("Données normalisées:", donnees_normalisees)  
 ```
 
 ### 2. Traitement d'images
@@ -350,9 +350,9 @@ print("Données normalisées:", donnees_normalisees)
 ```python
 # Une image est un array de pixels
 # Par exemple, une image 100x100 en niveaux de gris
-image = np.random.randint(0, 256, size=(100, 100))
-print(f"Dimensions de l'image: {image.shape}")
-print(f"Intensité moyenne: {np.mean(image):.2f}")
+image = np.random.randint(0, 256, size=(100, 100))  
+print(f"Dimensions de l'image: {image.shape}")  
+print(f"Intensité moyenne: {np.mean(image):.2f}")  
 ```
 
 ### 3. Analyse financière
@@ -362,27 +362,27 @@ print(f"Intensité moyenne: {np.mean(image):.2f}")
 prix = np.array([100, 102, 98, 105, 107])
 
 # Calculer les rendements journaliers
-rendements = (prix[1:] - prix[:-1]) / prix[:-1] * 100
-print("Rendements quotidiens (%):", rendements)
+rendements = (prix[1:] - prix[:-1]) / prix[:-1] * 100  
+print("Rendements quotidiens (%):", rendements)  
 ```
 
 ### 4. Simulations scientifiques
 
 ```python
 # Simulation de la marche aléatoire
-pas = np.random.choice([-1, 1], size=1000)  # 1000 pas aléatoires
-position = np.cumsum(pas)  # Position cumulative
-print(f"Position finale: {position[-1]}")
+pas = np.random.choice([-1, 1], size=1000)  # 1000 pas aléatoires  
+position = np.cumsum(pas)  # Position cumulative  
+print(f"Position finale: {position[-1]}")  
 ```
 
 ### 5. Traitement du signal
 
 ```python
 # Génération d'un signal sinusoïdal
-t = np.linspace(0, 1, 100)  # Temps de 0 à 1 seconde
-frequence = 5  # 5 Hz
-signal = np.sin(2 * np.pi * frequence * t)
-print(f"Signal généré: {len(signal)} points")
+t = np.linspace(0, 1, 100)  # Temps de 0 à 1 seconde  
+frequence = 5  # 5 Hz  
+signal = np.sin(2 * np.pi * frequence * t)  
+print(f"Signal généré: {len(signal)} points")  
 ```
 
 ## L'écosystème NumPy
@@ -460,8 +460,8 @@ Essayez toujours de trouver une solution vectorisée plutôt qu'une boucle :
 
 ```python
 # ❌ Moins bon
-resultat = []
-for x in arr:
+resultat = []  
+for x in arr:  
     resultat.append(x * 2)
 
 # ✅ Mieux
@@ -474,11 +474,11 @@ NumPy a déjà implémenté la plupart des opérations courantes. Ne réinventez
 
 ```python
 # NumPy a des fonctions pour presque tout
-moyenne = np.mean(arr)
-minimum = np.min(arr)
-maximum = np.max(arr)
-somme = np.sum(arr)
-tri = np.sort(arr)
+moyenne = np.mean(arr)  
+minimum = np.min(arr)  
+maximum = np.max(arr)  
+somme = np.sum(arr)  
+tri = np.sort(arr)  
 ```
 
 ### 5. Commencez simple

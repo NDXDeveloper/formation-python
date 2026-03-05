@@ -172,8 +172,8 @@ CREATE TABLE utilisateurs (
 );
 
 -- Insérer des données
-INSERT INTO utilisateurs (nom, email, age)
-VALUES ('Alice', 'alice@example.com', 28);
+INSERT INTO utilisateurs (nom, email, age)  
+VALUES ('Alice', 'alice@example.com', 28);  
 
 -- Lire des données
 SELECT * FROM utilisateurs WHERE age > 25;
@@ -215,8 +215,8 @@ Imaginez un traducteur simultané qui traduit automatiquement vos phrases Python
 import sqlite3
 
 # Connexion
-conn = sqlite3.connect('ma_base.db')
-cursor = conn.cursor()
+conn = sqlite3.connect('ma_base.db')  
+cursor = conn.cursor()  
 
 # Créer une table
 cursor.execute('''
@@ -235,9 +235,9 @@ cursor.execute(
 conn.commit()
 
 # Récupérer des données
-cursor.execute("SELECT * FROM users WHERE nom = ?", ("Alice",))
-row = cursor.fetchone()
-print(f"ID: {row[0]}, Nom: {row[1]}, Email: {row[2]}")
+cursor.execute("SELECT * FROM users WHERE nom = ?", ("Alice",))  
+row = cursor.fetchone()  
+print(f"ID: {row[0]}, Nom: {row[1]}, Email: {row[2]}")  
 
 # Fermeture
 conn.close()
@@ -245,14 +245,14 @@ conn.close()
 
 **Avec ORM (SQLAlchemy) :**
 ```python
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import create_engine, Column, Integer, String  
+from sqlalchemy.orm import declarative_base, sessionmaker  
 
 # Configuration
-Base = declarative_base()
-engine = create_engine('sqlite:///ma_base.db')
-Session = sessionmaker(bind=engine)
-session = Session()
+Base = declarative_base()  
+engine = create_engine('sqlite:///ma_base.db')  
+Session = sessionmaker(bind=engine)  
+session = Session()  
 
 # Définir le modèle (la structure)
 class User(Base):
@@ -265,13 +265,13 @@ class User(Base):
 Base.metadata.create_all(engine)
 
 # Insérer des données (comme un objet Python !)
-alice = User(nom="Alice", email="alice@example.com")
-session.add(alice)
-session.commit()
+alice = User(nom="Alice", email="alice@example.com")  
+session.add(alice)  
+session.commit()  
 
 # Récupérer des données (comme des objets Python !)
-user = session.query(User).filter(User.nom == "Alice").first()
-print(f"ID: {user.id}, Nom: {user.nom}, Email: {user.email}")
+user = session.query(User).filter(User.nom == "Alice").first()  
+print(f"ID: {user.id}, Nom: {user.nom}, Email: {user.email}")  
 ```
 
 **Différences notables :**
@@ -295,8 +295,8 @@ users = [
     User(nom="Bob", email="bob@example.com"),
     User(nom="Claire", email="claire@example.com")
 ]
-session.add_all(users)
-session.commit()
+session.add_all(users)  
+session.commit()  
 
 # Rechercher facilement
 users_seniors = session.query(User).filter(User.age > 50).all()
@@ -329,8 +329,8 @@ SQLAlchemy s'intègre parfaitement avec les frameworks web modernes :
 
 ```python
 # Avec FastAPI
-from fastapi import FastAPI
-from sqlalchemy.orm import Session
+from fastapi import FastAPI  
+from sqlalchemy.orm import Session  
 
 app = FastAPI()
 
@@ -339,15 +339,15 @@ def get_user(user_id: int, db: Session):
     return db.query(User).filter(User.id == user_id).first()
 
 # Avec Flask
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask  
+from flask_sqlalchemy import SQLAlchemy  
 
-app = Flask(__name__)
-db = SQLAlchemy(app)
+app = Flask(__name__)  
+db = SQLAlchemy(app)  
 
 @app.route('/users/<int:user_id>')
 def get_user(user_id):
-    return User.query.get(user_id)
+    return db.session.get(User, user_id)
 ```
 
 ## Concepts clés à retenir
@@ -367,9 +367,9 @@ class User(Base):
 Un espace de travail temporaire pour manipuler des données. C'est votre interface avec la base de données.
 
 ```python
-session = Session()
-session.add(user)      # Préparer
-session.commit()       # Sauvegarder
+session = Session()  
+session.add(user)      # Préparer  
+session.commit()       # Sauvegarder  
 ```
 
 ### 3. Requête (Query)
@@ -420,16 +420,16 @@ mon_application/
 
 ```python
 # database.py - Configuration
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy import create_engine  
+from sqlalchemy.orm import sessionmaker, declarative_base  
 
-engine = create_engine('sqlite:///ma_base.db')
-Session = sessionmaker(bind=engine)
-Base = declarative_base()
+engine = create_engine('sqlite:///ma_base.db')  
+Session = sessionmaker(bind=engine)  
+Base = declarative_base()  
 
 # models.py - Modèles
-from database import Base
-from sqlalchemy import Column, Integer, String
+from database import Base  
+from sqlalchemy import Column, Integer, String  
 
 class User(Base):
     __tablename__ = 'users'
@@ -438,17 +438,17 @@ class User(Base):
     email = Column(String(100))
 
 # main.py - Utilisation
-from database import Session, engine, Base
-from models import User
+from database import Session, engine, Base  
+from models import User  
 
 # Créer les tables
 Base.metadata.create_all(engine)
 
 # Utiliser
-session = Session()
-user = User(nom="Alice", email="alice@example.com")
-session.add(user)
-session.commit()
+session = Session()  
+user = User(nom="Alice", email="alice@example.com")  
+session.add(user)  
+session.commit()  
 ```
 
 ## Ce que vous allez apprendre

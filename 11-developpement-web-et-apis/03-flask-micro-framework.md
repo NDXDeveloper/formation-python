@@ -60,8 +60,8 @@ Comme toujours, commencez par créer un environnement virtuel :
 
 ```bash
 # Créer un dossier pour votre projet
-mkdir mon_projet_flask
-cd mon_projet_flask
+mkdir mon_projet_flask  
+cd mon_projet_flask  
 
 # Créer l'environnement virtuel
 python -m venv venv
@@ -384,8 +384,8 @@ Les filtres modifient les variables :
 <!-- Arrondir -->
 <p>{{ prix|round(2) }} €</p>
 
-<!-- Formater une date -->
-<p>{{ date|strftime('%d/%m/%Y') }}</p>
+<!-- Formater une date (méthode de l'objet datetime) -->
+<p>{{ date.strftime('%d/%m/%Y') }}</p>
 ```
 
 ## Gestion des données statiques
@@ -517,9 +517,9 @@ pip install Flask-WTF
 
 **forms.py :**
 ```python
-from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired, Email
+from flask_wtf import FlaskForm  
+from wtforms import StringField, EmailField, TextAreaField, SubmitField  
+from wtforms.validators import DataRequired, Email  
 
 class ContactForm(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
@@ -580,8 +580,8 @@ Les sessions permettent de stocker des données spécifiques à un utilisateur e
 ```python
 from flask import Flask, session, redirect, url_for
 
-app = Flask(__name__)
-app.secret_key = 'votre-clé-secrète-super-sécurisée'
+app = Flask(__name__)  
+app.secret_key = 'votre-clé-secrète-super-sécurisée'  
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -696,15 +696,15 @@ from .routes import blog_bp
 
 **app.py :**
 ```python
-from flask import Flask
-from blueprints.blog import blog_bp
-from blueprints.auth import auth_bp
+from flask import Flask  
+from blueprints.blog import blog_bp  
+from blueprints.auth import auth_bp  
 
 app = Flask(__name__)
 
 # Enregistrer les blueprints
-app.register_blueprint(blog_bp)
-app.register_blueprint(auth_bp)
+app.register_blueprint(blog_bp)  
+app.register_blueprint(auth_bp)  
 
 @app.route('/')
 def index():
@@ -729,14 +729,14 @@ pip install Flask-SQLAlchemy
 ### Configuration
 
 ```python
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask  
+from flask_sqlalchemy import SQLAlchemy  
 
 app = Flask(__name__)
 
 # Configuration de la base de données
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  
 
 # Créer l'instance SQLAlchemy
 db = SQLAlchemy(app)
@@ -840,11 +840,11 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 # Utilisation
-user = User.query.first()
-user_posts = user.posts  # Tous les articles de cet utilisateur
+user = User.query.first()  
+user_posts = user.posts  # Tous les articles de cet utilisateur  
 
-post = Post.query.first()
-author_name = post.author.username  # Nom de l'auteur
+post = Post.query.first()  
+author_name = post.author.username  # Nom de l'auteur  
 ```
 
 ## Flask en mode API
@@ -918,11 +918,11 @@ pip install flask-restx
 ```
 
 ```python
-from flask import Flask
-from flask_restx import Api, Resource, fields
+from flask import Flask  
+from flask_restx import Api, Resource, fields  
 
-app = Flask(__name__)
-api = Api(app, version='1.0', title='Mon API',
+app = Flask(__name__)  
+api = Api(app, version='1.0', title='Mon API',  
           description='Une API créée avec Flask-RESTX')
 
 # Namespace
@@ -1045,8 +1045,8 @@ app.config.from_object(DevelopmentConfig)
 ```python
 import os
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
+app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')  
 ```
 
 ## Comparaison Flask vs FastAPI
@@ -1141,8 +1141,8 @@ Utilisez le pattern Application Factory pour plus de flexibilité :
 
 ```python
 # app/__init__.py
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask  
+from flask_sqlalchemy import SQLAlchemy  
 
 db = SQLAlchemy()
 
@@ -1178,19 +1178,19 @@ if not app.debug:
     app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 # Protection CSRF avec Flask-WTF
-from flask_wtf.csrf import CSRFProtect
-csrf = CSRFProtect(app)
+from flask_wtf.csrf import CSRFProtect  
+csrf = CSRFProtect(app)  
 
 # Headers de sécurité
-from flask_talisman import Talisman
-Talisman(app)
+from flask_talisman import Talisman  
+Talisman(app)  
 ```
 
 ### 4. Logging
 
 ```python
-import logging
-from logging.handlers import RotatingFileHandler
+import logging  
+from logging.handlers import RotatingFileHandler  
 
 if not app.debug:
     file_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=10)
@@ -1206,8 +1206,8 @@ if not app.debug:
 ### 5. Tests
 
 ```python
-import unittest
-from app import create_app, db
+import unittest  
+from app import create_app, db  
 
 class BasicTestCase(unittest.TestCase):
     def setUp(self):
@@ -1252,8 +1252,8 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY requirements.txt .  
+RUN pip install -r requirements.txt  
 
 COPY . .
 
@@ -1266,32 +1266,32 @@ CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "app:app"]
 
 Créez un fichier `.env` :
 ```
-SECRET_KEY=votre-clé-secrète
-DATABASE_URL=postgresql://user:pass@localhost/db
-FLASK_ENV=production
+SECRET_KEY=votre-clé-secrète  
+DATABASE_URL=postgresql://user:pass@localhost/db  
+FLASK_ENV=production  
 ```
 
 Chargez-le avec `python-dotenv` :
 ```python
-from dotenv import load_dotenv
-load_dotenv()
+from dotenv import load_dotenv  
+load_dotenv()  
 ```
 
 ## Récapitulatif
 
 Dans cette section, vous avez appris :
 
-✅ Ce qu'est Flask et pourquoi il est populaire
-✅ Comment installer et créer votre première application
-✅ Le système de routing et les URLs dynamiques
-✅ Les templates Jinja2 et l'héritage de templates
-✅ La gestion des fichiers statiques (CSS, JS, images)
-✅ Le traitement des formulaires avec et sans extensions
-✅ Les sessions et cookies
-✅ L'organisation du code avec les blueprints
-✅ L'intégration de bases de données avec SQLAlchemy
-✅ La création d'APIs REST avec Flask
-✅ La gestion des erreurs
+✅ Ce qu'est Flask et pourquoi il est populaire  
+✅ Comment installer et créer votre première application  
+✅ Le système de routing et les URLs dynamiques  
+✅ Les templates Jinja2 et l'héritage de templates  
+✅ La gestion des fichiers statiques (CSS, JS, images)  
+✅ Le traitement des formulaires avec et sans extensions  
+✅ Les sessions et cookies  
+✅ L'organisation du code avec les blueprints  
+✅ L'intégration de bases de données avec SQLAlchemy  
+✅ La création d'APIs REST avec Flask  
+✅ La gestion des erreurs  
 ✅ Les bonnes pratiques et le déploiement
 
 Flask est un excellent framework pour apprendre les concepts du développement web grâce à sa simplicité et sa flexibilité. Une fois que vous maîtrisez Flask, vous avez une base solide pour explorer d'autres frameworks ou créer vos propres applications web !

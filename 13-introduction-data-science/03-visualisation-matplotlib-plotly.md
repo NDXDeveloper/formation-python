@@ -141,15 +141,15 @@ En pratique, beaucoup de data scientists utilisent **les deux bibliothèques** e
 
 ```python
 # Pour l'exploration rapide : Plotly Express
-import plotly.express as px
-fig = px.scatter(df, x='age', y='salaire', color='departement')
-fig.show()  # Interactif, parfait pour explorer
+import plotly.express as px  
+fig = px.scatter(df, x='age', y='salaire', color='departement')  
+fig.show()  # Interactif, parfait pour explorer  
 
 # Pour le rapport final : Matplotlib
-import matplotlib.pyplot as plt
-plt.figure(figsize=(10, 6))
-plt.scatter(df['age'], df['salaire'])
-plt.savefig('rapport.png', dpi=300)  # Image haute qualité
+import matplotlib.pyplot as plt  
+plt.figure(figsize=(10, 6))  
+plt.scatter(df['age'], df['salaire'])  
+plt.savefig('rapport.png', dpi=300)  # Image haute qualité  
 ```
 
 ## Les types de graphiques essentiels
@@ -157,32 +157,32 @@ plt.savefig('rapport.png', dpi=300)  # Image haute qualité
 Quelle que soit la bibliothèque, vous devez maîtriser ces types de graphiques fondamentaux :
 
 ### 1. Graphique en ligne (Line Plot)
-**Quand l'utiliser :** Évolution dans le temps, tendances
-**Exemple :** Cours de bourse, température sur une année, croissance d'une entreprise
+**Quand l'utiliser :** Évolution dans le temps, tendances  
+**Exemple :** Cours de bourse, température sur une année, croissance d'une entreprise  
 
 ### 2. Diagramme à barres (Bar Chart)
-**Quand l'utiliser :** Comparaison de catégories
-**Exemple :** Ventes par produit, population par pays, résultats d'enquête
+**Quand l'utiliser :** Comparaison de catégories  
+**Exemple :** Ventes par produit, population par pays, résultats d'enquête  
 
 ### 3. Nuage de points (Scatter Plot)
-**Quand l'utiliser :** Relations entre deux variables continues
-**Exemple :** Taille vs poids, prix vs surface d'un logement, âge vs revenu
+**Quand l'utiliser :** Relations entre deux variables continues  
+**Exemple :** Taille vs poids, prix vs surface d'un logement, âge vs revenu  
 
 ### 4. Histogramme
-**Quand l'utiliser :** Distribution d'une variable
-**Exemple :** Distribution des âges, des salaires, des notes d'examen
+**Quand l'utiliser :** Distribution d'une variable  
+**Exemple :** Distribution des âges, des salaires, des notes d'examen  
 
 ### 5. Diagramme circulaire (Pie Chart)
-**Quand l'utiliser :** Proportions d'un tout (avec parcimonie !)
-**Exemple :** Parts de marché, répartition du budget
+**Quand l'utiliser :** Proportions d'un tout (avec parcimonie !)  
+**Exemple :** Parts de marché, répartition du budget  
 
 ### 6. Box Plot (Boîte à moustaches)
-**Quand l'utiliser :** Comparer des distributions, détecter des outliers
-**Exemple :** Salaires par département, temps de réponse par serveur
+**Quand l'utiliser :** Comparer des distributions, détecter des outliers  
+**Exemple :** Salaires par département, temps de réponse par serveur  
 
 ### 7. Heatmap (Carte de chaleur)
-**Quand l'utiliser :** Matrices, corrélations, données tabulaires
-**Exemple :** Matrice de corrélation, calendrier d'activité
+**Quand l'utiliser :** Matrices, corrélations, données tabulaires  
+**Exemple :** Matrice de corrélation, calendrier d'activité  
 
 ## Principes de base d'une bonne visualisation
 
@@ -280,12 +280,12 @@ Vérification de l'installation :
 
 ```python
 # Test Matplotlib
-import matplotlib
-print(f"Matplotlib version: {matplotlib.__version__}")
+import matplotlib  
+print(f"Matplotlib version: {matplotlib.__version__}")  
 
 # Test Plotly
-import plotly
-print(f"Plotly version: {plotly.__version__}")
+import plotly  
+print(f"Plotly version: {plotly.__version__}")  
 ```
 
 ## Votre premier graphique
@@ -296,15 +296,15 @@ print(f"Plotly version: {plotly.__version__}")
 import matplotlib.pyplot as plt
 
 # Données simples
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]
+x = [1, 2, 3, 4, 5]  
+y = [2, 4, 6, 8, 10]  
 
 # Création du graphique
-plt.plot(x, y)
-plt.xlabel('X')
-plt.ylabel('Y')
-plt.title('Mon premier graphique Matplotlib')
-plt.show()
+plt.plot(x, y)  
+plt.xlabel('X')  
+plt.ylabel('Y')  
+plt.title('Mon premier graphique Matplotlib')  
+plt.show()  
 ```
 
 ### Avec Plotly
@@ -313,8 +313,8 @@ plt.show()
 import plotly.express as px
 
 # Données simples
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]
+x = [1, 2, 3, 4, 5]  
+y = [2, 4, 6, 8, 10]  
 
 # Création du graphique
 fig = px.line(x=x, y=y, title='Mon premier graphique Plotly',

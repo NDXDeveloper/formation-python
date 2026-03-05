@@ -282,8 +282,8 @@ Python est devenu le langage le plus populaire pour la Data Science pour plusieu
 moyenne = sum(valeurs) / len(valeurs)
 
 # vs C++ équivalent
-double moyenne = 0;
-for(int i = 0; i < valeurs.size(); i++) {
+double moyenne = 0;  
+for(int i = 0; i < valeurs.size(); i++) {  
     moyenne += valeurs[i];
 }
 moyenne /= valeurs.size();
@@ -295,21 +295,21 @@ Python dispose de bibliothèques pour chaque étape du processus :
 
 ```python
 # Manipulation de données
-import pandas as pd
-import numpy as np
+import pandas as pd  
+import numpy as np  
 
 # Visualisation
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
+import matplotlib.pyplot as plt  
+import seaborn as sns  
+import plotly.express as px  
 
 # Machine Learning
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split  
+from sklearn.linear_model import LinearRegression  
 
 # Deep Learning
-import tensorflow as tf
-import torch
+import tensorflow as tf  
+import torch  
 ```
 
 #### 3. Communauté active
@@ -363,12 +363,12 @@ Python dispose d'un écosystème riche de bibliothèques spécialisées. Voici l
 import numpy as np
 
 # Calculs vectorisés ultra-rapides
-array = np.array([1, 2, 3, 4, 5])
-resultat = array * 2  # [2, 4, 6, 8, 10]
+array = np.array([1, 2, 3, 4, 5])  
+resultat = array * 2  # [2, 4, 6, 8, 10]  
 
 # Algèbre linéaire
-matrice = np.array([[1, 2], [3, 4]])
-inverse = np.linalg.inv(matrice)
+matrice = np.array([[1, 2], [3, 4]])  
+inverse = np.linalg.inv(matrice)  
 ```
 
 **Utilisé pour :**
@@ -382,9 +382,9 @@ inverse = np.linalg.inv(matrice)
 import pandas as pd
 
 # DataFrames : comme des tableaux Excel
-df = pd.read_csv('donnees.csv')
-df_filtre = df[df['age'] > 25]
-moyenne = df.groupby('ville')['salaire'].mean()
+df = pd.read_csv('donnees.csv')  
+df_filtre = df[df['age'] > 25]  
+moyenne = df.groupby('ville')['salaire'].mean()  
 ```
 
 **Utilisé pour :**
@@ -398,11 +398,11 @@ moyenne = df.groupby('ville')['salaire'].mean()
 import matplotlib.pyplot as plt
 
 # Graphiques simples mais puissants
-plt.plot(x, y)
-plt.xlabel('X')
-plt.ylabel('Y')
-plt.title('Mon graphique')
-plt.show()
+plt.plot(x, y)  
+plt.xlabel('X')  
+plt.ylabel('Y')  
+plt.title('Mon graphique')  
+plt.show()  
 ```
 
 **Utilisé pour :**
@@ -418,8 +418,8 @@ plt.show()
 import seaborn as sns
 
 # Belles visualisations statistiques
-sns.boxplot(data=df, x='categorie', y='valeur')
-sns.heatmap(correlation_matrix, annot=True)
+sns.boxplot(data=df, x='categorie', y='valeur')  
+sns.heatmap(correlation_matrix, annot=True)  
 ```
 
 #### 5. Plotly - Visualisations interactives
@@ -427,20 +427,20 @@ sns.heatmap(correlation_matrix, annot=True)
 import plotly.express as px
 
 # Graphiques interactifs
-fig = px.scatter(df, x='age', y='salaire', color='ville')
-fig.show()
+fig = px.scatter(df, x='age', y='salaire', color='ville')  
+fig.show()  
 ```
 
 #### 6. Scikit-learn - Machine Learning
 ```python
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression  
+from sklearn.model_selection import train_test_split  
 
 # Modèles ML en quelques lignes
-X_train, X_test, y_train, y_test = train_test_split(X, y)
-model = LinearRegression()
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
+X_train, X_test, y_train, y_test = train_test_split(X, y)  
+model = LinearRegression()  
+model.fit(X_train, y_train)  
+predictions = model.predict(X_test)  
 ```
 
 **Algorithmes disponibles :**
@@ -463,9 +463,9 @@ t_stat, p_value = stats.ttest_ind(group1, group2)
 import statsmodels.api as sm
 
 # Modèles statistiques avancés
-model = sm.OLS(y, X)
-results = model.fit()
-print(results.summary())
+model = sm.OLS(y, X)  
+results = model.fit()  
+print(results.summary())  
 ```
 
 ### Stack Deep Learning
@@ -483,8 +483,8 @@ model = keras.Sequential([
 
 #### 10. PyTorch
 ```python
-import torch
-import torch.nn as nn
+import torch  
+import torch.nn as nn  
 
 # Alternative à TensorFlow, très populaire en recherche
 ```
@@ -767,20 +767,20 @@ import matplotlib.pyplot as plt
 print(df.describe())
 
 # Distribution des prix
-plt.hist(df['prix'], bins=50)
-plt.xlabel('Prix')
-plt.ylabel('Fréquence')
-plt.show()
+plt.hist(df['prix'], bins=50)  
+plt.xlabel('Prix')  
+plt.ylabel('Fréquence')  
+plt.show()  
 
 # Corrélations
-print(df.corr()['prix'].sort_values(ascending=False))
+print(df.corr(numeric_only=True)['prix'].sort_values(ascending=False))
 ```
 
 ### Étape 5 : Feature Engineering
 ```python
 # Créer de nouvelles variables
-df['prix_par_m2'] = df['prix'] / df['surface']
-df['age_category'] = pd.cut(df['age'], bins=[0, 10, 30, 100])
+df['prix_par_m2'] = df['prix'] / df['surface']  
+df['age_category'] = pd.cut(df['age'], bins=[0, 10, 30, 100])  
 
 # Encoder les variables catégorielles
 df = pd.get_dummies(df, columns=['quartier'])
@@ -788,20 +788,20 @@ df = pd.get_dummies(df, columns=['quartier'])
 
 ### Étape 6 : Modélisation
 ```python
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split  
+from sklearn.linear_model import LinearRegression  
+from sklearn.metrics import root_mean_squared_error, r2_score  
 
 # Séparer features et target
-X = df.drop('prix', axis=1)
-y = df['prix']
+X = df.drop('prix', axis=1)  
+y = df['prix']  
 
 # Split train/test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # Entraîner le modèle
-model = LinearRegression()
-model.fit(X_train, y_train)
+model = LinearRegression()  
+model.fit(X_train, y_train)  
 
 # Prédictions
 y_pred = model.predict(X_test)
@@ -810,19 +810,19 @@ y_pred = model.predict(X_test)
 ### Étape 7 : Évaluation
 ```python
 # Métriques
-rmse = mean_squared_error(y_test, y_pred, squared=False)
-r2 = r2_score(y_test, y_pred)
+rmse = root_mean_squared_error(y_test, y_pred)  
+r2 = r2_score(y_test, y_pred)  
 
-print(f"RMSE: {rmse:,.0f}€")
-print(f"R²: {r2:.3f}")
+print(f"RMSE: {rmse:,.0f}€")  
+print(f"R²: {r2:.3f}")  
 
 # Visualiser
-plt.scatter(y_test, y_pred, alpha=0.5)
-plt.xlabel('Prix réel')
-plt.ylabel('Prix prédit')
-plt.title('Prédiction vs Réalité')
-plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')
-plt.show()
+plt.scatter(y_test, y_pred, alpha=0.5)  
+plt.xlabel('Prix réel')  
+plt.ylabel('Prix prédit')  
+plt.title('Prédiction vs Réalité')  
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')  
+plt.show()  
 ```
 
 ### Étape 8 : Interprétation
@@ -833,8 +833,8 @@ importances = pd.DataFrame({
     'coefficient': model.coef_
 }).sort_values('coefficient', ascending=False)
 
-print("Variables les plus influentes:")
-print(importances.head(10))
+print("Variables les plus influentes:")  
+print(importances.head(10))  
 ```
 
 ## Ressources pour apprendre

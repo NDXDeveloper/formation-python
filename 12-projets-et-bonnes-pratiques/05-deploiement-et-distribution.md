@@ -69,10 +69,10 @@ Ou créez-le manuellement avec les versions :
 
 ```txt
 # requirements.txt
-requests>=2.28.0
-fastapi>=0.100.0
-pydantic>=2.0.0
-uvicorn[standard]>=0.23.0
+requests>=2.28.0  
+fastapi>=0.100.0  
+pydantic>=2.0.0  
+uvicorn[standard]>=0.23.0  
 ```
 
 **Bonnes pratiques** :
@@ -87,8 +87,8 @@ Ne commitez **JAMAIS** de secrets (mots de passe, clés API) dans votre code !
 **Mauvais** ❌ :
 ```python
 # config.py
-DATABASE_URL = "postgresql://user:password@localhost/db"
-API_KEY = "sk_live_123456789"
+DATABASE_URL = "postgresql://user:password@localhost/db"  
+API_KEY = "sk_live_123456789"  
 ```
 
 **Bon** ✅ :
@@ -96,8 +96,8 @@ API_KEY = "sk_live_123456789"
 # config.py
 import os
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-API_KEY = os.getenv("API_KEY")
+DATABASE_URL = os.getenv("DATABASE_URL")  
+API_KEY = os.getenv("API_KEY")  
 
 if not API_KEY:
     raise ValueError("API_KEY n'est pas définie")
@@ -107,9 +107,9 @@ Créez un fichier `.env` (et ajoutez-le au `.gitignore`) :
 
 ```bash
 # .env (ne pas commiter !)
-DATABASE_URL=postgresql://user:password@localhost/db
-API_KEY=sk_live_123456789
-DEBUG=True
+DATABASE_URL=postgresql://user:password@localhost/db  
+API_KEY=sk_live_123456789  
+DEBUG=True  
 ```
 
 Utilisez `python-dotenv` pour charger les variables :
@@ -120,15 +120,15 @@ pip install python-dotenv
 
 ```python
 # config.py
-from dotenv import load_dotenv
-import os
+from dotenv import load_dotenv  
+import os  
 
 # Charger les variables d'environnement
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-API_KEY = os.getenv("API_KEY")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DATABASE_URL = os.getenv("DATABASE_URL")  
+API_KEY = os.getenv("API_KEY")  
+DEBUG = os.getenv("DEBUG", "False") == "True"  
 ```
 
 ### 4. Fichier de configuration
@@ -137,8 +137,8 @@ Créez un fichier de configuration centralisé :
 
 ```python
 # config.py
-import os
-from pathlib import Path
+import os  
+from pathlib import Path  
 
 class Config:
     """Configuration de base"""
@@ -179,8 +179,8 @@ config_map = {
     "testing": TestingConfig
 }
 
-env = os.getenv("ENVIRONMENT", "development")
-config = config_map[env]()
+env = os.getenv("ENVIRONMENT", "development")  
+config = config_map[env]()  
 ```
 
 ### 5. Logging approprié
@@ -189,8 +189,8 @@ Configurez le logging pour la production :
 
 ```python
 # logger.py
-import logging
-import sys
+import logging  
+import sys  
 
 def setup_logger(name: str, level: str = "INFO"):
     """Configure le logger"""
@@ -211,9 +211,9 @@ def setup_logger(name: str, level: str = "INFO"):
     return logger
 
 # Utilisation
-logger = setup_logger(__name__)
-logger.info("Application démarrée")
-logger.error("Une erreur s'est produite")
+logger = setup_logger(__name__)  
+logger.info("Application démarrée")  
+logger.error("Une erreur s'est produite")  
 ```
 
 ---
@@ -269,9 +269,9 @@ setup(
     },
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Development Status :: 4 - Beta",
@@ -279,7 +279,7 @@ setup(
     ],
     package_dir={"": "src"},
     packages=find_packages(where="src"),
-    python_requires=">=3.9",
+    python_requires=">=3.10",
     install_requires=requirements,
     extras_require={
         "dev": [
@@ -299,31 +299,31 @@ setup(
 
 ### Le fichier `pyproject.toml` (moderne)
 
-Depuis Python 3.11, le format recommandé est `pyproject.toml` :
+Le format moderne et recommandé est `pyproject.toml` (PEP 621) :
 
 ```toml
 # pyproject.toml
 [build-system]
-requires = ["setuptools>=45", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["setuptools>=45", "wheel"]  
+build-backend = "setuptools.build_meta"  
 
 [project]
-name = "mon_package"
-version = "0.1.0"
-description = "Une courte description de votre package"
-readme = "README.md"
-authors = [
+name = "mon_package"  
+version = "0.1.0"  
+description = "Une courte description de votre package"  
+readme = "README.md"  
+authors = [  
     {name = "Votre Nom", email = "votre.email@example.com"}
 ]
-license = {text = "MIT"}
-classifiers = [
+license = {text = "MIT"}  
+classifiers = [  
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-keywords = ["exemple", "tutorial", "python"]
-requires-python = ">=3.9"
-dependencies = [
+keywords = ["exemple", "tutorial", "python"]  
+requires-python = ">=3.10"  
+dependencies = [  
     "requests>=2.28.0",
     "pydantic>=2.0.0",
 ]
@@ -336,9 +336,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/votre-nom/mon_package"
-Documentation = "https://mon-package.readthedocs.io/"
-Repository = "https://github.com/votre-nom/mon_package.git"
+Homepage = "https://github.com/votre-nom/mon_package"  
+Documentation = "https://mon-package.readthedocs.io/"  
+Repository = "https://github.com/votre-nom/mon_package.git"  
 "Bug Tracker" = "https://github.com/votre-nom/mon_package/issues"
 
 [project.scripts]
@@ -368,8 +368,8 @@ __author__ = "Votre Nom"
 __email__ = "votre.email@example.com"
 
 # Importer les fonctions principales pour faciliter l'usage
-from .module1 import fonction_importante
-from .module2 import AutreClasse
+from .module1 import fonction_importante  
+from .module2 import AutreClasse  
 
 __all__ = [
     "fonction_importante",
@@ -460,13 +460,13 @@ index-servers =
     testpypi
 
 [pypi]
-username = __token__
-password = votre-token-pypi
+username = __token__  
+password = votre-token-pypi  
 
 [testpypi]
-repository = https://test.pypi.org/legacy/
-username = __token__
-password = votre-token-testpypi
+repository = https://test.pypi.org/legacy/  
+username = __token__  
+password = votre-token-testpypi  
 ```
 
 **Important** : Ne commitez jamais ce fichier ! Ajoutez-le au `.gitignore`.
@@ -514,21 +514,21 @@ from .__version__ import __version__
 
 # setup.py ou pyproject.toml
 # Lire la version depuis __version__.py
-import re
-from pathlib import Path
+import re  
+from pathlib import Path  
 
-version_file = Path("src/mon_package/__version__.py")
-version_match = re.search(r'^__version__ = ["\']([^"\']*)["\']', version_file.read_text(), re.M)
-version = version_match.group(1) if version_match else "0.0.0"
+version_file = Path("src/mon_package/__version__.py")  
+version_match = re.search(r'^__version__ = ["\']([^"\']*)["\']', version_file.read_text(encoding='utf-8'), re.M)  
+version = version_match.group(1) if version_match else "0.0.0"  
 ```
 
 ---
 
 ## Déploiement d'applications web
 
-### Option 1 : Heroku (Simple et gratuit pour débuter)
+### Option 1 : Heroku (Simple, payant)
 
-**Heroku** est une plateforme cloud qui simplifie le déploiement.
+**Heroku** est une plateforme cloud qui simplifie le déploiement (plans à partir de ~5$/mois).
 
 #### Prérequis
 
@@ -571,13 +571,13 @@ heroku login
 heroku create mon-app-python
 
 # Ajouter les variables d'environnement
-heroku config:set API_KEY=votre_cle_api
-heroku config:set DATABASE_URL=votre_url_database
+heroku config:set API_KEY=votre_cle_api  
+heroku config:set DATABASE_URL=votre_url_database  
 
 # Déployer avec Git
-git add .
-git commit -m "Prêt pour le déploiement"
-git push heroku main
+git add .  
+git commit -m "Prêt pour le déploiement"  
+git push heroku main  
 
 # Ouvrir l'application
 heroku open
@@ -715,8 +715,8 @@ RUN useradd -m -u 1000 appuser
 WORKDIR /app
 
 # Installer les dépendances (layer en cache)
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt .  
+RUN pip install --no-cache-dir -r requirements.txt  
 
 # Copier le code
 COPY --chown=appuser:appuser . .
@@ -740,8 +740,8 @@ __pycache__/
 *$py.class
 *.so
 .Python
-venv/
-env/
+venv/  
+env/  
 .git/
 .gitignore
 .vscode/
@@ -750,9 +750,9 @@ env/
 tests/
 .pytest_cache/
 .coverage
-htmlcov/
-dist/
-build/
+htmlcov/  
+dist/  
+build/  
 *.egg-info/
 ```
 
@@ -784,8 +784,6 @@ Créez un `docker-compose.yml` pour gérer plusieurs services :
 
 ```yaml
 # docker-compose.yml
-version: '3.8'
-
 services:
   web:
     build: .
@@ -847,8 +845,8 @@ docker tag mon-app:latest votre-nom/mon-app:latest
 docker push votre-nom/mon-app:latest
 
 # Maintenant n'importe qui peut l'utiliser :
-docker pull votre-nom/mon-app:latest
-docker run -p 8000:8000 votre-nom/mon-app:latest
+docker pull votre-nom/mon-app:latest  
+docker run -p 8000:8000 votre-nom/mon-app:latest  
 ```
 
 ---
@@ -895,8 +893,8 @@ def lambda_handler(event, context):
 Packager :
 ```bash
 # Créer un package avec dépendances
-pip install -r requirements.txt -t .
-zip -r function.zip .
+pip install -r requirements.txt -t .  
+zip -r function.zip .  
 
 # Uploader sur AWS Lambda via la console
 ```
@@ -974,8 +972,8 @@ az webapp create --resource-group mon-groupe --plan mon-plan --name mon-app --ru
 az webapp deployment source config-local-git --name mon-app --resource-group mon-groupe
 
 # Pousser votre code
-git remote add azure <url-git-fournie>
-git push azure main
+git remote add azure <url-git-fournie>  
+git push azure main  
 ```
 
 ---
@@ -1003,10 +1001,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
@@ -1031,7 +1029,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Deploy to Heroku
       uses: akhileshns/heroku-deploy@v3.12.12
@@ -1076,8 +1074,8 @@ deploy:
   stage: deploy
   image: python:3.11
   script:
-    - pip install twine
-    - python setup.py sdist bdist_wheel
+    - pip install build twine
+    - python -m build
     - twine upload dist/*
   only:
     - tags
@@ -1094,9 +1092,9 @@ Une fois déployée, votre application a besoin de **surveillance**.
 
 ```python
 # logger.py
-import logging
-import sys
-from logging.handlers import RotatingFileHandler
+import logging  
+import sys  
+from logging.handlers import RotatingFileHandler  
 
 def setup_production_logger(name: str):
     logger = logging.getLogger(name)
@@ -1153,8 +1151,8 @@ pip install newrelic
 ```
 
 ```python
-import newrelic.agent
-newrelic.agent.initialize('newrelic.ini')
+import newrelic.agent  
+newrelic.agent.initialize('newrelic.ini')  
 ```
 
 ### Health checks
@@ -1191,7 +1189,7 @@ Un bon README est **essentiel** pour que les autres utilisent votre projet.
 # Mon Projet Python
 
 ![CI/CD](https://github.com/votre-nom/mon-projet/workflows/CI/badge.svg)
-![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 Description courte et accrocheuse de votre projet.
@@ -1204,7 +1202,7 @@ Description courte et accrocheuse de votre projet.
 
 ## 📋 Prérequis
 
-- Python 3.9 ou supérieur
+- Python 3.10 ou supérieur
 - pip
 - (Autres prérequis)
 
@@ -1219,9 +1217,9 @@ pip install mon-projet
 ### Installation depuis les sources
 
 ```bash
-git clone https://github.com/votre-nom/mon-projet.git
-cd mon-projet
-pip install -r requirements.txt
+git clone https://github.com/votre-nom/mon-projet.git  
+cd mon-projet  
+pip install -r requirements.txt  
 ```
 
 ## 💻 Utilisation
@@ -1231,8 +1229,8 @@ pip install -r requirements.txt
 ```python
 from mon_projet import ma_fonction
 
-resultat = ma_fonction("exemple")
-print(resultat)
+resultat = ma_fonction("exemple")  
+print(resultat)  
 ```
 
 ### Exemple avancé
@@ -1240,15 +1238,15 @@ print(resultat)
 ```python
 from mon_projet import MaClasse
 
-instance = MaClasse(param1="valeur1")
-instance.faire_quelque_chose()
+instance = MaClasse(param1="valeur1")  
+instance.faire_quelque_chose()  
 ```
 
 ## 🐳 Docker
 
 ```bash
-docker build -t mon-projet .
-docker run -p 8000:8000 mon-projet
+docker build -t mon-projet .  
+docker run -p 8000:8000 mon-projet  
 ```
 
 ## 🧪 Tests
@@ -1396,8 +1394,8 @@ Toujours avoir un plan B :
 
 ```bash
 # Git tags pour version
-git tag v1.2.3
-git push --tags
+git tag v1.2.3  
+git push --tags  
 
 # En cas de problème
 git checkout v1.2.2
@@ -1410,9 +1408,9 @@ Utilisez des outils de migration :
 
 ```bash
 # Avec Alembic (SQLAlchemy)
-alembic init alembic
-alembic revision --autogenerate -m "Initial migration"
-alembic upgrade head
+alembic init alembic  
+alembic revision --autogenerate -m "Initial migration"  
+alembic upgrade head  
 
 # Rollback si nécessaire
 alembic downgrade -1
@@ -1442,18 +1440,18 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 ```python
 # Avec FastAPI
-from fastapi import FastAPI
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+from fastapi import FastAPI  
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware  
 
-app = FastAPI()
-app.add_middleware(HTTPSRedirectMiddleware)
+app = FastAPI()  
+app.add_middleware(HTTPSRedirectMiddleware)  
 ```
 
 ### 3. Rate limiting
 
 ```python
-from slowapi import Limiter
-from slowapi.util import get_remote_address
+from slowapi import Limiter  
+from slowapi.util import get_remote_address  
 
 limiter = Limiter(key_func=get_remote_address)
 
@@ -1466,13 +1464,14 @@ async def get_data():
 ### 4. Validation des inputs
 
 ```python
-from pydantic import BaseModel, EmailStr, validator
+from pydantic import BaseModel, EmailStr, field_validator
 
 class User(BaseModel):
     email: EmailStr
     age: int
 
-    @validator('age')
+    @field_validator('age')
+    @classmethod
     def validate_age(cls, v):
         if v < 0 or v > 150:
             raise ValueError('Age invalide')
@@ -1483,8 +1482,8 @@ class User(BaseModel):
 
 ```bash
 # Vérifier les vulnérabilités
-pip install safety
-safety check
+pip install safety  
+safety check  
 
 # Mettre à jour les dépendances
 pip install --upgrade -r requirements.txt

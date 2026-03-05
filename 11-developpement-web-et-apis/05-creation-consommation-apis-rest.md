@@ -67,8 +67,8 @@ Les ressources peuvent avoir plusieurs représentations (JSON, XML, etc.). En pr
 Chaque requête est **indépendante** et contient toutes les informations nécessaires. Le serveur ne conserve pas d'état entre les requêtes.
 
 ```
-Requête 1 : GET /utilisateurs/123 (avec token d'authentification)
-Requête 2 : GET /articles (avec token d'authentification)
+Requête 1 : GET /utilisateurs/123 (avec token d'authentification)  
+Requête 2 : GET /articles (avec token d'authentification)  
 ```
 
 Chaque requête inclut ses propres informations d'authentification.
@@ -98,12 +98,12 @@ Pour créer une API cohérente, suivez ces conventions de nommage.
 **✅ Bonnes pratiques :**
 
 ```
-GET    /utilisateurs          → Lire tous les utilisateurs
-GET    /utilisateurs/123      → Lire l'utilisateur 123
-POST   /utilisateurs          → Créer un utilisateur
-PUT    /utilisateurs/123      → Remplacer l'utilisateur 123
-PATCH  /utilisateurs/123      → Modifier l'utilisateur 123
-DELETE /utilisateurs/123      → Supprimer l'utilisateur 123
+GET    /utilisateurs          → Lire tous les utilisateurs  
+GET    /utilisateurs/123      → Lire l'utilisateur 123  
+POST   /utilisateurs          → Créer un utilisateur  
+PUT    /utilisateurs/123      → Remplacer l'utilisateur 123  
+PATCH  /utilisateurs/123      → Modifier l'utilisateur 123  
+DELETE /utilisateurs/123      → Supprimer l'utilisateur 123  
 ```
 
 **Règles :**
@@ -126,10 +126,10 @@ DELETE /utilisateurs/123      → Supprimer l'utilisateur 123
 Pour les relations entre ressources :
 
 ```
-GET    /utilisateurs/123/articles       → Articles de l'utilisateur 123
-GET    /articles/456/commentaires       → Commentaires de l'article 456
-POST   /articles/456/commentaires       → Ajouter un commentaire à l'article 456
-GET    /articles/456/commentaires/789   → Commentaire 789 de l'article 456
+GET    /utilisateurs/123/articles       → Articles de l'utilisateur 123  
+GET    /articles/456/commentaires       → Commentaires de l'article 456  
+POST   /articles/456/commentaires       → Ajouter un commentaire à l'article 456  
+GET    /articles/456/commentaires/789   → Commentaire 789 de l'article 456  
 ```
 
 **Attention :** Ne créez pas de hiérarchies trop profondes (max 2-3 niveaux).
@@ -139,10 +139,10 @@ GET    /articles/456/commentaires/789   → Commentaire 789 de l'article 456
 Utilisez les **query parameters** pour filtrer, trier et paginer :
 
 ```
-GET /articles?statut=publie                  → Filtrer
-GET /articles?sort=date&order=desc           → Trier
-GET /articles?page=2&per_page=10             → Paginer
-GET /articles?auteur=alice&categorie=tech    → Filtres multiples
+GET /articles?statut=publie                  → Filtrer  
+GET /articles?sort=date&order=desc           → Trier  
+GET /articles?page=2&per_page=10             → Paginer  
+GET /articles?auteur=alice&categorie=tech    → Filtres multiples  
 ```
 
 ## Concevoir une API REST
@@ -167,32 +167,32 @@ Pour chaque ressource, définissez les opérations CRUD :
 #### Utilisateurs
 
 ```
-GET    /api/utilisateurs              → Lister les utilisateurs
-POST   /api/utilisateurs              → Créer un utilisateur
-GET    /api/utilisateurs/{id}         → Récupérer un utilisateur
-PUT    /api/utilisateurs/{id}         → Remplacer un utilisateur
-PATCH  /api/utilisateurs/{id}         → Modifier un utilisateur
-DELETE /api/utilisateurs/{id}         → Supprimer un utilisateur
+GET    /api/utilisateurs              → Lister les utilisateurs  
+POST   /api/utilisateurs              → Créer un utilisateur  
+GET    /api/utilisateurs/{id}         → Récupérer un utilisateur  
+PUT    /api/utilisateurs/{id}         → Remplacer un utilisateur  
+PATCH  /api/utilisateurs/{id}         → Modifier un utilisateur  
+DELETE /api/utilisateurs/{id}         → Supprimer un utilisateur  
 ```
 
 #### Articles
 
 ```
-GET    /api/articles                  → Lister les articles
-POST   /api/articles                  → Créer un article
-GET    /api/articles/{id}             → Récupérer un article
-PUT    /api/articles/{id}             → Remplacer un article
-PATCH  /api/articles/{id}             → Modifier un article
-DELETE /api/articles/{id}             → Supprimer un article
+GET    /api/articles                  → Lister les articles  
+POST   /api/articles                  → Créer un article  
+GET    /api/articles/{id}             → Récupérer un article  
+PUT    /api/articles/{id}             → Remplacer un article  
+PATCH  /api/articles/{id}             → Modifier un article  
+DELETE /api/articles/{id}             → Supprimer un article  
 ```
 
 #### Commentaires (sous-ressource)
 
 ```
-GET    /api/articles/{id}/commentaires     → Lister les commentaires d'un article
-POST   /api/articles/{id}/commentaires     → Ajouter un commentaire
-GET    /api/commentaires/{id}              → Récupérer un commentaire
-DELETE /api/commentaires/{id}               → Supprimer un commentaire
+GET    /api/articles/{id}/commentaires     → Lister les commentaires d'un article  
+POST   /api/articles/{id}/commentaires     → Ajouter un commentaire  
+GET    /api/commentaires/{id}              → Récupérer un commentaire  
+DELETE /api/commentaires/{id}               → Supprimer un commentaire  
 ```
 
 ### 3. Définir les structures de données
@@ -252,44 +252,41 @@ blog_api/
 ### Modèles de données (models.py)
 
 ```python
-from pydantic import BaseModel, EmailStr, Field
-from typing import List, Optional
-from datetime import datetime
+from pydantic import BaseModel, ConfigDict, EmailStr, Field  
+from datetime import datetime  
 
 # Modèles pour les utilisateurs
 class UtilisateurBase(BaseModel):
     nom: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    bio: Optional[str] = None
+    bio: str | None = None
 
 class UtilisateurCreate(UtilisateurBase):
     mot_de_passe: str = Field(..., min_length=8)
 
 class Utilisateur(UtilisateurBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     date_inscription: datetime
-
-    class Config:
-        from_attributes = True
 
 # Modèles pour les articles
 class ArticleBase(BaseModel):
     titre: str = Field(..., min_length=5, max_length=200)
     contenu: str = Field(..., min_length=10)
     categorie: str
-    tags: List[str] = []
+    tags: list[str] = []
 
 class ArticleCreate(ArticleBase):
     pass
 
 class Article(ArticleBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     auteur_id: int
     date_publication: datetime
     nombre_vues: int = 0
-
-    class Config:
-        from_attributes = True
 
 # Modèle avec l'auteur inclus
 class ArticleAvecAuteur(Article):
@@ -303,21 +300,19 @@ class CommentaireCreate(CommentaireBase):
     pass
 
 class Commentaire(CommentaireBase):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     article_id: int
     auteur_id: int
     date_creation: datetime
-
-    class Config:
-        from_attributes = True
 ```
 
 ### Configuration base de données (database.py)
 
 ```python
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine  
+from sqlalchemy.orm import declarative_base, sessionmaker  
 
 # URL de la base de données SQLite
 SQLALCHEMY_DATABASE_URL = "sqlite:///./blog.db"
@@ -346,12 +341,11 @@ def get_db():
 ### Application principale (main.py)
 
 ```python
-from fastapi import FastAPI, Depends, HTTPException, status, Query
-from sqlalchemy.orm import Session
-from typing import List, Optional
-from datetime import datetime
-import models
-import database
+from fastapi import FastAPI, Depends, HTTPException, status, Query  
+from sqlalchemy.orm import Session  
+from datetime import datetime  
+import models  
+import database  
 
 app = FastAPI(
     title="Blog API",
@@ -397,7 +391,7 @@ def creer_utilisateur(
     return db_utilisateur
 
 @app.get("/api/utilisateurs",
-         response_model=List[models.Utilisateur],
+         response_model=list[models.Utilisateur],
          tags=["Utilisateurs"])
 def lire_utilisateurs(
     skip: int = Query(0, ge=0, description="Nombre d'éléments à sauter"),
@@ -511,15 +505,15 @@ def creer_article(
     return db_article
 
 @app.get("/api/articles",
-         response_model=List[models.Article],
+         response_model=list[models.Article],
          tags=["Articles"])
 def lire_articles(
     skip: int = Query(0, ge=0),
     limit: int = Query(10, ge=1, le=100),
-    categorie: Optional[str] = None,
-    auteur_id: Optional[int] = None,
-    sort: str = Query("date_publication", regex="^(date_publication|nombre_vues|titre)$"),
-    order: str = Query("desc", regex="^(asc|desc)$"),
+    categorie: str | None = None,
+    auteur_id: int | None = None,
+    sort: str = Query("date_publication", pattern="^(date_publication|nombre_vues|titre)$"),
+    order: str = Query("desc", pattern="^(asc|desc)$"),
     db: Session = Depends(database.get_db)
 ):
     """
@@ -578,9 +572,9 @@ def lire_article(
            tags=["Articles"])
 def modifier_article_partiel(
     article_id: int,
-    titre: Optional[str] = None,
-    contenu: Optional[str] = None,
-    categorie: Optional[str] = None,
+    titre: str | None = None,
+    contenu: str | None = None,
+    categorie: str | None = None,
     db: Session = Depends(database.get_db)
 ):
     """Modifier partiellement un article"""
@@ -661,7 +655,7 @@ def creer_commentaire(
     return db_commentaire
 
 @app.get("/api/articles/{article_id}/commentaires",
-         response_model=List[models.Commentaire],
+         response_model=list[models.Commentaire],
          tags=["Commentaires"])
 def lire_commentaires_article(
     article_id: int,
@@ -738,7 +732,6 @@ Maintenant que nous avons créé l'API, voyons comment la consommer.
 
 ```python
 import requests
-from typing import List, Dict, Optional
 
 class BlogAPIClient:
     def __init__(self, base_url: str = "http://localhost:8000"):
@@ -748,7 +741,7 @@ class BlogAPIClient:
     # ==================== UTILISATEURS ====================
 
     def creer_utilisateur(self, nom: str, email: str,
-                          mot_de_passe: str, bio: str = None) -> Dict:
+                          mot_de_passe: str, bio: str | None = None) -> dict:
         """Créer un nouvel utilisateur"""
         data = {
             "nom": nom,
@@ -765,7 +758,7 @@ class BlogAPIClient:
         return response.json()
 
     def obtenir_utilisateurs(self, skip: int = 0,
-                             limit: int = 10) -> List[Dict]:
+                             limit: int = 10) -> list[dict]:
         """Obtenir la liste des utilisateurs"""
         params = {"skip": skip, "limit": limit}
 
@@ -776,7 +769,7 @@ class BlogAPIClient:
         response.raise_for_status()
         return response.json()
 
-    def obtenir_utilisateur(self, utilisateur_id: int) -> Dict:
+    def obtenir_utilisateur(self, utilisateur_id: int) -> dict:
         """Obtenir un utilisateur par son ID"""
         response = self.session.get(
             f"{self.base_url}/api/utilisateurs/{utilisateur_id}"
@@ -786,7 +779,7 @@ class BlogAPIClient:
 
     def modifier_utilisateur(self, utilisateur_id: int,
                             nom: str, email: str,
-                            mot_de_passe: str, bio: str = None) -> Dict:
+                            mot_de_passe: str, bio: str | None = None) -> dict:
         """Modifier un utilisateur"""
         data = {
             "nom": nom,
@@ -813,7 +806,7 @@ class BlogAPIClient:
 
     def creer_article(self, titre: str, contenu: str,
                      categorie: str, auteur_id: int,
-                     tags: List[str] = None) -> Dict:
+                     tags: list[str] | None = None) -> dict:
         """Créer un nouvel article"""
         data = {
             "titre": titre,
@@ -831,9 +824,9 @@ class BlogAPIClient:
         return response.json()
 
     def obtenir_articles(self, skip: int = 0, limit: int = 10,
-                        categorie: str = None, auteur_id: int = None,
+                        categorie: str | None = None, auteur_id: int | None = None,
                         sort: str = "date_publication",
-                        order: str = "desc") -> List[Dict]:
+                        order: str = "desc") -> list[dict]:
         """Obtenir la liste des articles avec filtres"""
         params = {
             "skip": skip,
@@ -854,7 +847,7 @@ class BlogAPIClient:
         response.raise_for_status()
         return response.json()
 
-    def obtenir_article(self, article_id: int) -> Dict:
+    def obtenir_article(self, article_id: int) -> dict:
         """Obtenir un article par son ID"""
         response = self.session.get(
             f"{self.base_url}/api/articles/{article_id}"
@@ -863,9 +856,9 @@ class BlogAPIClient:
         return response.json()
 
     def modifier_article_partiel(self, article_id: int,
-                                titre: str = None,
-                                contenu: str = None,
-                                categorie: str = None) -> Dict:
+                                titre: str | None = None,
+                                contenu: str | None = None,
+                                categorie: str | None = None) -> dict:
         """Modifier partiellement un article"""
         params = {}
         if titre:
@@ -892,7 +885,7 @@ class BlogAPIClient:
     # ==================== COMMENTAIRES ====================
 
     def creer_commentaire(self, article_id: int, contenu: str,
-                         auteur_id: int) -> Dict:
+                         auteur_id: int) -> dict:
         """Créer un commentaire"""
         data = {"contenu": contenu}
 
@@ -904,7 +897,7 @@ class BlogAPIClient:
         response.raise_for_status()
         return response.json()
 
-    def obtenir_commentaires_article(self, article_id: int) -> List[Dict]:
+    def obtenir_commentaires_article(self, article_id: int) -> list[dict]:
         """Obtenir les commentaires d'un article"""
         response = self.session.get(
             f"{self.base_url}/api/articles/{article_id}/commentaires"
@@ -921,7 +914,7 @@ class BlogAPIClient:
 
     # ==================== UTILITAIRES ====================
 
-    def obtenir_statistiques(self) -> Dict:
+    def obtenir_statistiques(self) -> dict:
         """Obtenir les statistiques"""
         response = self.session.get(f"{self.base_url}/api/stats")
         response.raise_for_status()
@@ -1024,8 +1017,8 @@ def lire_articles(
 
 **Utilisation :**
 ```
-GET /api/articles?page=1&per_page=10
-GET /api/articles?page=2&per_page=10
+GET /api/articles?page=1&per_page=10  
+GET /api/articles?page=2&per_page=10  
 ```
 
 #### 2. Pagination par curseur (pour de très grandes bases)
@@ -1033,7 +1026,7 @@ GET /api/articles?page=2&per_page=10
 ```python
 @app.get("/api/articles")
 def lire_articles(
-    cursor: Optional[int] = None,
+    cursor: int | None = None,
     limit: int = Query(10, ge=1, le=100)
 ):
     query = db.query(Article)
@@ -1053,8 +1046,8 @@ def lire_articles(
 
 **Utilisation :**
 ```
-GET /api/articles?limit=10
-GET /api/articles?cursor=42&limit=10
+GET /api/articles?limit=10  
+GET /api/articles?cursor=42&limit=10  
 ```
 
 ## Versioning d'API
@@ -1111,7 +1104,7 @@ from fastapi import HTTPException
 class APIError(BaseModel):
     error: str
     message: str
-    details: Optional[Dict] = None
+    details: dict | None = None
 
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
@@ -1136,7 +1129,7 @@ class ResourceNotFound(HTTPException):
         )
 
 class ValidationError(HTTPException):
-    def __init__(self, message: str, errors: List[str]):
+    def __init__(self, message: str, errors: list[str]):
         super().__init__(
             status_code=400,
             detail={
@@ -1186,13 +1179,13 @@ app.add_middleware(
 Limiter le nombre de requêtes pour éviter les abus :
 
 ```python
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
+from slowapi import Limiter, _rate_limit_exceeded_handler  
+from slowapi.util import get_remote_address  
+from slowapi.errors import RateLimitExceeded  
 
-limiter = Limiter(key_func=get_remote_address)
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+limiter = Limiter(key_func=get_remote_address)  
+app.state.limiter = limiter  
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)  
 
 @app.get("/api/articles")
 @limiter.limit("10/minute")  # 10 requêtes par minute
@@ -1205,13 +1198,13 @@ def lire_articles(request: Request):
 ### JWT (JSON Web Tokens)
 
 ```python
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-import jwt
-from datetime import datetime, timedelta
+from fastapi import Depends, HTTPException, status  
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials  
+import jwt  
+from datetime import datetime, timedelta, timezone  
 
-SECRET_KEY = "votre-clé-secrète"
-ALGORITHM = "HS256"
+SECRET_KEY = "votre-clé-secrète"  
+ALGORITHM = "HS256"  
 
 security = HTTPBearer()
 
@@ -1219,7 +1212,7 @@ def creer_token(user_id: int) -> str:
     """Créer un JWT"""
     payload = {
         "user_id": user_id,
-        "exp": datetime.utcnow() + timedelta(hours=24)
+        "exp": datetime.now(timezone.utc) + timedelta(hours=24)
     }
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -1264,8 +1257,8 @@ def obtenir_profil(user_id: int = Depends(verifier_token)):
 
 ```python
 # test_api.py
-from fastapi.testclient import TestClient
-from main import app
+from fastapi.testclient import TestClient  
+from main import app  
 
 client = TestClient(app)
 
@@ -1354,26 +1347,26 @@ raise HTTPException(status_code=500, detail="Erreur serveur")
 
 ```
 ✅ Bon
-GET    /api/utilisateurs
-GET    /api/articles
-GET    /api/commentaires
+GET    /api/utilisateurs  
+GET    /api/articles  
+GET    /api/commentaires  
 
 ❌ Incohérent
-GET    /api/users
-GET    /api/posts
-GET    /api/comment
+GET    /api/users  
+GET    /api/posts  
+GET    /api/comment  
 ```
 
 ### 3. Utilisez des noms de ressources, pas de verbes
 
 ```
 ✅ Bon
-GET    /api/articles
-POST   /api/articles
+GET    /api/articles  
+POST   /api/articles  
 
 ❌ Mauvais
-GET    /api/obtenirArticles
-POST   /api/creerArticle
+GET    /api/obtenirArticles  
+POST   /api/creerArticle  
 ```
 
 ### 4. Fournissez une documentation claire
@@ -1417,10 +1410,11 @@ Utilisez Pydantic pour valider automatiquement :
 class ArticleCreate(BaseModel):
     titre: str = Field(..., min_length=5, max_length=200)
     contenu: str = Field(..., min_length=10)
-    categorie: str = Field(..., regex="^(Tech|Science|Culture)$")
+    categorie: str = Field(..., pattern="^(Tech|Science|Culture)$")
 
-    @validator('titre')
-    def titre_pas_vide(cls, v):
+    @field_validator('titre')
+    @classmethod
+    def titre_pas_vide(cls, v: str) -> str:
         if not v.strip():
             raise ValueError("Le titre ne peut pas être vide")
         return v
@@ -1447,17 +1441,17 @@ class UtilisateurReponse(BaseModel):
 
 Dans cette section, vous avez appris :
 
-✅ Les principes fondamentaux de REST
-✅ Les conventions de nommage et structure d'URLs
-✅ Comment concevoir une API REST complète
-✅ Comment créer une API REST avec FastAPI
-✅ Comment consommer une API avec requests
-✅ La pagination, le filtrage et le tri
-✅ Le versioning d'API
-✅ La gestion des erreurs de manière professionnelle
-✅ CORS et rate limiting
-✅ L'authentification avec JWT
-✅ Comment tester une API
+✅ Les principes fondamentaux de REST  
+✅ Les conventions de nommage et structure d'URLs  
+✅ Comment concevoir une API REST complète  
+✅ Comment créer une API REST avec FastAPI  
+✅ Comment consommer une API avec requests  
+✅ La pagination, le filtrage et le tri  
+✅ Le versioning d'API  
+✅ La gestion des erreurs de manière professionnelle  
+✅ CORS et rate limiting  
+✅ L'authentification avec JWT  
+✅ Comment tester une API  
 ✅ Les bonnes pratiques REST
 
 Vous avez maintenant toutes les compétences nécessaires pour créer et consommer des APIs REST professionnelles avec Python. REST est le standard de facto pour les APIs web modernes, et sa maîtrise est essentielle pour tout développeur backend.

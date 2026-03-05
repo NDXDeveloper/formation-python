@@ -45,8 +45,7 @@ mon_projet/
 │   └── README.md
 │
 ├── .gitignore
-├── requirements.txt
-├── setup.py
+├── pyproject.toml
 └── README.md
 ```
 
@@ -64,8 +63,8 @@ Cette structure en deux niveaux est une bonne pratique moderne car elle évite c
 Ce fichier (qui peut être vide) transforme un simple dossier en un **package Python**. Il permet d'importer votre code comme ceci :
 
 ```python
-from mon_projet import main
-from mon_projet.utils import ma_fonction
+from mon_projet import main  
+from mon_projet.utils import ma_fonction  
 ```
 
 #### Le dossier `tests/`
@@ -94,9 +93,9 @@ __pycache__/
 *.so
 
 # Environnements virtuels
-venv/
-env/
-ENV/
+venv/  
+env/  
+ENV/  
 
 # IDEs
 .vscode/
@@ -104,8 +103,8 @@ ENV/
 *.swp
 
 # Distribution
-dist/
-build/
+dist/  
+build/  
 *.egg-info/
 
 # Tests
@@ -123,9 +122,9 @@ config.local.py
 Liste toutes les dépendances (bibliothèques externes) de votre projet avec leurs versions :
 
 ```
-requests==2.31.0
-pandas>=2.0.0
-numpy==1.24.3
+requests==2.31.0  
+pandas>=2.0.0  
+numpy==1.24.3  
 ```
 
 Installation des dépendances :
@@ -256,23 +255,23 @@ C'est le cœur de votre projet avec Poetry. Il remplace `setup.py` et `requireme
 
 ```toml
 [tool.poetry]
-name = "mon_projet"
-version = "0.1.0"
-description = "Description de mon projet"
-authors = ["Votre Nom <email@example.com>"]
+name = "mon_projet"  
+version = "0.1.0"  
+description = "Description de mon projet"  
+authors = ["Votre Nom <email@example.com>"]  
 
 [tool.poetry.dependencies]
-python = "^3.9"
-requests = "^2.31.0"
-pandas = "^2.0.0"
+python = "^3.10"  
+requests = "^2.31.0"  
+pandas = "^2.0.0"  
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.4.0"
-black = "^23.0.0"
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"  
+black = "^23.0.0"  
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]  
+build-backend = "poetry.core.masonry.api"  
 ```
 
 #### Commandes Poetry essentielles
@@ -332,10 +331,10 @@ black --diff src/
 
 ```toml
 [tool.black]
-line-length = 88
-target-version = ['py39']
-include = '\.pyi?$'
-extend-exclude = '''
+line-length = 88  
+target-version = ['py310']  
+include = '\.pyi?$'  
+extend-exclude = '''  
 /(
   # Dossiers à exclure
   \.eggs
@@ -392,9 +391,18 @@ ruff check --select I --fix .
 
 ```toml
 [tool.ruff]
-line-length = 88
-target-version = "py39"
+line-length = 88  
+target-version = "py310"  
 
+# Fichiers à exclure
+exclude = [
+    ".git",
+    "__pycache__",
+    ".venv",
+    "venv",
+]
+
+[tool.ruff.lint]
 # Règles à activer
 select = [
     "E",   # pycodestyle errors
@@ -409,14 +417,6 @@ select = [
 # Règles à ignorer
 ignore = [
     "E501",  # line too long (géré par Black)
-]
-
-# Fichiers à exclure
-exclude = [
-    ".git",
-    "__pycache__",
-    ".venv",
-    "venv",
 ]
 ```
 
@@ -456,10 +456,10 @@ resultat: str = additionner(5, 10)  # Erreur : int assigné à str
 
 ```toml
 [tool.mypy]
-python_version = "3.9"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
+python_version = "3.10"  
+warn_return_any = true  
+warn_unused_configs = true  
+disallow_untyped_defs = true  
 ```
 
 ### 5. pre-commit - Hooks Git automatiques
@@ -537,10 +537,10 @@ tests/
 
 ```toml
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = "test_*.py"
-python_functions = "test_*"
-addopts = "-v --tb=short"
+testpaths = ["tests"]  
+python_files = "test_*.py"  
+python_functions = "test_*"  
+addopts = "-v --tb=short"  
 ```
 
 #### Exécution des tests
@@ -567,47 +567,49 @@ Voici un exemple de `pyproject.toml` complet pour un projet bien configuré :
 
 ```toml
 [tool.poetry]
-name = "mon-projet-moderne"
-version = "0.1.0"
-description = "Un projet Python bien structuré"
-authors = ["Votre Nom <email@example.com>"]
-readme = "README.md"
-packages = [{include = "mon_projet", from = "src"}]
+name = "mon-projet-moderne"  
+version = "0.1.0"  
+description = "Un projet Python bien structuré"  
+authors = ["Votre Nom <email@example.com>"]  
+readme = "README.md"  
+packages = [{include = "mon_projet", from = "src"}]  
 
 [tool.poetry.dependencies]
-python = "^3.9"
-requests = "^2.31.0"
-pydantic = "^2.5.0"
+python = "^3.10"  
+requests = "^2.31.0"  
+pydantic = "^2.5.0"  
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-black = "^23.11.0"
-ruff = "^0.1.6"
-mypy = "^1.7.0"
-pre-commit = "^3.5.0"
+pytest = "^7.4.0"  
+pytest-cov = "^4.1.0"  
+black = "^23.11.0"  
+ruff = "^0.1.6"  
+mypy = "^1.7.0"  
+pre-commit = "^3.5.0"  
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]  
+build-backend = "poetry.core.masonry.api"  
 
 [tool.black]
-line-length = 88
-target-version = ['py39']
+line-length = 88  
+target-version = ['py310']  
 
 [tool.ruff]
 line-length = 88
-select = ["E", "F", "I", "B", "C4", "UP"]
-ignore = ["E501"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "C4", "UP"]  
+ignore = ["E501"]  
 
 [tool.mypy]
-python_version = "3.9"
-warn_return_any = true
-warn_unused_configs = true
+python_version = "3.10"  
+warn_return_any = true  
+warn_unused_configs = true  
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts = "-v --cov=src/mon_projet --cov-report=html"
+testpaths = ["tests"]  
+addopts = "-v --cov=src/mon_projet --cov-report=html"  
 ```
 
 ---
@@ -625,15 +627,15 @@ Description courte et claire de votre projet.
 
 ### Prérequis
 
-- Python 3.9 ou supérieur
+- Python 3.10 ou supérieur
 - Poetry (recommandé) ou pip
 
 ### Avec Poetry (recommandé)
 
 ```bash
 # Cloner le repository
-git clone https://github.com/votre-nom/mon-projet.git
-cd mon-projet
+git clone https://github.com/votre-nom/mon-projet.git  
+cd mon-projet  
 
 # Installer les dépendances
 poetry install
@@ -646,12 +648,12 @@ poetry shell
 
 ```bash
 # Cloner le repository
-git clone https://github.com/votre-nom/mon-projet.git
-cd mon-projet
+git clone https://github.com/votre-nom/mon-projet.git  
+cd mon-projet  
 
 # Créer un environnement virtuel
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
+python -m venv venv  
+source venv/bin/activate  # Linux/Mac  
 # ou
 venv\Scripts\activate  # Windows
 
@@ -665,9 +667,9 @@ pip install -r requirements.txt
 from mon_projet import MaClasse
 
 # Exemple d'utilisation
-instance = MaClasse()
-resultat = instance.faire_quelque_chose()
-print(resultat)
+instance = MaClasse()  
+resultat = instance.faire_quelque_chose()  
+print(resultat)  
 ```
 
 ## 🧪 Tests
@@ -685,8 +687,8 @@ pytest --cov=src/mon_projet --cov-report=html
 ### Installation de l'environnement de développement
 
 ```bash
-poetry install --with dev
-pre-commit install
+poetry install --with dev  
+pre-commit install  
 ```
 
 ### Outils de qualité du code
@@ -706,10 +708,10 @@ mypy src/
 
 ```
 mon-projet/
-├── src/
-│   └── mon_projet/      # Code source
-├── tests/               # Tests unitaires
-├── docs/                # Documentation
+├── src/  
+│   └── mon_projet/      # Code source  
+├── tests/               # Tests unitaires  
+├── docs/                # Documentation  
 └── pyproject.toml       # Configuration du projet
 ```
 
@@ -738,8 +740,8 @@ Voici un workflow type pour travailler sur votre projet :
 
 ```bash
 # Créer le projet avec Poetry
-poetry new mon_projet
-cd mon_projet
+poetry new mon_projet  
+cd mon_projet  
 
 # Initialiser Git
 git init
@@ -748,9 +750,9 @@ git init
 touch .gitignore  # Puis copier le contenu recommandé
 
 # Installer pre-commit
-poetry add --group dev pre-commit black ruff mypy pytest
-poetry install
-pre-commit install
+poetry add --group dev pre-commit black ruff mypy pytest  
+poetry install  
+pre-commit install  
 ```
 
 ### 2. Développement quotidien
@@ -767,13 +769,13 @@ git checkout -b feature/ma-nouvelle-fonctionnalite
 poetry run pytest
 
 # 5. Formater et vérifier le code
-poetry run black src/ tests/
-poetry run ruff check src/ tests/ --fix
-poetry run mypy src/
+poetry run black src/ tests/  
+poetry run ruff check src/ tests/ --fix  
+poetry run mypy src/  
 
 # 6. Commiter (pre-commit s'exécute automatiquement)
-git add .
-git commit -m "feat: ajout de ma nouvelle fonctionnalité"
+git add .  
+git commit -m "feat: ajout de ma nouvelle fonctionnalité"  
 
 # 7. Pousser vers le repository
 git push origin feature/ma-nouvelle-fonctionnalite
@@ -789,9 +791,9 @@ poetry run pytest --cov
 # Modifier README.md si nécessaire
 
 # Vérifier la qualité globale
-poetry run black --check src/
-poetry run ruff check src/
-poetry run mypy src/
+poetry run black --check src/  
+poetry run ruff check src/  
+poetry run mypy src/  
 
 # Créer une Pull Request sur GitHub/GitLab
 ```

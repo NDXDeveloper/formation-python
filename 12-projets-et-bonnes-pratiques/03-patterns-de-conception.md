@@ -53,11 +53,11 @@ class DatabaseConnection:
         return cls._instance
 
 # Utilisation
-db1 = DatabaseConnection()
-db2 = DatabaseConnection()
+db1 = DatabaseConnection()  
+db2 = DatabaseConnection()  
 
-print(db1 is db2)  # True - c'est la même instance !
-print(id(db1) == id(db2))  # True - même adresse mémoire
+print(db1 is db2)  # True - c'est la même instance !  
+print(id(db1) == id(db2))  # True - même adresse mémoire  
 ```
 
 ### Solution Pythonique (avec décorateur)
@@ -86,11 +86,11 @@ class Configuration:
         return self.settings.get(key)
 
 # Utilisation
-config1 = Configuration()
-config1.set("database", "postgresql")
+config1 = Configuration()  
+config1.set("database", "postgresql")  
 
-config2 = Configuration()
-print(config2.get("database"))  # "postgresql" - même instance !
+config2 = Configuration()  
+print(config2.get("database"))  # "postgresql" - même instance !  
 ```
 
 ### Quand utiliser le Singleton ?
@@ -122,13 +122,13 @@ class Logger:
         return self.logs
 
 # Dans différentes parties de l'application
-logger = Logger()
-logger.log("Application démarrée")
+logger = Logger()  
+logger.log("Application démarrée")  
 
 # Plus tard, dans un autre fichier
-logger = Logger()  # Même instance !
-logger.log("Traitement des données")
-print(logger.get_logs())  # Contient les deux logs
+logger = Logger()  # Même instance !  
+logger.log("Traitement des données")  
+print(logger.get_logs())  # Contient les deux logs  
 ```
 
 ---
@@ -185,11 +185,11 @@ class AnimalFactory:
 # Utilisation
 factory = AnimalFactory()
 
-animal1 = factory.creer_animal("chien")
-print(animal1.parler())  # "Wouf wouf!"
+animal1 = factory.creer_animal("chien")  
+print(animal1.parler())  # "Wouf wouf!"  
 
-animal2 = factory.creer_animal("chat")
-print(animal2.parler())  # "Miaou!"
+animal2 = factory.creer_animal("chat")  
+print(animal2.parler())  # "Miaou!"  
 
 # Facile d'ajouter de nouveaux types sans modifier le code existant
 ```
@@ -237,9 +237,9 @@ data = {"nom": "Rapport", "date": "2024-01-15"}
 # L'utilisateur choisit le format
 format_choisi = "pdf"  # Pourrait venir d'une interface utilisateur
 
-exporter = ExporterFactory.get_exporter(format_choisi)
-resultat = exporter.export(data)
-print(resultat)
+exporter = ExporterFactory.get_exporter(format_choisi)  
+resultat = exporter.export(data)  
+print(resultat)  
 ```
 
 ### Quand utiliser Factory ?
@@ -419,7 +419,6 @@ Vous voulez qu'un objet **notifie automatiquement** d'autres objets quand son é
 
 ```python
 from abc import ABC, abstractmethod
-from typing import List
 
 # Interface pour les observateurs
 class Observer(ABC):
@@ -430,7 +429,7 @@ class Observer(ABC):
 # Sujet observable
 class Subject:
     def __init__(self):
-        self._observers: List[Observer] = []
+        self._observers: list[Observer] = []
 
     def attach(self, observer: Observer):
         """Ajoute un observateur"""
@@ -463,9 +462,9 @@ class PushNotifier(Observer):
 commande = Subject()
 
 # Attacher des observateurs
-commande.attach(EmailNotifier())
-commande.attach(SMSNotifier())
-commande.attach(PushNotifier())
+commande.attach(EmailNotifier())  
+commande.attach(SMSNotifier())  
+commande.attach(PushNotifier())  
 
 # Quand quelque chose se passe, tout le monde est notifié
 commande.notify("Votre commande a été expédiée !")
@@ -502,13 +501,13 @@ class Abonne(Observer):
 article = BlogPost("Introduction à Python")
 
 # Des abonnés s'inscrivent
-alice = Abonne("Alice")
-bob = Abonne("Bob")
-charlie = Abonne("Charlie")
+alice = Abonne("Alice")  
+bob = Abonne("Bob")  
+charlie = Abonne("Charlie")  
 
-article.attach(alice)
-article.attach(bob)
-article.attach(charlie)
+article.attach(alice)  
+article.attach(bob)  
+article.attach(charlie)  
 
 # Publier l'article
 article.publier("Python est un langage génial...")
@@ -586,7 +585,7 @@ class ShoppingCart:
         self.payment_strategy = strategy
 
     def checkout(self):
-        total = sum(item["prix"] for item in self.items)
+        total = round(sum(item["prix"] for item in self.items), 2)
 
         if self.payment_strategy is None:
             return "Veuillez choisir un moyen de paiement"
@@ -594,17 +593,17 @@ class ShoppingCart:
         return self.payment_strategy.payer(total)
 
 # Utilisation
-cart = ShoppingCart()
-cart.ajouter_item("Livre Python", 29.99)
-cart.ajouter_item("Clavier", 79.99)
+cart = ShoppingCart()  
+cart.ajouter_item("Livre Python", 29.99)  
+cart.ajouter_item("Clavier", 79.99)  
 
 # Choisir la stratégie de paiement
-cart.set_payment_strategy(CarteBancaire("1234-5678-9012-3456"))
-print(cart.checkout())  # Paiement de 109.98€ par carte 3456
+cart.set_payment_strategy(CarteBancaire("1234-5678-9012-3456"))  
+print(cart.checkout())  # Paiement de 109.98€ par carte 3456  
 
 # Changer de stratégie
-cart.set_payment_strategy(PayPal("user@example.com"))
-print(cart.checkout())  # Paiement de 109.98€ via PayPal (user@example.com)
+cart.set_payment_strategy(PayPal("user@example.com"))  
+print(cart.checkout())  # Paiement de 109.98€ via PayPal (user@example.com)  
 ```
 
 ### Exemple pratique : Compression de fichiers
@@ -641,12 +640,12 @@ class FileCompressor:
 # Utilisation
 data = "Beaucoup de données à compresser..." * 100
 
-compressor = FileCompressor(ZipCompression())
-compressor.compress_file("document.txt", data)
+compressor = FileCompressor(ZipCompression())  
+compressor.compress_file("document.txt", data)  
 
 # Changer de stratégie à la volée
-compressor.set_strategy(GzipCompression())
-compressor.compress_file("image.jpg", data)
+compressor.set_strategy(GzipCompression())  
+compressor.compress_file("image.jpg", data)  
 ```
 
 ### Quand utiliser Strategy ?
@@ -722,20 +721,20 @@ class WhippedCreamDecorator(CoffeeDecorator):
         return self._coffee.get_cost() + 0.7
 
 # Utilisation - on peut empiler les décorateurs !
-coffee = SimpleCoffee()
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")
+coffee = SimpleCoffee()  
+print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
 # Café simple: 2.0€
 
-coffee = MilkDecorator(coffee)
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")
+coffee = MilkDecorator(coffee)  
+print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
 # Café simple, lait: 2.5€
 
-coffee = SugarDecorator(coffee)
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")
+coffee = SugarDecorator(coffee)  
+print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
 # Café simple, lait, sucre: 2.7€
 
-coffee = WhippedCreamDecorator(coffee)
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")
+coffee = WhippedCreamDecorator(coffee)  
+print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
 # Café simple, lait, sucre, chantilly: 3.4€
 
 # Ou en une seule ligne
@@ -753,8 +752,8 @@ coffee_deluxe = WhippedCreamDecorator(
 Python a un support natif pour les décorateurs, ce qui rend le pattern encore plus simple :
 
 ```python
-import time
-from functools import wraps
+import time  
+from functools import wraps  
 
 def timer(func):
     """Décorateur qui mesure le temps d'exécution"""
@@ -897,10 +896,10 @@ class Playlist:
         return iter(self.chansons)
 
 # Utilisation
-playlist = Playlist("Ma playlist")
-playlist.ajouter_chanson("Song 1")
-playlist.ajouter_chanson("Song 2")
-playlist.ajouter_chanson("Song 3")
+playlist = Playlist("Ma playlist")  
+playlist.ajouter_chanson("Song 1")  
+playlist.ajouter_chanson("Song 2")  
+playlist.ajouter_chanson("Song 3")  
 
 # On peut itérer directement !
 for chanson in playlist:
@@ -926,8 +925,8 @@ class CountDown:
         return self.current + 1
 
 # Utilisation
-countdown = CountDown(5)
-for num in countdown:
+countdown = CountDown(5)  
+for num in countdown:  
     print(num)
 # 5
 # 4
@@ -961,8 +960,8 @@ class Paginator:
         return page
 
 # Utilisation
-data = list(range(1, 26))  # 25 éléments
-paginator = Paginator(data, page_size=10)
+data = list(range(1, 26))  # 25 éléments  
+paginator = Paginator(data, page_size=10)  
 
 for page_num, page in enumerate(paginator, 1):
     print(f"Page {page_num}: {page}")
@@ -1052,15 +1051,13 @@ def lire_media(player: MediaPlayer, filename: str):
     player.play(filename)
 
 # Maintenant tout utilise la même interface
-lire_media(MP3Adapter(), "musique.mp3")
-lire_media(MP4Adapter(), "video.mp4")
+lire_media(MP3Adapter(), "musique.mp3")  
+lire_media(MP4Adapter(), "video.mp4")  
 ```
 
 ### Exemple pratique : API externes
 
 ```python
-from datetime import datetime
-
 # Notre interface standard pour la météo
 class WeatherService:
     def get_temperature(self, city: str) -> float:
@@ -1111,8 +1108,8 @@ def afficher_meteo(service: WeatherService, ville: str):
     print(f"Température à {ville} : {temp}°C")
 
 # Peu importe l'API, l'interface est la même
-afficher_meteo(OpenWeatherAdapter(), "Paris")
-afficher_meteo(WeatherDotComAdapter(), "Paris")
+afficher_meteo(OpenWeatherAdapter(), "Paris")  
+afficher_meteo(WeatherDotComAdapter(), "Paris")  
 ```
 
 ### Quand utiliser Adapter ?
@@ -1135,7 +1132,6 @@ Vous voulez **séparer la logique métier** de la logique d'accès aux données.
 
 ```python
 from abc import ABC, abstractmethod
-from typing import List, Optional
 
 # Modèle de données
 class User:
@@ -1150,11 +1146,11 @@ class User:
 # Interface du Repository
 class UserRepository(ABC):
     @abstractmethod
-    def find_by_id(self, user_id: int) -> Optional[User]:
+    def find_by_id(self, user_id: int) -> User | None:
         pass
 
     @abstractmethod
-    def find_all(self) -> List[User]:
+    def find_all(self) -> list[User]:
         pass
 
     @abstractmethod
@@ -1171,10 +1167,10 @@ class InMemoryUserRepository(UserRepository):
         self._users = {}
         self._next_id = 1
 
-    def find_by_id(self, user_id: int) -> Optional[User]:
+    def find_by_id(self, user_id: int) -> User | None:
         return self._users.get(user_id)
 
-    def find_all(self) -> List[User]:
+    def find_all(self) -> list[User]:
         return list(self._users.values())
 
     def save(self, user: User) -> User:
@@ -1195,14 +1191,14 @@ class DatabaseUserRepository(UserRepository):
     def __init__(self, connection):
         self.connection = connection
 
-    def find_by_id(self, user_id: int) -> Optional[User]:
+    def find_by_id(self, user_id: int) -> User | None:
         # Simuler une requête SQL
         query = f"SELECT * FROM users WHERE id = {user_id}"
         # result = self.connection.execute(query)
         print(f"SQL: {query}")
         return None  # Simulation
 
-    def find_all(self) -> List[User]:
+    def find_all(self) -> list[User]:
         query = "SELECT * FROM users"
         print(f"SQL: {query}")
         return []
@@ -1229,10 +1225,10 @@ class UserService:
         user = User(id=None, name=name, email=email)
         return self.repository.save(user)
 
-    def get_user(self, user_id: int) -> Optional[User]:
+    def get_user(self, user_id: int) -> User | None:
         return self.repository.find_by_id(user_id)
 
-    def list_users(self) -> List[User]:
+    def list_users(self) -> list[User]:
         return self.repository.find_all()
 
 # Utilisation - on peut changer facilement d'implémentation
@@ -1242,8 +1238,8 @@ repository = InMemoryUserRepository()
 service = UserService(repository)
 
 # Créer des utilisateurs
-user1 = service.register_user("Alice", "alice@example.com")
-user2 = service.register_user("Bob", "bob@example.com")
+user1 = service.register_user("Alice", "alice@example.com")  
+user2 = service.register_user("Bob", "bob@example.com")  
 
 # Lister les utilisateurs
 for user in service.list_users():
@@ -1311,8 +1307,8 @@ with FileHandler("test.txt", "w") as f:
 ### Solution avec `contextlib` (plus simple)
 
 ```python
-from contextlib import contextmanager
-import time
+from contextlib import contextmanager  
+import time  
 
 @contextmanager
 def timer(name: str):
@@ -1369,8 +1365,8 @@ class Database:
             print("Fin de la transaction")
 
 # Utilisation
-db = Database("postgresql://localhost/mydb")
-db.connect()
+db = Database("postgresql://localhost/mydb")  
+db.connect()  
 
 with db.transaction() as conn:
     # Faire des opérations
@@ -1384,8 +1380,8 @@ db.disconnect()
 ### Exemple pratique : Suppression temporaire de fichiers
 
 ```python
-import os
-from contextlib import contextmanager
+import os  
+from contextlib import contextmanager  
 
 @contextmanager
 def temporary_file(filename: str):
@@ -1393,7 +1389,7 @@ def temporary_file(filename: str):
     print(f"Création du fichier temporaire {filename}")
 
     # Créer le fichier
-    with open(filename, 'w') as f:
+    with open(filename, 'w', encoding='utf-8') as f:
         f.write("Contenu temporaire")
 
     try:
@@ -1407,7 +1403,7 @@ def temporary_file(filename: str):
 # Utilisation
 with temporary_file("temp.txt") as filename:
     print(f"Utilisation de {filename}")
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding='utf-8') as f:
         print(f.read())
 # Le fichier est automatiquement supprimé après le with !
 ```
@@ -1481,6 +1477,8 @@ class ReportGenerator:
 **Ouvert à l'extension, fermé à la modification**
 
 ```python
+import math
+
 # ✅ Bon : on peut ajouter de nouveaux types sans modifier le code existant
 class Shape(ABC):
     @abstractmethod
@@ -1492,7 +1490,7 @@ class Circle(Shape):
         self.radius = radius
 
     def area(self):
-        return 3.14 * self.radius ** 2
+        return math.pi * self.radius ** 2
 
 class Square(Shape):
     def __init__(self, side):
@@ -1608,9 +1606,9 @@ Les patterns sont des outils, pas des objectifs. N'utilisez un pattern que s'il 
 
 ```python
 # ❌ Trop complexe pour un besoin simple
-factory = AnimalFactory()
-builder = AnimalBuilder()
-animal = factory.create(builder.build("chat"))
+factory = AnimalFactory()  
+builder = AnimalBuilder()  
+animal = factory.create(builder.build("chat"))  
 
 # ✅ Simple et suffisant
 animal = Chat()

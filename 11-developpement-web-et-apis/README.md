@@ -116,14 +116,14 @@ Le **serveur** est un ordinateur qui héberge votre application Python. Il atten
 Voici un exemple de dialogue client-serveur :
 
 ```
-Client : "Bonjour serveur, donne-moi la liste des produits"
-Serveur : "Voici les produits : [Produit1, Produit2, Produit3]"
+Client : "Bonjour serveur, donne-moi la liste des produits"  
+Serveur : "Voici les produits : [Produit1, Produit2, Produit3]"  
 
-Client : "Je veux acheter le Produit2"
-Serveur : "D'accord, Produit2 ajouté à votre panier"
+Client : "Je veux acheter le Produit2"  
+Serveur : "D'accord, Produit2 ajouté à votre panier"  
 
-Client : "Montre-moi mon panier"
-Serveur : "Votre panier contient : [Produit2], Total: 29,99€"
+Client : "Montre-moi mon panier"  
+Serveur : "Votre panier contient : [Produit2], Total: 29,99€"  
 ```
 
 Votre code Python gère toute la logique du serveur !
@@ -181,8 +181,8 @@ Frontend JavaScript → API Python → Base de données
 **3. Intégration entre systèmes**
 Différents services communiquent via des APIs :
 ```
-Votre app → API de paiement Stripe → Transaction
-Votre app → API Google Maps → Affichage carte
+Votre app → API de paiement Stripe → Transaction  
+Votre app → API Google Maps → Affichage carte  
 ```
 
 **4. Microservices**
@@ -194,8 +194,8 @@ Service Utilisateurs (API) ←→ Service Commandes (API) ←→ Service Paiemen
 **5. Partage de données**
 Permettre à d'autres développeurs d'utiliser vos données/services :
 ```
-API Météo publique ← Développeurs externes
-API Twitter ← Applications tierces
+API Météo publique ← Développeurs externes  
+API Twitter ← Applications tierces  
 ```
 
 ## Les deux approches du développement web avec Python
@@ -323,8 +323,8 @@ JSON ressemble beaucoup aux dictionnaires Python ! Python peut facilement conver
 import json
 
 # Python dict → JSON
-data = {"nom": "Alice", "age": 28}
-json_string = json.dumps(data)
+data = {"nom": "Alice", "age": 28}  
+json_string = json.dumps(data)  
 
 # JSON → Python dict
 data = json.loads(json_string)
@@ -356,12 +356,12 @@ data = json.loads(json_string)
 **Exemple d'API REST complète :**
 
 ```
-GET    /api/articles          → Lire tous les articles
-GET    /api/articles/5        → Lire l'article 5
-POST   /api/articles          → Créer un article
-PUT    /api/articles/5        → Modifier l'article 5
-DELETE /api/articles/5        → Supprimer l'article 5
-GET    /api/articles/5/auteur → Lire l'auteur de l'article 5
+GET    /api/articles          → Lire tous les articles  
+GET    /api/articles/5        → Lire l'article 5  
+POST   /api/articles          → Créer un article  
+PUT    /api/articles/5        → Modifier l'article 5  
+DELETE /api/articles/5        → Supprimer l'article 5  
+GET    /api/articles/5/auteur → Lire l'auteur de l'article 5  
 ```
 
 ## Les bases de données dans le développement web
@@ -414,8 +414,8 @@ class Utilisateur(Base):
     email = Column(String)
 
 # Créer un utilisateur
-utilisateur = Utilisateur(nom="Alice", email="alice@example.com")
-session.add(utilisateur)
+utilisateur = Utilisateur(nom="Alice", email="alice@example.com")  
+session.add(utilisateur)  
 ```
 
 ## Sécurité dans le développement web
@@ -480,7 +480,7 @@ Créer votre application en local n'est que la première étape. Il faut ensuite
 ### Options de déploiement
 
 **Solutions cloud simples :**
-- **Heroku** - Très simple, gratuit pour débuter
+- **Heroku** - Très simple, payant (plans à partir de 5$/mois)
 - **PythonAnywhere** - Spécialisé Python
 - **Railway** - Moderne et facile
 - **Render** - Alternative à Heroku
