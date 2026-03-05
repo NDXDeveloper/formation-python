@@ -24,13 +24,13 @@ Une liste est une collection ordonnée et modifiable d'éléments. C'est probabl
 
 ```python
 # Liste vide
-ma_liste = []
-autre_liste = list()
+ma_liste = []  
+autre_liste = list()  
 
 # Liste avec des éléments
-fruits = ["pomme", "banane", "orange"]
-nombres = [1, 2, 3, 4, 5]
-mixte = [1, "texte", 3.14, True]
+fruits = ["pomme", "banane", "orange"]  
+nombres = [1, 2, 3, 4, 5]  
+mixte = [1, "texte", 3.14, True]  
 
 print(fruits)  # ['pomme', 'banane', 'orange']
 ```
@@ -43,12 +43,12 @@ Les éléments d'une liste sont indexés à partir de 0. On peut aussi utiliser 
 fruits = ["pomme", "banane", "orange", "fraise", "kiwi"]
 
 # Accès par index positif
-print(fruits[0])   # 'pomme' (premier élément)
-print(fruits[2])   # 'orange'
+print(fruits[0])   # 'pomme' (premier élément)  
+print(fruits[2])   # 'orange'  
 
 # Accès par index négatif
-print(fruits[-1])  # 'kiwi' (dernier élément)
-print(fruits[-2])  # 'fraise' (avant-dernier)
+print(fruits[-1])  # 'kiwi' (dernier élément)  
+print(fruits[-2])  # 'fraise' (avant-dernier)  
 ```
 
 ### Slicing (tranches)
@@ -59,11 +59,11 @@ Le slicing permet d'extraire une portion de la liste.
 nombres = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 # Syntaxe : liste[début:fin:pas]
-print(nombres[2:5])      # [2, 3, 4] (de l'index 2 à 4)
-print(nombres[:3])       # [0, 1, 2] (du début jusqu'à l'index 2)
-print(nombres[5:])       # [5, 6, 7, 8, 9] (de l'index 5 jusqu'à la fin)
-print(nombres[::2])      # [0, 2, 4, 6, 8] (tous les 2 éléments)
-print(nombres[::-1])     # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0] (inverse la liste)
+print(nombres[2:5])      # [2, 3, 4] (de l'index 2 à 4)  
+print(nombres[:3])       # [0, 1, 2] (du début jusqu'à l'index 2)  
+print(nombres[5:])       # [5, 6, 7, 8, 9] (de l'index 5 jusqu'à la fin)  
+print(nombres[::2])      # [0, 2, 4, 6, 8] (tous les 2 éléments)  
+print(nombres[::-1])     # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0] (inverse la liste)  
 ```
 
 ### Modifier une liste
@@ -74,20 +74,20 @@ Les listes sont modifiables (mutables), vous pouvez donc changer, ajouter ou sup
 fruits = ["pomme", "banane", "orange"]
 
 # Modifier un élément
-fruits[1] = "mangue"
-print(fruits)  # ['pomme', 'mangue', 'orange']
+fruits[1] = "mangue"  
+print(fruits)  # ['pomme', 'mangue', 'orange']  
 
 # Ajouter un élément à la fin
-fruits.append("fraise")
-print(fruits)  # ['pomme', 'mangue', 'orange', 'fraise']
+fruits.append("fraise")  
+print(fruits)  # ['pomme', 'mangue', 'orange', 'fraise']  
 
 # Insérer un élément à une position spécifique
-fruits.insert(1, "kiwi")
-print(fruits)  # ['pomme', 'kiwi', 'mangue', 'orange', 'fraise']
+fruits.insert(1, "kiwi")  
+print(fruits)  # ['pomme', 'kiwi', 'mangue', 'orange', 'fraise']  
 
 # Étendre la liste avec une autre liste
-fruits.extend(["cerise", "raisin"])
-print(fruits)  # ['pomme', 'kiwi', 'mangue', 'orange', 'fraise', 'cerise', 'raisin']
+fruits.extend(["cerise", "raisin"])  
+print(fruits)  # ['pomme', 'kiwi', 'mangue', 'orange', 'fraise', 'cerise', 'raisin']  
 ```
 
 ### Supprimer des éléments
@@ -96,25 +96,25 @@ print(fruits)  # ['pomme', 'kiwi', 'mangue', 'orange', 'fraise', 'cerise', 'rais
 fruits = ["pomme", "banane", "orange", "fraise", "kiwi"]
 
 # Supprimer par valeur
-fruits.remove("banane")
-print(fruits)  # ['pomme', 'orange', 'fraise', 'kiwi']
+fruits.remove("banane")  
+print(fruits)  # ['pomme', 'orange', 'fraise', 'kiwi']  
 
 # Supprimer par index et récupérer la valeur
-fruit_supprime = fruits.pop(2)
-print(fruit_supprime)  # 'fraise'
-print(fruits)          # ['pomme', 'orange', 'kiwi']
+fruit_supprime = fruits.pop(2)  
+print(fruit_supprime)  # 'fraise'  
+print(fruits)          # ['pomme', 'orange', 'kiwi']  
 
 # Supprimer le dernier élément
-dernier = fruits.pop()
-print(dernier)  # 'kiwi'
+dernier = fruits.pop()  
+print(dernier)  # 'kiwi'  
 
 # Supprimer un élément par index sans récupérer la valeur
-del fruits[0]
-print(fruits)  # ['orange']
+del fruits[0]  
+print(fruits)  # ['orange']  
 
 # Vider complètement la liste
-fruits.clear()
-print(fruits)  # []
+fruits.clear()  
+print(fruits)  # []  
 ```
 
 ### Opérations courantes sur les listes
@@ -126,8 +126,8 @@ nombres = [3, 1, 4, 1, 5, 9, 2, 6]
 print(len(nombres))  # 8
 
 # Vérifier si un élément est dans la liste
-print(4 in nombres)   # True
-print(10 in nombres)  # False
+print(4 in nombres)   # True  
+print(10 in nombres)  # False  
 
 # Compter les occurrences d'un élément
 print(nombres.count(1))  # 2
@@ -136,22 +136,22 @@ print(nombres.count(1))  # 2
 print(nombres.index(5))  # 4
 
 # Trier la liste (modifie la liste originale)
-nombres.sort()
-print(nombres)  # [1, 1, 2, 3, 4, 5, 6, 9]
+nombres.sort()  
+print(nombres)  # [1, 1, 2, 3, 4, 5, 6, 9]  
 
 # Trier en ordre décroissant
-nombres.sort(reverse=True)
-print(nombres)  # [9, 6, 5, 4, 3, 2, 1, 1]
+nombres.sort(reverse=True)  
+print(nombres)  # [9, 6, 5, 4, 3, 2, 1, 1]  
 
 # Créer une copie triée sans modifier l'original
-nombres_originaux = [3, 1, 4, 1, 5]
-nombres_tries = sorted(nombres_originaux)
-print(nombres_originaux)  # [3, 1, 4, 1, 5]
-print(nombres_tries)      # [1, 1, 3, 4, 5]
+nombres_originaux = [3, 1, 4, 1, 5]  
+nombres_tries = sorted(nombres_originaux)  
+print(nombres_originaux)  # [3, 1, 4, 1, 5]  
+print(nombres_tries)      # [1, 1, 3, 4, 5]  
 
 # Inverser l'ordre de la liste
-nombres.reverse()
-print(nombres)  # [1, 1, 2, 3, 4, 5, 6, 9]
+nombres.reverse()  
+print(nombres)  # [1, 1, 2, 3, 4, 5, 6, 9]  
 ```
 
 ### Copier une liste
@@ -160,22 +160,22 @@ Attention : l'affectation simple ne crée pas une copie !
 
 ```python
 # Mauvaise méthode : crée une référence
-liste1 = [1, 2, 3]
-liste2 = liste1
-liste2.append(4)
-print(liste1)  # [1, 2, 3, 4] - liste1 est aussi modifiée !
+liste1 = [1, 2, 3]  
+liste2 = liste1  
+liste2.append(4)  
+print(liste1)  # [1, 2, 3, 4] - liste1 est aussi modifiée !  
 
 # Bonnes méthodes pour copier
-liste1 = [1, 2, 3]
-liste2 = liste1.copy()
+liste1 = [1, 2, 3]  
+liste2 = liste1.copy()  
 # ou
 liste3 = liste1[:]
 # ou
 liste4 = list(liste1)
 
-liste2.append(4)
-print(liste1)  # [1, 2, 3] - liste1 n'est pas modifiée
-print(liste2)  # [1, 2, 3, 4]
+liste2.append(4)  
+print(liste1)  # [1, 2, 3] - liste1 n'est pas modifiée  
+print(liste2)  # [1, 2, 3, 4]  
 ```
 
 ### Listes imbriquées
@@ -190,8 +190,8 @@ matrice = [
     [7, 8, 9]
 ]
 
-print(matrice[0])      # [1, 2, 3]
-print(matrice[1][2])   # 6
+print(matrice[0])      # [1, 2, 3]  
+print(matrice[1][2])   # 6  
 
 # Liste de listes avec des données variées
 etudiants = [
@@ -217,21 +217,21 @@ Un tuple est similaire à une liste, mais il est **immuable** (non modifiable). 
 
 ```python
 # Tuple vide
-mon_tuple = ()
-autre_tuple = tuple()
+mon_tuple = ()  
+autre_tuple = tuple()  
 
 # Tuple avec des éléments
-coordonnees = (10, 20)
-informations = ("Alice", 25, "Paris")
+coordonnees = (10, 20)  
+informations = ("Alice", 25, "Paris")  
 
 # Tuple avec un seul élément (attention à la virgule !)
-un_element = (5,)  # Correct
-pas_un_tuple = (5)  # Ceci est juste un entier entre parenthèses
+un_element = (5,)  # Correct  
+pas_un_tuple = (5)  # Ceci est juste un entier entre parenthèses  
 
 # Création sans parenthèses (packing)
-point = 3, 4
-print(point)  # (3, 4)
-print(type(point))  # <class 'tuple'>
+point = 3, 4  
+print(point)  # (3, 4)  
+print(type(point))  # <class 'tuple'>  
 ```
 
 ### Accéder aux éléments
@@ -241,9 +241,9 @@ L'accès aux éléments d'un tuple fonctionne exactement comme pour les listes.
 ```python
 informations = ("Alice", 25, "Paris", "Ingénieure")
 
-print(informations[0])   # 'Alice'
-print(informations[-1])  # 'Ingénieure'
-print(informations[1:3]) # (25, 'Paris')
+print(informations[0])   # 'Alice'  
+print(informations[-1])  # 'Ingénieure'  
+print(informations[1:3]) # (25, 'Paris')  
 ```
 
 ### Immuabilité des tuples
@@ -264,43 +264,43 @@ Le unpacking permet d'assigner les éléments d'un tuple à plusieurs variables 
 
 ```python
 # Unpacking simple
-coordonnees = (10, 20)
-x, y = coordonnees
-print(x)  # 10
-print(y)  # 20
+coordonnees = (10, 20)  
+x, y = coordonnees  
+print(x)  # 10  
+print(y)  # 20  
 
 # Unpacking avec plusieurs valeurs
-personne = ("Alice", 25, "Paris", "Ingénieure")
-nom, age, ville, profession = personne
-print(nom)  # Alice
+personne = ("Alice", 25, "Paris", "Ingénieure")  
+nom, age, ville, profession = personne  
+print(nom)  # Alice  
 
 # Unpacking partiel avec *
-nombres = (1, 2, 3, 4, 5)
-premier, *milieu, dernier = nombres
-print(premier)  # 1
-print(milieu)   # [2, 3, 4]
-print(dernier)  # 5
+nombres = (1, 2, 3, 4, 5)  
+premier, *milieu, dernier = nombres  
+print(premier)  # 1  
+print(milieu)   # [2, 3, 4]  
+print(dernier)  # 5  
 
 # Échanger des variables facilement
-a = 5
-b = 10
-a, b = b, a
-print(a, b)  # 10 5
+a = 5  
+b = 10  
+a, b = b, a  
+print(a, b)  # 10 5  
 ```
 
 ### Opérations sur les tuples
 
 ```python
-tuple1 = (1, 2, 3)
-tuple2 = (4, 5, 6)
+tuple1 = (1, 2, 3)  
+tuple2 = (4, 5, 6)  
 
 # Concaténation
-tuple3 = tuple1 + tuple2
-print(tuple3)  # (1, 2, 3, 4, 5, 6)
+tuple3 = tuple1 + tuple2  
+print(tuple3)  # (1, 2, 3, 4, 5, 6)  
 
 # Répétition
-tuple4 = tuple1 * 3
-print(tuple4)  # (1, 2, 3, 1, 2, 3, 1, 2, 3)
+tuple4 = tuple1 * 3  
+print(tuple4)  # (1, 2, 3, 1, 2, 3, 1, 2, 3)  
 
 # Longueur
 print(len(tuple1))  # 3
@@ -309,8 +309,8 @@ print(len(tuple1))  # 3
 print(2 in tuple1)  # True
 
 # Compter les occurrences
-nombres = (1, 2, 3, 2, 4, 2)
-print(nombres.count(2))  # 3
+nombres = (1, 2, 3, 2, 4, 2)  
+print(nombres.count(2))  # 3  
 
 # Trouver l'index
 print(nombres.index(3))  # 2
@@ -345,14 +345,14 @@ JOURS_SEMAINE = ("lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "d
 
 ### Qu'est-ce qu'un dictionnaire ?
 
-Un dictionnaire est une collection non ordonnée de paires **clé-valeur**. Chaque clé est unique et permet d'accéder rapidement à sa valeur associée. C'est l'équivalent des objets en JavaScript ou des maps dans d'autres langages.
+Un dictionnaire est une collection **ordonnée** (depuis Python 3.7) de paires **clé-valeur**. Chaque clé est unique et permet d'accéder rapidement à sa valeur associée. C'est l'équivalent des objets en JavaScript ou des maps dans d'autres langages.
 
 ### Créer un dictionnaire
 
 ```python
 # Dictionnaire vide
-mon_dict = {}
-autre_dict = dict()
+mon_dict = {}  
+autre_dict = dict()  
 
 # Dictionnaire avec des éléments
 personne = {
@@ -387,9 +387,9 @@ personne = {
 print(personne["nom"])  # 'Alice'
 
 # Accès avec get() (plus sûr, ne lève pas d'erreur si la clé n'existe pas)
-print(personne.get("age"))        # 25
-print(personne.get("profession")) # None
-print(personne.get("profession", "Non spécifiée"))  # 'Non spécifiée' (valeur par défaut)
+print(personne.get("age"))        # 25  
+print(personne.get("profession")) # None  
+print(personne.get("profession", "Non spécifiée"))  # 'Non spécifiée' (valeur par défaut)  
 
 # Attention : accéder à une clé inexistante avec [] lève une erreur
 # print(personne["profession"])  # KeyError
@@ -405,16 +405,16 @@ personne = {
 }
 
 # Modifier une valeur existante
-personne["age"] = 26
-print(personne)  # {'nom': 'Alice', 'age': 26, 'ville': 'Paris'}
+personne["age"] = 26  
+print(personne)  # {'nom': 'Alice', 'age': 26, 'ville': 'Paris'}  
 
 # Ajouter une nouvelle paire clé-valeur
-personne["profession"] = "Ingénieure"
-print(personne)  # {'nom': 'Alice', 'age': 26, 'ville': 'Paris', 'profession': 'Ingénieure'}
+personne["profession"] = "Ingénieure"  
+print(personne)  # {'nom': 'Alice', 'age': 26, 'ville': 'Paris', 'profession': 'Ingénieure'}  
 
 # Mettre à jour plusieurs valeurs à la fois
-personne.update({"age": 27, "ville": "Lyon", "telephone": "0123456789"})
-print(personne)
+personne.update({"age": 27, "ville": "Lyon", "telephone": "0123456789"})  
+print(personne)  
 ```
 
 ### Supprimer des éléments
@@ -428,24 +428,24 @@ personne = {
 }
 
 # Supprimer une clé spécifique avec del
-del personne["profession"]
-print(personne)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris'}
+del personne["profession"]  
+print(personne)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris'}  
 
 # Supprimer avec pop() et récupérer la valeur
-age = personne.pop("age")
-print(age)       # 25
-print(personne)  # {'nom': 'Alice', 'ville': 'Paris'}
+age = personne.pop("age")  
+print(age)       # 25  
+print(personne)  # {'nom': 'Alice', 'ville': 'Paris'}  
 
 # Supprimer avec pop() avec valeur par défaut
-telephone = personne.pop("telephone", "Non renseigné")
-print(telephone)  # 'Non renseigné'
+telephone = personne.pop("telephone", "Non renseigné")  
+print(telephone)  # 'Non renseigné'  
 
 # Supprimer et récupérer un élément arbitraire
 # item = personne.popitem()
 
 # Vider complètement le dictionnaire
-personne.clear()
-print(personne)  # {}
+personne.clear()  
+print(personne)  # {}  
 ```
 
 ### Parcourir un dictionnaire
@@ -490,12 +490,12 @@ personne = {
 print(len(personne))  # 3
 
 # Vérifier si une clé existe
-print("nom" in personne)        # True
-print("profession" in personne) # False
+print("nom" in personne)        # True  
+print("profession" in personne) # False  
 
 # Obtenir toutes les clés
-print(personne.keys())    # dict_keys(['nom', 'age', 'ville'])
-print(list(personne.keys()))  # ['nom', 'age', 'ville']
+print(personne.keys())    # dict_keys(['nom', 'age', 'ville'])  
+print(list(personne.keys()))  # ['nom', 'age', 'ville']  
 
 # Obtenir toutes les valeurs
 print(personne.values())  # dict_values(['Alice', 25, 'Paris'])
@@ -508,20 +508,20 @@ print(personne.items())   # dict_items([('nom', 'Alice'), ('age', 25), ('ville',
 
 ```python
 # Mauvaise méthode : crée une référence
-dict1 = {"a": 1, "b": 2}
-dict2 = dict1
-dict2["c"] = 3
-print(dict1)  # {'a': 1, 'b': 2, 'c': 3} - dict1 est aussi modifié !
+dict1 = {"a": 1, "b": 2}  
+dict2 = dict1  
+dict2["c"] = 3  
+print(dict1)  # {'a': 1, 'b': 2, 'c': 3} - dict1 est aussi modifié !  
 
 # Bonne méthode : copie superficielle
-dict1 = {"a": 1, "b": 2}
-dict2 = dict1.copy()
+dict1 = {"a": 1, "b": 2}  
+dict2 = dict1.copy()  
 # ou
 dict3 = dict(dict1)
 
-dict2["c"] = 3
-print(dict1)  # {'a': 1, 'b': 2}
-print(dict2)  # {'a': 1, 'b': 2, 'c': 3}
+dict2["c"] = 3  
+print(dict1)  # {'a': 1, 'b': 2}  
+print(dict2)  # {'a': 1, 'b': 2, 'c': 3}  
 ```
 
 ### Dictionnaires imbriqués
@@ -562,8 +562,8 @@ personne = {"nom": "Alice", "age": 25}
 print(personne.setdefault("nom", "Inconnu"))  # 'Alice'
 
 # Si la clé n'existe pas, l'ajoute avec la valeur par défaut
-print(personne.setdefault("ville", "Paris"))  # 'Paris'
-print(personne)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris'}
+print(personne.setdefault("ville", "Paris"))  # 'Paris'  
+print(personne)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris'}  
 ```
 
 ---
@@ -581,29 +581,29 @@ Un set est une collection **non ordonnée** d'éléments **uniques**. Les sets s
 mon_set = set()
 
 # Set avec des éléments
-nombres = {1, 2, 3, 4, 5}
-fruits = {"pomme", "banane", "orange"}
+nombres = {1, 2, 3, 4, 5}  
+fruits = {"pomme", "banane", "orange"}  
 
 # Créer un set à partir d'une liste (élimine les doublons)
-liste_avec_doublons = [1, 2, 2, 3, 3, 3, 4]
-nombres_uniques = set(liste_avec_doublons)
-print(nombres_uniques)  # {1, 2, 3, 4}
+liste_avec_doublons = [1, 2, 2, 3, 3, 3, 4]  
+nombres_uniques = set(liste_avec_doublons)  
+print(nombres_uniques)  # {1, 2, 3, 4}  
 
 # Créer un set à partir d'une chaîne
-lettres = set("hello")
-print(lettres)  # {'h', 'e', 'l', 'o'}
+lettres = set("hello")  
+print(lettres)  # {'h', 'e', 'l', 'o'}  
 ```
 
 ### Caractéristiques importantes
 
 ```python
 # Les sets ne conservent pas l'ordre
-nombres = {3, 1, 4, 1, 5, 9, 2}
-print(nombres)  # Affichage dans un ordre arbitraire : {1, 2, 3, 4, 5, 9}
+nombres = {3, 1, 4, 1, 5, 9, 2}  
+print(nombres)  # Affichage dans un ordre arbitraire : {1, 2, 3, 4, 5, 9}  
 
 # Les doublons sont automatiquement éliminés
-nombres = {1, 2, 2, 3, 3, 3}
-print(nombres)  # {1, 2, 3}
+nombres = {1, 2, 2, 3, 3, 3}  
+print(nombres)  # {1, 2, 3}  
 
 # Les éléments doivent être immuables (hashables)
 # Vous pouvez avoir des nombres, des chaînes, des tuples
@@ -619,29 +619,29 @@ valide = {1, "texte", (1, 2), True}
 fruits = {"pomme", "banane"}
 
 # Ajouter un élément
-fruits.add("orange")
-print(fruits)  # {'pomme', 'banane', 'orange'}
+fruits.add("orange")  
+print(fruits)  # {'pomme', 'banane', 'orange'}  
 
 # Ajouter plusieurs éléments
-fruits.update(["fraise", "kiwi"])
-print(fruits)  # {'pomme', 'banane', 'orange', 'fraise', 'kiwi'}
+fruits.update(["fraise", "kiwi"])  
+print(fruits)  # {'pomme', 'banane', 'orange', 'fraise', 'kiwi'}  
 
 # Supprimer un élément (lève une erreur si l'élément n'existe pas)
-fruits.remove("banane")
-print(fruits)  # {'pomme', 'orange', 'fraise', 'kiwi'}
+fruits.remove("banane")  
+print(fruits)  # {'pomme', 'orange', 'fraise', 'kiwi'}  
 
 # Supprimer un élément (ne lève pas d'erreur si l'élément n'existe pas)
-fruits.discard("mangue")  # Pas d'erreur
-print(fruits)  # Inchangé
+fruits.discard("mangue")  # Pas d'erreur  
+print(fruits)  # Inchangé  
 
 # Supprimer et retourner un élément arbitraire
-fruit = fruits.pop()
-print(fruit)   # Par exemple : 'pomme'
-print(fruits)
+fruit = fruits.pop()  
+print(fruit)   # Par exemple : 'pomme'  
+print(fruits)  
 
 # Vider le set
-fruits.clear()
-print(fruits)  # set()
+fruits.clear()  
+print(fruits)  # set()  
 ```
 
 ### Opérations sur les sets
@@ -653,8 +653,8 @@ nombres = {1, 2, 3, 4, 5}
 print(len(nombres))  # 5
 
 # Vérifier si un élément est dans le set
-print(3 in nombres)   # True
-print(10 in nombres)  # False
+print(3 in nombres)   # True  
+print(10 in nombres)  # False  
 
 # Parcourir les éléments
 for nombre in nombres:
@@ -666,88 +666,92 @@ for nombre in nombres:
 Les sets permettent d'effectuer facilement des opérations d'ensembles.
 
 ```python
-set1 = {1, 2, 3, 4, 5}
-set2 = {4, 5, 6, 7, 8}
+set1 = {1, 2, 3, 4, 5}  
+set2 = {4, 5, 6, 7, 8}  
 
 # Union (tous les éléments des deux sets)
 union = set1 | set2
 # ou
-union = set1.union(set2)
-print(union)  # {1, 2, 3, 4, 5, 6, 7, 8}
+union = set1.union(set2)  
+print(union)  # {1, 2, 3, 4, 5, 6, 7, 8}  
 
 # Intersection (éléments présents dans les deux sets)
 intersection = set1 & set2
 # ou
-intersection = set1.intersection(set2)
-print(intersection)  # {4, 5}
+intersection = set1.intersection(set2)  
+print(intersection)  # {4, 5}  
 
 # Différence (éléments dans set1 mais pas dans set2)
 difference = set1 - set2
 # ou
-difference = set1.difference(set2)
-print(difference)  # {1, 2, 3}
+difference = set1.difference(set2)  
+print(difference)  # {1, 2, 3}  
 
 # Différence symétrique (éléments dans l'un ou l'autre, mais pas dans les deux)
 diff_sym = set1 ^ set2
 # ou
-diff_sym = set1.symmetric_difference(set2)
-print(diff_sym)  # {1, 2, 3, 6, 7, 8}
+diff_sym = set1.symmetric_difference(set2)  
+print(diff_sym)  # {1, 2, 3, 6, 7, 8}  
 ```
 
 ### Comparaisons de sets
 
 ```python
-set1 = {1, 2, 3}
-set2 = {1, 2, 3, 4, 5}
-set3 = {1, 2, 3}
+set1 = {1, 2, 3}  
+set2 = {1, 2, 3, 4, 5}  
+set3 = {1, 2, 3}  
 
 # Égalité
 print(set1 == set3)  # True
 
 # Sous-ensemble (subset)
-print(set1.issubset(set2))     # True (set1 est inclus dans set2)
-print(set1 <= set2)            # True
+print(set1.issubset(set2))     # True (set1 est inclus dans set2)  
+print(set1 <= set2)            # True  
 
 # Sous-ensemble strict
 print(set1 < set2)             # True
 
 # Sur-ensemble (superset)
-print(set2.issuperset(set1))   # True (set2 contient set1)
-print(set2 >= set1)            # True
+print(set2.issuperset(set1))   # True (set2 contient set1)  
+print(set2 >= set1)            # True  
 
 # Sets disjoints (aucun élément en commun)
-set_a = {1, 2, 3}
-set_b = {4, 5, 6}
-print(set_a.isdisjoint(set_b))  # True
+set_a = {1, 2, 3}  
+set_b = {4, 5, 6}  
+print(set_a.isdisjoint(set_b))  # True  
 ```
 
 ### Cas d'usage pratiques
 
 ```python
 # 1. Éliminer les doublons d'une liste
-liste = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
-liste_sans_doublons = list(set(liste))
-print(liste_sans_doublons)  # [1, 2, 3, 4]
+liste = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]  
+liste_sans_doublons = list(set(liste))  
+print(liste_sans_doublons)  # [1, 2, 3, 4] (l'ordre peut changer)  
+
+# Pour éliminer les doublons en préservant l'ordre :
+liste_ordonnee = list(dict.fromkeys(liste))  
+print(liste_ordonnee)  # [1, 2, 3, 4] (ordre d'apparition préservé)  
 
 # 2. Trouver les éléments uniques entre deux listes
-liste1 = [1, 2, 3, 4, 5]
-liste2 = [4, 5, 6, 7, 8]
-uniques = list(set(liste1) ^ set(liste2))
-print(uniques)  # [1, 2, 3, 6, 7, 8]
+liste1 = [1, 2, 3, 4, 5]  
+liste2 = [4, 5, 6, 7, 8]  
+uniques = list(set(liste1) ^ set(liste2))  
+print(uniques)  # [1, 2, 3, 6, 7, 8]  
 
 # 3. Vérifier si tous les éléments d'une liste sont uniques
 def tous_uniques(liste):
     return len(liste) == len(set(liste))
 
-print(tous_uniques([1, 2, 3, 4]))     # True
-print(tous_uniques([1, 2, 2, 3]))     # False
+print(tous_uniques([1, 2, 3, 4]))     # True  
+print(tous_uniques([1, 2, 2, 3]))     # False  
 
 # 4. Trouver les mots uniques dans un texte
-texte = "le chat et le chien jouent avec le chat"
-mots = texte.split()
-mots_uniques = set(mots)
-print(mots_uniques)  # {'le', 'chat', 'et', 'chien', 'jouent', 'avec'}
-print(f"Nombre de mots uniques : {len(mots_uniques)}")  # 6
+texte = "le chat et le chien jouent avec le chat"  
+mots = texte.split()  
+mots_uniques = set(mots)  
+print(mots_uniques)  # {'le', 'chat', 'et', 'chien', 'jouent', 'avec'}  
+print(f"Nombre de mots uniques : {len(mots_uniques)}")  # 6  
 ```
 
 ### Frozenset (set immuable)
@@ -784,10 +788,10 @@ set_de_sets = {
 |-----------|---------|------------|----------|---------|----------------------|
 | **Liste** | Oui | Oui | Oui | `[1, 2, 3]` | Collection générale d'éléments |
 | **Tuple** | Oui | Non | Oui | `(1, 2, 3)` | Données immuables, unpacking |
-| **Dictionnaire** | Non* | Oui | Non (clés) | `{"a": 1}` | Association clé-valeur |
+| **Dictionnaire** | Oui* | Oui | Non (clés) | `{"a": 1}` | Association clé-valeur |
 | **Set** | Non | Oui | Non | `{1, 2, 3}` | Éléments uniques, opérations d'ensembles |
 
-*Depuis Python 3.7, les dictionnaires conservent l'ordre d'insertion, mais ce n'est pas leur caractéristique principale.
+*Depuis Python 3.7, les dictionnaires conservent l'ordre d'insertion.
 
 ---
 
@@ -857,17 +861,17 @@ texte = "Python est un langage de programmation. Python est facile à apprendre.
 mots = texte.lower().replace(".", "").split()
 
 # Compter les occurrences avec un dictionnaire
-compteur = {}
-for mot in mots:
+compteur = {}  
+for mot in mots:  
     compteur[mot] = compteur.get(mot, 0) + 1
 
-print("Fréquence des mots :")
-for mot, count in compteur.items():
+print("Fréquence des mots :")  
+for mot, count in compteur.items():  
     print(f"{mot}: {count}")
 
 # Mots uniques avec un set
-mots_uniques = set(mots)
-print(f"\nNombre de mots uniques : {len(mots_uniques)}")
+mots_uniques = set(mots)  
+print(f"\nNombre de mots uniques : {len(mots_uniques)}")  
 ```
 
 ### Exemple 3 : Gestion d'étudiants
@@ -881,8 +885,8 @@ etudiants = [
 ]
 
 # Extraire toutes les matières uniques avec un set
-toutes_matieres = set()
-for nom, age, matieres in etudiants:
+toutes_matieres = set()  
+for nom, age, matieres in etudiants:  
     toutes_matieres.update(matieres)
 
 print("Matières enseignées :", toutes_matieres)
@@ -894,8 +898,8 @@ for nom, age, matieres in etudiants:
     for matiere in matieres:
         matieres_etudiants[matiere].append(nom)
 
-print("\nÉtudiants par matière :")
-for matiere, noms in matieres_etudiants.items():
+print("\nÉtudiants par matière :")  
+for matiere, noms in matieres_etudiants.items():  
     print(f"{matiere}: {', '.join(noms)}")
 ```
 

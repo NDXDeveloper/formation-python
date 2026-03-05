@@ -21,13 +21,13 @@ Choisir la bonne structure de données peut transformer un programme lent en un 
 ```python
 # Exemple simple
 # Liste : recherche lente pour de grandes quantités de données
-utilisateurs_liste = ["alice", "bob", "charlie", ...]  # 10 000 utilisateurs
-if "marie" in utilisateurs_liste:  # Doit parcourir toute la liste
+utilisateurs_liste = ["alice", "bob", "charlie", ...]  # 10 000 utilisateurs  
+if "marie" in utilisateurs_liste:  # Doit parcourir toute la liste  
     print("Utilisateur trouvé")
 
 # Set : recherche instantanée
-utilisateurs_set = {"alice", "bob", "charlie", ...}  # 10 000 utilisateurs
-if "marie" in utilisateurs_set:  # Recherche ultra-rapide
+utilisateurs_set = {"alice", "bob", "charlie", ...}  # 10 000 utilisateurs  
+if "marie" in utilisateurs_set:  # Recherche ultra-rapide  
     print("Utilisateur trouvé")
 ```
 
@@ -37,14 +37,14 @@ Utiliser la bonne structure rend votre code plus clair et plus facile à compren
 
 ```python
 # ❌ Peu lisible : utiliser des indices numériques
-personne = ("Alice", 25, "Paris")
-nom = personne[0]  # Qu'est-ce que personne[0] ?
-age = personne[1]  # Et personne[1] ?
+personne = ("Alice", 25, "Paris")  
+nom = personne[0]  # Qu'est-ce que personne[0] ?  
+age = personne[1]  # Et personne[1] ?  
 
 # ✅ Plus lisible : utiliser des clés explicites
-personne = {"nom": "Alice", "age": 25, "ville": "Paris"}
-nom = personne["nom"]  # Beaucoup plus clair !
-age = personne["age"]
+personne = {"nom": "Alice", "age": 25, "ville": "Paris"}  
+nom = personne["nom"]  # Beaucoup plus clair !  
+age = personne["age"]  
 ```
 
 **3. Fonctionnalités**
@@ -55,10 +55,10 @@ Chaque structure offre des opérations spécifiques qui simplifient votre travai
 # Compter automatiquement les occurrences
 from collections import Counter
 
-votes = ["Alice", "Bob", "Alice", "Charlie", "Alice", "Bob"]
-resultats = Counter(votes)
-print(resultats)  # Counter({'Alice': 3, 'Bob': 2, 'Charlie': 1})
-print(resultats.most_common(1))  # [('Alice', 3)]
+votes = ["Alice", "Bob", "Alice", "Charlie", "Alice", "Bob"]  
+resultats = Counter(votes)  
+print(resultats)  # Counter({'Alice': 3, 'Bob': 2, 'Charlie': 1})  
+print(resultats.most_common(1))  # [('Alice', 3)]  
 ```
 
 ### Analogies du monde réel
@@ -82,9 +82,9 @@ Certaines structures peuvent être modifiées après leur création (mutables), 
 
 ```python
 # Mutable : on peut modifier
-ma_liste = [1, 2, 3]
-ma_liste[0] = 10  # ✓ Fonctionne
-print(ma_liste)   # [10, 2, 3]
+ma_liste = [1, 2, 3]  
+ma_liste[0] = 10  # ✓ Fonctionne  
+print(ma_liste)   # [10, 2, 3]  
 
 # Immuable : on ne peut pas modifier
 mon_tuple = (1, 2, 3)
@@ -97,12 +97,12 @@ Certaines structures conservent l'ordre dans lequel vous ajoutez les éléments,
 
 ```python
 # Ordonné : conserve l'ordre
-ma_liste = [3, 1, 2]
-print(ma_liste)  # [3, 1, 2] - ordre préservé
+ma_liste = [3, 1, 2]  
+print(ma_liste)  # [3, 1, 2] - ordre préservé  
 
 # Non-ordonné : ordre arbitraire
-mon_set = {3, 1, 2}
-print(mon_set)  # Peut afficher {1, 2, 3} ou autre
+mon_set = {3, 1, 2}  
+print(mon_set)  # Peut afficher {1, 2, 3} ou autre  
 ```
 
 **3. Unicité des éléments**
@@ -111,12 +111,12 @@ Certaines structures acceptent les doublons, d'autres garantissent l'unicité.
 
 ```python
 # Avec doublons
-ma_liste = [1, 2, 2, 3, 3, 3]
-print(ma_liste)  # [1, 2, 2, 3, 3, 3]
+ma_liste = [1, 2, 2, 3, 3, 3]  
+print(ma_liste)  # [1, 2, 2, 3, 3, 3]  
 
 # Sans doublons
-mon_set = {1, 2, 2, 3, 3, 3}
-print(mon_set)  # {1, 2, 3} - doublons automatiquement supprimés
+mon_set = {1, 2, 2, 3, 3, 3}  
+print(mon_set)  # {1, 2, 3} - doublons automatiquement supprimés  
 ```
 
 **4. Accès aux données**
@@ -125,16 +125,16 @@ Différentes méthodes pour accéder aux éléments : par indice, par clé, ou p
 
 ```python
 # Accès par indice
-ma_liste = ["a", "b", "c"]
-print(ma_liste[1])  # "b"
+ma_liste = ["a", "b", "c"]  
+print(ma_liste[1])  # "b"  
 
 # Accès par clé
-mon_dict = {"nom": "Alice", "age": 25}
-print(mon_dict["nom"])  # "Alice"
+mon_dict = {"nom": "Alice", "age": 25}  
+print(mon_dict["nom"])  # "Alice"  
 
 # Pas d'accès direct, seulement par itération
-mon_set = {1, 2, 3}
-for element in mon_set:
+mon_set = {1, 2, 3}  
+for element in mon_set:  
     print(element)
 ```
 
@@ -152,10 +152,10 @@ Les quatre structures de données fondamentales de Python. Vous apprendrez :
 
 ```python
 # Aperçu rapide
-liste = [1, 2, 3, 4]              # Collection ordonnée et modifiable
-tuple = (1, 2, 3, 4)              # Collection ordonnée et immuable
-dictionnaire = {"a": 1, "b": 2}   # Paires clé-valeur
-ensemble = {1, 2, 3, 4}           # Collection d'éléments uniques
+liste = [1, 2, 3, 4]              # Collection ordonnée et modifiable  
+mon_tuple = (1, 2, 3, 4)          # Collection ordonnée et immuable  
+dictionnaire = {"a": 1, "b": 2}   # Paires clé-valeur  
+ensemble = {1, 2, 3, 4}           # Collection d'éléments uniques  
 ```
 
 #### **2.2 Compréhensions de Listes et Dictionnaires**
@@ -169,8 +169,8 @@ Une syntaxe élégante pour créer des collections en une seule ligne. Vous déc
 ```python
 # Aperçu rapide
 # Au lieu de :
-carres = []
-for i in range(10):
+carres = []  
+for i in range(10):  
     carres.append(i ** 2)
 
 # Vous écrirez :
@@ -189,9 +189,9 @@ Des structures avancées du module `collections` pour des besoins spécifiques :
 # Aperçu rapide
 from collections import Counter
 
-votes = ["Alice", "Bob", "Alice", "Charlie", "Alice"]
-resultats = Counter(votes)
-print(resultats.most_common(1))  # [('Alice', 3)]
+votes = ["Alice", "Bob", "Alice", "Charlie", "Alice"]  
+resultats = Counter(votes)  
+print(resultats.most_common(1))  # [('Alice', 3)]  
 ```
 
 #### **2.4 Manipulation de Chaînes et Expressions Régulières**
@@ -204,14 +204,14 @@ Les chaînes de caractères sont omniprésentes en programmation. Vous maîtrise
 
 ```python
 # Aperçu rapide
-nom = "Alice"
-age = 25
-message = f"Je m'appelle {nom} et j'ai {age} ans"
+nom = "Alice"  
+age = 25  
+message = f"Je m'appelle {nom} et j'ai {age} ans"  
 
 # Expressions régulières
-import re
-email = "alice@example.com"
-if re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
+import re  
+email = "alice@example.com"  
+if re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):  
     print("Email valide")
 ```
 
@@ -241,9 +241,9 @@ Vous découvrirez de nouveaux détails et subtilités à chaque relecture.
 
 Avant de commencer cette section, assurez-vous d'être à l'aise avec :
 
-✓ Les variables et les types de données de base (int, float, str, bool)
-✓ Les structures de contrôle (if/else, boucles for et while)
-✓ Les fonctions de base
+✓ Les variables et les types de données de base (int, float, str, bool)  
+✓ Les structures de contrôle (if/else, boucles for et while)  
+✓ Les fonctions de base  
 ✓ La syntaxe Python générale
 
 Si vous n'êtes pas sûr de ces concepts, il peut être utile de revoir la section "Fondamentaux et syntaxe de base" avant de continuer.
@@ -278,9 +278,9 @@ notes_dict = {"Alice": 18, "Bob": 15, "Charlie": 17}
 notes_list = [("Alice", 18), ("Bob", 15), ("Charlie", 17)]
 
 # Approche 3 : namedtuple
-from collections import namedtuple
-Etudiant = namedtuple('Etudiant', 'nom note')
-notes_named = [Etudiant("Alice", 18), Etudiant("Bob", 15), Etudiant("Charlie", 17)]
+from collections import namedtuple  
+Etudiant = namedtuple('Etudiant', 'nom note')  
+notes_named = [Etudiant("Alice", 18), Etudiant("Bob", 15), Etudiant("Charlie", 17)]  
 
 # Quelle approche est la meilleure ? Ça dépend de votre cas d'usage !
 ```
@@ -311,8 +311,8 @@ Un code clair vaut mieux qu'un code "intelligent" mais incompréhensible.
 d = {k: [x for x in v if x > 0] for k, v in data.items() if len(v) > 2}
 
 # ✅ Plus verbeux mais plus clair
-resultat = {}
-for cle, valeurs in data.items():
+resultat = {}  
+for cle, valeurs in data.items():  
     if len(valeurs) > 2:
         valeurs_positives = [x for x in valeurs if x > 0]
         resultat[cle] = valeurs_positives
@@ -324,9 +324,9 @@ Python a une excellente documentation. N'hésitez pas à utiliser la fonction `h
 
 ```python
 # Dans l'interpréteur Python
-help(list)
-help(dict)
-help(set)
+help(list)  
+help(dict)  
+help(set)  
 
 # Ou pour une méthode spécifique
 help(str.split)
@@ -336,11 +336,11 @@ help(str.split)
 
 À la fin de cette section, vous serez capable de :
 
-✓ Choisir la structure de données appropriée pour chaque situation
-✓ Manipuler efficacement les listes, tuples, dictionnaires et sets
-✓ Utiliser les compréhensions pour créer des collections de manière concise
-✓ Exploiter les collections spécialisées pour des besoins avancés
-✓ Maîtriser la manipulation de texte et les expressions régulières
+✓ Choisir la structure de données appropriée pour chaque situation  
+✓ Manipuler efficacement les listes, tuples, dictionnaires et sets  
+✓ Utiliser les compréhensions pour créer des collections de manière concise  
+✓ Exploiter les collections spécialisées pour des besoins avancés  
+✓ Maîtriser la manipulation de texte et les expressions régulières  
 ✓ Écrire du code plus lisible, plus efficace et plus pythonique
 
 ### Erreurs courantes à éviter
@@ -351,38 +351,38 @@ Voici quelques pièges dans lesquels les débutants tombent souvent :
 
 ```python
 # ❌ Erreur
-liste1 = [1, 2, 3]
-liste2 = liste1  # liste2 référence liste1
-liste2.append(4)
-print(liste1)  # [1, 2, 3, 4] - liste1 a aussi changé !
+liste1 = [1, 2, 3]  
+liste2 = liste1  # liste2 référence liste1  
+liste2.append(4)  
+print(liste1)  # [1, 2, 3, 4] - liste1 a aussi changé !  
 
 # ✓ Correct
-liste1 = [1, 2, 3]
-liste2 = liste1.copy()  # Crée une vraie copie
-liste2.append(4)
-print(liste1)  # [1, 2, 3] - liste1 n'a pas changé
+liste1 = [1, 2, 3]  
+liste2 = liste1.copy()  # Crée une vraie copie  
+liste2.append(4)  
+print(liste1)  # [1, 2, 3] - liste1 n'a pas changé  
 ```
 
 **Erreur n°2 : Modifier une liste pendant l'itération**
 
 ```python
 # ❌ Erreur
-nombres = [1, 2, 3, 4, 5]
-for n in nombres:
+nombres = [1, 2, 3, 4, 5]  
+for n in nombres:  
     if n % 2 == 0:
         nombres.remove(n)  # Dangereux !
 
 # ✓ Correct
-nombres = [1, 2, 3, 4, 5]
-nombres = [n for n in nombres if n % 2 != 0]
+nombres = [1, 2, 3, 4, 5]  
+nombres = [n for n in nombres if n % 2 != 0]  
 ```
 
 **Erreur n°3 : Utiliser une liste quand un set suffirait**
 
 ```python
 # ❌ Moins efficace
-elements_uniques = []
-for item in grande_liste:
+elements_uniques = []  
+for item in grande_liste:  
     if item not in elements_uniques:
         elements_uniques.append(item)
 
@@ -393,21 +393,24 @@ elements_uniques = set(grande_liste)
 **Erreur n°4 : Oublier que les dictionnaires sont mutables**
 
 ```python
-# ❌ Erreur
-def ajouter_valeur(dico={}):
-    dico['nouvelle_cle'] = 'valeur'
+# ❌ Erreur : argument mutable par défaut
+def ajouter_entree(nom, dico={}):
+    dico[nom] = len(dico) + 1
     return dico
 
 # Le dictionnaire par défaut est partagé entre tous les appels !
-print(ajouter_valeur())  # {'nouvelle_cle': 'valeur'}
-print(ajouter_valeur())  # {'nouvelle_cle': 'valeur', 'nouvelle_cle': 'valeur'} ?
+print(ajouter_entree("alice"))   # {'alice': 1}  
+print(ajouter_entree("bob"))     # {'alice': 1, 'bob': 2} — surprise !  
 
-# ✓ Correct
-def ajouter_valeur(dico=None):
+# ✓ Correct : utiliser None comme valeur par défaut
+def ajouter_entree(nom, dico=None):
     if dico is None:
         dico = {}
-    dico['nouvelle_cle'] = 'valeur'
+    dico[nom] = len(dico) + 1
     return dico
+
+print(ajouter_entree("alice"))   # {'alice': 1}  
+print(ajouter_entree("bob"))     # {'bob': 1} — un nouveau dict à chaque appel  
 ```
 
 ### Ressources complémentaires

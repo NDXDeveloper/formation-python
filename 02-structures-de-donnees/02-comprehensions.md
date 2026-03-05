@@ -37,8 +37,8 @@ Imaginons que vous voulez créer une liste avec les carrés des nombres de 0 à 
 **Méthode traditionnelle avec une boucle :**
 ```python
 # Méthode classique
-carres = []
-for i in range(5):
+carres = []  
+for i in range(5):  
     carres.append(i ** 2)
 
 print(carres)  # [0, 1, 4, 9, 16]
@@ -58,26 +58,26 @@ C'est beaucoup plus concis ! On lit cette ligne ainsi : "crée une liste contena
 
 ```python
 # Créer une liste de nombres
-nombres = [x for x in range(10)]
-print(nombres)  # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+nombres = [x for x in range(10)]  
+print(nombres)  # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]  
 
 # Multiplier chaque nombre par 2
-doubles = [x * 2 for x in range(5)]
-print(doubles)  # [0, 2, 4, 6, 8]
+doubles = [x * 2 for x in range(5)]  
+print(doubles)  # [0, 2, 4, 6, 8]  
 
 # Convertir des températures Celsius en Fahrenheit
-celsius = [0, 10, 20, 30, 40]
-fahrenheit = [(temp * 9/5) + 32 for temp in celsius]
-print(fahrenheit)  # [32.0, 50.0, 68.0, 86.0, 104.0]
+celsius = [0, 10, 20, 30, 40]  
+fahrenheit = [(temp * 9/5) + 32 for temp in celsius]  
+print(fahrenheit)  # [32.0, 50.0, 68.0, 86.0, 104.0]  
 
 # Mettre tous les mots en majuscules
-mots = ["python", "est", "génial"]
-mots_majuscules = [mot.upper() for mot in mots]
-print(mots_majuscules)  # ['PYTHON', 'EST', 'GÉNIAL']
+mots = ["python", "est", "génial"]  
+mots_majuscules = [mot.upper() for mot in mots]  
+print(mots_majuscules)  # ['PYTHON', 'EST', 'GÉNIAL']  
 
 # Extraire la première lettre de chaque mot
-premieres_lettres = [mot[0] for mot in mots]
-print(premieres_lettres)  # ['p', 'e', 'g']
+premieres_lettres = [mot[0] for mot in mots]  
+print(premieres_lettres)  # ['p', 'e', 'g']  
 ```
 
 ### Compréhensions avec condition (filtre)
@@ -93,24 +93,24 @@ Vous pouvez ajouter une condition `if` pour filtrer les éléments.
 
 ```python
 # Garder seulement les nombres pairs
-nombres = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-pairs = [x for x in nombres if x % 2 == 0]
-print(pairs)  # [0, 2, 4, 6, 8]
+nombres = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]  
+pairs = [x for x in nombres if x % 2 == 0]  
+print(pairs)  # [0, 2, 4, 6, 8]  
 
 # Garder seulement les nombres positifs
-nombres = [-2, -1, 0, 1, 2, 3]
-positifs = [x for x in nombres if x > 0]
-print(positifs)  # [1, 2, 3]
+nombres = [-2, -1, 0, 1, 2, 3]  
+positifs = [x for x in nombres if x > 0]  
+print(positifs)  # [1, 2, 3]  
 
 # Filtrer les mots courts (moins de 5 lettres)
-mots = ["chat", "éléphant", "oiseau", "souris"]
-mots_courts = [mot for mot in mots if len(mot) < 5]
-print(mots_courts)  # ['chat']
+mots = ["chat", "éléphant", "oiseau", "souris"]  
+mots_courts = [mot for mot in mots if len(mot) < 5]  
+print(mots_courts)  # ['chat']  
 
 # Extraire les nombres pairs et les mettre au carré
-nombres = range(10)
-carres_pairs = [x ** 2 for x in nombres if x % 2 == 0]
-print(carres_pairs)  # [0, 4, 16, 36, 64]
+nombres = range(10)  
+carres_pairs = [x ** 2 for x in nombres if x % 2 == 0]  
+print(carres_pairs)  # [0, 4, 16, 36, 64]  
 ```
 
 ### Comparaison : boucle vs compréhension
@@ -121,8 +121,8 @@ Prenons un exemple concret pour bien voir la différence.
 
 **Avec une boucle traditionnelle :**
 ```python
-mots = ["chat", "chien", "oiseau", "poisson"]
-longueurs = []
+mots = ["chat", "chien", "oiseau", "poisson"]  
+longueurs = []  
 
 for mot in mots:
     if 'a' in mot:
@@ -133,8 +133,8 @@ print(longueurs)  # [4, 6]
 
 **Avec une compréhension de liste :**
 ```python
-mots = ["chat", "chien", "oiseau", "poisson"]
-longueurs = [len(mot) for mot in mots if 'a' in mot]
+mots = ["chat", "chien", "oiseau", "poisson"]  
+longueurs = [len(mot) for mot in mots if 'a' in mot]  
 
 print(longueurs)  # [4, 6]
 ```
@@ -154,24 +154,24 @@ Vous pouvez aussi utiliser `if-else` pour appliquer une transformation condition
 
 ```python
 # Remplacer les nombres négatifs par 0
-nombres = [-2, -1, 0, 1, 2, 3]
-positifs_ou_zero = [x if x >= 0 else 0 for x in nombres]
-print(positifs_ou_zero)  # [0, 0, 0, 1, 2, 3]
+nombres = [-2, -1, 0, 1, 2, 3]  
+positifs_ou_zero = [x if x >= 0 else 0 for x in nombres]  
+print(positifs_ou_zero)  # [0, 0, 0, 1, 2, 3]  
 
 # Classifier les nombres en "pair" ou "impair"
-nombres = [1, 2, 3, 4, 5]
-classification = ["pair" if x % 2 == 0 else "impair" for x in nombres]
-print(classification)  # ['impair', 'pair', 'impair', 'pair', 'impair']
+nombres = [1, 2, 3, 4, 5]  
+classification = ["pair" if x % 2 == 0 else "impair" for x in nombres]  
+print(classification)  # ['impair', 'pair', 'impair', 'pair', 'impair']  
 
 # Appliquer une réduction aux produits en stock
-prix = [100, 200, 150, 300]
-prix_soldes = [p * 0.8 if p > 150 else p for p in prix]
-print(prix_soldes)  # [100, 160.0, 150, 240.0]
+prix = [100, 200, 150, 300]  
+prix_soldes = [p * 0.8 if p > 150 else p for p in prix]  
+print(prix_soldes)  # [100, 160.0, 150, 240.0]  
 
 # Convertir des notes en appréciation
-notes = [18, 12, 8, 15]
-appreciations = ["Excellent" if n >= 16 else "Bien" if n >= 12 else "Passable" for n in notes]
-print(appreciations)  # ['Excellent', 'Bien', 'Passable', 'Bien']
+notes = [18, 12, 8, 15]  
+appreciations = ["Excellent" if n >= 16 else "Bien" if n >= 12 else "Passable" for n in notes]  
+print(appreciations)  # ['Excellent', 'Bien', 'Passable', 'Bien']  
 ```
 
 ### Compréhensions avec plusieurs boucles
@@ -180,23 +180,23 @@ Vous pouvez imbriquer plusieurs boucles `for` dans une compréhension.
 
 ```python
 # Créer toutes les paires possibles
-couleurs = ["rouge", "vert", "bleu"]
-tailles = ["S", "M", "L"]
+couleurs = ["rouge", "vert", "bleu"]  
+tailles = ["S", "M", "L"]  
 
-combinaisons = [(couleur, taille) for couleur in couleurs for taille in tailles]
-print(combinaisons)
+combinaisons = [(couleur, taille) for couleur in couleurs for taille in tailles]  
+print(combinaisons)  
 # [('rouge', 'S'), ('rouge', 'M'), ('rouge', 'L'),
 #  ('vert', 'S'), ('vert', 'M'), ('vert', 'L'),
 #  ('bleu', 'S'), ('bleu', 'M'), ('bleu', 'L')]
 
 # Multiplication de matrices (liste de listes)
-matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-elements = [element for ligne in matrice for element in ligne]
-print(elements)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]  
+elements = [element for ligne in matrice for element in ligne]  
+print(elements)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]  
 
 # Créer des paires de coordonnées
-coordonnees = [(x, y) for x in range(3) for y in range(3)]
-print(coordonnees)
+coordonnees = [(x, y) for x in range(3) for y in range(3)]  
+print(coordonnees)  
 # [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
 ```
 
@@ -204,8 +204,8 @@ print(coordonnees)
 
 ```python
 # Équivalent traditionnel de la compréhension ci-dessus
-coordonnees = []
-for x in range(3):
+coordonnees = []  
+for x in range(3):  
     for y in range(3):
         coordonnees.append((x, y))
 ```
@@ -216,13 +216,13 @@ Vous pouvez créer des listes de listes avec des compréhensions imbriquées.
 
 ```python
 # Créer une matrice 3x3 remplie de zéros
-matrice = [[0 for _ in range(3)] for _ in range(3)]
-print(matrice)
+matrice = [[0 for _ in range(3)] for _ in range(3)]  
+print(matrice)  
 # [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
 # Créer une table de multiplication
-table = [[i * j for j in range(1, 6)] for i in range(1, 6)]
-for ligne in table:
+table = [[i * j for j in range(1, 6)] for i in range(1, 6)]  
+for ligne in table:  
     print(ligne)
 # [1, 2, 3, 4, 5]
 # [2, 4, 6, 8, 10]
@@ -231,9 +231,9 @@ for ligne in table:
 # [5, 10, 15, 20, 25]
 
 # Transposer une matrice
-matrice = [[1, 2, 3], [4, 5, 6]]
-transposee = [[ligne[i] for ligne in matrice] for i in range(len(matrice[0]))]
-print(transposee)
+matrice = [[1, 2, 3], [4, 5, 6]]  
+transposee = [[ligne[i] for ligne in matrice] for i in range(len(matrice[0]))]  
+print(transposee)  
 # [[1, 4], [2, 5], [3, 6]]
 ```
 
@@ -248,27 +248,27 @@ etudiants = [
 ]
 
 # Extraire seulement les noms
-noms = [etudiant["nom"] for etudiant in etudiants]
-print(noms)  # ['Alice', 'Bob', 'Charlie']
+noms = [etudiant["nom"] for etudiant in etudiants]  
+print(noms)  # ['Alice', 'Bob', 'Charlie']  
 
 # Extraire les noms des étudiants ayant plus de 15
-bons_etudiants = [e["nom"] for e in etudiants if e["note"] >= 15]
-print(bons_etudiants)  # ['Alice', 'Charlie']
+bons_etudiants = [e["nom"] for e in etudiants if e["note"] >= 15]  
+print(bons_etudiants)  # ['Alice', 'Charlie']  
 
 # 2. Traiter des fichiers
-lignes = ["  ligne 1  ", "  ligne 2\n", "ligne 3  "]
-lignes_nettoyees = [ligne.strip() for ligne in lignes]
-print(lignes_nettoyees)  # ['ligne 1', 'ligne 2', 'ligne 3']
+lignes = ["  ligne 1  ", "  ligne 2\n", "ligne 3  "]  
+lignes_nettoyees = [ligne.strip() for ligne in lignes]  
+print(lignes_nettoyees)  # ['ligne 1', 'ligne 2', 'ligne 3']  
 
 # 3. Filtrer et transformer en une étape
-texte = "Python Est Un Langage Génial"
-voyelles = [c.lower() for c in texte if c.lower() in 'aeiouy']
-print(voyelles)  # ['o', 'e', 'u', 'a', 'a', 'e', 'e', 'i', 'a']
+texte = "Python Est Un Langage Génial"  
+voyelles = [c.lower() for c in texte if c.lower() in 'aeiouy']  
+print(voyelles)  # ['y', 'o', 'e', 'u', 'a', 'a', 'e', 'i', 'a']  
 
 # 4. Aplatir une structure imbriquée
-listes_imbriquees = [[1, 2], [3, 4], [5, 6]]
-liste_plate = [element for sous_liste in listes_imbriquees for element in sous_liste]
-print(liste_plate)  # [1, 2, 3, 4, 5, 6]
+listes_imbriquees = [[1, 2], [3, 4], [5, 6]]  
+liste_plate = [element for sous_liste in listes_imbriquees for element in sous_liste]  
+print(liste_plate)  # [1, 2, 3, 4, 5, 6]  
 ```
 
 ---
@@ -286,75 +286,75 @@ Les compréhensions de dictionnaires permettent de créer des dictionnaires de m
 
 ```python
 # Créer un dictionnaire de carrés
-carres = {x: x**2 for x in range(5)}
-print(carres)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+carres = {x: x**2 for x in range(5)}  
+print(carres)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}  
 
 # Créer un dictionnaire à partir de deux listes
-noms = ["Alice", "Bob", "Charlie"]
-ages = [25, 30, 35]
-personnes = {nom: age for nom, age in zip(noms, ages)}
-print(personnes)  # {'Alice': 25, 'Bob': 30, 'Charlie': 35}
+noms = ["Alice", "Bob", "Charlie"]  
+ages = [25, 30, 35]  
+personnes = {nom: age for nom, age in zip(noms, ages)}  
+print(personnes)  # {'Alice': 25, 'Bob': 30, 'Charlie': 35}  
 
 # Créer un dictionnaire de longueurs de mots
-mots = ["chat", "chien", "oiseau"]
-longueurs = {mot: len(mot) for mot in mots}
-print(longueurs)  # {'chat': 4, 'chien': 5, 'oiseau': 6}
+mots = ["chat", "chien", "oiseau"]  
+longueurs = {mot: len(mot) for mot in mots}  
+print(longueurs)  # {'chat': 4, 'chien': 5, 'oiseau': 6}  
 
 # Inverser un dictionnaire (échanger clés et valeurs)
-original = {"a": 1, "b": 2, "c": 3}
-inverse = {valeur: cle for cle, valeur in original.items()}
-print(inverse)  # {1: 'a', 2: 'b', 3: 'c'}
+original = {"a": 1, "b": 2, "c": 3}  
+inverse = {valeur: cle for cle, valeur in original.items()}  
+print(inverse)  # {1: 'a', 2: 'b', 3: 'c'}  
 ```
 
 ### Compréhensions de dictionnaires avec conditions
 
 ```python
 # Filtrer les notes supérieures à 12
-notes = {"Alice": 18, "Bob": 10, "Charlie": 15, "David": 8}
-bonnes_notes = {nom: note for nom, note in notes.items() if note > 12}
-print(bonnes_notes)  # {'Alice': 18, 'Charlie': 15}
+notes = {"Alice": 18, "Bob": 10, "Charlie": 15, "David": 8}  
+bonnes_notes = {nom: note for nom, note in notes.items() if note > 12}  
+print(bonnes_notes)  # {'Alice': 18, 'Charlie': 15}  
 
 # Garder seulement les nombres pairs
-nombres = {f"n{i}": i for i in range(10) if i % 2 == 0}
-print(nombres)  # {'n0': 0, 'n2': 2, 'n4': 4, 'n6': 6, 'n8': 8}
+nombres = {f"n{i}": i for i in range(10) if i % 2 == 0}  
+print(nombres)  # {'n0': 0, 'n2': 2, 'n4': 4, 'n6': 6, 'n8': 8}  
 
 # Créer un dictionnaire de mots avec plus de 4 lettres
-mots = ["le", "chat", "et", "le", "chien"]
-mots_longs = {mot: len(mot) for mot in mots if len(mot) > 2}
-print(mots_longs)  # {'chat': 4, 'chien': 5}
+mots = ["le", "chat", "et", "le", "chien"]  
+mots_longs = {mot: len(mot) for mot in mots if len(mot) > 2}  
+print(mots_longs)  # {'chat': 4, 'chien': 5}  
 ```
 
 ### Transformer les valeurs d'un dictionnaire
 
 ```python
 # Appliquer une réduction de 20% sur tous les prix
-prix = {"pomme": 2.5, "banane": 1.8, "orange": 3.0}
-prix_soldes = {produit: prix * 0.8 for produit, prix in prix.items()}
-print(prix_soldes)  # {'pomme': 2.0, 'banane': 1.44, 'orange': 2.4}
+prix = {"pomme": 2.5, "banane": 1.8, "orange": 3.0}  
+prix_soldes = {produit: prix * 0.8 for produit, prix in prix.items()}  
+print(prix_soldes)  # {'pomme': 2.0, 'banane': 1.44, 'orange': 2.4}  
 
 # Convertir toutes les valeurs en chaînes de caractères
-donnees = {"a": 1, "b": 2, "c": 3}
-donnees_str = {cle: str(valeur) for cle, valeur in donnees.items()}
-print(donnees_str)  # {'a': '1', 'b': '2', 'c': '3'}
+donnees = {"a": 1, "b": 2, "c": 3}  
+donnees_str = {cle: str(valeur) for cle, valeur in donnees.items()}  
+print(donnees_str)  # {'a': '1', 'b': '2', 'c': '3'}  
 
 # Mettre les clés en majuscules
-original = {"nom": "Alice", "age": 25, "ville": "Paris"}
-majuscules = {cle.upper(): valeur for cle, valeur in original.items()}
-print(majuscules)  # {'NOM': 'Alice', 'AGE': 25, 'VILLE': 'Paris'}
+original = {"nom": "Alice", "age": 25, "ville": "Paris"}  
+majuscules = {cle.upper(): valeur for cle, valeur in original.items()}  
+print(majuscules)  # {'NOM': 'Alice', 'AGE': 25, 'VILLE': 'Paris'}  
 ```
 
 ### Compréhensions avec conditions if-else
 
 ```python
 # Classifier les notes
-notes = {"Alice": 18, "Bob": 10, "Charlie": 15}
-appreciations = {nom: "Admis" if note >= 12 else "Refusé"
+notes = {"Alice": 18, "Bob": 10, "Charlie": 15}  
+appreciations = {nom: "Admis" if note >= 12 else "Refusé"  
                  for nom, note in notes.items()}
 print(appreciations)  # {'Alice': 'Admis', 'Bob': 'Refusé', 'Charlie': 'Admis'}
 
 # Ajuster les prix en fonction du stock
-produits = {"laptop": 1000, "souris": 20, "clavier": 50}
-stock = {"laptop": 5, "souris": 100, "clavier": 30}
+produits = {"laptop": 1000, "souris": 20, "clavier": 50}  
+stock = {"laptop": 5, "souris": 100, "clavier": 30}  
 
 prix_ajustes = {
     produit: prix * 1.1 if stock[produit] < 10 else prix * 0.9
@@ -367,9 +367,9 @@ print(prix_ajustes)  # {'laptop': 1100.0, 'souris': 18.0, 'clavier': 45.0}
 
 ```python
 # 1. Compter les occurrences de caractères
-texte = "hello"
-occurrences = {lettre: texte.count(lettre) for lettre in set(texte)}
-print(occurrences)  # {'h': 1, 'e': 1, 'l': 2, 'o': 1}
+texte = "hello"  
+occurrences = {lettre: texte.count(lettre) for lettre in set(texte)}  
+print(occurrences)  # {'h': 1, 'e': 1, 'l': 2, 'o': 1}  
 
 # 2. Grouper des données
 etudiants = [
@@ -386,13 +386,13 @@ index_classes = {
 print(index_classes)  # {'A': ['Alice', 'Charlie'], 'B': ['Bob']}
 
 # 3. Créer un dictionnaire de configuration
-parametres = ["debug", "verbose", "log"]
-config = {param: True for param in parametres}
-print(config)  # {'debug': True, 'verbose': True, 'log': True}
+parametres = ["debug", "verbose", "log"]  
+config = {param: True for param in parametres}  
+print(config)  # {'debug': True, 'verbose': True, 'log': True}  
 
 # 4. Convertir des données
-temperatures_c = {"Paris": 20, "Londres": 15, "Berlin": 18}
-temperatures_f = {
+temperatures_c = {"Paris": 20, "Londres": 15, "Berlin": 18}  
+temperatures_f = {  
     ville: (temp * 9/5) + 32
     for ville, temp in temperatures_c.items()
 }
@@ -403,17 +403,17 @@ print(temperatures_f)  # {'Paris': 68.0, 'Londres': 59.0, 'Berlin': 64.4}
 
 ```python
 # Méthode 1 : avec dict()
-donnees = [("a", 1), ("b", 2), ("c", 3)]
-dictionnaire = dict(donnees)
-print(dictionnaire)  # {'a': 1, 'b': 2, 'c': 3}
+donnees = [("a", 1), ("b", 2), ("c", 3)]  
+dictionnaire = dict(donnees)  
+print(dictionnaire)  # {'a': 1, 'b': 2, 'c': 3}  
 
 # Méthode 2 : avec une compréhension
-dictionnaire = {cle: valeur for cle, valeur in donnees}
-print(dictionnaire)  # {'a': 1, 'b': 2, 'c': 3}
+dictionnaire = {cle: valeur for cle, valeur in donnees}  
+print(dictionnaire)  # {'a': 1, 'b': 2, 'c': 3}  
 
 # Avec transformation
-dictionnaire = {cle.upper(): valeur * 2 for cle, valeur in donnees}
-print(dictionnaire)  # {'A': 2, 'B': 4, 'C': 6}
+dictionnaire = {cle.upper(): valeur * 2 for cle, valeur in donnees}  
+print(dictionnaire)  # {'A': 2, 'B': 4, 'C': 6}  
 ```
 
 ---
@@ -433,56 +433,56 @@ Les compréhensions de sets fonctionnent comme celles des listes, mais créent d
 
 ```python
 # Créer un set de carrés
-carres = {x**2 for x in range(5)}
-print(carres)  # {0, 1, 4, 9, 16}
+carres = {x**2 for x in range(5)}  
+print(carres)  # {0, 1, 4, 9, 16}  
 
 # Extraire les caractères uniques d'une chaîne
-texte = "hello world"
-caracteres_uniques = {c for c in texte if c != ' '}
-print(caracteres_uniques)  # {'h', 'e', 'l', 'o', 'w', 'r', 'd'}
+texte = "hello world"  
+caracteres_uniques = {c for c in texte if c != ' '}  
+print(caracteres_uniques)  # {'h', 'e', 'l', 'o', 'w', 'r', 'd'}  
 
 # Obtenir les longueurs uniques des mots
-mots = ["chat", "chien", "oiseau", "chat", "lion"]
-longueurs_uniques = {len(mot) for mot in mots}
-print(longueurs_uniques)  # {4, 5, 6}
+mots = ["chat", "chien", "oiseau", "chat", "lion"]  
+longueurs_uniques = {len(mot) for mot in mots}  
+print(longueurs_uniques)  # {4, 5, 6}  
 
 # Extraire les premières lettres (en minuscules)
-prenoms = ["Alice", "Bob", "Charlie", "Anne"]
-premieres_lettres = {nom[0].lower() for nom in prenoms}
-print(premieres_lettres)  # {'a', 'b', 'c'}
+prenoms = ["Alice", "Bob", "Charlie", "Anne"]  
+premieres_lettres = {nom[0].lower() for nom in prenoms}  
+print(premieres_lettres)  # {'a', 'b', 'c'}  
 ```
 
 ### Compréhensions de sets avec conditions
 
 ```python
 # Nombres pairs uniques
-nombres = [1, 2, 2, 3, 4, 4, 5, 6, 6]
-pairs_uniques = {x for x in nombres if x % 2 == 0}
-print(pairs_uniques)  # {2, 4, 6}
+nombres = [1, 2, 2, 3, 4, 4, 5, 6, 6]  
+pairs_uniques = {x for x in nombres if x % 2 == 0}  
+print(pairs_uniques)  # {2, 4, 6}  
 
 # Voyelles présentes dans un texte
-texte = "Python est un excellent langage"
-voyelles = {c.lower() for c in texte if c.lower() in 'aeiouy'}
-print(voyelles)  # {'e', 'a', 'o', 'u'}
+texte = "Python est un excellent langage"  
+voyelles = {c.lower() for c in texte if c.lower() in 'aeiouy'}  
+print(voyelles)  # {'e', 'a', 'o', 'u'}  
 
 # Domaines uniques d'emails
-emails = ["alice@example.com", "bob@test.com", "charlie@example.com"]
-domaines = {email.split('@')[1] for email in emails}
-print(domaines)  # {'example.com', 'test.com'}
+emails = ["alice@example.com", "bob@test.com", "charlie@example.com"]  
+domaines = {email.split('@')[1] for email in emails}  
+print(domaines)  # {'example.com', 'test.com'}  
 ```
 
 ### Cas d'usage : éliminer les doublons avec transformation
 
 ```python
 # Mots uniques en minuscules
-texte = "Le Chat et le Chien jouent avec le Chat"
-mots_uniques = {mot.lower() for mot in texte.split()}
-print(mots_uniques)  # {'le', 'chat', 'et', 'chien', 'jouent', 'avec'}
+texte = "Le Chat et le Chien jouent avec le Chat"  
+mots_uniques = {mot.lower() for mot in texte.split()}  
+print(mots_uniques)  # {'le', 'chat', 'et', 'chien', 'jouent', 'avec'}  
 
 # Valeurs absolues uniques
-nombres = [-2, -1, 0, 1, 2, 3]
-absolues_uniques = {abs(x) for x in nombres}
-print(absolues_uniques)  # {0, 1, 2, 3}
+nombres = [-2, -1, 0, 1, 2, 3]  
+absolues_uniques = {abs(x) for x in nombres}  
+print(absolues_uniques)  # {0, 1, 2, 3}  
 ```
 
 ---
@@ -495,17 +495,17 @@ Voici un exemple qui montre les trois types de compréhensions pour le même pro
 nombres = [1, 2, 3, 4, 5]
 
 # Compréhension de liste : créer une liste de carrés
-carres_liste = [x**2 for x in nombres]
-print(carres_liste)  # [1, 4, 9, 16, 25]
+carres_liste = [x**2 for x in nombres]  
+print(carres_liste)  # [1, 4, 9, 16, 25]  
 
 # Compréhension de dictionnaire : associer nombre → carré
-carres_dict = {x: x**2 for x in nombres}
-print(carres_dict)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+carres_dict = {x: x**2 for x in nombres}  
+print(carres_dict)  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}  
 
 # Compréhension de set : ensemble de carrés (uniques)
-nombres_avec_doublons = [1, 2, 2, 3, 3, 4, 5]
-carres_set = {x**2 for x in nombres_avec_doublons}
-print(carres_set)  # {1, 4, 9, 16, 25}
+nombres_avec_doublons = [1, 2, 2, 3, 3, 4, 5]  
+carres_set = {x**2 for x in nombres_avec_doublons}  
+print(carres_set)  # {1, 4, 9, 16, 25}  
 ```
 
 ---
@@ -518,8 +518,8 @@ Les compréhensions imbriquées peuvent devenir complexes. Utilisez-les avec pr�
 
 ```python
 # Créer une matrice identité 4x4
-taille = 4
-identite = [[1 if i == j else 0 for j in range(taille)] for i in range(taille)]
+taille = 4  
+identite = [[1 if i == j else 0 for j in range(taille)] for i in range(taille)]  
 
 for ligne in identite:
     print(ligne)
@@ -536,20 +536,20 @@ for ligne in identite:
 matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 # Extraire seulement les nombres pairs
-pairs = [x for ligne in matrice for x in ligne if x % 2 == 0]
-print(pairs)  # [2, 4, 6, 8]
+pairs = [x for ligne in matrice for x in ligne if x % 2 == 0]  
+print(pairs)  # [2, 4, 6, 8]  
 
 # Garder seulement les lignes qui contiennent au moins un nombre > 5
-lignes_filtrees = [ligne for ligne in matrice if any(x > 5 for x in ligne)]
-print(lignes_filtrees)  # [[4, 5, 6], [7, 8, 9]]
+lignes_filtrees = [ligne for ligne in matrice if any(x > 5 for x in ligne)]  
+print(lignes_filtrees)  # [[4, 5, 6], [7, 8, 9]]  
 ```
 
 ### Exemple 3 : Dictionnaires imbriqués
 
 ```python
 # Créer un dictionnaire de dictionnaires
-categories = ["fruits", "legumes"]
-items = {"fruits": ["pomme", "banane"], "legumes": ["carotte", "tomate"]}
+categories = ["fruits", "legumes"]  
+items = {"fruits": ["pomme", "banane"], "legumes": ["carotte", "tomate"]}  
 
 # Créer un dictionnaire avec les longueurs de chaque item
 longueurs = {
@@ -580,14 +580,14 @@ for carre in carres_gen:
     print(carre)
 
 # Expressions génératrices avec des fonctions
-nombres = [1, 2, 3, 4, 5]
-somme = sum(x**2 for x in nombres)  # Pas besoin de [] supplémentaires
-print(somme)  # 55
+nombres = [1, 2, 3, 4, 5]  
+somme = sum(x**2 for x in nombres)  # Pas besoin de [] supplémentaires  
+print(somme)  # 55  
 
 # Maximum des valeurs absolues
-nombres = [-5, 2, -8, 3]
-max_abs = max(abs(x) for x in nombres)
-print(max_abs)  # 8
+nombres = [-5, 2, -8, 3]  
+max_abs = max(abs(x) for x in nombres)  
+print(max_abs)  # 8  
 ```
 
 **Quand utiliser les expressions génératrices ?**
@@ -606,15 +606,15 @@ print(max_abs)  # 8
 resultat = [x*2 for x in [y**2 for y in range(10) if y%2==0] if x>10]
 
 # ✅ Plus lisible avec des étapes intermédiaires
-carres_pairs = [y**2 for y in range(10) if y % 2 == 0]
-resultat = [x * 2 for x in carres_pairs if x > 10]
+carres_pairs = [y**2 for y in range(10) if y % 2 == 0]  
+resultat = [x * 2 for x in carres_pairs if x > 10]  
 
 # Ou même avec des boucles traditionnelles si c'est plus clair
-carres_pairs = []
-for y in range(10):
+carres_pairs = []  
+for y in range(10):  
     if y % 2 == 0:
         carre = y ** 2
-        if carre > 5:
+        if carre > 10:
             carres_pairs.append(carre * 2)
 ```
 
@@ -627,8 +627,8 @@ Si votre compréhension nécessite plus de deux niveaux d'imbrication ou plusieu
 resultat = {k: [x*2 for x in v if x > 0] for k, v in donnees.items() if len(v) > 2}
 
 # ✅ Plus clair
-resultat = {}
-for k, v in donnees.items():
+resultat = {}  
+for k, v in donnees.items():  
     if len(v) > 2:
         resultat[k] = [x * 2 for x in v if x > 0]
 ```
@@ -677,12 +677,12 @@ texte = "Python est un langage de programmation. Python est facile à apprendre.
 mots = texte.lower().replace(".", "").split()
 
 # Compter la fréquence des mots avec une compréhension de dictionnaire
-frequence = {mot: mots.count(mot) for mot in set(mots)}
-print(frequence)
+frequence = {mot: mots.count(mot) for mot in set(mots)}  
+print(frequence)  
 
 # Garder seulement les mots qui apparaissent plus d'une fois
-mots_frequents = {mot: freq for mot, freq in frequence.items() if freq > 1}
-print(mots_frequents)  # {'python': 2, 'est': 2}
+mots_frequents = {mot: freq for mot, freq in frequence.items() if freq > 1}  
+print(mots_frequents)  # {'python': 2, 'est': 2}  
 ```
 
 ### Exemple 2 : Transformation de données
@@ -752,8 +752,8 @@ print(prix_moyens)
 
 ```python
 # Addition de matrices
-matrice_a = [[1, 2, 3], [4, 5, 6]]
-matrice_b = [[7, 8, 9], [10, 11, 12]]
+matrice_a = [[1, 2, 3], [4, 5, 6]]  
+matrice_b = [[7, 8, 9], [10, 11, 12]]  
 
 # Additionner élément par élément
 somme = [
@@ -764,9 +764,9 @@ print(somme)
 # [[8, 10, 12], [14, 16, 18]]
 
 # Transposition
-matrice = [[1, 2, 3], [4, 5, 6]]
-transposee = [[ligne[i] for ligne in matrice] for i in range(len(matrice[0]))]
-print(transposee)
+matrice = [[1, 2, 3], [4, 5, 6]]  
+transposee = [[ligne[i] for ligne in matrice] for i in range(len(matrice[0]))]  
+print(transposee)  
 # [[1, 4], [2, 5], [3, 6]]
 ```
 

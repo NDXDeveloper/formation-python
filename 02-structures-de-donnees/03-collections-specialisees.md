@@ -27,9 +27,9 @@ from collections import namedtuple, defaultdict, Counter
 Imaginons que vous représentez un point 2D avec un tuple :
 
 ```python
-point = (10, 20)
-x = point[0]
-y = point[1]
+point = (10, 20)  
+x = point[0]  
+y = point[1]  
 ```
 
 Le problème ? Ce n'est pas très explicite. Quelqu'un qui lit votre code doit deviner que `point[0]` est le x et `point[1]` est le y. De plus, c'est facile de se tromper avec les indices.
@@ -48,12 +48,12 @@ Point = namedtuple('Point', ['x', 'y'])
 point = Point(10, 20)
 
 # Accéder aux valeurs par nom (beaucoup plus lisible !)
-print(point.x)  # 10
-print(point.y)  # 20
+print(point.x)  # 10  
+print(point.y)  # 20  
 
 # On peut aussi utiliser les indices (comme un tuple normal)
-print(point[0])  # 10
-print(point[1])  # 20
+print(point[0])  # 10  
+print(point[1])  # 20  
 ```
 
 ### Créer un namedtuple
@@ -73,10 +73,10 @@ Personne = namedtuple('Personne', 'nom age ville')
 Personne = namedtuple('Personne', 'nom, age, ville')
 
 # Créer une instance
-alice = Personne('Alice', 25, 'Paris')
-print(alice.nom)   # Alice
-print(alice.age)   # 25
-print(alice.ville) # Paris
+alice = Personne('Alice', 25, 'Paris')  
+print(alice.nom)   # Alice  
+print(alice.age)   # 25  
+print(alice.ville) # Paris  
 ```
 
 ### Caractéristiques des namedtuple
@@ -86,8 +86,8 @@ print(alice.ville) # Paris
 Comme les tuples, les namedtuples sont immuables : on ne peut pas modifier leurs valeurs après création.
 
 ```python
-Point = namedtuple('Point', ['x', 'y'])
-point = Point(10, 20)
+Point = namedtuple('Point', ['x', 'y'])  
+point = Point(10, 20)  
 
 # Ceci provoque une erreur
 # point.x = 15  # AttributeError: can't set attribute
@@ -96,12 +96,12 @@ point = Point(10, 20)
 **2. Déballage (unpacking)**
 
 ```python
-Personne = namedtuple('Personne', 'nom age ville')
-alice = Personne('Alice', 25, 'Paris')
+Personne = namedtuple('Personne', 'nom age ville')  
+alice = Personne('Alice', 25, 'Paris')  
 
 # Unpacking classique
-nom, age, ville = alice
-print(nom)  # Alice
+nom, age, ville = alice  
+print(nom)  # Alice  
 
 # Unpacking dans une boucle
 personnes = [
@@ -116,13 +116,13 @@ for nom, age, ville in personnes:
 **3. Conversion en dictionnaire**
 
 ```python
-Personne = namedtuple('Personne', 'nom age ville')
-alice = Personne('Alice', 25, 'Paris')
+Personne = namedtuple('Personne', 'nom age ville')  
+alice = Personne('Alice', 25, 'Paris')  
 
 # Convertir en dictionnaire
-alice_dict = alice._asdict()
-print(alice_dict)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris'}
-print(type(alice_dict))  # <class 'dict'>
+alice_dict = alice._asdict()  
+print(alice_dict)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris'}  
+print(type(alice_dict))  # <class 'dict'>  
 ```
 
 **4. Créer une copie avec modifications**
@@ -130,13 +130,13 @@ print(type(alice_dict))  # <class 'dict'>
 Bien que les namedtuples soient immuables, vous pouvez créer une nouvelle instance avec certains champs modifiés :
 
 ```python
-Personne = namedtuple('Personne', 'nom age ville')
-alice = Personne('Alice', 25, 'Paris')
+Personne = namedtuple('Personne', 'nom age ville')  
+alice = Personne('Alice', 25, 'Paris')  
 
 # Créer une copie avec un champ modifié
-alice_plus_vieille = alice._replace(age=26)
-print(alice)              # Personne(nom='Alice', age=25, ville='Paris')
-print(alice_plus_vieille) # Personne(nom='Alice', age=26, ville='Paris')
+alice_plus_vieille = alice._replace(age=26)  
+print(alice)              # Personne(nom='Alice', age=25, ville='Paris')  
+print(alice_plus_vieille) # Personne(nom='Alice', age=26, ville='Paris')  
 ```
 
 **5. Valeurs par défaut**
@@ -147,11 +147,11 @@ Vous pouvez définir des valeurs par défaut pour certains champs :
 Personne = namedtuple('Personne', 'nom age ville', defaults=['Inconnu'])
 # Le dernier champ (ville) aura 'Inconnu' par défaut
 
-alice = Personne('Alice', 25)
-print(alice)  # Personne(nom='Alice', age=25, ville='Inconnu')
+alice = Personne('Alice', 25)  
+print(alice)  # Personne(nom='Alice', age=25, ville='Inconnu')  
 
-bob = Personne('Bob', 30, 'Lyon')
-print(bob)    # Personne(nom='Bob', age=30, ville='Lyon')
+bob = Personne('Bob', 30, 'Lyon')  
+print(bob)    # Personne(nom='Bob', age=30, ville='Lyon')  
 ```
 
 ### Cas d'usage pratiques
@@ -164,9 +164,9 @@ from collections import namedtuple
 Point = namedtuple('Point', ['x', 'y'])
 
 # Créer plusieurs points
-p1 = Point(0, 0)
-p2 = Point(10, 5)
-p3 = Point(3, 8)
+p1 = Point(0, 0)  
+p2 = Point(10, 5)  
+p3 = Point(3, 8)  
 
 # Calculer la distance entre deux points
 def distance(p1, p2):
@@ -193,12 +193,12 @@ employes = [
 ]
 
 # Calculer le salaire moyen
-salaire_moyen = sum(e.salaire for e in employes) / len(employes)
-print(f"Salaire moyen : {salaire_moyen}€")
+salaire_moyen = sum(e.salaire for e in employes) / len(employes)  
+print(f"Salaire moyen : {salaire_moyen}€")  
 
 # Trouver les employés avec plus de 2 ans d'ancienneté
-veterants = [e for e in employes if e.anciennete > 2]
-for emp in veterants:
+veterants = [e for e in employes if e.anciennete > 2]  
+for emp in veterants:  
     print(f"{emp.nom} - {emp.anciennete} ans")
 ```
 
@@ -212,12 +212,12 @@ Config = namedtuple('Config', 'host port debug timeout',
                     defaults=['localhost', 8000, False, 30])
 
 # Utiliser les valeurs par défaut
-config_dev = Config()
-print(config_dev)  # Config(host='localhost', port=8000, debug=False, timeout=30)
+config_dev = Config()  
+print(config_dev)  # Config(host='localhost', port=8000, debug=False, timeout=30)  
 
 # Personnaliser certaines valeurs
-config_prod = Config(host='api.example.com', port=443, debug=False)
-print(config_prod)  # Config(host='api.example.com', port=443, debug=False, timeout=30)
+config_prod = Config(host='api.example.com', port=443, debug=False)  
+print(config_prod)  # Config(host='api.example.com', port=443, debug=False, timeout=30)  
 ```
 
 **Exemple 4 : Résultats de fonction**
@@ -238,12 +238,12 @@ def calculer_statistiques(nombres):
     return Stats(moyenne, mediane, ecart_type)
 
 # Utilisation
-donnees = [10, 20, 30, 40, 50]
-resultats = calculer_statistiques(donnees)
+donnees = [10, 20, 30, 40, 50]  
+resultats = calculer_statistiques(donnees)  
 
-print(f"Moyenne : {resultats.moyenne}")
-print(f"Médiane : {resultats.mediane}")
-print(f"Écart-type : {resultats.ecart_type}")
+print(f"Moyenne : {resultats.moyenne}")  
+print(f"Médiane : {resultats.mediane}")  
+print(f"Écart-type : {resultats.ecart_type}")  
 
 # Beaucoup plus clair que :
 # moyenne, mediane, ecart_type = calculer_statistiques(donnees)
@@ -253,14 +253,14 @@ print(f"Écart-type : {resultats.ecart_type}")
 
 ```python
 # 1. Tuple classique (peu lisible)
-personne_tuple = ('Alice', 25, 'Paris')
-nom = personne_tuple[0]  # Indices magiques !
+personne_tuple = ('Alice', 25, 'Paris')  
+nom = personne_tuple[0]  # Indices magiques !  
 
 # 2. namedtuple (lisible et léger)
-from collections import namedtuple
-Personne = namedtuple('Personne', 'nom age ville')
-personne_named = Personne('Alice', 25, 'Paris')
-nom = personne_named.nom  # Beaucoup plus clair !
+from collections import namedtuple  
+Personne = namedtuple('Personne', 'nom age ville')  
+personne_named = Personne('Alice', 25, 'Paris')  
+nom = personne_named.nom  # Beaucoup plus clair !  
 
 # 3. Classe (plus de fonctionnalités mais plus verbeux)
 class Personne:
@@ -269,8 +269,8 @@ class Personne:
         self.age = age
         self.ville = ville
 
-personne_classe = Personne('Alice', 25, 'Paris')
-nom = personne_classe.nom
+personne_classe = Personne('Alice', 25, 'Paris')  
+nom = personne_classe.nom  
 ```
 
 **Utilisez namedtuple quand :**
@@ -291,8 +291,8 @@ Avec un dictionnaire normal, accéder à une clé inexistante provoque une erreu
 compteur = {}
 
 # Compter les occurrences de lettres
-texte = "hello"
-for lettre in texte:
+texte = "hello"  
+for lettre in texte:  
     # Ceci provoque une KeyError à la première itération !
     # compteur[lettre] = compteur[lettre] + 1
 
@@ -317,12 +317,12 @@ from collections import defaultdict
 # Créer un defaultdict avec des valeurs par défaut à 0
 compteur = defaultdict(int)  # int() retourne 0
 
-texte = "hello"
-for lettre in texte:
+texte = "hello"  
+for lettre in texte:  
     compteur[lettre] += 1  # Pas besoin de vérifier si la clé existe !
 
-print(compteur)  # defaultdict(<class 'int'>, {'h': 1, 'e': 1, 'l': 2, 'o': 1})
-print(dict(compteur))  # Convertir en dict normal : {'h': 1, 'e': 1, 'l': 2, 'o': 1}
+print(compteur)  # defaultdict(<class 'int'>, {'h': 1, 'e': 1, 'l': 2, 'o': 1})  
+print(dict(compteur))  # Convertir en dict normal : {'h': 1, 'e': 1, 'l': 2, 'o': 1}  
 ```
 
 ### Comment fonctionne defaultdict ?
@@ -333,27 +333,27 @@ Vous passez une **fonction** (appelée "factory") qui sera appelée pour créer 
 from collections import defaultdict
 
 # int() retourne 0
-dd_int = defaultdict(int)
-print(dd_int['cle_inexistante'])  # 0
+dd_int = defaultdict(int)  
+print(dd_int['cle_inexistante'])  # 0  
 
 # list() retourne []
-dd_list = defaultdict(list)
-print(dd_list['cle_inexistante'])  # []
+dd_list = defaultdict(list)  
+print(dd_list['cle_inexistante'])  # []  
 
 # set() retourne set()
-dd_set = defaultdict(set)
-print(dd_set['cle_inexistante'])  # set()
+dd_set = defaultdict(set)  
+print(dd_set['cle_inexistante'])  # set()  
 
 # str() retourne ''
-dd_str = defaultdict(str)
-print(dd_str['cle_inexistante'])  # ''
+dd_str = defaultdict(str)  
+print(dd_str['cle_inexistante'])  # ''  
 
 # Fonction personnalisée
 def valeur_par_defaut():
     return "N/A"
 
-dd_custom = defaultdict(valeur_par_defaut)
-print(dd_custom['cle_inexistante'])  # 'N/A'
+dd_custom = defaultdict(valeur_par_defaut)  
+print(dd_custom['cle_inexistante'])  # 'N/A'  
 ```
 
 ### Valeurs par défaut courantes
@@ -364,11 +364,11 @@ print(dd_custom['cle_inexistante'])  # 'N/A'
 from collections import defaultdict
 
 # Compter les occurrences de mots
-texte = "le chat et le chien jouent avec le chat"
-mots = texte.split()
+texte = "le chat et le chien jouent avec le chat"  
+mots = texte.split()  
 
-compteur = defaultdict(int)
-for mot in mots:
+compteur = defaultdict(int)  
+for mot in mots:  
     compteur[mot] += 1
 
 print(dict(compteur))
@@ -389,8 +389,8 @@ etudiants = [
     ('Eve', 'B')
 ]
 
-classes = defaultdict(list)
-for nom, classe in etudiants:
+classes = defaultdict(list)  
+for nom, classe in etudiants:  
     classes[classe].append(nom)
 
 print(dict(classes))
@@ -411,8 +411,8 @@ articles = [
     ('Article 1', 'python')  # doublon
 ]
 
-tags_par_article = defaultdict(set)
-for article, tag in articles:
+tags_par_article = defaultdict(set)  
+for article, tag in articles:  
     tags_par_article[article].add(tag)
 
 print(dict(tags_par_article))
@@ -428,13 +428,14 @@ from collections import defaultdict
 matrice = defaultdict(dict)
 
 # Ajouter des valeurs
-matrice[0][0] = 1
-matrice[2][5] = 7
-matrice[100][200] = 42
+matrice[0][0] = 1  
+matrice[2][5] = 7  
+matrice[100][200] = 42  
 
-print(matrice[0][0])    # 1
-print(matrice[2][5])    # 7
-print(matrice[50][50])  # {} (dictionnaire vide par défaut)
+print(matrice[0][0])    # 1  
+print(matrice[2][5])    # 7  
+print(matrice[50])      # {} (dictionnaire vide par défaut)  
+# Attention : matrice[50][50] lèverait un KeyError (le sous-dict est vide)
 ```
 
 ### Cas d'usage pratiques
@@ -474,10 +475,10 @@ from collections import defaultdict
 graphe = defaultdict(list)
 
 # Ajouter des arêtes
-graphe['A'].append('B')
-graphe['A'].append('C')
-graphe['B'].append('C')
-graphe['C'].append('D')
+graphe['A'].append('B')  
+graphe['A'].append('C')  
+graphe['B'].append('C')  
+graphe['C'].append('D')  
 
 print(dict(graphe))
 # {'A': ['B', 'C'], 'B': ['C'], 'C': ['D']}
@@ -486,8 +487,8 @@ print(dict(graphe))
 def parcourir(graphe, depart):
     print(f"Depuis {depart}, on peut aller vers : {graphe[depart]}")
 
-parcourir(graphe, 'A')  # Depuis A, on peut aller vers : ['B', 'C']
-parcourir(graphe, 'Z')  # Depuis Z, on peut aller vers : [] (pas d'erreur !)
+parcourir(graphe, 'A')  # Depuis A, on peut aller vers : ['B', 'C']  
+parcourir(graphe, 'Z')  # Depuis Z, on peut aller vers : [] (pas d'erreur !)  
 ```
 
 **Exemple 3 : Compteur de fréquence avec seuil**
@@ -498,13 +499,13 @@ from collections import defaultdict
 # Compter les visites par utilisateur
 visites = ['alice', 'bob', 'alice', 'charlie', 'alice', 'bob', 'alice']
 
-compteur = defaultdict(int)
-for utilisateur in visites:
+compteur = defaultdict(int)  
+for utilisateur in visites:  
     compteur[utilisateur] += 1
 
 # Filtrer les utilisateurs actifs (plus de 2 visites)
-actifs = {user: count for user, count in compteur.items() if count > 2}
-print(actifs)  # {'alice': 4}
+actifs = {user: count for user, count in compteur.items() if count > 2}  
+print(actifs)  # {'alice': 4}  
 ```
 
 **Exemple 4 : Regroupement multi-niveaux**
@@ -535,10 +536,10 @@ for region, produits in ventes_groupees.items():
 
 # Nord:
 #   Laptop: 2000€ (2 ventes)
-#   Clavier: 50€ (1 ventes)
+#   Clavier: 50€ (1 vente)
 # Sud:
-#   Souris: 20€ (1 ventes)
-#   Laptop: 1000€ (1 ventes)
+#   Souris: 20€ (1 vente)
+#   Laptop: 1000€ (1 vente)
 ```
 
 ### Convertir en dictionnaire normal
@@ -546,14 +547,14 @@ for region, produits in ventes_groupees.items():
 ```python
 from collections import defaultdict
 
-dd = defaultdict(int)
-dd['a'] = 1
-dd['b'] = 2
+dd = defaultdict(int)  
+dd['a'] = 1  
+dd['b'] = 2  
 
 # Convertir en dict normal
-normal_dict = dict(dd)
-print(normal_dict)  # {'a': 1, 'b': 2}
-print(type(normal_dict))  # <class 'dict'>
+normal_dict = dict(dd)  
+print(normal_dict)  # {'a': 1, 'b': 2}  
+print(type(normal_dict))  # <class 'dict'>  
 ```
 
 ---
@@ -568,8 +569,8 @@ Compter des éléments est une tâche courante en programmation :
 # Méthode manuelle
 mots = ['pomme', 'banane', 'pomme', 'orange', 'banane', 'pomme']
 
-compteur = {}
-for mot in mots:
+compteur = {}  
+for mot in mots:  
     if mot in compteur:
         compteur[mot] += 1
     else:
@@ -590,9 +591,9 @@ mots = ['pomme', 'banane', 'pomme', 'orange', 'banane', 'pomme']
 # Créer un Counter
 compteur = Counter(mots)
 
-print(compteur)  # Counter({'pomme': 3, 'banane': 2, 'orange': 1})
-print(compteur['pomme'])   # 3
-print(compteur['kiwi'])    # 0 (pas d'erreur si la clé n'existe pas !)
+print(compteur)  # Counter({'pomme': 3, 'banane': 2, 'orange': 1})  
+print(compteur['pomme'])   # 3  
+print(compteur['kiwi'])    # 0 (pas d'erreur si la clé n'existe pas !)  
 ```
 
 ### Créer un Counter
@@ -603,24 +604,24 @@ Il existe plusieurs façons de créer un Counter :
 from collections import Counter
 
 # 1. À partir d'une liste
-c1 = Counter(['a', 'b', 'c', 'a', 'b', 'a'])
-print(c1)  # Counter({'a': 3, 'b': 2, 'c': 1})
+c1 = Counter(['a', 'b', 'c', 'a', 'b', 'a'])  
+print(c1)  # Counter({'a': 3, 'b': 2, 'c': 1})  
 
 # 2. À partir d'une chaîne de caractères
-c2 = Counter("hello world")
-print(c2)  # Counter({'l': 3, 'o': 2, 'h': 1, 'e': 1, ' ': 1, 'w': 1, 'r': 1, 'd': 1})
+c2 = Counter("hello world")  
+print(c2)  # Counter({'l': 3, 'o': 2, 'h': 1, 'e': 1, ' ': 1, 'w': 1, 'r': 1, 'd': 1})  
 
 # 3. À partir d'un dictionnaire
-c3 = Counter({'rouge': 4, 'bleu': 2})
-print(c3)  # Counter({'rouge': 4, 'bleu': 2})
+c3 = Counter({'rouge': 4, 'bleu': 2})  
+print(c3)  # Counter({'rouge': 4, 'bleu': 2})  
 
 # 4. Avec des arguments nommés
-c4 = Counter(chats=4, chiens=2, oiseaux=1)
-print(c4)  # Counter({'chats': 4, 'chiens': 2, 'oiseaux': 1})
+c4 = Counter(chats=4, chiens=2, oiseaux=1)  
+print(c4)  # Counter({'chats': 4, 'chiens': 2, 'oiseaux': 1})  
 
 # 5. Counter vide
-c5 = Counter()
-print(c5)  # Counter()
+c5 = Counter()  
+print(c5)  # Counter()  
 ```
 
 ### Méthodes utiles de Counter
@@ -630,13 +631,13 @@ print(c5)  # Counter()
 ```python
 from collections import Counter
 
-mots = ['python', 'java', 'python', 'c++', 'python', 'java', 'ruby']
-compteur = Counter(mots)
+mots = ['python', 'java', 'python', 'c++', 'python', 'java', 'ruby']  
+compteur = Counter(mots)  
 
 # Obtenir les éléments les plus fréquents
-print(compteur.most_common())    # [('python', 3), ('java', 2), ('c++', 1), ('ruby', 1)]
-print(compteur.most_common(2))   # [('python', 3), ('java', 2)] (top 2)
-print(compteur.most_common(1))   # [('python', 3)] (le plus fréquent)
+print(compteur.most_common())    # [('python', 3), ('java', 2), ('c++', 1), ('ruby', 1)]  
+print(compteur.most_common(2))   # [('python', 3), ('java', 2)] (top 2)  
+print(compteur.most_common(1))   # [('python', 3)] (le plus fréquent)  
 ```
 
 **2. elements() - itérer sur les éléments**
@@ -658,17 +659,17 @@ mots_originaux = list(c.elements())
 ```python
 from collections import Counter
 
-c = Counter(['a', 'b', 'c'])
-print(c)  # Counter({'a': 1, 'b': 1, 'c': 1})
+c = Counter(['a', 'b', 'c'])  
+print(c)  # Counter({'a': 1, 'b': 1, 'c': 1})  
 
 # Ajouter d'autres éléments
-c.update(['a', 'b', 'd'])
-print(c)  # Counter({'a': 2, 'b': 2, 'c': 1, 'd': 1})
+c.update(['a', 'b', 'd'])  
+print(c)  # Counter({'a': 2, 'b': 2, 'c': 1, 'd': 1})  
 
 # Update avec un autre Counter
-c2 = Counter(['a', 'e'])
-c.update(c2)
-print(c)  # Counter({'a': 3, 'b': 2, 'c': 1, 'd': 1, 'e': 1})
+c2 = Counter(['a', 'e'])  
+c.update(c2)  
+print(c)  # Counter({'a': 3, 'b': 2, 'c': 1, 'd': 1, 'e': 1})  
 ```
 
 **4. subtract() - soustraire des comptages**
@@ -676,11 +677,11 @@ print(c)  # Counter({'a': 3, 'b': 2, 'c': 1, 'd': 1, 'e': 1})
 ```python
 from collections import Counter
 
-c1 = Counter(a=4, b=3, c=2)
-c2 = Counter(a=1, b=2, d=1)
+c1 = Counter(a=4, b=3, c=2)  
+c2 = Counter(a=1, b=2, d=1)  
 
-c1.subtract(c2)
-print(c1)  # Counter({'a': 3, 'b': 1, 'c': 2, 'd': -1})
+c1.subtract(c2)  
+print(c1)  # Counter({'a': 3, 'b': 1, 'c': 2, 'd': -1})  
 # Notez que les valeurs peuvent être négatives !
 ```
 
@@ -689,8 +690,8 @@ print(c1)  # Counter({'a': 3, 'b': 1, 'c': 2, 'd': -1})
 ```python
 from collections import Counter
 
-c1 = Counter(a=3, b=1)
-c2 = Counter(a=1, b=2, c=1)
+c1 = Counter(a=3, b=1)  
+c2 = Counter(a=1, b=2, c=1)  
 
 # Addition
 print(c1 + c2)  # Counter({'a': 4, 'b': 3, 'c': 1})
@@ -712,25 +713,25 @@ print(c1 | c2)  # Counter({'a': 3, 'b': 2, 'c': 1})
 ```python
 from collections import Counter
 
-texte = """
-Python est un langage de programmation interprété, multi-paradigme et multiplateformes.
-Il favorise la programmation impérative structurée, fonctionnelle et orientée objet.
+texte = """  
+Python est un langage de programmation interprété, multi-paradigme et multiplateformes.  
+Il favorise la programmation impérative structurée, fonctionnelle et orientée objet.  
 """
 
 # Compter les mots
-mots = texte.lower().split()
-compteur_mots = Counter(mots)
+mots = texte.lower().split()  
+compteur_mots = Counter(mots)  
 
-print(f"Nombre total de mots : {sum(compteur_mots.values())}")
-print(f"Nombre de mots uniques : {len(compteur_mots)}")
-print(f"\nTop 5 des mots les plus fréquents :")
-for mot, freq in compteur_mots.most_common(5):
+print(f"Nombre total de mots : {sum(compteur_mots.values())}")  
+print(f"Nombre de mots uniques : {len(compteur_mots)}")  
+print(f"\nTop 5 des mots les plus fréquents :")  
+for mot, freq in compteur_mots.most_common(5):  
     print(f"  {mot}: {freq}")
 
 # Compter les lettres
-lettres = Counter(texte.lower())
-lettres_alphabet = {c: count for c, count in lettres.items() if c.isalpha()}
-print(f"\nLettre la plus fréquente : {Counter(lettres_alphabet).most_common(1)}")
+lettres = Counter(texte.lower())  
+lettres_alphabet = {c: count for c, count in lettres.items() if c.isalpha()}  
+print(f"\nLettre la plus fréquente : {Counter(lettres_alphabet).most_common(1)}")  
 ```
 
 **Exemple 2 : Statistiques sur des votes**
@@ -744,8 +745,8 @@ votes = ['Alice', 'Bob', 'Alice', 'Charlie', 'Alice', 'Bob',
 
 resultats = Counter(votes)
 
-print("Résultats des élections :")
-for candidat, nb_votes in resultats.most_common():
+print("Résultats des élections :")  
+for candidat, nb_votes in resultats.most_common():  
     pourcentage = (nb_votes / len(votes)) * 100
     print(f"{candidat}: {nb_votes} votes ({pourcentage:.1f}%)")
 
@@ -754,8 +755,8 @@ for candidat, nb_votes in resultats.most_common():
 # Bob: 3 votes (27.3%)
 # Charlie: 2 votes (18.2%)
 
-gagnant = resultats.most_common(1)[0][0]
-print(f"\nGagnant : {gagnant}")
+gagnant = resultats.most_common(1)[0][0]  
+print(f"\nGagnant : {gagnant}")  
 ```
 
 **Exemple 3 : Inventaire et gestion de stock**
@@ -770,19 +771,19 @@ stock = Counter(pommes=50, bananes=30, oranges=40)
 ventes = Counter(pommes=10, bananes=5, oranges=15)
 
 # Mettre à jour le stock
-stock_restant = stock - ventes
-print("Stock restant :", stock_restant)
+stock_restant = stock - ventes  
+print("Stock restant :", stock_restant)  
 # Counter({'pommes': 40, 'oranges': 25, 'bananes': 25})
 
 # Nouvelle livraison
-livraison = Counter(pommes=20, bananes=15, kiwis=10)
-stock_final = stock_restant + livraison
-print("Stock final :", stock_final)
+livraison = Counter(pommes=20, bananes=15, kiwis=10)  
+stock_final = stock_restant + livraison  
+print("Stock final :", stock_final)  
 # Counter({'pommes': 60, 'bananes': 40, 'oranges': 25, 'kiwis': 10})
 
 # Produits en rupture de stock
-print("\nProduits avec moins de 30 unités :")
-for produit, quantite in stock_final.items():
+print("\nProduits avec moins de 30 unités :")  
+for produit, quantite in stock_final.items():  
     if quantite < 30:
         print(f"  {produit}: {quantite}")
 ```
@@ -792,31 +793,31 @@ for produit, quantite in stock_final.items():
 ```python
 from collections import Counter
 
-doc1 = "python est un langage de programmation"
-doc2 = "java est un langage de programmation orientée objet"
+doc1 = "python est un langage de programmation"  
+doc2 = "java est un langage de programmation orientée objet"  
 
 # Créer des Counters pour chaque document
-mots_doc1 = Counter(doc1.split())
-mots_doc2 = Counter(doc2.split())
+mots_doc1 = Counter(doc1.split())  
+mots_doc2 = Counter(doc2.split())  
 
 # Mots communs
-mots_communs = mots_doc1 & mots_doc2
-print("Mots en commun :", dict(mots_communs))
+mots_communs = mots_doc1 & mots_doc2  
+print("Mots en commun :", dict(mots_communs))  
 # {'est': 1, 'un': 1, 'langage': 1, 'de': 1, 'programmation': 1}
 
 # Mots uniquement dans doc1
-mots_uniques_doc1 = mots_doc1 - mots_doc2
-print("Mots uniques à doc1 :", dict(mots_uniques_doc1))
+mots_uniques_doc1 = mots_doc1 - mots_doc2  
+print("Mots uniques à doc1 :", dict(mots_uniques_doc1))  
 # {'python': 1}
 
 # Mots uniquement dans doc2
-mots_uniques_doc2 = mots_doc2 - mots_doc1
-print("Mots uniques à doc2 :", dict(mots_uniques_doc2))
+mots_uniques_doc2 = mots_doc2 - mots_doc1  
+print("Mots uniques à doc2 :", dict(mots_uniques_doc2))  
 # {'java': 1, 'orientée': 1, 'objet': 1}
 
 # Tous les mots (union)
-tous_mots = mots_doc1 | mots_doc2
-print("Nombre total de mots uniques :", len(tous_mots))
+tous_mots = mots_doc1 | mots_doc2  
+print("Nombre total de mots uniques :", len(tous_mots))  
 ```
 
 **Exemple 5 : Analyse de logs**
@@ -833,8 +834,8 @@ logs = [
 # Compter les codes de statut
 codes_statut = Counter(logs)
 
-print("Statistiques du serveur :")
-for code, count in sorted(codes_statut.items()):
+print("Statistiques du serveur :")  
+for code, count in sorted(codes_statut.items()):  
     print(f"  Code {code}: {count} occurrences")
 
 # Vérifier si on a des erreurs
@@ -855,20 +856,20 @@ c = Counter(a=3, b=2, c=0, d=-1)
 
 # Supprimer les éléments avec compte zéro ou négatif
 # Méthode 1 : utiliser +Counter() (unary plus)
-c_positifs = +c
-print(c_positifs)  # Counter({'a': 3, 'b': 2})
+c_positifs = +c  
+print(c_positifs)  # Counter({'a': 3, 'b': 2})  
 
 # Méthode 2 : filtrer manuellement
-c_positifs = Counter({k: v for k, v in c.items() if v > 0})
-print(c_positifs)  # Counter({'a': 3, 'b': 2})
+c_positifs = Counter({k: v for k, v in c.items() if v > 0})  
+print(c_positifs)  # Counter({'a': 3, 'b': 2})  
 
 # Obtenir le total de tous les comptages
-total = sum(c.values())
-print(total)  # 4 (3 + 2 + 0 + (-1))
+total = sum(c.values())  
+print(total)  # 4 (3 + 2 + 0 + (-1))  
 
 # Réinitialiser
-c.clear()
-print(c)  # Counter()
+c.clear()  
+print(c)  # Counter()  
 ```
 
 ---
@@ -886,18 +887,18 @@ from collections import deque
 d = deque([1, 2, 3])
 
 # Ajouter à droite et à gauche
-d.append(4)      # [1, 2, 3, 4]
-d.appendleft(0)  # [0, 1, 2, 3, 4]
+d.append(4)      # [1, 2, 3, 4]  
+d.appendleft(0)  # [0, 1, 2, 3, 4]  
 
 # Retirer à droite et à gauche
-d.pop()          # Retire 4, reste [0, 1, 2, 3]
-d.popleft()      # Retire 0, reste [1, 2, 3]
+d.pop()          # Retire 4, reste [0, 1, 2, 3]  
+d.popleft()      # Retire 0, reste [1, 2, 3]  
 
 print(d)  # deque([1, 2, 3])
 
 # Rotation
-d.rotate(1)   # Rotation à droite : deque([3, 1, 2])
-d.rotate(-1)  # Rotation à gauche : deque([1, 2, 3])
+d.rotate(1)   # Rotation à droite : deque([3, 1, 2])  
+d.rotate(-1)  # Rotation à gauche : deque([1, 2, 3])  
 ```
 
 **Utilisation :** Files d'attente, historique d'annulation/rétablissement, caches LRU.
@@ -910,16 +911,16 @@ Depuis Python 3.7, les dictionnaires normaux conservent l'ordre d'insertion, don
 from collections import OrderedDict
 
 # OrderedDict conserve l'ordre d'insertion (comme dict depuis Python 3.7)
-od = OrderedDict()
-od['b'] = 2
-od['a'] = 1
-od['c'] = 3
+od = OrderedDict()  
+od['b'] = 2  
+od['a'] = 1  
+od['c'] = 3  
 
 print(od)  # OrderedDict([('b', 2), ('a', 1), ('c', 3)])
 
 # Méthode spéciale : move_to_end
-od.move_to_end('a')
-print(od)  # OrderedDict([('b', 2), ('c', 3), ('a', 1)])
+od.move_to_end('a')  
+print(od)  # OrderedDict([('b', 2), ('c', 3), ('a', 1)])  
 ```
 
 ### ChainMap - Chaîner plusieurs dictionnaires
@@ -930,15 +931,15 @@ print(od)  # OrderedDict([('b', 2), ('c', 3), ('a', 1)])
 from collections import ChainMap
 
 # Dictionnaires de configuration
-config_defaut = {'couleur': 'bleu', 'taille': 'M'}
-config_utilisateur = {'couleur': 'rouge'}
+config_defaut = {'couleur': 'bleu', 'taille': 'M'}  
+config_utilisateur = {'couleur': 'rouge'}  
 
 # Combiner avec priorité (config_utilisateur > config_defaut)
 config = ChainMap(config_utilisateur, config_defaut)
 
-print(config['couleur'])  # 'rouge' (de config_utilisateur)
-print(config['taille'])   # 'M' (de config_defaut)
-print(dict(config))       # {'couleur': 'rouge', 'taille': 'M'}
+print(config['couleur'])  # 'rouge' (de config_utilisateur)  
+print(config['taille'])   # 'M' (de config_defaut)  
+print(dict(config))       # {'couleur': 'rouge', 'taille': 'M'}  
 ```
 
 **Utilisation :** Gestion de configurations avec plusieurs niveaux (défaut, utilisateur, environnement).
@@ -1003,18 +1004,18 @@ ventes = [
 ]
 
 # 1. Compter les ventes par produit avec Counter
-ventes_par_produit = Counter(v.produit for v in ventes)
-print("Nombre de ventes par produit :")
-for produit, count in ventes_par_produit.most_common():
+ventes_par_produit = Counter(v.produit for v in ventes)  
+print("Nombre de ventes par produit :")  
+for produit, count in ventes_par_produit.most_common():  
     print(f"  {produit}: {count}")
 
 # 2. Grouper les montants par région avec defaultdict
-montants_par_region = defaultdict(list)
-for vente in ventes:
+montants_par_region = defaultdict(list)  
+for vente in ventes:  
     montants_par_region[vente.region].append(vente.montant)
 
-print("\nChiffre d'affaires par région :")
-for region, montants in montants_par_region.items():
+print("\nChiffre d'affaires par région :")  
+for region, montants in montants_par_region.items():  
     print(f"  {region}: {sum(montants)}€")
 
 # 3. Produit le plus vendu par région
@@ -1043,20 +1044,20 @@ interactions = [
 ]
 
 # Compter les actions par utilisateur
-actions_par_user = defaultdict(Counter)
-for inter in interactions:
+actions_par_user = defaultdict(Counter)  
+for inter in interactions:  
     actions_par_user[inter.utilisateur][inter.action] += 1
 
-print("Actions par utilisateur :")
-for user, actions in actions_par_user.items():
+print("Actions par utilisateur :")  
+for user, actions in actions_par_user.items():  
     print(f"\n{user}:")
     for action, count in actions.items():
         print(f"  {action}: {count}")
 
 # Post le plus populaire
-popularite_posts = Counter(i.cible for i in interactions)
-post_populaire = popularite_posts.most_common(1)[0]
-print(f"\nPost le plus populaire : {post_populaire[0]} ({post_populaire[1]} interactions)")
+popularite_posts = Counter(i.cible for i in interactions)  
+post_populaire = popularite_posts.most_common(1)[0]  
+print(f"\nPost le plus populaire : {post_populaire[0]} ({post_populaire[1]} interactions)")  
 ```
 
 ---
