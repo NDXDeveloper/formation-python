@@ -33,12 +33,13 @@ from datetime import datetime, date, time, timedelta
 from datetime import datetime
 
 # Date et heure actuelles
-maintenant = datetime.now()
-print(maintenant)  # 2025-10-27 14:30:45.123456
+maintenant = datetime.now()  
+print(maintenant)  # 2025-10-27 14:30:45.123456  
 
 # Date et heure en UTC (temps universel coordonné)
-maintenant_utc = datetime.utcnow()
-print(maintenant_utc)
+from datetime import timezone  
+maintenant_utc = datetime.now(timezone.utc)  
+print(maintenant_utc)  
 ```
 
 ### Créer une date/heure spécifique
@@ -47,12 +48,12 @@ print(maintenant_utc)
 from datetime import datetime
 
 # Créer une date et heure précise
-noel = datetime(2025, 12, 25, 18, 0, 0)
-print(noel)  # 2025-12-25 18:00:00
+noel = datetime(2025, 12, 25, 18, 0, 0)  
+print(noel)  # 2025-12-25 18:00:00  
 
 # Avec seulement la date (heure à 00:00:00)
-anniversaire = datetime(1990, 5, 15)
-print(anniversaire)  # 1990-05-15 00:00:00
+anniversaire = datetime(1990, 5, 15)  
+print(anniversaire)  # 1990-05-15 00:00:00  
 ```
 
 ### Accéder aux composants d'une date/heure
@@ -63,13 +64,13 @@ from datetime import datetime
 maintenant = datetime.now()
 
 # Accéder aux différents composants
-print(f"Année : {maintenant.year}")
-print(f"Mois : {maintenant.month}")
-print(f"Jour : {maintenant.day}")
-print(f"Heure : {maintenant.hour}")
-print(f"Minute : {maintenant.minute}")
-print(f"Seconde : {maintenant.second}")
-print(f"Microseconde : {maintenant.microsecond}")
+print(f"Année : {maintenant.year}")  
+print(f"Mois : {maintenant.month}")  
+print(f"Jour : {maintenant.day}")  
+print(f"Heure : {maintenant.hour}")  
+print(f"Minute : {maintenant.minute}")  
+print(f"Seconde : {maintenant.second}")  
+print(f"Microseconde : {maintenant.microsecond}")  
 
 # Jour de la semaine (0 = lundi, 6 = dimanche)
 print(f"Jour de la semaine : {maintenant.weekday()}")
@@ -91,15 +92,15 @@ maintenant = datetime.now()
 print(maintenant)  # 2025-10-27 14:30:45.123456
 
 # Formats personnalisés avec strftime()
-print(maintenant.strftime("%d/%m/%Y"))  # 27/10/2025
-print(maintenant.strftime("%d-%m-%Y %H:%M:%S"))  # 27-10-2025 14:30:45
-print(maintenant.strftime("%A %d %B %Y"))  # Monday 27 October 2025
-print(maintenant.strftime("%H:%M"))  # 14:30
+print(maintenant.strftime("%d/%m/%Y"))  # 27/10/2025  
+print(maintenant.strftime("%d-%m-%Y %H:%M:%S"))  # 27-10-2025 14:30:45  
+print(maintenant.strftime("%A %d %B %Y"))  # Monday 27 October 2025  
+print(maintenant.strftime("%H:%M"))  # 14:30  
 
 # Formats courants
-print(maintenant.strftime("%Y-%m-%d"))  # Format ISO : 2025-10-27
-print(maintenant.strftime("%d/%m/%y"))  # Format court : 27/10/25
-print(maintenant.strftime("%I:%M %p"))  # Format 12h : 02:30 PM
+print(maintenant.strftime("%Y-%m-%d"))  # Format ISO : 2025-10-27  
+print(maintenant.strftime("%d/%m/%y"))  # Format court : 27/10/25  
+print(maintenant.strftime("%I:%M %p"))  # Format 12h : 02:30 PM  
 ```
 
 **Principaux codes de formatage :**
@@ -128,18 +129,18 @@ L'opération inverse du formatage : créer un objet `datetime` depuis une chaîn
 from datetime import datetime
 
 # Parser une date depuis une chaîne
-date_str = "27/10/2025 14:30:45"
-date_obj = datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S")
-print(date_obj)  # 2025-10-27 14:30:45
+date_str = "27/10/2025 14:30:45"  
+date_obj = datetime.strptime(date_str, "%d/%m/%Y %H:%M:%S")  
+print(date_obj)  # 2025-10-27 14:30:45  
 
 # Autres exemples
-date1 = datetime.strptime("2025-10-27", "%Y-%m-%d")
-date2 = datetime.strptime("27 October 2025", "%d %B %Y")
-date3 = datetime.strptime("10/27/25", "%m/%d/%y")
+date1 = datetime.strptime("2025-10-27", "%Y-%m-%d")  
+date2 = datetime.strptime("27 October 2025", "%d %B %Y")  
+date3 = datetime.strptime("10/27/25", "%m/%d/%y")  
 
-print(date1)  # 2025-10-27 00:00:00
-print(date2)  # 2025-10-27 00:00:00
-print(date3)  # 2025-10-27 00:00:00
+print(date1)  # 2025-10-27 00:00:00  
+print(date2)  # 2025-10-27 00:00:00  
+print(date3)  # 2025-10-27 00:00:00  
 ```
 
 ### Exemple pratique : Calculer l'âge d'une personne
@@ -161,15 +162,15 @@ def calculer_age(date_naissance):
     return age
 
 # Exemple d'utilisation
-date_naissance = datetime(1990, 5, 15)
-age = calculer_age(date_naissance)
-print(f"Âge : {age} ans")
+date_naissance = datetime(1990, 5, 15)  
+age = calculer_age(date_naissance)  
+print(f"Âge : {age} ans")  
 
 # Avec parsing depuis une chaîne
-date_naissance_str = "15/05/1990"
-date_naissance = datetime.strptime(date_naissance_str, "%d/%m/%Y")
-age = calculer_age(date_naissance)
-print(f"Âge : {age} ans")
+date_naissance_str = "15/05/1990"  
+date_naissance = datetime.strptime(date_naissance_str, "%d/%m/%Y")  
+age = calculer_age(date_naissance)  
+print(f"Âge : {age} ans")  
 ```
 
 ---
@@ -182,25 +183,25 @@ Pour travailler uniquement avec des dates (sans l'heure), utilisez la classe `da
 from datetime import date
 
 # Date d'aujourd'hui
-aujourd_hui = date.today()
-print(aujourd_hui)  # 2025-10-27
+aujourd_hui = date.today()  
+print(aujourd_hui)  # 2025-10-27  
 
 # Créer une date spécifique
-noel = date(2025, 12, 25)
-print(noel)  # 2025-12-25
+noel = date(2025, 12, 25)  
+print(noel)  # 2025-12-25  
 
 # Accéder aux composants
-print(f"Année : {aujourd_hui.year}")
-print(f"Mois : {aujourd_hui.month}")
-print(f"Jour : {aujourd_hui.day}")
+print(f"Année : {aujourd_hui.year}")  
+print(f"Mois : {aujourd_hui.month}")  
+print(f"Jour : {aujourd_hui.day}")  
 
 # Formatage
-print(aujourd_hui.strftime("%d/%m/%Y"))  # 27/10/2025
-print(aujourd_hui.strftime("%A %d %B %Y"))  # Monday 27 October 2025
+print(aujourd_hui.strftime("%d/%m/%Y"))  # 27/10/2025  
+print(aujourd_hui.strftime("%A %d %B %Y"))  # Monday 27 October 2025  
 
 # Jour de la semaine
-print(aujourd_hui.weekday())  # 0 (lundi)
-print(aujourd_hui.isoweekday())  # 1 (lundi)
+print(aujourd_hui.weekday())  # 0 (lundi)  
+print(aujourd_hui.isoweekday())  # 1 (lundi)  
 ```
 
 ---
@@ -213,21 +214,21 @@ Pour travailler uniquement avec des heures (sans la date), utilisez la classe `t
 from datetime import time
 
 # Créer une heure spécifique
-heure_reunion = time(14, 30, 0)  # 14h30m00s
-print(heure_reunion)  # 14:30:00
+heure_reunion = time(14, 30, 0)  # 14h30m00s  
+print(heure_reunion)  # 14:30:00  
 
 # Avec microsecondes
-heure_precise = time(14, 30, 45, 123456)
-print(heure_precise)  # 14:30:45.123456
+heure_precise = time(14, 30, 45, 123456)  
+print(heure_precise)  # 14:30:45.123456  
 
 # Accéder aux composants
-print(f"Heure : {heure_reunion.hour}")
-print(f"Minute : {heure_reunion.minute}")
-print(f"Seconde : {heure_reunion.second}")
+print(f"Heure : {heure_reunion.hour}")  
+print(f"Minute : {heure_reunion.minute}")  
+print(f"Seconde : {heure_reunion.second}")  
 
 # Formatage
-print(heure_reunion.strftime("%H:%M"))  # 14:30
-print(heure_reunion.strftime("%I:%M %p"))  # 02:30 PM
+print(heure_reunion.strftime("%H:%M"))  # 14:30  
+print(heure_reunion.strftime("%I:%M %p"))  # 02:30 PM  
 ```
 
 ---
@@ -242,19 +243,19 @@ print(heure_reunion.strftime("%I:%M %p"))  # 02:30 PM
 from datetime import timedelta
 
 # Créer des durées
-un_jour = timedelta(days=1)
-une_semaine = timedelta(weeks=1)
-deux_heures = timedelta(hours=2)
-trente_minutes = timedelta(minutes=30)
-dix_secondes = timedelta(seconds=10)
+un_jour = timedelta(days=1)  
+une_semaine = timedelta(weeks=1)  
+deux_heures = timedelta(hours=2)  
+trente_minutes = timedelta(minutes=30)  
+dix_secondes = timedelta(seconds=10)  
 
 # Combiner plusieurs unités
-duree = timedelta(days=2, hours=3, minutes=30)
-print(duree)  # 2 days, 3:30:00
+duree = timedelta(days=2, hours=3, minutes=30)  
+print(duree)  # 2 days, 3:30:00  
 
 # Convertir en différentes unités
-print(f"Jours totaux : {duree.days}")
-print(f"Secondes totales : {duree.total_seconds()}")
+print(f"Jours totaux : {duree.days}")  
+print(f"Secondes totales : {duree.total_seconds()}")  
 ```
 
 ### Opérations arithmétiques avec les dates
@@ -262,25 +263,25 @@ print(f"Secondes totales : {duree.total_seconds()}")
 ```python
 from datetime import datetime, timedelta
 
-maintenant = datetime.now()
-print(f"Maintenant : {maintenant}")
+maintenant = datetime.now()  
+print(f"Maintenant : {maintenant}")  
 
 # Ajouter une durée
-demain = maintenant + timedelta(days=1)
-print(f"Demain : {demain}")
+demain = maintenant + timedelta(days=1)  
+print(f"Demain : {demain}")  
 
-dans_une_semaine = maintenant + timedelta(weeks=1)
-print(f"Dans une semaine : {dans_une_semaine}")
+dans_une_semaine = maintenant + timedelta(weeks=1)  
+print(f"Dans une semaine : {dans_une_semaine}")  
 
-dans_trois_heures = maintenant + timedelta(hours=3)
-print(f"Dans 3 heures : {dans_trois_heures}")
+dans_trois_heures = maintenant + timedelta(hours=3)  
+print(f"Dans 3 heures : {dans_trois_heures}")  
 
 # Soustraire une durée
-hier = maintenant - timedelta(days=1)
-print(f"Hier : {hier}")
+hier = maintenant - timedelta(days=1)  
+print(f"Hier : {hier}")  
 
-il_y_a_un_mois = maintenant - timedelta(days=30)
-print(f"Il y a un mois : {il_y_a_un_mois}")
+il_y_a_un_mois = maintenant - timedelta(days=30)  
+print(f"Il y a un mois : {il_y_a_un_mois}")  
 ```
 
 ### Calculer la différence entre deux dates
@@ -289,21 +290,21 @@ print(f"Il y a un mois : {il_y_a_un_mois}")
 from datetime import datetime, date
 
 # Avec datetime
-debut = datetime(2025, 1, 1)
-fin = datetime(2025, 12, 31)
+debut = datetime(2025, 1, 1)  
+fin = datetime(2025, 12, 31)  
 
-difference = fin - debut
-print(f"Différence : {difference}")  # 364 days, 0:00:00
-print(f"Nombre de jours : {difference.days}")  # 364
-print(f"Nombre de secondes : {difference.total_seconds()}")
+difference = fin - debut  
+print(f"Différence : {difference}")  # 364 days, 0:00:00  
+print(f"Nombre de jours : {difference.days}")  # 364  
+print(f"Nombre de secondes : {difference.total_seconds()}")  
 
 # Avec date
-naissance = date(1990, 5, 15)
-aujourd_hui = date.today()
+naissance = date(1990, 5, 15)  
+aujourd_hui = date.today()  
 
-jours_vecus = aujourd_hui - naissance
-print(f"Jours vécus : {jours_vecus.days}")
-print(f"Années approximatives : {jours_vecus.days / 365.25:.1f}")
+jours_vecus = aujourd_hui - naissance  
+print(f"Jours vécus : {jours_vecus.days}")  
+print(f"Années approximatives : {jours_vecus.days / 365.25:.1f}")  
 ```
 
 ### Exemple pratique : Calculer le temps restant jusqu'à une date
@@ -326,12 +327,12 @@ def temps_restant(date_cible):
     return f"{jours} jours, {heures} heures, {minutes} minutes, {secondes} secondes"
 
 # Exemple : Temps jusqu'à Noël
-noel = datetime(2025, 12, 25, 0, 0, 0)
-print(f"Temps restant jusqu'à Noël : {temps_restant(noel)}")
+noel = datetime(2025, 12, 25, 0, 0, 0)  
+print(f"Temps restant jusqu'à Noël : {temps_restant(noel)}")  
 
 # Exemple : Temps jusqu'au Nouvel An
-nouvel_an = datetime(2026, 1, 1, 0, 0, 0)
-print(f"Temps restant jusqu'au Nouvel An : {temps_restant(nouvel_an)}")
+nouvel_an = datetime(2026, 1, 1, 0, 0, 0)  
+print(f"Temps restant jusqu'au Nouvel An : {temps_restant(nouvel_an)}")  
 ```
 
 ---
@@ -344,17 +345,17 @@ Les objets `datetime` peuvent être comparés directement.
 from datetime import datetime, date
 
 # Avec datetime
-date1 = datetime(2025, 10, 27)
-date2 = datetime(2025, 12, 25)
+date1 = datetime(2025, 10, 27)  
+date2 = datetime(2025, 12, 25)  
 
-print(date1 < date2)   # True
-print(date1 > date2)   # False
-print(date1 == date2)  # False
-print(date1 != date2)  # True
+print(date1 < date2)   # True  
+print(date1 > date2)   # False  
+print(date1 == date2)  # False  
+print(date1 != date2)  # True  
 
 # Avec date
-aujourd_hui = date.today()
-noel = date(2025, 12, 25)
+aujourd_hui = date.today()  
+noel = date(2025, 12, 25)  
 
 if aujourd_hui < noel:
     print("Noël n'est pas encore passé")
@@ -368,11 +369,11 @@ dates = [
     datetime(2025, 3, 10)
 ]
 
-date_la_plus_recente = max(dates)
-date_la_plus_ancienne = min(dates)
+date_la_plus_recente = max(dates)  
+date_la_plus_ancienne = min(dates)  
 
-print(f"Date la plus récente : {date_la_plus_recente}")
-print(f"Date la plus ancienne : {date_la_plus_ancienne}")
+print(f"Date la plus récente : {date_la_plus_recente}")  
+print(f"Date la plus ancienne : {date_la_plus_ancienne}")  
 ```
 
 ---
@@ -395,12 +396,12 @@ Un timestamp est le nombre de secondes écoulées depuis le 1er janvier 1970 (é
 import time
 
 # Timestamp actuel (secondes depuis l'époque Unix)
-timestamp = time.time()
-print(f"Timestamp : {timestamp}")  # Exemple : 1698415845.123456
+timestamp = time.time()  
+print(f"Timestamp : {timestamp}")  # Exemple : 1698415845.123456  
 
 # Convertir un timestamp en structure de temps lisible
-temps_local = time.localtime(timestamp)
-print(temps_local)
+temps_local = time.localtime(timestamp)  
+print(temps_local)  
 
 # Afficher de manière formatée
 print(time.strftime("%Y-%m-%d %H:%M:%S", temps_local))
@@ -409,18 +410,18 @@ print(time.strftime("%Y-%m-%d %H:%M:%S", temps_local))
 ### Conversion entre datetime et timestamp
 
 ```python
-import time
-from datetime import datetime
+import time  
+from datetime import datetime  
 
 # De datetime vers timestamp
-maintenant = datetime.now()
-timestamp = maintenant.timestamp()
-print(f"Timestamp : {timestamp}")
+maintenant = datetime.now()  
+timestamp = maintenant.timestamp()  
+print(f"Timestamp : {timestamp}")  
 
 # De timestamp vers datetime
-timestamp = 1698415845
-date_depuis_timestamp = datetime.fromtimestamp(timestamp)
-print(f"Date : {date_depuis_timestamp}")
+timestamp = 1698415845  
+date_depuis_timestamp = datetime.fromtimestamp(timestamp)  
+print(f"Date : {date_depuis_timestamp}")  
 ```
 
 ### Mettre en pause l'exécution avec `sleep()`
@@ -430,13 +431,13 @@ La fonction `sleep()` met le programme en pause pendant un nombre de secondes sp
 ```python
 import time
 
-print("Début")
-time.sleep(2)  # Pause de 2 secondes
-print("2 secondes se sont écoulées")
+print("Début")  
+time.sleep(2)  # Pause de 2 secondes  
+print("2 secondes se sont écoulées")  
 
 # Avec des fractions de seconde
-time.sleep(0.5)  # Pause de 0,5 seconde
-print("0,5 seconde supplémentaire")
+time.sleep(0.5)  # Pause de 0,5 seconde  
+print("0,5 seconde supplémentaire")  
 ```
 
 ### Exemple pratique : Compte à rebours
@@ -453,8 +454,8 @@ def compte_a_rebours(secondes):
     print("C'est parti ! 🚀")
 
 # Exemple d'utilisation
-print("Début du compte à rebours :")
-compte_a_rebours(5)
+print("Début du compte à rebours :")  
+compte_a_rebours(5)  
 ```
 
 ### Mesurer le temps d'exécution
@@ -466,13 +467,13 @@ import time
 debut = time.time()
 
 # Code à mesurer
-total = 0
-for i in range(1000000):
+total = 0  
+for i in range(1000000):  
     total += i
 
-fin = time.time()
-duree = fin - debut
-print(f"Temps d'exécution : {duree:.4f} secondes")
+fin = time.time()  
+duree = fin - debut  
+print(f"Temps d'exécution : {duree:.4f} secondes")  
 
 # Méthode 2 : Avec time.perf_counter() (plus précis)
 debut = time.perf_counter()
@@ -480,9 +481,9 @@ debut = time.perf_counter()
 # Code à mesurer
 resultat = sum(range(1000000))
 
-fin = time.perf_counter()
-duree = fin - debut
-print(f"Temps d'exécution : {duree:.6f} secondes")
+fin = time.perf_counter()  
+duree = fin - debut  
+print(f"Temps d'exécution : {duree:.6f} secondes")  
 ```
 
 ### Exemple pratique : Chronomètre
@@ -523,14 +524,14 @@ class Chronometre:
         self.arreter()
 
 # Utilisation classique
-chrono = Chronometre()
-chrono.demarrer()
-time.sleep(2)
-chrono.arreter()
+chrono = Chronometre()  
+chrono.demarrer()  
+time.sleep(2)  
+chrono.arreter()  
 
 # Utilisation avec context manager
-print("\nAvec context manager :")
-with Chronometre():
+print("\nAvec context manager :")  
+with Chronometre():  
     # Code à chronométrer
     time.sleep(1.5)
     resultat = sum(range(1000000))
@@ -540,26 +541,26 @@ with Chronometre():
 
 ## Fuseaux horaires avec `datetime`
 
-Pour travailler avec des fuseaux horaires, utilisez le module `zoneinfo` (Python 3.9+) ou `pytz` pour les versions antérieures.
+Pour travailler avec des fuseaux horaires, utilisez le module `zoneinfo` de la bibliothèque standard.
 
-### Avec zoneinfo (Python 3.9+)
+### Avec zoneinfo
 
 ```python
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from datetime import datetime  
+from zoneinfo import ZoneInfo  
 
 # Heure actuelle dans différents fuseaux horaires
-maintenant_paris = datetime.now(ZoneInfo("Europe/Paris"))
-maintenant_tokyo = datetime.now(ZoneInfo("Asia/Tokyo"))
-maintenant_ny = datetime.now(ZoneInfo("America/New_York"))
+maintenant_paris = datetime.now(ZoneInfo("Europe/Paris"))  
+maintenant_tokyo = datetime.now(ZoneInfo("Asia/Tokyo"))  
+maintenant_ny = datetime.now(ZoneInfo("America/New_York"))  
 
-print(f"Paris : {maintenant_paris}")
-print(f"Tokyo : {maintenant_tokyo}")
-print(f"New York : {maintenant_ny}")
+print(f"Paris : {maintenant_paris}")  
+print(f"Tokyo : {maintenant_tokyo}")  
+print(f"New York : {maintenant_ny}")  
 
 # Convertir une date d'un fuseau à un autre
-date_paris = datetime(2025, 10, 27, 14, 30, tzinfo=ZoneInfo("Europe/Paris"))
-date_tokyo = date_paris.astimezone(ZoneInfo("Asia/Tokyo"))
+date_paris = datetime(2025, 10, 27, 14, 30, tzinfo=ZoneInfo("Europe/Paris"))  
+date_tokyo = date_paris.astimezone(ZoneInfo("Asia/Tokyo"))  
 
 print(f"14h30 à Paris correspond à {date_tokyo.strftime('%H:%M')} à Tokyo")
 ```
@@ -570,12 +571,12 @@ print(f"14h30 à Paris correspond à {date_tokyo.strftime('%H:%M')} à Tokyo")
 from datetime import datetime, timezone
 
 # Heure UTC actuelle
-maintenant_utc = datetime.now(timezone.utc)
-print(f"UTC : {maintenant_utc}")
+maintenant_utc = datetime.now(timezone.utc)  
+print(f"UTC : {maintenant_utc}")  
 
 # Créer une date en UTC
-date_utc = datetime(2025, 10, 27, 12, 0, 0, tzinfo=timezone.utc)
-print(date_utc)
+date_utc = datetime(2025, 10, 27, 12, 0, 0, tzinfo=timezone.utc)  
+print(date_utc)  
 ```
 
 ---
@@ -641,9 +642,9 @@ class Rappel:
 systeme = Rappel()
 
 # Ajouter des rappels
-systeme.ajouter("Réunion d'équipe", timedelta(hours=2))
-systeme.ajouter("Appeler le dentiste", timedelta(days=1))
-systeme.ajouter("Réviser Python", timedelta(hours=1, minutes=30))
+systeme.ajouter("Réunion d'équipe", timedelta(hours=2))  
+systeme.ajouter("Appeler le dentiste", timedelta(days=1))  
+systeme.ajouter("Réviser Python", timedelta(hours=1, minutes=30))  
 
 # Lister les rappels
 systeme.lister()
@@ -708,11 +709,11 @@ class Journal:
 # Exemple d'utilisation
 journal = Journal()
 
-journal.info("Application démarrée")
-journal.info("Connexion à la base de données")
-journal.warning("Mémoire utilisée : 80%")
-journal.error("Échec de connexion au serveur")
-journal.info("Application arrêtée")
+journal.info("Application démarrée")  
+journal.info("Connexion à la base de données")  
+journal.warning("Mémoire utilisée : 80%")  
+journal.error("Échec de connexion au serveur")  
+journal.info("Application arrêtée")  
 
 # Lire le journal
 journal.lire()
@@ -791,14 +792,14 @@ class CalculateurTravail:
 calculateur = CalculateurTravail()
 
 # Simuler une journée de travail
-calculateur.pointer_entree()   # 08:00
-import time
-time.sleep(1)  # Simuler le passage du temps
-calculateur.pointer_sortie()   # Pause déjeuner à 12:00
-time.sleep(1)
-calculateur.pointer_entree()   # Reprise à 13:00
-time.sleep(1)
-calculateur.pointer_sortie()   # Fin à 17:00
+calculateur.pointer_entree()   # 08:00  
+import time  
+time.sleep(1)  # Simuler le passage du temps  
+calculateur.pointer_sortie()   # Pause déjeuner à 12:00  
+time.sleep(1)  
+calculateur.pointer_entree()   # Reprise à 13:00  
+time.sleep(1)  
+calculateur.pointer_sortie()   # Fin à 17:00  
 
 # Afficher le résumé
 calculateur.afficher_resume()
@@ -823,6 +824,8 @@ def calculer_echeances(date_debut, montant_total, nombre_mensualites):
     echeances = []
     montant_mensuel = montant_total / nombre_mensualites
 
+    import calendar
+
     for i in range(nombre_mensualites):
         # Calculer la date (on ajoute i mois)
         mois_total = date_debut.month + i
@@ -830,7 +833,8 @@ def calculer_echeances(date_debut, montant_total, nombre_mensualites):
         mois = ((mois_total - 1) % 12) + 1
 
         # Gérer les jours invalides (ex: 31 février)
-        jour = min(date_debut.day, [31, 29 if annee % 4 == 0 else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][mois - 1])
+        _, max_jour = calendar.monthrange(annee, mois)
+        jour = min(date_debut.day, max_jour)
 
         date_echeance = datetime(annee, mois, jour)
 
@@ -844,12 +848,12 @@ def calculer_echeances(date_debut, montant_total, nombre_mensualites):
     return echeances
 
 # Exemple : Prêt de 10 000€ sur 12 mois
-date_debut = datetime(2025, 1, 15)
-montant = 10000
-duree = 12
+date_debut = datetime(2025, 1, 15)  
+montant = 10000  
+duree = 12  
 
-print("📋 Plan de remboursement")
-print("=" * 60)
+print("📋 Plan de remboursement")  
+print("=" * 60)  
 
 echeances = calculer_echeances(date_debut, montant, duree)
 
@@ -858,8 +862,8 @@ for ech in echeances:
     print(f"Mensualité {ech['numero']:2d} - {date_str} : "
           f"{ech['montant']:7.2f}€ (reste : {ech['reste']:7.2f}€)")
 
-print("=" * 60)
-print(f"Total : {montant:.2f}€")
+print("=" * 60)  
+print(f"Total : {montant:.2f}€")  
 ```
 
 ---
@@ -874,8 +878,8 @@ date_str = "2025-10-27"
 # Difficile de faire des calculs avec des chaînes
 
 # ✅ Utiliser des objets datetime
-from datetime import datetime
-date_obj = datetime(2025, 10, 27)
+from datetime import datetime  
+date_obj = datetime(2025, 10, 27)  
 # Facile de faire des calculs
 ```
 
@@ -933,8 +937,8 @@ def parser_date_securise(date_str, format_str):
         return None
 
 # Utilisation
-date = parser_date_securise("2025-13-01", "%Y-%m-%d")  # Mois invalide
-if date:
+date = parser_date_securise("2025-13-01", "%Y-%m-%d")  # Mois invalide  
+if date:  
     print(date)
 else:
     print("Date invalide")
@@ -983,8 +987,8 @@ date = datetime.strptime("27/10/2025", "%d/%m/%Y")
 difference = date2 - date1
 
 # Ajouter/Soustraire une durée
-future = maintenant + timedelta(days=7)
-passé = maintenant - timedelta(hours=3)
+future = maintenant + timedelta(days=7)  
+passé = maintenant - timedelta(hours=3)  
 ```
 
 Les modules `datetime` et `time` sont essentiels pour toute application Python qui manipule des dates, des heures ou des durées. Avec la pratique, vous serez capable de gérer facilement tous vos besoins liés au temps !

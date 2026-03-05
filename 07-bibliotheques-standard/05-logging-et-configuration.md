@@ -85,11 +85,11 @@ Le module `logging` définit 5 niveaux de gravité, du moins grave au plus grave
 import logging
 
 # Par défaut, seuls les messages WARNING et supérieurs sont affichés
-logging.debug("Message de débogage - pas affiché par défaut")
-logging.info("Message d'information - pas affiché par défaut")
-logging.warning("Message d'avertissement - AFFICHÉ")
-logging.error("Message d'erreur - AFFICHÉ")
-logging.critical("Message critique - AFFICHÉ")
+logging.debug("Message de débogage - pas affiché par défaut")  
+logging.info("Message d'information - pas affiché par défaut")  
+logging.warning("Message d'avertissement - AFFICHÉ")  
+logging.error("Message d'erreur - AFFICHÉ")  
+logging.critical("Message critique - AFFICHÉ")  
 
 # Sortie :
 # WARNING:root:Message d'avertissement - AFFICHÉ
@@ -109,11 +109,11 @@ import logging
 # Configurer le logging pour afficher tous les niveaux
 logging.basicConfig(level=logging.DEBUG)
 
-logging.debug("Ceci est un message de débogage")
-logging.info("Ceci est une information")
-logging.warning("Ceci est un avertissement")
-logging.error("Ceci est une erreur")
-logging.critical("Ceci est critique")
+logging.debug("Ceci est un message de débogage")  
+logging.info("Ceci est une information")  
+logging.warning("Ceci est un avertissement")  
+logging.error("Ceci est une erreur")  
+logging.critical("Ceci est critique")  
 ```
 
 ### Personnaliser le format
@@ -183,8 +183,8 @@ logging.basicConfig(
     filemode='w'  # 'w' écrase, 'a' ajoute à la fin
 )
 
-logging.info("Ce message va dans le fichier")
-logging.error("Cette erreur aussi")
+logging.info("Ce message va dans le fichier")  
+logging.error("Cette erreur aussi")  
 ```
 
 ### Écrire à la fois dans un fichier et la console
@@ -195,30 +195,30 @@ Pour afficher les logs à la fois dans la console et dans un fichier, il faut ut
 import logging
 
 # Créer le logger
-logger = logging.getLogger('mon_app')
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger('mon_app')  
+logger.setLevel(logging.DEBUG)  
 
 # Format
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # Handler pour fichier
-file_handler = logging.FileHandler('app.log')
-file_handler.setLevel(logging.DEBUG)
-file_handler.setFormatter(formatter)
+file_handler = logging.FileHandler('app.log')  
+file_handler.setLevel(logging.DEBUG)  
+file_handler.setFormatter(formatter)  
 
 # Handler pour console
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)  # Moins de détails dans la console
-console_handler.setFormatter(formatter)
+console_handler = logging.StreamHandler()  
+console_handler.setLevel(logging.INFO)  # Moins de détails dans la console  
+console_handler.setFormatter(formatter)  
 
 # Ajouter les handlers au logger
-logger.addHandler(file_handler)
-logger.addHandler(console_handler)
+logger.addHandler(file_handler)  
+logger.addHandler(console_handler)  
 
 # Utilisation
-logger.debug("Message de débogage - seulement dans le fichier")
-logger.info("Message d'info - fichier ET console")
-logger.error("Message d'erreur - fichier ET console")
+logger.debug("Message de débogage - seulement dans le fichier")  
+logger.info("Message d'info - fichier ET console")  
+logger.error("Message d'erreur - fichier ET console")  
 ```
 
 ---
@@ -231,17 +231,17 @@ Plutôt que d'utiliser le logger racine, il est recommandé de créer des logger
 import logging
 
 # Créer des loggers pour différents modules
-logger_auth = logging.getLogger('auth')
-logger_db = logging.getLogger('database')
-logger_api = logging.getLogger('api')
+logger_auth = logging.getLogger('auth')  
+logger_db = logging.getLogger('database')  
+logger_api = logging.getLogger('api')  
 
 # Configuration basique
 logging.basicConfig(level=logging.DEBUG, format='%(name)s - %(levelname)s - %(message)s')
 
 # Utilisation
-logger_auth.info("Utilisateur connecté")
-logger_db.debug("Connexion à la base de données")
-logger_api.warning("Taux de requêtes élevé")
+logger_auth.info("Utilisateur connecté")  
+logger_db.debug("Connexion à la base de données")  
+logger_api.warning("Taux de requêtes élevé")  
 
 # Sortie :
 # auth - INFO - Utilisateur connecté
@@ -257,16 +257,16 @@ Les loggers suivent une hiérarchie basée sur les points dans leurs noms :
 import logging
 
 # Hiérarchie : app -> app.module -> app.module.fonction
-logger_app = logging.getLogger('app')
-logger_module = logging.getLogger('app.module')
-logger_fonction = logging.getLogger('app.module.fonction')
+logger_app = logging.getLogger('app')  
+logger_module = logging.getLogger('app.module')  
+logger_fonction = logging.getLogger('app.module.fonction')  
 
 # Configuration
 logging.basicConfig(level=logging.DEBUG, format='%(name)s - %(message)s')
 
-logger_app.info("Log de l'application")
-logger_module.info("Log du module")
-logger_fonction.info("Log de la fonction")
+logger_app.info("Log de l'application")  
+logger_module.info("Log du module")  
+logger_fonction.info("Log de la fonction")  
 
 # Sortie :
 # app - Log de l'application
@@ -279,8 +279,8 @@ logger_fonction.info("Log de la fonction")
 ## Exemple pratique : Application avec logging
 
 ```python
-import logging
-from datetime import datetime
+import logging  
+from datetime import datetime  
 
 class GestionnaireUtilisateurs:
     """Gestionnaire d'utilisateurs avec logging"""
@@ -338,12 +338,12 @@ logging.basicConfig(
 # Utilisation
 gestionnaire = GestionnaireUtilisateurs()
 
-gestionnaire.ajouter_utilisateur("alice", "alice@example.com")
-gestionnaire.ajouter_utilisateur("bob", "bob@example.com")
-gestionnaire.ajouter_utilisateur("alice", "alice2@example.com")  # Doublon
-gestionnaire.ajouter_utilisateur("charlie", "invalide")  # Email invalide
-gestionnaire.supprimer_utilisateur("bob")
-gestionnaire.supprimer_utilisateur("david")  # N'existe pas
+gestionnaire.ajouter_utilisateur("alice", "alice@example.com")  
+gestionnaire.ajouter_utilisateur("bob", "bob@example.com")  
+gestionnaire.ajouter_utilisateur("alice", "alice2@example.com")  # Doublon  
+gestionnaire.ajouter_utilisateur("charlie", "invalide")  # Email invalide  
+gestionnaire.supprimer_utilisateur("bob")  
+gestionnaire.supprimer_utilisateur("david")  # N'existe pas  
 
 print("\nUtilisateurs:", gestionnaire.lister_utilisateurs())
 ```
@@ -359,28 +359,28 @@ Les handlers déterminent où vont les messages de log (console, fichier, email,
 ```python
 import logging
 
-logger = logging.getLogger('mon_app')
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger('mon_app')  
+logger.setLevel(logging.DEBUG)  
 
 # 1. StreamHandler - Sortie console (stdout/stderr)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
+console_handler = logging.StreamHandler()  
+console_handler.setLevel(logging.INFO)  
 
 # 2. FileHandler - Fichier simple
-file_handler = logging.FileHandler('app.log')
-file_handler.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler('app.log')  
+file_handler.setLevel(logging.DEBUG)  
 
 # 3. RotatingFileHandler - Rotation par taille
-from logging.handlers import RotatingFileHandler
-rotating_handler = RotatingFileHandler(
+from logging.handlers import RotatingFileHandler  
+rotating_handler = RotatingFileHandler(  
     'app.log',
     maxBytes=1024*1024,  # 1 MB
     backupCount=5        # Garde 5 fichiers de backup
 )
 
 # 4. TimedRotatingFileHandler - Rotation par temps
-from logging.handlers import TimedRotatingFileHandler
-timed_handler = TimedRotatingFileHandler(
+from logging.handlers import TimedRotatingFileHandler  
+timed_handler = TimedRotatingFileHandler(  
     'app.log',
     when='midnight',     # Rotation à minuit
     interval=1,          # Tous les jours
@@ -388,24 +388,24 @@ timed_handler = TimedRotatingFileHandler(
 )
 
 # Ajouter des formatters
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-file_handler.setFormatter(formatter)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')  
+console_handler.setFormatter(formatter)  
+file_handler.setFormatter(formatter)  
 
 # Ajouter au logger
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+logger.addHandler(console_handler)  
+logger.addHandler(file_handler)  
 ```
 
 ### Exemple avec RotatingFileHandler
 
 ```python
-import logging
-from logging.handlers import RotatingFileHandler
+import logging  
+from logging.handlers import RotatingFileHandler  
 
 # Configuration avec rotation de fichiers
-logger = logging.getLogger('app_rotation')
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger('app_rotation')  
+logger.setLevel(logging.DEBUG)  
 
 # Handler avec rotation (max 1KB, 3 fichiers de backup)
 handler = RotatingFileHandler(
@@ -414,9 +414,9 @@ handler = RotatingFileHandler(
     backupCount=3
 )
 
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')  
+handler.setFormatter(formatter)  
+logger.addHandler(handler)  
 
 # Générer beaucoup de logs pour tester la rotation
 for i in range(100):
@@ -445,27 +445,27 @@ class FiltreNiveauSpecifique(logging.Filter):
         return record.levelno in self.niveaux
 
 # Configuration
-logger = logging.getLogger('app_filtree')
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger('app_filtree')  
+logger.setLevel(logging.DEBUG)  
 
 # Handler pour les erreurs uniquement
-error_handler = logging.FileHandler('errors.log')
-error_handler.setLevel(logging.DEBUG)
-error_handler.addFilter(FiltreNiveauSpecifique([logging.ERROR, logging.CRITICAL]))
+error_handler = logging.FileHandler('errors.log')  
+error_handler.setLevel(logging.DEBUG)  
+error_handler.addFilter(FiltreNiveauSpecifique([logging.ERROR, logging.CRITICAL]))  
 
 # Handler pour les infos uniquement
-info_handler = logging.FileHandler('info.log')
-info_handler.setLevel(logging.DEBUG)
-info_handler.addFilter(FiltreNiveauSpecifique([logging.INFO]))
+info_handler = logging.FileHandler('info.log')  
+info_handler.setLevel(logging.DEBUG)  
+info_handler.addFilter(FiltreNiveauSpecifique([logging.INFO]))  
 
-logger.addHandler(error_handler)
-logger.addHandler(info_handler)
+logger.addHandler(error_handler)  
+logger.addHandler(info_handler)  
 
 # Test
-logger.debug("Debug - nulle part")
-logger.info("Info - dans info.log")
-logger.warning("Warning - nulle part")
-logger.error("Error - dans errors.log")
+logger.debug("Debug - nulle part")  
+logger.info("Info - dans info.log")  
+logger.warning("Warning - nulle part")  
+logger.error("Error - dans errors.log")  
 ```
 
 ---
@@ -477,8 +477,8 @@ logger.error("Error - dans errors.log")
 Pour des applications complexes, la configuration par dictionnaire est recommandée.
 
 ```python
-import logging
-import logging.config
+import logging  
+import logging.config  
 
 # Configuration complète par dictionnaire
 LOGGING_CONFIG = {
@@ -540,10 +540,10 @@ LOGGING_CONFIG = {
 logging.config.dictConfig(LOGGING_CONFIG)
 
 # Utilisation
-logger = logging.getLogger('mon_app')
-logger.debug("Message de débogage")
-logger.info("Message d'information")
-logger.error("Message d'erreur")
+logger = logging.getLogger('mon_app')  
+logger.debug("Message de débogage")  
+logger.info("Message d'information")  
+logger.error("Message d'erreur")  
 ```
 
 ### Configuration depuis un fichier
@@ -561,47 +561,47 @@ keys=console,file
 keys=simple,detailed
 
 [logger_root]
-level=INFO
-handlers=console
+level=INFO  
+handlers=console  
 
 [logger_app]
-level=DEBUG
-handlers=console,file
-qualname=mon_app
-propagate=0
+level=DEBUG  
+handlers=console,file  
+qualname=mon_app  
+propagate=0  
 
 [handler_console]
-class=StreamHandler
-level=INFO
-formatter=simple
-args=(sys.stdout,)
+class=StreamHandler  
+level=INFO  
+formatter=simple  
+args=(sys.stdout,)  
 
 [handler_file]
-class=FileHandler
-level=DEBUG
-formatter=detailed
-args=('app.log', 'a')
+class=FileHandler  
+level=DEBUG  
+formatter=detailed  
+args=('app.log', 'a')  
 
 [formatter_simple]
 format=%(levelname)s - %(message)s
 
 [formatter_detailed]
-format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
-datefmt=%Y-%m-%d %H:%M:%S
+format=%(asctime)s - %(name)s - %(levelname)s - %(message)s  
+datefmt=%Y-%m-%d %H:%M:%S  
 ```
 
 #### Charger la configuration depuis le fichier
 
 ```python
-import logging
-import logging.config
+import logging  
+import logging.config  
 
 # Charger la configuration depuis le fichier INI
 logging.config.fileConfig('logging.conf')
 
 # Utilisation
-logger = logging.getLogger('mon_app')
-logger.info("Configuration chargée depuis le fichier")
+logger = logging.getLogger('mon_app')  
+logger.info("Configuration chargée depuis le fichier")  
 ```
 
 ---
@@ -609,10 +609,9 @@ logger.info("Configuration chargée depuis le fichier")
 ## Exemple complet : Application e-commerce
 
 ```python
-import logging
-import logging.config
-from datetime import datetime
-from typing import Dict, List
+import logging  
+import logging.config  
+from datetime import datetime  
 
 # Configuration du logging
 LOGGING_CONFIG = {
@@ -698,7 +697,7 @@ class Panier:
 
     def __init__(self, client_id: str):
         self.client_id = client_id
-        self.articles: Dict[int, tuple[Produit, int]] = {}
+        self.articles: dict[int, tuple[Produit, int]] = {}
         self.logger = logging.getLogger('ecommerce.panier')
         self.logger.info(f"Panier créé pour le client {client_id}")
 
@@ -742,7 +741,7 @@ class GestionnaireCommandes:
     """Gestionnaire de commandes"""
 
     def __init__(self):
-        self.commandes: List[Dict] = []
+        self.commandes: list[dict] = []
         self.logger = logging.getLogger('ecommerce.commandes')
         self.logger.info("Gestionnaire de commandes initialisé")
 
@@ -860,8 +859,8 @@ def diviser(a, b):
         return None
 
 # Test
-diviser(10, 2)   # OK
-diviser(10, 0)   # Erreur avec stack trace
+diviser(10, 2)   # OK  
+diviser(10, 0)   # Erreur avec stack trace  
 ```
 
 ### logging.exception() - Raccourci pratique
@@ -890,13 +889,13 @@ fonction_risquee()
 
 ```python
 # ❌ Mauvais : utiliser le logger racine
-import logging
-logging.info("Message")
+import logging  
+logging.info("Message")  
 
 # ✅ Bon : créer un logger nommé
-import logging
-logger = logging.getLogger(__name__)
-logger.info("Message")
+import logging  
+logger = logging.getLogger(__name__)  
+logger.info("Message")  
 ```
 
 ### 2. Configurer le logging une seule fois
@@ -920,12 +919,12 @@ if __name__ == "__main__":
 
 ```python
 # ❌ Dans une bibliothèque/module
-import logging
-logging.basicConfig(...)  # NE JAMAIS FAIRE ÇA !
+import logging  
+logging.basicConfig(...)  # NE JAMAIS FAIRE ÇA !  
 
 # ✅ Dans une bibliothèque/module
-import logging
-logger = logging.getLogger(__name__)
+import logging  
+logger = logging.getLogger(__name__)  
 # C'est à l'utilisateur de configurer le logging
 ```
 
@@ -937,11 +936,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 # ✅ Utilisation appropriée des niveaux
-logger.debug("Valeur de la variable x: 42")  # Débogage détaillé
-logger.info("Traitement terminé avec succès")  # Information
-logger.warning("Fichier de config manquant, utilisation des valeurs par défaut")  # Avertissement
-logger.error("Impossible de se connecter à la base de données")  # Erreur
-logger.critical("Le système manque de mémoire!")  # Critique
+logger.debug("Valeur de la variable x: 42")  # Débogage détaillé  
+logger.info("Traitement terminé avec succès")  # Information  
+logger.warning("Fichier de config manquant, utilisation des valeurs par défaut")  # Avertissement  
+logger.error("Impossible de se connecter à la base de données")  # Erreur  
+logger.critical("Le système manque de mémoire!")  # Critique  
 ```
 
 ### 5. Utiliser le lazy formatting
@@ -951,13 +950,20 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# ❌ Mauvais : formatage immédiat (coûteux même si non loggé)
-logger.debug("Valeur: " + str(valeur_couteuse_a_calculer()))
+# ❌ Mauvais : concaténation de chaînes (formatage effectué même si le message n'est pas loggé)
+logger.debug("Valeur: " + str(variable))
 
-# ✅ Bon : lazy formatting (évalué seulement si nécessaire)
-logger.debug("Valeur: %s", valeur_couteuse_a_calculer())
-logger.debug("Valeur: {}", valeur_couteuse_a_calculer())  # Python 3.2+
+# ❌ Mauvais : f-string (formatage effectué même si le message n'est pas loggé)
+logger.debug(f"Valeur: {variable}")
+
+# ✅ Bon : lazy formatting avec %s (le formatage n'est effectué que si le message est loggé)
+logger.debug("Valeur: %s", variable)  
+logger.debug("Utilisateur %s a effectué %d actions", username, count)  
 ```
+
+> **Note :** Le module `logging` utilise le formatage `%` par défaut (comme `"message %s" % args`).
+> La syntaxe `{}` (style `str.format()`) ne fonctionne **pas** avec les arguments positionnels du logger.
+> Le lazy formatting diffère le coût de la **conversion en chaîne**, mais les expressions passées en arguments sont toujours évaluées.
 
 ### 6. Éviter les informations sensibles dans les logs
 
@@ -970,15 +976,15 @@ logger = logging.getLogger(__name__)
 logger.info(f"Connexion avec mot de passe: {password}")
 
 # ✅ Bon : masquer les informations sensibles
-logger.info(f"Tentative de connexion pour l'utilisateur: {username}")
-logger.info(f"Mot de passe fourni: {'*' * len(password)}")
+logger.info(f"Tentative de connexion pour l'utilisateur: {username}")  
+logger.info(f"Mot de passe fourni: {'*' * len(password)}")  
 ```
 
 ### 7. Créer une fonction de configuration réutilisable
 
 ```python
-import logging
-from pathlib import Path
+import logging  
+from pathlib import Path  
 
 def setup_logging(
     log_level=logging.INFO,
@@ -1020,9 +1026,9 @@ setup_logging(log_level=logging.DEBUG, log_file='logs/app.log')
 ## Exemple pratique : Application web avec logging
 
 ```python
-import logging
-import logging.config
-from datetime import datetime
+import logging  
+import logging.config  
+from datetime import datetime  
 
 # Configuration adaptée à une application web
 LOGGING_CONFIG = {
@@ -1155,19 +1161,19 @@ app = SimpleWebApp()
 print("=== Simulation d'activité web ===\n")
 
 # Connexions
-app.login('admin', 'password123')  # Succès
-app.login('admin', 'wrongpass')    # Échec
-app.login('hacker', 'test')        # Utilisateur inconnu
+app.login('admin', 'password123')  # Succès  
+app.login('admin', 'wrongpass')    # Échec  
+app.login('hacker', 'test')        # Utilisateur inconnu  
 
 # Accès aux pages
-app.get_page('/', 'admin')
-app.get_page('/profile', 'admin')
-app.get_page('/admin/settings', 'admin')  # OK
-app.get_page('/admin/settings', 'user')   # Refusé
+app.get_page('/', 'admin')  
+app.get_page('/profile', 'admin')  
+app.get_page('/admin/settings', 'admin')  # OK  
+app.get_page('/admin/settings', 'user')   # Refusé  
 
 # Traitement de données
-app.process_data([1, 2, 3, 4, 5])  # Succès
-app.process_data([])                # Erreur
+app.process_data([1, 2, 3, 4, 5])  # Succès  
+app.process_data([])                # Erreur  
 
 print("\n=== Les logs ont été écrits dans le dossier 'logs/' ===")
 ```
@@ -1202,8 +1208,8 @@ logging.basicConfig(
 )
 
 # Logger nommé
-logger = logging.getLogger(__name__)
-logger.info("Message")
+logger = logging.getLogger(__name__)  
+logger.info("Message")  
 ```
 
 ### Handlers courants
@@ -1239,15 +1245,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Messages simples
-logger.debug("Variable x = 10")
-logger.info("Opération terminée")
-logger.warning("Attention: mémoire faible")
-logger.error("Connexion échouée")
-logger.critical("Système en panne!")
+logger.debug("Variable x = 10")  
+logger.info("Opération terminée")  
+logger.warning("Attention: mémoire faible")  
+logger.error("Connexion échouée")  
+logger.critical("Système en panne!")  
 
 # Avec formatage
-logger.info("Utilisateur %s connecté", username)
-logger.debug("Valeurs: x=%d, y=%d", x, y)
+logger.info("Utilisateur %s connecté", username)  
+logger.debug("Valeurs: x=%d, y=%d", x, y)  
 
 # Exceptions
 try:

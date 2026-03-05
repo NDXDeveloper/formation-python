@@ -45,8 +45,8 @@ print(f"e : {math.e}")  # 2.718281828459045
 print(f"Tau : {math.tau}")  # 6.283185307179586
 
 # Infini
-print(f"Infini : {math.inf}")
-print(f"Infini négatif : {-math.inf}")
+print(f"Infini : {math.inf}")  
+print(f"Infini négatif : {-math.inf}")  
 
 # Not a Number (NaN) - Résultat d'opération invalide
 print(f"NaN : {math.nan}")
@@ -65,10 +65,10 @@ def calculer_aire(rayon):
     """Calcule l'aire d'un cercle"""
     return math.pi * rayon ** 2
 
-rayon = 5
-print(f"Rayon : {rayon} cm")
-print(f"Circonférence : {calculer_circonference(rayon):.2f} cm")
-print(f"Aire : {calculer_aire(rayon):.2f} cm²")
+rayon = 5  
+print(f"Rayon : {rayon} cm")  
+print(f"Circonférence : {calculer_circonference(rayon):.2f} cm")  
+print(f"Aire : {calculer_aire(rayon):.2f} cm²")  
 ```
 
 ---
@@ -81,12 +81,12 @@ print(f"Aire : {calculer_aire(rayon):.2f} cm²")
 import math
 
 # Valeur absolue
-print(math.fabs(-5.7))  # 5.7 (retourne un float)
-print(abs(-5.7))        # 5.7 (fonction built-in, peut retourner int ou float)
+print(math.fabs(-5.7))  # 5.7 (retourne un float)  
+print(abs(-5.7))        # 5.7 (fonction built-in, peut retourner int ou float)  
 
 # Copier le signe d'un nombre à un autre
-print(math.copysign(5, -1))   # -5.0 (prend le signe de -1)
-print(math.copysign(-5, 1))   # 5.0 (prend le signe de 1)
+print(math.copysign(5, -1))   # -5.0 (prend le signe de -1)  
+print(math.copysign(-5, 1))   # 5.0 (prend le signe de 1)  
 ```
 
 ### Arrondis et troncatures
@@ -97,23 +97,28 @@ import math
 nombre = 3.7
 
 # Arrondir vers le haut (plafond)
-print(math.ceil(3.2))   # 4
-print(math.ceil(3.7))   # 4
-print(math.ceil(-3.2))  # -3
+print(math.ceil(3.2))   # 4  
+print(math.ceil(3.7))   # 4  
+print(math.ceil(-3.2))  # -3  
 
 # Arrondir vers le bas (plancher)
-print(math.floor(3.2))   # 3
-print(math.floor(3.7))   # 3
-print(math.floor(-3.2))  # -4
+print(math.floor(3.2))   # 3  
+print(math.floor(3.7))   # 3  
+print(math.floor(-3.2))  # -4  
 
 # Tronquer (supprimer la partie décimale)
-print(math.trunc(3.7))   # 3
-print(math.trunc(-3.7))  # -3
+print(math.trunc(3.7))   # 3  
+print(math.trunc(-3.7))  # -3  
 
 # Arrondir au plus proche (fonction built-in)
-print(round(3.5))   # 4
-print(round(3.4))   # 3
-print(round(3.456, 2))  # 3.46 (2 décimales)
+print(round(3.4))   # 3  
+print(round(3.6))   # 4  
+print(round(3.456, 2))  # 3.46 (2 décimales)  
+
+# ⚠️ Arrondi bancaire ("round half to even") :
+# Quand le chiffre est exactement à .5, Python arrondit vers le nombre pair
+print(round(3.5))   # 4 (arrondi vers le pair)  
+print(round(4.5))   # 4 (arrondi vers le pair, pas 5 !)  
 ```
 
 ### Exemple pratique : Calculer une facture
@@ -136,10 +141,10 @@ def calculer_facture(prix_unitaire, quantite, taux_tva=0.20):
         'ttc': montant_ttc
     }
 
-facture = calculer_facture(19.99, 3)
-print(f"Montant HT : {facture['ht']}€")
-print(f"TVA : {facture['tva']}€")
-print(f"Montant TTC : {facture['ttc']}€")
+facture = calculer_facture(19.99, 3)  
+print(f"Montant HT : {facture['ht']}€")  
+print(f"TVA : {facture['tva']}€")  
+print(f"Montant TTC : {facture['ttc']}€")  
 ```
 
 ---
@@ -150,22 +155,25 @@ print(f"Montant TTC : {facture['ttc']}€")
 import math
 
 # Racine carrée
-print(math.sqrt(16))     # 4.0
-print(math.sqrt(2))      # 1.4142135623730951
+print(math.sqrt(16))     # 4.0  
+print(math.sqrt(2))      # 1.4142135623730951  
 
 # Puissance (nombre ** exposant)
-print(math.pow(2, 3))    # 8.0 (2³)
-print(math.pow(5, 2))    # 25.0 (5²)
+print(math.pow(2, 3))    # 8.0 (2³)  
+print(math.pow(5, 2))    # 25.0 (5²)  
 
 # Alternative avec l'opérateur **
 print(2 ** 3)            # 8 (peut retourner un int)
 
-# Racine n-ième (à partir de Python 3.11)
-# print(math.cbrt(27))   # 3.0 (racine cubique)
+# Racine cubique (Python 3.11+)
+print(math.cbrt(27))     # 3.0000000000000004
+
+# Alternative pour Python 3.10 : utiliser la puissance 1/3
+print(27 ** (1/3))       # 3.0
 
 # Exponentielle (e^x)
-print(math.exp(1))       # 2.718281828459045 (e¹)
-print(math.exp(2))       # 7.38905609893065 (e²)
+print(math.exp(1))       # 2.718281828459045 (e¹)  
+print(math.exp(2))       # 7.38905609893065 (e²)  
 
 # Exponentielle - 1 (plus précise pour les petites valeurs)
 print(math.expm1(0.001)) # 0.0010005001667083846
@@ -191,10 +199,10 @@ def calculer_interets_composes(capital, taux_annuel, duree_annees):
     }
 
 # Exemple : 10 000€ à 3% sur 10 ans
-resultat = calculer_interets_composes(10000, 0.03, 10)
-print(f"Capital initial : {resultat['capital_initial']}€")
-print(f"Capital final : {resultat['capital_final']}€")
-print(f"Intérêts gagnés : {resultat['interets']}€")
+resultat = calculer_interets_composes(10000, 0.03, 10)  
+print(f"Capital initial : {resultat['capital_initial']}€")  
+print(f"Capital final : {resultat['capital_final']}€")  
+print(f"Intérêts gagnés : {resultat['interets']}€")  
 ```
 
 ---
@@ -205,20 +213,20 @@ print(f"Intérêts gagnés : {resultat['interets']}€")
 import math
 
 # Logarithme naturel (base e)
-print(math.log(math.e))      # 1.0
-print(math.log(10))          # 2.302585092994046
+print(math.log(math.e))      # 1.0  
+print(math.log(10))          # 2.302585092994046  
 
 # Logarithme base 10
-print(math.log10(100))       # 2.0
-print(math.log10(1000))      # 3.0
+print(math.log10(100))       # 2.0  
+print(math.log10(1000))      # 3.0  
 
 # Logarithme base 2
-print(math.log2(8))          # 3.0
-print(math.log2(1024))       # 10.0
+print(math.log2(8))          # 3.0  
+print(math.log2(1024))       # 10.0  
 
 # Logarithme avec base personnalisée
-print(math.log(8, 2))        # 3.0 (log base 2 de 8)
-print(math.log(81, 3))       # 4.0 (log base 3 de 81)
+print(math.log(8, 2))        # 3.0 (log base 2 de 8)  
+print(math.log(81, 3))       # 4.0 (log base 3 de 81)  
 
 # Logarithme de (1 + x) - plus précis pour les petites valeurs
 print(math.log1p(0.001))     # 0.0009995003330835332
@@ -234,32 +242,32 @@ Les fonctions trigonométriques utilisent les radians par défaut.
 import math
 
 # Conversions degrés ↔ radians
-angle_degres = 90
-angle_radians = math.radians(angle_degres)
-print(f"{angle_degres}° = {angle_radians} radians")  # 1.5707963267948966
+angle_degres = 90  
+angle_radians = math.radians(angle_degres)  
+print(f"{angle_degres}° = {angle_radians} radians")  # 1.5707963267948966  
 
-angle_radians = math.pi / 2
-angle_degres = math.degrees(angle_radians)
-print(f"{angle_radians} radians = {angle_degres}°")  # 90.0
+angle_radians = math.pi / 2  
+angle_degres = math.degrees(angle_radians)  
+print(f"{angle_radians} radians = {angle_degres}°")  # 90.0  
 
 # Fonctions trigonométriques de base
-print(f"sin(π/2) = {math.sin(math.pi / 2)}")  # 1.0
-print(f"cos(π) = {math.cos(math.pi)}")        # -1.0
-print(f"tan(π/4) = {math.tan(math.pi / 4)}")  # 1.0
+print(f"sin(π/2) = {math.sin(math.pi / 2)}")  # 1.0  
+print(f"cos(π) = {math.cos(math.pi)}")        # -1.0  
+print(f"tan(π/4) = {math.tan(math.pi / 4)}")  # 1.0  
 
 # Fonctions trigonométriques inverses
-print(f"asin(1) = {math.asin(1)}")    # 1.5707... (π/2 radians)
-print(f"acos(0) = {math.acos(0)}")    # 1.5707... (π/2 radians)
-print(f"atan(1) = {math.atan(1)}")    # 0.7853... (π/4 radians)
+print(f"asin(1) = {math.asin(1)}")    # 1.5707... (π/2 radians)  
+print(f"acos(0) = {math.acos(0)}")    # 1.5707... (π/2 radians)  
+print(f"atan(1) = {math.atan(1)}")    # 0.7853... (π/4 radians)  
 
 # atan2 : arc tangente de y/x (gère les quadrants)
-print(math.atan2(1, 1))    # 0.7853... (π/4 radians, 45°)
-print(math.atan2(-1, 1))   # -0.7853... (-π/4 radians, -45°)
+print(math.atan2(1, 1))    # 0.7853... (π/4 radians, 45°)  
+print(math.atan2(-1, 1))   # -0.7853... (-π/4 radians, -45°)  
 
 # Fonctions hyperboliques
-print(f"sinh(1) = {math.sinh(1)}")    # 1.1752...
-print(f"cosh(0) = {math.cosh(0)}")    # 1.0
-print(f"tanh(1) = {math.tanh(1)}")    # 0.7615...
+print(f"sinh(1) = {math.sinh(1)}")    # 1.1752...  
+print(f"cosh(0) = {math.cosh(0)}")    # 1.0  
+print(f"tanh(1) = {math.tanh(1)}")    # 0.7615...  
 ```
 
 ### Exemple pratique : Calculer la distance entre deux points
@@ -280,14 +288,14 @@ def angle_entre_points(x1, y1, x2, y2):
     return math.degrees(angle_rad)
 
 # Exemple
-point_a = (0, 0)
-point_b = (3, 4)
+point_a = (0, 0)  
+point_b = (3, 4)  
 
-distance = distance_euclidienne(*point_a, *point_b)
-angle = angle_entre_points(*point_a, *point_b)
+distance = distance_euclidienne(*point_a, *point_b)  
+angle = angle_entre_points(*point_a, *point_b)  
 
-print(f"Distance entre A{point_a} et B{point_b} : {distance:.2f}")
-print(f"Angle : {angle:.2f}°")
+print(f"Distance entre A{point_a} et B{point_b} : {distance:.2f}")  
+print(f"Angle : {angle:.2f}°")  
 ```
 
 ---
@@ -298,16 +306,16 @@ print(f"Angle : {angle:.2f}°")
 import math
 
 # Plus grand commun diviseur (PGCD)
-print(math.gcd(48, 18))      # 6
-print(math.gcd(100, 35))     # 5
+print(math.gcd(48, 18))      # 6  
+print(math.gcd(100, 35))     # 5  
 
 # Plus petit commun multiple (PPCM) - Python 3.9+
-print(math.lcm(12, 18))      # 36
-print(math.lcm(4, 6, 8))     # 24
+print(math.lcm(12, 18))      # 36  
+print(math.lcm(4, 6, 8))     # 24  
 
 # Factorielle
-print(math.factorial(5))     # 120 (5! = 5×4×3×2×1)
-print(math.factorial(0))     # 1
+print(math.factorial(5))     # 120 (5! = 5×4×3×2×1)  
+print(math.factorial(0))     # 1  
 
 # Combinaisons (n parmi k) - Python 3.8+
 print(math.comb(5, 2))       # 10 (nombre de façons de choisir 2 éléments parmi 5)
@@ -316,16 +324,16 @@ print(math.comb(5, 2))       # 10 (nombre de façons de choisir 2 éléments par
 print(math.perm(5, 2))       # 20 (arrangements de 2 éléments parmi 5)
 
 # Somme précise d'un itérable (évite les erreurs d'arrondi)
-nombres = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
-print(sum(nombres))          # 0.9999999999999999 (erreur d'arrondi)
-print(math.fsum(nombres))    # 1.0 (plus précis)
+nombres = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]  
+print(sum(nombres))          # 1.0 (peut varier selon la version de Python)  
+print(math.fsum(nombres))    # 1.0 (plus précis)  
 
 # Produit d'un itérable - Python 3.8+
 print(math.prod([2, 3, 4]))  # 24
 
 # Hypoténuse (√(x² + y²))
-print(math.hypot(3, 4))      # 5.0
-print(math.hypot(5, 12))     # 13.0
+print(math.hypot(3, 4))      # 5.0  
+print(math.hypot(5, 12))     # 13.0  
 ```
 
 ### Exemple pratique : Calculateur de probabilités
@@ -349,10 +357,10 @@ def probabilite_tirage(k_succes, n_total, k_tires):
     return combinaisons_favorables / combinaisons_totales
 
 # Exemple : Loto (choisir 5 numéros parmi 49)
-total_combinaisons = math.comb(49, 5)
-print(f"Nombre de combinaisons possibles au loto : {total_combinaisons:,}")
-print(f"Probabilité de gagner : 1/{total_combinaisons:,}")
-print(f"Soit : {(1/total_combinaisons)*100:.10f}%")
+total_combinaisons = math.comb(49, 5)  
+print(f"Nombre de combinaisons possibles au loto : {total_combinaisons:,}")  
+print(f"Probabilité de gagner : 1/{total_combinaisons:,}")  
+print(f"Soit : {(1/total_combinaisons)*100:.10f}%")  
 ```
 
 ---
@@ -405,9 +413,9 @@ def lancer_plusieurs_des(nombre, faces=6):
 print(f"Résultat du dé : {lancer_de()}")
 
 # Lancer deux dés
-des = lancer_plusieurs_des(2)
-print(f"Résultat des dés : {des}")
-print(f"Total : {sum(des)}")
+des = lancer_plusieurs_des(2)  
+print(f"Résultat des dés : {des}")  
+print(f"Total : {sum(des)}")  
 
 # Lancer un dé à 20 faces (jeu de rôle)
 print(f"Dé à 20 faces : {lancer_de(20)}")
@@ -432,9 +440,9 @@ print(random.choices(couleurs, k=3))  # Ex: ['bleu', 'bleu', 'rouge']
 print(random.sample(couleurs, k=3))  # Ex: ['noir', 'vert', 'jaune']
 
 # Choix avec poids (probabilités différentes)
-elements = ["A", "B", "C"]
-poids = [0.5, 0.3, 0.2]  # 50% A, 30% B, 20% C
-print(random.choices(elements, weights=poids, k=10))
+elements = ["A", "B", "C"]  
+poids = [0.5, 0.3, 0.2]  # 50% A, 30% B, 20% C  
+print(random.choices(elements, weights=poids, k=10))  
 ```
 
 ### Exemple pratique : Tirage au sort
@@ -451,14 +459,14 @@ def tirage_au_sort(participants, nombre_gagnants=1):
     return gagnants
 
 # Exemple
-participants = ["Alice", "Bob", "Charlie", "David", "Emma", "Fanny"]
-print(f"Participants : {participants}")
+participants = ["Alice", "Bob", "Charlie", "David", "Emma", "Fanny"]  
+print(f"Participants : {participants}")  
 
-gagnant = tirage_au_sort(participants, 1)
-print(f"🎉 Gagnant : {gagnant[0]}")
+gagnant = tirage_au_sort(participants, 1)  
+print(f"🎉 Gagnant : {gagnant[0]}")  
 
-gagnants_multiples = tirage_au_sort(participants, 3)
-print(f"🎉 Podium : {gagnants_multiples}")
+gagnants_multiples = tirage_au_sort(participants, 3)  
+print(f"🎉 Podium : {gagnants_multiples}")  
 ```
 
 ---
@@ -469,19 +477,19 @@ print(f"🎉 Podium : {gagnants_multiples}")
 import random
 
 # Mélanger une liste (modifie la liste en place)
-cartes = ["As", "Roi", "Dame", "Valet", "10", "9", "8", "7"]
-print(f"Ordre original : {cartes}")
+cartes = ["As", "Roi", "Dame", "Valet", "10", "9", "8", "7"]  
+print(f"Ordre original : {cartes}")  
 
-random.shuffle(cartes)
-print(f"Après mélange : {cartes}")
+random.shuffle(cartes)  
+print(f"Après mélange : {cartes}")  
 
 # Si on veut garder l'original, faire une copie d'abord
-cartes_originales = ["As", "Roi", "Dame", "Valet"]
-cartes_melangees = cartes_originales.copy()
-random.shuffle(cartes_melangees)
+cartes_originales = ["As", "Roi", "Dame", "Valet"]  
+cartes_melangees = cartes_originales.copy()  
+random.shuffle(cartes_melangees)  
 
-print(f"Original : {cartes_originales}")
-print(f"Mélangé : {cartes_melangees}")
+print(f"Original : {cartes_originales}")  
+print(f"Mélangé : {cartes_melangees}")  
 ```
 
 ### Exemple pratique : Jeu de cartes
@@ -517,12 +525,12 @@ class PaquetDeCartes:
         return len(self.cartes)
 
 # Utilisation
-paquet = PaquetDeCartes()
-print(f"Cartes restantes : {paquet.cartes_restantes()}")
+paquet = PaquetDeCartes()  
+print(f"Cartes restantes : {paquet.cartes_restantes()}")  
 
-main = paquet.tirer(5)
-print(f"Main tirée : {main}")
-print(f"Cartes restantes : {paquet.cartes_restantes()}")
+main = paquet.tirer(5)  
+print(f"Main tirée : {main}")  
+print(f"Cartes restantes : {paquet.cartes_restantes()}")  
 ```
 
 ---
@@ -534,8 +542,8 @@ import random
 
 # Distribution gaussienne (normale)
 # mu = moyenne, sigma = écart-type
-print(random.gauss(0, 1))        # Distribution normale centrée réduite
-print(random.normalvariate(100, 15))  # Moyenne 100, écart-type 15
+print(random.gauss(0, 1))        # Distribution normale centrée réduite  
+print(random.normalvariate(100, 15))  # Moyenne 100, écart-type 15  
 
 # Distribution triangulaire
 # low <= N <= high avec mode au milieu
@@ -583,8 +591,8 @@ def analyser_notes(notes):
     print(f"Taux de réussite : {taux_reussite:.1f}%")
 
 # Simulation
-notes = simuler_notes_examen(30, moyenne=12, ecart_type=3)
-analyser_notes(notes)
+notes = simuler_notes_examen(30, moyenne=12, ecart_type=3)  
+analyser_notes(notes)  
 ```
 
 ---
@@ -597,18 +605,18 @@ Pour obtenir des résultats reproductibles (utile pour les tests et le débogage
 import random
 
 # Définir une graine
-random.seed(42)
-print(random.random())  # Toujours le même résultat avec seed=42
-print(random.randint(1, 100))
+random.seed(42)  
+print(random.random())  # Toujours le même résultat avec seed=42  
+print(random.randint(1, 100))  
 
 # Réinitialiser avec la même graine
-random.seed(42)
-print(random.random())  # Même résultat qu'avant
-print(random.randint(1, 100))  # Même résultat qu'avant
+random.seed(42)  
+print(random.random())  # Même résultat qu'avant  
+print(random.randint(1, 100))  # Même résultat qu'avant  
 
 # Graine aléatoire (par défaut, basée sur l'horloge système)
-random.seed()
-print(random.random())  # Résultat différent à chaque exécution
+random.seed()  
+print(random.random())  # Résultat différent à chaque exécution  
 ```
 
 ---
@@ -635,21 +643,21 @@ import statistics
 donnees = [2, 4, 6, 8, 10]
 
 # Moyenne arithmétique
-moyenne = statistics.mean(donnees)
-print(f"Moyenne : {moyenne}")  # 6.0
+moyenne = statistics.mean(donnees)  
+print(f"Moyenne : {moyenne}")  # 6.0  
 
 # Données avec différents types
-donnees_mixtes = [1, 2.5, 3, 4.5, 5]
-print(f"Moyenne : {statistics.mean(donnees_mixtes)}")  # 3.2
+donnees_mixtes = [1, 2.5, 3, 4.5, 5]  
+print(f"Moyenne : {statistics.mean(donnees_mixtes)}")  # 3.2  
 
 # Moyenne géométrique - Python 3.8+
-donnees_geo = [2, 8]
-print(f"Moyenne géométrique : {statistics.geometric_mean(donnees_geo)}")  # 4.0
+donnees_geo = [2, 8]  
+print(f"Moyenne géométrique : {statistics.geometric_mean(donnees_geo)}")  # 4.0  
 
 # Moyenne harmonique
 # Utile pour des moyennes de taux ou de vitesses
-vitesses = [30, 60, 90]  # km/h
-print(f"Moyenne harmonique : {statistics.harmonic_mean(vitesses):.2f}")
+vitesses = [30, 60, 90]  # km/h  
+print(f"Moyenne harmonique : {statistics.harmonic_mean(vitesses):.2f}")  
 ```
 
 ### Médiane (median)
@@ -658,12 +666,12 @@ print(f"Moyenne harmonique : {statistics.harmonic_mean(vitesses):.2f}")
 import statistics
 
 # Médiane : valeur centrale quand les données sont triées
-donnees_impaires = [1, 3, 5, 7, 9]
-print(f"Médiane : {statistics.median(donnees_impaires)}")  # 5
+donnees_impaires = [1, 3, 5, 7, 9]  
+print(f"Médiane : {statistics.median(donnees_impaires)}")  # 5  
 
 # Avec un nombre pair d'éléments : moyenne des deux valeurs centrales
-donnees_paires = [1, 3, 5, 7, 9, 11]
-print(f"Médiane : {statistics.median(donnees_paires)}")  # 6.0
+donnees_paires = [1, 3, 5, 7, 9, 11]  
+print(f"Médiane : {statistics.median(donnees_paires)}")  # 6.0  
 
 # Médiane basse (toujours un élément de la liste)
 print(f"Médiane basse : {statistics.median_low(donnees_paires)}")  # 5
@@ -681,16 +689,16 @@ print(f"Médiane groupée : {statistics.median_grouped(donnees_paires)}")
 import statistics
 
 # Mode : valeur la plus fréquente
-donnees = [1, 2, 2, 3, 3, 3, 4, 4, 5]
-print(f"Mode : {statistics.mode(donnees)}")  # 3
+donnees = [1, 2, 2, 3, 3, 3, 4, 4, 5]  
+print(f"Mode : {statistics.mode(donnees)}")  # 3  
 
 # Avec des chaînes de caractères
-couleurs = ["rouge", "bleu", "rouge", "vert", "rouge", "bleu"]
-print(f"Couleur la plus fréquente : {statistics.mode(couleurs)}")  # rouge
+couleurs = ["rouge", "bleu", "rouge", "vert", "rouge", "bleu"]  
+print(f"Couleur la plus fréquente : {statistics.mode(couleurs)}")  # rouge  
 
 # Multimode : toutes les valeurs avec la fréquence maximale - Python 3.8+
-donnees_multimodales = [1, 1, 2, 2, 3]
-print(f"Modes multiples : {statistics.multimode(donnees_multimodales)}")  # [1, 2]
+donnees_multimodales = [1, 1, 2, 2, 3]  
+print(f"Modes multiples : {statistics.multimode(donnees_multimodales)}")  # [1, 2]  
 ```
 
 ### Exemple pratique : Analyse de salaires
@@ -742,20 +750,20 @@ import statistics
 donnees = [2, 4, 6, 8, 10]
 
 # Variance de population
-variance_pop = statistics.pvariance(donnees)
-print(f"Variance de population : {variance_pop}")  # 8.0
+variance_pop = statistics.pvariance(donnees)  
+print(f"Variance de population : {variance_pop}")  # 8.0  
 
 # Variance d'échantillon (estimation)
-variance_ech = statistics.variance(donnees)
-print(f"Variance d'échantillon : {variance_ech}")  # 10.0
+variance_ech = statistics.variance(donnees)  
+print(f"Variance d'échantillon : {variance_ech}")  # 10.0  
 
 # Écart-type de population
-ecart_type_pop = statistics.pstdev(donnees)
-print(f"Écart-type de population : {ecart_type_pop:.2f}")  # 2.83
+ecart_type_pop = statistics.pstdev(donnees)  
+print(f"Écart-type de population : {ecart_type_pop:.2f}")  # 2.83  
 
 # Écart-type d'échantillon
-ecart_type_ech = statistics.stdev(donnees)
-print(f"Écart-type d'échantillon : {ecart_type_ech:.2f}")  # 3.16
+ecart_type_ech = statistics.stdev(donnees)  
+print(f"Écart-type d'échantillon : {ecart_type_ech:.2f}")  # 3.16  
 ```
 
 ### Quantiles
@@ -767,17 +775,17 @@ import statistics
 donnees = list(range(1, 101))  # 1 à 100
 
 # Quartiles (divise en 4 parties)
-quartiles = statistics.quantiles(donnees, n=4)
-print(f"Quartiles : {quartiles}")
+quartiles = statistics.quantiles(donnees, n=4)  
+print(f"Quartiles : {quartiles}")  
 # Q1 (25%), Q2/médiane (50%), Q3 (75%)
 
 # Déciles (divise en 10 parties)
-deciles = statistics.quantiles(donnees, n=10)
-print(f"Premier décile : {deciles[0]}")  # 10% des valeurs sont inférieures
+deciles = statistics.quantiles(donnees, n=10)  
+print(f"Premier décile : {deciles[0]}")  # 10% des valeurs sont inférieures  
 
 # Percentiles (divise en 100 parties)
-percentiles = statistics.quantiles(donnees, n=100)
-print(f"95e percentile : {percentiles[94]}")  # 95% des valeurs sont inférieures
+percentiles = statistics.quantiles(donnees, n=100)  
+print(f"95e percentile : {percentiles[94]}")  # 95% des valeurs sont inférieures  
 ```
 
 ### Exemple pratique : Analyse de performances
@@ -812,8 +820,8 @@ def analyser_performances(temps_reponse):
     print(f"\n⚠️  Valeurs aberrantes (>{seuil:.0f}ms) : {len(valeurs_aberrantes)}")
 
 # Simulation de temps de réponse
-import random
-random.seed(42)
+import random  
+random.seed(42)  
 
 temps_reponse = [
     random.gauss(100, 20) for _ in range(1000)  # Temps normal
@@ -832,23 +840,23 @@ analyser_performances(temps_reponse)
 import statistics
 
 # Covariance : mesure comment deux variables varient ensemble
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]  # y = 2x (corrélation positive parfaite)
+x = [1, 2, 3, 4, 5]  
+y = [2, 4, 6, 8, 10]  # y = 2x (corrélation positive parfaite)  
 
-covariance = statistics.covariance(x, y)
-print(f"Covariance : {covariance}")  # 5.0
+covariance = statistics.covariance(x, y)  
+print(f"Covariance : {covariance}")  # 5.0  
 
 # Corrélation de Pearson : entre -1 et 1
 # 1 = corrélation positive parfaite
 # 0 = pas de corrélation
 # -1 = corrélation négative parfaite
-correlation = statistics.correlation(x, y)
-print(f"Corrélation : {correlation}")  # 1.0
+correlation = statistics.correlation(x, y)  
+print(f"Corrélation : {correlation}")  # 1.0  
 
 # Exemple avec corrélation négative
-z = [10, 8, 6, 4, 2]  # Diminue quand x augmente
-correlation_neg = statistics.correlation(x, z)
-print(f"Corrélation négative : {correlation_neg}")  # -1.0
+z = [10, 8, 6, 4, 2]  # Diminue quand x augmente  
+correlation_neg = statistics.correlation(x, z)  
+print(f"Corrélation négative : {correlation_neg}")  # -1.0  
 ```
 
 ### Exemple pratique : Relation entre température et ventes
@@ -882,8 +890,8 @@ def analyser_correlation_ventes(temperatures, ventes):
     print(f"Ventes moyennes : {statistics.mean(ventes):.0f} unités")
 
 # Exemple : Ventes de glaces en fonction de la température
-temperatures = [15, 18, 22, 25, 28, 30, 32, 35, 38, 40]
-ventes_glaces = [50, 65, 85, 110, 140, 160, 180, 210, 250, 280]
+temperatures = [15, 18, 22, 25, 28, 30, 32, 35, 38, 40]  
+ventes_glaces = [50, 65, 85, 110, 140, 160, 180, 210, 250, 280]  
 
 analyser_correlation_ventes(temperatures, ventes_glaces)
 ```
@@ -895,9 +903,9 @@ analyser_correlation_ventes(temperatures, ventes_glaces)
 Combinons les trois modules pour créer un simulateur de casino complet.
 
 ```python
-import random
-import statistics
-import math
+import random  
+import statistics  
+import math  
 
 class Casino:
     """Simulateur de jeux de casino"""
@@ -1003,18 +1011,18 @@ class Casino:
             print(f"ROI : {roi:+.2f}%")
 
 # Simulation
-print("🎰 Bienvenue au Casino!")
-casino = Casino(capital_initial=1000)
+print("🎰 Bienvenue au Casino!")  
+casino = Casino(capital_initial=1000)  
 
 # Jouer quelques parties
-print("\n--- Roulette ---")
-for i in range(5):
+print("\n--- Roulette ---")  
+for i in range(5):  
     resultat = casino.roulette(50, "rouge")
     print(f"Partie {i+1}: Numéro {resultat['numero']} ({resultat['couleur']}) - "
           f"Gain: {resultat['gain']:+}€ - Capital: {resultat['capital']:.0f}€")
 
-print("\n--- Blackjack ---")
-for i in range(5):
+print("\n--- Blackjack ---")  
+for i in range(5):  
     resultat = casino.blackjack_simplifie(50)
     print(f"Partie {i+1}: {resultat['resultat']} ({resultat['main_joueur']} vs "
           f"{resultat['main_croupier']}) - Gain: {resultat['gain']:+}€ - "
@@ -1031,8 +1039,8 @@ casino.statistiques()
 La méthode de Monte Carlo utilise l'aléatoire pour résoudre des problèmes mathématiques.
 
 ```python
-import random
-import math
+import random  
+import math  
 
 def estimer_pi(nombre_points=10000):
     """Estime la valeur de π avec la méthode de Monte Carlo
@@ -1059,8 +1067,8 @@ def estimer_pi(nombre_points=10000):
     pi_estime = 4 * (points_dans_cercle / nombre_points)
     return pi_estime
 
-print("🎯 Estimation de π avec Monte Carlo")
-print("=" * 50)
+print("🎯 Estimation de π avec Monte Carlo")  
+print("=" * 50)  
 
 for n in [100, 1000, 10000, 100000, 1000000]:
     pi_estime = estimer_pi(n)
@@ -1082,29 +1090,29 @@ import math
 # math n'a pas de fonctions aléatoires
 
 # ✅ Utiliser random pour l'aléatoire
-import random
-nombre = random.randint(1, 10)
+import random  
+nombre = random.randint(1, 10)  
 ```
 
 ### 2. Attention aux types de données
 
 ```python
-import math
-import statistics
+import math  
+import statistics  
 
 # math travaille avec des floats
 print(type(math.sqrt(4)))  # <class 'float'>
 
 # statistics accepte ints et floats
-donnees = [1, 2, 3, 4, 5]
-print(statistics.mean(donnees))  # 3 (peut être int ou float)
+donnees = [1, 2, 3, 4, 5]  
+print(statistics.mean(donnees))  # 3 (peut être int ou float)  
 ```
 
 ### 3. Gérer les erreurs
 
 ```python
-import math
-import statistics
+import math  
+import statistics  
 
 # Division par zéro
 try:
@@ -1125,8 +1133,8 @@ except statistics.StatisticsError as e:
 import random
 
 # Pour les tests
-random.seed(42)
-resultats_test = [random.randint(1, 100) for _ in range(10)]
+random.seed(42)  
+resultats_test = [random.randint(1, 100) for _ in range(10)]  
 
 # Pour la production
 random.seed()  # Réinitialise avec l'horloge système
@@ -1141,8 +1149,8 @@ donnees = [1, 2, 3, 4, 5]
 moyenne = sum(donnees) / len(donnees)
 
 # ✅ Utiliser statistics (plus robuste)
-import statistics
-moyenne = statistics.mean(donnees)
+import statistics  
+moyenne = statistics.mean(donnees)  
 ```
 
 ---
@@ -1187,23 +1195,23 @@ moyenne = statistics.mean(donnees)
 ### Exemples d'utilisation
 
 ```python
-import math
-import random
-import statistics
+import math  
+import random  
+import statistics  
 
 # Calculs mathématiques
-aire_cercle = math.pi * (5 ** 2)
-racine = math.sqrt(16)
+aire_cercle = math.pi * (5 ** 2)  
+racine = math.sqrt(16)  
 
 # Génération aléatoire
-nombre = random.randint(1, 100)
-choix = random.choice(['A', 'B', 'C'])
+nombre = random.randint(1, 100)  
+choix = random.choice(['A', 'B', 'C'])  
 
 # Statistiques
-donnees = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-moyenne = statistics.mean(donnees)
-mediane = statistics.median(donnees)
-ecart_type = statistics.stdev(donnees)
+donnees = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  
+moyenne = statistics.mean(donnees)  
+mediane = statistics.median(donnees)  
+ecart_type = statistics.stdev(donnees)  
 ```
 
 Ces trois modules sont des outils puissants pour effectuer des calculs mathématiques, générer de l'aléatoire et analyser des données en Python !

@@ -38,29 +38,29 @@ C'est très simple ! Il suffit de l'importer avec le mot-clé `import` :
 # Importer un module complet
 import math
 
-resultat = math.sqrt(16)  # Utiliser une fonction du module
-print(resultat)  # 4.0
+resultat = math.sqrt(16)  # Utiliser une fonction du module  
+print(resultat)  # 4.0  
 
 # Importer des fonctions spécifiques
 from datetime import datetime
 
-maintenant = datetime.now()
-print(maintenant)
+maintenant = datetime.now()  
+print(maintenant)  
 
 # Importer avec un alias (raccourci)
 import statistics as stats
 
-moyenne = stats.mean([1, 2, 3, 4, 5])
-print(moyenne)  # 3
+moyenne = stats.mean([1, 2, 3, 4, 5])  
+print(moyenne)  # 3  
 ```
 
 ### Bonnes pratiques d'import
 
 ```python
 # ✅ Bon : import explicite
-import os
-import sys
-from datetime import datetime, timedelta
+import os  
+import sys  
+from datetime import datetime, timedelta  
 
 # ✅ Bon : alias courants et reconnus
 import statistics as stats
@@ -117,8 +117,8 @@ Ces modules permettent de travailler avec des dates, des heures, des durées et 
 ```python
 from datetime import datetime
 
-maintenant = datetime.now()
-print(maintenant.strftime("%d/%m/%Y %H:%M:%S"))
+maintenant = datetime.now()  
+print(maintenant.strftime("%d/%m/%Y %H:%M:%S"))  
 ```
 
 ### 7.3 math, random, statistics
@@ -134,8 +134,8 @@ Ces modules offrent des fonctions mathématiques avancées, la génération de n
 - Combinaisons et permutations
 
 ```python
-import math
-import random
+import math  
+import random  
 
 # Calcul mathématique
 print(math.sqrt(25))  # 5.0
@@ -144,8 +144,8 @@ print(math.sqrt(25))  # 5.0
 print(random.randint(1, 100))
 
 # Statistiques
-import statistics
-print(statistics.mean([1, 2, 3, 4, 5]))  # 3
+import statistics  
+print(statistics.mean([1, 2, 3, 4, 5]))  # 3  
 ```
 
 ### 7.4 itertools et functools
@@ -184,9 +184,9 @@ Le module `logging` permet d'enregistrer des messages sur l'exécution du progra
 ```python
 import logging
 
-logging.basicConfig(level=logging.INFO)
-logging.info("L'application a démarré")
-logging.error("Une erreur s'est produite")
+logging.basicConfig(level=logging.INFO)  
+logging.info("L'application a démarré")  
+logging.error("Une erreur s'est produite")  
 ```
 
 ### 7.6 typing - Annotations avancées
@@ -202,9 +202,7 @@ Le module `typing` permet d'ajouter des annotations de type pour rendre le code 
 - Bénéficier d'une meilleure autocomplétion dans les IDE
 
 ```python
-from typing import List, Dict
-
-def calculer_moyenne(notes: List[float]) -> float:
+def calculer_moyenne(notes: list[float]) -> float:
     """Calcule la moyenne d'une liste de notes"""
     return sum(notes) / len(notes)
 ```
@@ -291,12 +289,12 @@ print(datetime.__doc__)
 import math
 
 # Lister tous les attributs et fonctions
-attributs = dir(math)
-print(attributs)
+attributs = dir(math)  
+print(attributs)  
 
 # Filtrer pour voir seulement les fonctions publiques
-fonctions_publiques = [attr for attr in dir(math) if not attr.startswith('_')]
-print(fonctions_publiques)
+fonctions_publiques = [attr for attr in dir(math) if not attr.startswith('_')]  
+print(fonctions_publiques)  
 ```
 
 ---
@@ -337,9 +335,9 @@ Appliquez ce que vous apprenez dans des projets concrets :
 Les modules sont encore plus puissants quand on les combine :
 
 ```python
-import os
-import datetime
-import logging
+import os  
+import datetime  
+import logging  
 
 # Créer un système de sauvegarde automatique
 logging.basicConfig(level=logging.INFO)
@@ -382,9 +380,9 @@ Tous les modules que nous allons étudier font partie de la bibliothèque standa
 
 ```python
 # Testez ceci dans votre interpréteur Python
-import sys
-print(f"Version Python : {sys.version}")
-print(f"Chemin Python : {sys.executable}")
+import sys  
+print(f"Version Python : {sys.version}")  
+print(f"Chemin Python : {sys.executable}")  
 
 # Vérifier qu'un module est disponible
 try:
@@ -399,7 +397,7 @@ except ImportError as e:
 Pour tirer le meilleur parti de cette section, assurez-vous d'avoir :
 
 1. **Un éditeur de code** ou un IDE (VS Code, PyCharm, etc.)
-2. **Python 3.8 ou supérieur** installé
+2. **Python 3.10 ou supérieur** installé
 3. **Un terminal** pour exécuter vos scripts
 
 ---
@@ -456,36 +454,35 @@ MON AIDE-MÉMOIRE - BIBLIOTHÈQUE STANDARD PYTHON
 
 OS & SYSTÈME
 ------------
-import os
-os.getcwd()                    # Répertoire actuel
-os.listdir('.')                # Liste des fichiers
-os.path.join('dossier', 'fichier.txt')  # Joindre chemins
+import os  
+os.getcwd()                    # Répertoire actuel  
+os.listdir('.')                # Liste des fichiers  
+os.path.join('dossier', 'fichier.txt')  # Joindre chemins  
 
 DATES & TEMPS
 -------------
-from datetime import datetime
-datetime.now()                 # Date/heure actuelle
-datetime.strftime(fmt)         # Formater date
+from datetime import datetime  
+datetime.now()                 # Date/heure actuelle  
+datetime.strftime(fmt)         # Formater date  
 
 MATHÉMATIQUES
 -------------
-import math
-math.sqrt(x)                   # Racine carrée
-math.pi                        # Pi (3.14159...)
+import math  
+math.sqrt(x)                   # Racine carrée  
+math.pi                        # Pi (3.14159...)  
 
-import random
-random.randint(a, b)           # Entier aléatoire
+import random  
+random.randint(a, b)           # Entier aléatoire  
 
 LOGGING
 -------
-import logging
-logging.info("message")        # Log d'information
-logging.error("erreur")        # Log d'erreur
+import logging  
+logging.info("message")        # Log d'information  
+logging.error("erreur")        # Log d'erreur  
 
-TYPING
-------
-from typing import List, Dict
-def fonction(param: List[int]) -> int:
+TYPING (Python 3.10+)
+---------------------
+def fonction(param: list[int]) -> int:
     ...
 
 ... Ajoutez vos propres notes ici ...

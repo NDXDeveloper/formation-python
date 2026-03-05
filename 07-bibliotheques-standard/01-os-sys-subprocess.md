@@ -25,8 +25,8 @@ import os
 print(os.name)  # 'posix' pour Linux/Mac, 'nt' pour Windows
 
 # Obtenir le répertoire de travail actuel
-repertoire_actuel = os.getcwd()
-print(f"Répertoire actuel : {repertoire_actuel}")
+repertoire_actuel = os.getcwd()  
+print(f"Répertoire actuel : {repertoire_actuel}")  
 
 # Obtenir le séparateur de chemin du système
 print(os.sep)  # '/' pour Linux/Mac, '\' pour Windows
@@ -42,8 +42,8 @@ os.mkdir("nouveau_dossier")
 os.makedirs("dossier/sous_dossier/sous_sous_dossier")
 
 # Changer de répertoire de travail
-os.chdir("nouveau_dossier")
-print(os.getcwd())  # Affiche le nouveau répertoire
+os.chdir("nouveau_dossier")  
+print(os.getcwd())  # Affiche le nouveau répertoire  
 
 # Revenir au répertoire parent
 os.chdir("..")
@@ -59,8 +59,8 @@ os.removedirs("dossier/sous_dossier/sous_sous_dossier")
 
 ```python
 # Lister tous les fichiers et dossiers
-contenu = os.listdir(".")
-print(contenu)
+contenu = os.listdir(".")  
+print(contenu)  
 
 # Exemple plus détaillé avec filtrage
 for element in os.listdir("."):
@@ -77,8 +77,8 @@ Le sous-module `os.path` est très utile pour travailler avec des chemins de fic
 
 ```python
 # Joindre des parties de chemin de manière portable
-chemin = os.path.join("dossier", "sous_dossier", "fichier.txt")
-print(chemin)  # Utilise automatiquement le bon séparateur
+chemin = os.path.join("dossier", "sous_dossier", "fichier.txt")  
+print(chemin)  # Utilise automatiquement le bon séparateur  
 
 # Vérifier si un chemin existe
 if os.path.exists("mon_fichier.txt"):
@@ -95,19 +95,19 @@ if os.path.isdir("mon_dossier"):
     print("C'est un répertoire")
 
 # Obtenir le chemin absolu
-chemin_absolu = os.path.abspath("fichier.txt")
-print(chemin_absolu)
+chemin_absolu = os.path.abspath("fichier.txt")  
+print(chemin_absolu)  
 
 # Séparer le nom du fichier et l'extension
-nom_complet = "document.pdf"
-nom, extension = os.path.splitext(nom_complet)
-print(f"Nom : {nom}, Extension : {extension}")
+nom_complet = "document.pdf"  
+nom, extension = os.path.splitext(nom_complet)  
+print(f"Nom : {nom}, Extension : {extension}")  
 
 # Séparer le répertoire et le nom de fichier
-chemin = "/home/utilisateur/documents/rapport.txt"
-repertoire, fichier = os.path.split(chemin)
-print(f"Répertoire : {repertoire}")
-print(f"Fichier : {fichier}")
+chemin = "/home/utilisateur/documents/rapport.txt"  
+repertoire, fichier = os.path.split(chemin)  
+print(f"Répertoire : {repertoire}")  
+print(f"Fichier : {fichier}")  
 
 # Obtenir la taille d'un fichier en octets
 if os.path.exists("mon_fichier.txt"):
@@ -125,9 +125,9 @@ os.rename("ancien_nom.txt", "nouveau_nom.txt")
 os.remove("fichier_a_supprimer.txt")
 
 # Obtenir des informations sur un fichier
-stats = os.stat("mon_fichier.txt")
-print(f"Taille : {stats.st_size} octets")
-print(f"Dernière modification : {stats.st_mtime}")
+stats = os.stat("mon_fichier.txt")  
+print(f"Taille : {stats.st_size} octets")  
+print(f"Dernière modification : {stats.st_mtime}")  
 ```
 
 ### Variables d'environnement
@@ -136,8 +136,8 @@ Les variables d'environnement sont des valeurs stockées par le système d'explo
 
 ```python
 # Lire une variable d'environnement
-home = os.environ.get("HOME")  # Répertoire home de l'utilisateur
-print(f"Répertoire home : {home}")
+home = os.environ.get("HOME")  # Répertoire home de l'utilisateur  
+print(f"Répertoire home : {home}")  
 
 # Lire avec valeur par défaut si la variable n'existe pas
 api_key = os.environ.get("API_KEY", "cle_par_defaut")
@@ -178,8 +178,8 @@ import sys
 
 ```python
 # Version de Python
-print(sys.version)
-print(sys.version_info)  # Plus structuré
+print(sys.version)  
+print(sys.version_info)  # Plus structuré  
 
 # Plateforme d'exécution
 print(sys.platform)  # 'linux', 'win32', 'darwin' (macOS), etc.
@@ -197,8 +197,8 @@ Lorsque vous exécutez un script Python avec des arguments, ceux-ci sont accessi
 import sys
 
 # sys.argv est une liste contenant le nom du script et les arguments
-print(f"Nom du script : {sys.argv[0]}")
-print(f"Nombre d'arguments : {len(sys.argv) - 1}")
+print(f"Nom du script : {sys.argv[0]}")  
+print(f"Nombre d'arguments : {len(sys.argv) - 1}")  
 
 if len(sys.argv) > 1:
     print("Arguments reçus :")
@@ -212,9 +212,9 @@ Si vous exécutez ce script avec : `python mon_script.py bonjour monde 123`
 
 Le résultat sera :
 ```
-Nom du script : mon_script.py
-Nombre d'arguments : 3
-Arguments reçus :
+Nom du script : mon_script.py  
+Nombre d'arguments : 3  
+Arguments reçus :  
   Argument 1 : bonjour
   Argument 2 : monde
   Argument 3 : 123
@@ -240,9 +240,9 @@ sys.stdout.write("Message sur stdout\n")
 sys.stderr.write("Message d'erreur\n")
 
 # Lire depuis l'entrée standard (stdin)
-print("Entrez votre nom :")
-nom = sys.stdin.readline().strip()
-print(f"Bonjour {nom} !")
+print("Entrez votre nom :")  
+nom = sys.stdin.readline().strip()  
+print(f"Bonjour {nom} !")  
 ```
 
 ### Terminer un programme
@@ -268,12 +268,12 @@ def verifier_arguments():
 
 ```python
 # Obtenir la taille en mémoire d'un objet
-liste = [1, 2, 3, 4, 5]
-taille = sys.getsizeof(liste)
-print(f"Taille de la liste : {taille} octets")
+liste = [1, 2, 3, 4, 5]  
+taille = sys.getsizeof(liste)  
+print(f"Taille de la liste : {taille} octets")  
 
-chaine = "Bonjour le monde"
-print(f"Taille de la chaîne : {sys.getsizeof(chaine)} octets")
+chaine = "Bonjour le monde"  
+print(f"Taille de la chaîne : {sys.getsizeof(chaine)} octets")  
 ```
 
 ### Exemple pratique : Script avec arguments
@@ -374,8 +374,8 @@ except FileNotFoundError:
 ### Exemple pratique : Obtenir des informations système
 
 ```python
-import subprocess
-import sys
+import subprocess  
+import sys  
 
 def obtenir_info_python():
     """Obtient la version de Python via subprocess"""
@@ -391,7 +391,7 @@ def lister_fichiers_python(repertoire="."):
     if sys.platform.startswith("win"):
         # Windows
         resultat = subprocess.run(
-            ["dir", "/b", "*.py"],
+            "dir /b *.py",
             shell=True,
             capture_output=True,
             text=True,
@@ -400,7 +400,7 @@ def lister_fichiers_python(repertoire="."):
     else:
         # Linux/Mac
         resultat = subprocess.run(
-            ["ls", "*.py"],
+            "ls *.py",
             shell=True,
             capture_output=True,
             text=True,
@@ -413,8 +413,8 @@ def lister_fichiers_python(repertoire="."):
     return []
 
 # Utilisation
-print(f"Version Python : {obtenir_info_python()}")
-print(f"Fichiers Python : {lister_fichiers_python()}")
+print(f"Version Python : {obtenir_info_python()}")  
+print(f"Fichiers Python : {lister_fichiers_python()}")  
 ```
 
 ### Envoyer des données à un processus (stdin)
@@ -430,8 +430,8 @@ resultat = subprocess.run(
     text=True
 )
 
-print("Lignes filtrées :")
-print(resultat.stdout)
+print("Lignes filtrées :")  
+print(resultat.stdout)  
 ```
 
 ### Exécuter des commandes complexes avec le shell
@@ -458,9 +458,9 @@ print(f"Nombre de fichiers Python : {resultat.stdout.strip()}")
 ### Exemple pratique : Créer une sauvegarde
 
 ```python
-import subprocess
-import os
-from datetime import datetime
+import subprocess  
+import os  
+from datetime import datetime  
 
 def creer_sauvegarde(dossier_source, dossier_backup):
     """Crée une archive tar.gz du dossier source (Linux/Mac)"""
@@ -505,10 +505,10 @@ creer_sauvegarde("mon_projet", "backups")
 Voici un exemple qui combine `os`, `sys` et `subprocess` pour créer un script utile :
 
 ```python
-import os
-import sys
-import subprocess
-from datetime import datetime
+import os  
+import sys  
+import subprocess  
+from datetime import datetime  
 
 def analyser_projet():
     """Analyse un projet Python et affiche des statistiques"""
@@ -604,7 +604,7 @@ if __name__ == "__main__":
 
 ## Bonnes pratiques
 
-### 1. Utiliser `pathlib` pour les chemins (Python 3.4+)
+### 1. Utiliser `pathlib` pour les chemins
 
 Bien que `os.path` fonctionne parfaitement, le module `pathlib` est plus moderne et plus lisible :
 
