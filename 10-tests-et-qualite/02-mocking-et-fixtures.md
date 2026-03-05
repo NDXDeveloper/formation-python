@@ -106,9 +106,9 @@ def test_retrait_impossible(compte):
 Les fixtures peuvent effectuer du nettoyage après le test :
 
 ```python
-import pytest
-import tempfile
-import os
+import pytest  
+import tempfile  
+import os  
 
 @pytest.fixture
 def fichier_temp():
@@ -130,16 +130,16 @@ def fichier_temp():
 
 def test_lecture_fichier(fichier_temp):
     """Teste la lecture du fichier temporaire."""
-    with open(fichier_temp, "r") as f:
+    with open(fichier_temp, "r", encoding="utf-8") as f:
         contenu = f.read()
     assert contenu == "Contenu initial"
 
 def test_modification_fichier(fichier_temp):
     """Teste la modification du fichier temporaire."""
-    with open(fichier_temp, "w") as f:
+    with open(fichier_temp, "w", encoding="utf-8") as f:
         f.write("Nouveau contenu")
 
-    with open(fichier_temp, "r") as f:
+    with open(fichier_temp, "r", encoding="utf-8") as f:
         contenu = f.read()
     assert contenu == "Nouveau contenu"
 ```
@@ -328,17 +328,17 @@ from unittest.mock import Mock
 mon_mock = Mock()
 
 # Utiliser le mock
-resultat = mon_mock.ma_methode(1, 2, 3)
-autre_resultat = mon_mock.autre_methode(nom="Alice")
+resultat = mon_mock.ma_methode(1, 2, 3)  
+autre_resultat = mon_mock.autre_methode(nom="Alice")  
 
 # Vérifier les appels
-print(mon_mock.ma_methode.called)  # True
-print(mon_mock.ma_methode.call_count)  # 1
-print(mon_mock.autre_methode.call_count)  # 1
+print(mon_mock.ma_methode.called)  # True  
+print(mon_mock.ma_methode.call_count)  # 1  
+print(mon_mock.autre_methode.call_count)  # 1  
 
 # Le mock peut être appelé comme une fonction
-mon_mock(42)
-print(mon_mock.called)  # True
+mon_mock(42)  
+print(mon_mock.called)  # True  
 ```
 
 ### Configurer le retour d'un mock
@@ -349,16 +349,16 @@ Vous pouvez définir ce qu'un mock doit retourner :
 from unittest.mock import Mock
 
 # Mock avec une valeur de retour
-mock_addition = Mock(return_value=10)
-resultat = mock_addition(5, 5)
-print(resultat)  # 10 (peu importe les arguments)
+mock_addition = Mock(return_value=10)  
+resultat = mock_addition(5, 5)  
+print(resultat)  # 10 (peu importe les arguments)  
 
 # Mock avec plusieurs valeurs de retour successives
-mock_compteur = Mock(side_effect=[1, 2, 3, 4])
-print(mock_compteur())  # 1
-print(mock_compteur())  # 2
-print(mock_compteur())  # 3
-print(mock_compteur())  # 4
+mock_compteur = Mock(side_effect=[1, 2, 3, 4])  
+print(mock_compteur())  # 1  
+print(mock_compteur())  # 2  
+print(mock_compteur())  # 3  
+print(mock_compteur())  # 4  
 ```
 
 ### Mock qui lève une exception
@@ -414,9 +414,9 @@ Tests avec mock :
 
 ```python
 # fichier: test_meteo.py
-import pytest
-from unittest.mock import Mock, patch
-from meteo import obtenir_temperature, recommander_vetements
+import pytest  
+from unittest.mock import Mock, patch  
+from meteo import obtenir_temperature, recommander_vetements  
 
 def test_obtenir_temperature():
     """Teste l'obtention de la température avec un mock."""
@@ -510,9 +510,9 @@ Tests avec mock :
 
 ```python
 # fichier: test_utilisateurs.py
-import pytest
-from unittest.mock import Mock, MagicMock
-from utilisateurs import BaseDeDonnees, ServiceUtilisateur
+import pytest  
+from unittest.mock import Mock, MagicMock  
+from utilisateurs import BaseDeDonnees, ServiceUtilisateur  
 
 @pytest.fixture
 def mock_db():
@@ -593,10 +593,10 @@ Tests avec mock du temps :
 
 ```python
 # fichier: test_evenements.py
-import pytest
-from unittest.mock import patch
-from datetime import datetime, timedelta
-from evenements import Evenement
+import pytest  
+from unittest.mock import patch  
+from datetime import datetime, timedelta  
+from evenements import Evenement  
 
 def test_evenement_recent():
     """Teste qu'un événement créé aujourd'hui est récent."""
@@ -657,7 +657,7 @@ class Configuration:
 
     def charger(self):
         """Charge la configuration depuis un fichier."""
-        with open(self.fichier_config, 'r') as f:
+        with open(self.fichier_config, 'r', encoding='utf-8') as f:
             self.config = json.load(f)
 
     def obtenir(self, cle, defaut=None):
@@ -673,10 +673,10 @@ Tests avec mock :
 
 ```python
 # fichier: test_config.py
-import pytest
-from unittest.mock import mock_open, patch
-import json
-from config import Configuration
+import pytest  
+from unittest.mock import mock_open, patch  
+import json  
+from config import Configuration  
 
 def test_charger_configuration():
     """Teste le chargement de la configuration."""
@@ -749,17 +749,17 @@ from unittest.mock import Mock, call
 mock = Mock()
 
 # Utiliser le mock
-mock.methode(1, 2, 3)
-mock.methode(4, 5, 6)
-mock.autre_methode(nom="Alice")
+mock.methode(1, 2, 3)  
+mock.methode(4, 5, 6)  
+mock.autre_methode(nom="Alice")  
 
 # Vérifier qu'une méthode a été appelée
-assert mock.methode.called
-assert mock.autre_methode.called
+assert mock.methode.called  
+assert mock.autre_methode.called  
 
 # Vérifier le nombre d'appels
-assert mock.methode.call_count == 2
-assert mock.autre_methode.call_count == 1
+assert mock.methode.call_count == 2  
+assert mock.autre_methode.call_count == 1  
 
 # Vérifier les arguments du dernier appel
 mock.methode.assert_called_with(4, 5, 6)
@@ -771,16 +771,16 @@ mock.methode.assert_has_calls([
 ])
 
 # Vérifier qu'une méthode n'a PAS été appelée
-mock_non_appele = Mock()
-mock_non_appele.methode.assert_not_called()
+mock_non_appele = Mock()  
+mock_non_appele.methode.assert_not_called()  
 ```
 
 ### Exemple pratique : Vérifier l'envoi d'email
 
 ```python
 # fichier: notification.py
-import smtplib
-from email.message import EmailMessage
+import smtplib  
+from email.message import EmailMessage  
 
 class ServiceNotification:
     """Service pour envoyer des notifications."""
@@ -811,9 +811,9 @@ Tests :
 
 ```python
 # fichier: test_notification.py
-import pytest
-from unittest.mock import Mock, patch, MagicMock
-from notification import ServiceNotification
+import pytest  
+from unittest.mock import Mock, patch, MagicMock  
+from notification import ServiceNotification  
 
 @pytest.fixture
 def service():
@@ -874,30 +874,30 @@ from unittest.mock import MagicMock
 mock = MagicMock()
 
 # On peut l'utiliser comme un conteneur
-mock.__len__.return_value = 5
-print(len(mock))  # 5
+mock.__len__.return_value = 5  
+print(len(mock))  # 5  
 
 # Comme un itérable
-mock.__iter__.return_value = iter([1, 2, 3])
-for item in mock:
+mock.__iter__.return_value = iter([1, 2, 3])  
+for item in mock:  
     print(item)  # 1, 2, 3
 
 # Avec des comparaisons
-mock.__eq__.return_value = True
-print(mock == "quelque chose")  # True
+mock.__eq__.return_value = True  
+print(mock == "quelque chose")  # True  
 
 # Exemple plus réaliste : simuler une classe
 class FausseBaseDeDonnees(MagicMock):
     """Simule une base de données pour les tests."""
     pass
 
-db = FausseBaseDeDonnees()
-db.query.return_value = [{"id": 1, "nom": "Alice"}]
-db.__len__.return_value = 10
+db = FausseBaseDeDonnees()  
+db.query.return_value = [{"id": 1, "nom": "Alice"}]  
+db.__len__.return_value = 10  
 
-resultats = db.query("SELECT * FROM users")
-print(resultats)  # [{'id': 1, 'nom': 'Alice'}]
-print(len(db))  # 10
+resultats = db.query("SELECT * FROM users")  
+print(resultats)  # [{'id': 1, 'nom': 'Alice'}]  
+print(len(db))  # 10  
 ```
 
 ---
@@ -1022,8 +1022,8 @@ class VraieClasse:
         pass
 
 # ❌ Sans spec, tout est permis
-mock_sans_spec = Mock()
-mock_sans_spec.methode_qui_nexiste_pas()  # Pas d'erreur !
+mock_sans_spec = Mock()  
+mock_sans_spec.methode_qui_nexiste_pas()  # Pas d'erreur !  
 
 # ✅ Avec spec, les erreurs sont détectées
 mock_avec_spec = Mock(spec=VraieClasse)
@@ -1038,9 +1038,9 @@ mock_avec_spec.methode_existante()  # OK
 mock = Mock()
 
 # ✅ Bon
-mock_base_de_donnees = Mock()
-mock_api_meteo = Mock()
-mock_service_email = Mock()
+mock_base_de_donnees = Mock()  
+mock_api_meteo = Mock()  
+mock_service_email = Mock()  
 ```
 
 ### 4. Testez le comportement, pas l'implémentation
@@ -1101,8 +1101,8 @@ Voici un exemple réaliste qui combine fixtures et mocking :
 
 ```python
 # fichier: paiement.py
-import requests
-from datetime import datetime
+import requests  
+from datetime import datetime  
 
 class ServicePaiement:
     """Gère les paiements."""
@@ -1155,10 +1155,10 @@ Tests complets :
 
 ```python
 # fichier: test_paiement.py
-import pytest
-from unittest.mock import Mock, patch
-from datetime import datetime
-from paiement import ServicePaiement
+import pytest  
+from unittest.mock import Mock, patch  
+from datetime import datetime  
+from paiement import ServicePaiement  
 
 @pytest.fixture
 def mock_db():

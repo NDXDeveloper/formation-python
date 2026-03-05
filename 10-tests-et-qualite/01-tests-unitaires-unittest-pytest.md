@@ -59,8 +59,8 @@ Maintenant, créons les tests :
 
 ```python
 # fichier: test_calculatrice.py
-import unittest
-from calculatrice import additionner, soustraire, diviser
+import unittest  
+from calculatrice import additionner, soustraire, diviser  
 
 class TestCalculatrice(unittest.TestCase):
     """Tests pour les fonctions de calculatrice."""
@@ -230,8 +230,8 @@ Tests correspondants :
 
 ```python
 # fichier: test_utilisateur.py
-import unittest
-from utilisateur import Utilisateur
+import unittest  
+from utilisateur import Utilisateur  
 
 class TestUtilisateur(unittest.TestCase):
 
@@ -323,8 +323,8 @@ Tests avec pytest (beaucoup plus simple !) :
 
 ```python
 # fichier: test_calculatrice_pytest.py
-import pytest
-from calculatrice import additionner, soustraire, diviser
+import pytest  
+from calculatrice import additionner, soustraire, diviser  
 
 def test_additionner():
     """Teste l'addition de deux nombres."""
@@ -444,7 +444,7 @@ def fichier_temporaire():
     """Crée un fichier temporaire et le supprime après le test."""
     # Setup : créer le fichier
     nom_fichier = "test_temp.txt"
-    with open(nom_fichier, "w") as f:
+    with open(nom_fichier, "w", encoding="utf-8") as f:
         f.write("contenu de test")
 
     # Fournir le nom du fichier au test
@@ -457,7 +457,7 @@ def fichier_temporaire():
 
 def test_lecture_fichier(fichier_temporaire):
     """Teste la lecture du fichier temporaire."""
-    with open(fichier_temporaire, "r") as f:
+    with open(fichier_temporaire, "r", encoding="utf-8") as f:
         contenu = f.read()
     assert contenu == "contenu de test"
 ```
@@ -467,8 +467,8 @@ def test_lecture_fichier(fichier_temporaire):
 pytest permet de tester facilement plusieurs cas avec le même code :
 
 ```python
-import pytest
-from calculatrice import additionner
+import pytest  
+from calculatrice import additionner  
 
 @pytest.mark.parametrize("a, b, attendu", [
     (1, 1, 2),
@@ -490,8 +490,8 @@ Voici notre classe Utilisateur testée avec pytest :
 
 ```python
 # fichier: test_utilisateur_pytest.py
-import pytest
-from utilisateur import Utilisateur
+import pytest  
+from utilisateur import Utilisateur  
 
 @pytest.fixture
 def utilisateur():
@@ -764,8 +764,8 @@ Tests correspondants avec pytest :
 
 ```python
 # fichier: test_panier.py
-import pytest
-from panier import Panier
+import pytest  
+from panier import Panier  
 
 @pytest.fixture
 def panier():
@@ -836,14 +836,14 @@ def test_calcul_total_parametrise(panier, article, prix, quantite, total_attendu
 
 ```bash
 # unittest
-python -m unittest discover
-python -m unittest test_fichier.py -v
+python -m unittest discover  
+python -m unittest test_fichier.py -v  
 
 # pytest
-pytest
-pytest -v
-pytest test_fichier.py::test_nom
-pytest -s  # Affiche les print()
+pytest  
+pytest -v  
+pytest test_fichier.py::test_nom  
+pytest -s  # Affiche les print()  
 ```
 
 ### Prochaines étapes

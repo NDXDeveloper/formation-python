@@ -26,7 +26,7 @@ def calcul(x,y,z):a=x+y;b=a*z;return b
 
 # ✅ Code facile à lire
 def calculer_total(prix, quantite, taux_taxe):
-    sous_total = prix + quantite
+    sous_total = prix * quantite
     total = sous_total * taux_taxe
     return total
 ```
@@ -106,8 +106,8 @@ resultat = calculer_moyenne(donnees_utilisateur, filtre_actif=True, inclure_vale
 
 ```python
 # ✅ Bon
-import os
-import sys
+import os  
+import sys  
 
 CONSTANTE = 42
 
@@ -130,10 +130,10 @@ def fonction_globale():
 
 
 # ❌ Mauvais - manque de séparation
-import os
-import sys
-CONSTANTE = 42
-class MaClasse:
+import os  
+import sys  
+CONSTANTE = 42  
+class MaClasse:  
     def __init__(self):
         self.attribut = None
     def methode1(self):
@@ -154,25 +154,25 @@ def fonction_globale():
 ```python
 # ✅ Bon - imports organisés
 # 1. Bibliothèque standard
-import os
-import sys
-from datetime import datetime
+import os  
+import sys  
+from datetime import datetime  
 
 # 2. Bibliothèques tierces
-import numpy as np
-import pandas as pd
-import requests
+import numpy as np  
+import pandas as pd  
+import requests  
 
 # 3. Imports locaux
-from mon_package import ma_fonction
-from mon_package.module import MaClasse
+from mon_package import ma_fonction  
+from mon_package.module import MaClasse  
 
 # ❌ Mauvais - imports désorganisés
-from mon_package import ma_fonction
-import sys
-import requests, pandas
-from datetime import *
-import os
+from mon_package import ma_fonction  
+import sys  
+import requests, pandas  
+from datetime import *  
+import os  
 ```
 
 **Règles pour les imports** :
@@ -188,18 +188,18 @@ import os
 
 ```python
 # ✅ Bon
-x = 5
-y = x + 10
-resultat = fonction(a, b, c)
-liste = [1, 2, 3, 4]
-dico = {'cle': 'valeur'}
+x = 5  
+y = x + 10  
+resultat = fonction(a, b, c)  
+liste = [1, 2, 3, 4]  
+dico = {'cle': 'valeur'}  
 
 # ❌ Mauvais
-x=5
-y = x+10
-resultat = fonction (a,b,c)
-liste = [1,2,3,4]
-dico = {'cle':'valeur'}
+x=5  
+y = x+10  
+resultat = fonction (a,b,c)  
+liste = [1,2,3,4]  
+dico = {'cle':'valeur'}  
 ```
 
 **Détails** :
@@ -215,9 +215,9 @@ dico = {'cle':'valeur'}
 ```python
 # ✅ Bon
 # Variables et fonctions : snake_case
-ma_variable = 42
-nombre_total = 100
-def calculer_moyenne():
+ma_variable = 42  
+nombre_total = 100  
+def calculer_moyenne():  
     pass
 
 # Classes : PascalCase
@@ -228,9 +228,9 @@ class GestionnaireUtilisateurs:
     pass
 
 # Constantes : UPPER_CASE
-PI = 3.14159
-MAX_CONNEXIONS = 100
-CHEMIN_CONFIG = "/etc/config"
+PI = 3.14159  
+MAX_CONNEXIONS = 100  
+CHEMIN_CONFIG = "/etc/config"  
 
 # Variables "privées" : _prefixe
 class MaClasse:
@@ -241,8 +241,8 @@ class MaClasse:
         pass
 
 # ❌ Mauvais
-MaVariable = 42  # Variable en PascalCase
-def CalculerMoyenne():  # Fonction en PascalCase
+MaVariable = 42  # Variable en PascalCase  
+def CalculerMoyenne():  # Fonction en PascalCase  
     pass
 class compte_bancaire:  # Classe en snake_case
     pass
@@ -266,17 +266,17 @@ pi = 3.14159  # Constante en minuscules
 
 ```python
 # ✅ Bon - noms explicites
-nombre_utilisateurs = 42
-prix_total = calculer_prix(quantite, prix_unitaire)
-date_inscription = datetime.now()
+nombre_utilisateurs = 42  
+prix_total = calculer_prix(quantite, prix_unitaire)  
+date_inscription = datetime.now()  
 
 def calculer_moyenne_etudiants(notes):
     return sum(notes) / len(notes)
 
 # ❌ Mauvais - noms cryptiques
-n = 42
-pt = calc(q, pu)
-di = datetime.now()
+n = 42  
+pt = calc(q, pu)  
+di = datetime.now()  
 
 def calc_moy(n):
     return sum(n) / len(n)
@@ -389,10 +389,10 @@ def calculer_moyenne(nombres):
 **Avant** (ne suit pas PEP 8) :
 
 ```python
-import sys,os
-from datetime import datetime
-def calcul(x,y):a=x+y;return a
-class compte:
+import sys,os  
+from datetime import datetime  
+def calcul(x,y):a=x+y;return a  
+class compte:  
   def __init__(self,solde):self.solde=solde
   def depot(self,montant):
    self.solde+=montant
@@ -404,9 +404,9 @@ class compte:
 ```python
 """Module de gestion de comptes bancaires."""
 
-import os
-import sys
-from datetime import datetime
+import os  
+import sys  
+from datetime import datetime  
 
 
 TAUX_INTERET = 0.03
@@ -518,10 +518,10 @@ flake8 --select=E501 mon_package/
 
 ```bash
 $ flake8 exemple.py
-exemple.py:1:1: E302 expected 2 blank lines, found 1
-exemple.py:5:80: E501 line too long (85 > 79 characters)
-exemple.py:10:1: W293 blank line contains whitespace
-exemple.py:15:1: F401 'os' imported but unused
+exemple.py:1:1: E302 expected 2 blank lines, found 1  
+exemple.py:5:80: E501 line too long (85 > 79 characters)  
+exemple.py:10:1: W293 blank line contains whitespace  
+exemple.py:15:1: F401 'os' imported but unused  
 ```
 
 **Codes d'erreur** :
@@ -538,8 +538,8 @@ Créez un fichier `.flake8` ou `setup.cfg` :
 ```ini
 # fichier: .flake8
 [flake8]
-max-line-length = 88
-exclude =
+max-line-length = 88  
+exclude =  
     .git,
     __pycache__,
     venv,
@@ -581,9 +581,9 @@ pylint --reports=y mon_fichier.py
 ```bash
 $ pylint exemple.py
 ************* Module exemple
-exemple.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-exemple.py:5:0: C0103: Variable name "X" doesn't conform to snake_case naming style (invalid-name)
-exemple.py:10:0: W0612: Unused variable 'resultat' (unused-variable)
+exemple.py:1:0: C0114: Missing module docstring (missing-module-docstring)  
+exemple.py:5:0: C0103: Variable name "X" doesn't conform to snake_case naming style (invalid-name)  
+exemple.py:10:0: W0612: Unused variable 'resultat' (unused-variable)  
 
 -----------------------------------
 Your code has been rated at 7.50/10
@@ -614,8 +614,8 @@ disable=
     too-many-arguments
 
 [FORMAT]
-max-line-length=88
-indent-string='    '
+max-line-length=88  
+indent-string='    '  
 
 [BASIC]
 good-names=i,j,k,x,y,z,df,ax
@@ -678,10 +678,10 @@ Black a très peu d'options (c'est volontaire !). Fichier `pyproject.toml` :
 
 ```toml
 [tool.black]
-line-length = 88
-target-version = ['py310']
-include = '\.pyi?$'
-exclude = '''
+line-length = 88  
+target-version = ['py310']  
+include = '\.pyi?$'  
+exclude = '''  
 /(
     \.git
   | \.venv
@@ -724,19 +724,19 @@ isort --diff mon_fichier.py
 **Avant** :
 
 ```python
-from mon_package import fonction
-import sys
-import requests
-from datetime import datetime
-import os
+from mon_package import fonction  
+import sys  
+import requests  
+from datetime import datetime  
+import os  
 ```
 
 **Après** :
 
 ```python
-import os
-import sys
-from datetime import datetime
+import os  
+import sys  
+from datetime import datetime  
 
 import requests
 
@@ -749,13 +749,13 @@ Compatible avec Black dans `pyproject.toml` :
 
 ```toml
 [tool.isort]
-profile = "black"
-line_length = 88
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-ensure_newline_before_comments = true
+profile = "black"  
+line_length = 88  
+multi_line_output = 3  
+include_trailing_comma = true  
+force_grid_wrap = 0  
+use_parentheses = true  
+ensure_newline_before_comments = true  
 ```
 
 ### 5. mypy : Vérification de types
@@ -829,6 +829,70 @@ def charger_donnees(fichier):
         return pickle.load(f)  # Risque de sécurité !
 ```
 
+### 7. Ruff : Le linter ultra-rapide
+
+**Ruff** est un linter et formateur écrit en Rust qui remplace à lui seul flake8, isort, pylint et bien d'autres outils. Il est extrêmement rapide (10 à 100 fois plus rapide que flake8) et s'est imposé comme l'outil de référence dans l'écosystème Python moderne.
+
+#### Installation
+
+```bash
+pip install ruff
+```
+
+#### Utilisation
+
+```bash
+# Vérifier le code (linting)
+ruff check .
+
+# Corriger automatiquement les erreurs
+ruff check --fix .
+
+# Formater le code (remplace Black)
+ruff format .
+
+# Vérifier le formatage sans modifier
+ruff format --check .
+```
+
+#### Configuration
+
+Dans `pyproject.toml` :
+
+```toml
+[tool.ruff]
+line-length = 88  
+target-version = "py310"  
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle (erreurs)
+    "W",    # pycodestyle (avertissements)
+    "F",    # pyflakes
+    "I",    # isort (tri des imports)
+    "N",    # pep8-naming
+    "UP",   # pyupgrade (modernisation du code)
+    "B",    # flake8-bugbear
+    "S",    # flake8-bandit (sécurité)
+]
+ignore = ["E203"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["mon_package"]
+```
+
+#### Pourquoi adopter Ruff ?
+
+| Avantage | Détail |
+|----------|--------|
+| **Vitesse** | 10-100x plus rapide que flake8 |
+| **Tout-en-un** | Remplace flake8, isort, pylint, bandit, pyupgrade... |
+| **Configuration unique** | Tout dans `pyproject.toml` |
+| **Corrections automatiques** | `ruff check --fix` corrige de nombreuses erreurs |
+| **Formatage intégré** | `ruff format` remplace Black |
+
+Ruff est compatible avec les règles de flake8 et utilise les mêmes codes d'erreur, ce qui facilite la migration.
+
 ---
 
 ## Configuration d'un projet complet
@@ -856,27 +920,27 @@ mon_projet/
 # fichier: pyproject.toml
 
 [tool.black]
-line-length = 88
-target-version = ['py310']
-include = '\.pyi?$'
+line-length = 88  
+target-version = ['py310']  
+include = '\.pyi?$'  
 
 [tool.isort]
-profile = "black"
-line_length = 88
+profile = "black"  
+line_length = 88  
 
 [tool.mypy]
-python_version = "3.10"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
+python_version = "3.10"  
+warn_return_any = true  
+warn_unused_configs = true  
+disallow_untyped_defs = true  
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
+testpaths = ["tests"]  
+python_files = ["test_*.py"]  
 
 [tool.coverage.run]
-source = ["src"]
-branch = true
+source = ["src"]  
+branch = true  
 
 [tool.coverage.report]
 show_missing = true
@@ -887,9 +951,9 @@ show_missing = true
 ```ini
 # fichier: .flake8
 [flake8]
-max-line-length = 88
-extend-ignore = E203, W503
-exclude =
+max-line-length = 88  
+extend-ignore = E203, W503  
+exclude =  
     .git,
     __pycache__,
     .venv,
@@ -918,15 +982,12 @@ Configuration `settings.json` :
 
 ```json
 {
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.pylintEnabled": false,
-    "python.formatting.provider": "black",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+        "source.organizeImports": "explicit"
     },
     "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.rulers": [88],
         "editor.tabSize": 4
     }
@@ -1034,10 +1095,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
@@ -1098,20 +1159,20 @@ pre-commit install
 
 ```bash
 # Formater automatiquement
-black .
-isort .
+black .  
+isort .  
 
 # Vérifier le code
-flake8 .
-mypy src/
+flake8 .  
+mypy src/  
 ```
 
 ### 3. Avant de commiter
 
 ```bash
 # Pre-commit s'exécute automatiquement
-git add .
-git commit -m "Mon message"
+git add .  
+git commit -m "Mon message"  
 
 # Ou manuellement
 pre-commit run --all-files
@@ -1163,9 +1224,9 @@ def fonction_avec_beaucoup_arguments(a, b, c, d, e, f):
 ### Fichier initial (nombreuses violations)
 
 ```python
-import sys,os
-from datetime import *
-def calc(x,y,z):
+import sys,os  
+from datetime import *  
+def calc(x,y,z):  
  result=x+y
  if result>z:return result
  else:return 0
@@ -1180,23 +1241,23 @@ class user:
 
 ```bash
 $ flake8 exemple.py
-exemple.py:1:10: E401 multiple imports on one line
-exemple.py:2:1: F403 'from datetime import *' used; unable to detect undefined names
-exemple.py:3:1: E302 expected 2 blank lines, found 0
-exemple.py:3:15: E231 missing whitespace after ','
-exemple.py:4:1: E111 indentation is not a multiple of 4
-exemple.py:5:2: E225 missing whitespace around operator
-exemple.py:5:11: E701 multiple statements on one line (colon)
-exemple.py:6:2: E701 multiple statements on one line (colon)
-exemple.py:7:1: E302 expected 2 blank lines, found 0
-exemple.py:7:7: E999 SyntaxError: invalid syntax
-exemple.py:8:1: E111 indentation is not a multiple of 4
-exemple.py:8:25: E702 multiple statements on one line (semicolon)
-exemple.py:9:1: E111 indentation is not a multiple of 4
-exemple.py:9:6: N802 function name should be lowercase
-exemple.py:10:2: E111 indentation is not a multiple of 4
-exemple.py:10:18: E701 multiple statements on one line (colon)
-exemple.py:11:2: E701 multiple statements on one line (colon)
+exemple.py:1:10: E401 multiple imports on one line  
+exemple.py:2:1: F403 'from datetime import *' used; unable to detect undefined names  
+exemple.py:3:1: E302 expected 2 blank lines, found 0  
+exemple.py:3:15: E231 missing whitespace after ','  
+exemple.py:4:1: E111 indentation is not a multiple of 4  
+exemple.py:5:2: E225 missing whitespace around operator  
+exemple.py:5:11: E701 multiple statements on one line (colon)  
+exemple.py:6:2: E701 multiple statements on one line (colon)  
+exemple.py:7:1: E302 expected 2 blank lines, found 0  
+exemple.py:7:7: E999 SyntaxError: invalid syntax  
+exemple.py:8:1: E111 indentation is not a multiple of 4  
+exemple.py:8:25: E702 multiple statements on one line (semicolon)  
+exemple.py:9:1: E111 indentation is not a multiple of 4  
+exemple.py:9:6: N802 function name should be lowercase  
+exemple.py:10:2: E111 indentation is not a multiple of 4  
+exemple.py:10:18: E701 multiple statements on one line (colon)  
+exemple.py:11:2: E701 multiple statements on one line (colon)  
 ```
 
 **25 erreurs détectées !**
@@ -1222,9 +1283,9 @@ Les imports sont organisés.
 ```python
 """Module de gestion d'utilisateurs."""
 
-import os
-import sys
-from datetime import datetime
+import os  
+import sys  
+from datetime import datetime  
 
 
 def calculer_resultat(valeur_x, valeur_y, seuil):
@@ -1397,6 +1458,7 @@ radon mi mon_package/
 
 | Outil | Usage | Commande |
 |-------|-------|----------|
+| **ruff** | Linting + formatage (tout-en-un) | `ruff check . && ruff format .` |
 | **flake8** | Vérification PEP 8 | `flake8 .` |
 | **black** | Formatage automatique | `black .` |
 | **isort** | Organisation imports | `isort .` |
@@ -1413,10 +1475,10 @@ pip install black isort flake8 pre-commit
 # Créer .flake8
 cat > .flake8 << EOF
 [flake8]
-max-line-length = 88
-extend-ignore = E203, W503
-exclude = .git,__pycache__,.venv
-EOF
+max-line-length = 88  
+extend-ignore = E203, W503  
+exclude = .git,__pycache__,.venv  
+EOF  
 
 # Créer pyproject.toml
 cat > pyproject.toml << EOF
@@ -1424,8 +1486,8 @@ cat > pyproject.toml << EOF
 line-length = 88
 
 [tool.isort]
-profile = "black"
-EOF
+profile = "black"  
+EOF  
 
 # Installer pre-commit
 pre-commit install
@@ -1435,8 +1497,8 @@ pre-commit install
 
 ```bash
 # Formater le code
-black .
-isort .
+black .  
+isort .  
 
 # Vérifier le code
 flake8 .

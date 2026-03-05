@@ -144,8 +144,8 @@ Sortie typique de `coverage report` :
 ```
 Name                  Stmts   Miss  Cover
 -----------------------------------------
-calculatrice.py          15      6    60%
-test_calculatrice.py      6      0   100%
+calculatrice.py          15      6    60%  
+test_calculatrice.py      6      0   100%  
 -----------------------------------------
 TOTAL                    21      6    71%
 ```
@@ -225,8 +225,8 @@ Avec `--cov-report=term-missing`, vous voyez les lignes manquantes :
 ```
 Name                  Stmts   Miss  Cover   Missing
 ---------------------------------------------------
-calculatrice.py          15      6    60%   12-13, 16-19
-test_calculatrice.py      6      0   100%
+calculatrice.py          15      6    60%   12-13, 16-19  
+test_calculatrice.py      6      0   100%  
 ---------------------------------------------------
 TOTAL                    21      6    71%
 ```
@@ -243,8 +243,8 @@ Ajoutons des tests pour atteindre une meilleure couverture :
 
 ```python
 # fichier: test_calculatrice.py (version améliorée)
-import pytest
-from calculatrice import (
+import pytest  
+from calculatrice import (  
     additionner,
     soustraire,
     multiplier,
@@ -296,8 +296,8 @@ pytest --cov=calculatrice --cov-report=term-missing
 ```
 Name                  Stmts   Miss  Cover   Missing
 ---------------------------------------------------
-calculatrice.py          15      0   100%
-test_calculatrice.py     20      0   100%
+calculatrice.py          15      0   100%  
+test_calculatrice.py     20      0   100%  
 ---------------------------------------------------
 TOTAL                    35      0   100%
 ```
@@ -331,8 +331,8 @@ Pour une couverture de branches complète, vous devez tester :
 
 ```bash
 # Avec coverage.py
-coverage run --branch -m pytest
-coverage report
+coverage run --branch -m pytest  
+coverage report  
 
 # Avec pytest-cov
 pytest --cov=module --cov-branch
@@ -390,8 +390,8 @@ pytest --cov=validation --cov-branch --cov-report=term-missing
 ```
 Name               Stmts   Miss Branch BrPart  Cover   Missing
 --------------------------------------------------------------
-validation.py         13      0      8      2    88%   3->5, 10->12
-test_validation.py     6      0      0      0   100%
+validation.py         13      0      8      2    88%   3->5, 10->12  
+test_validation.py     6      0      0      0   100%  
 --------------------------------------------------------------
 TOTAL                 19      0      8      2    90%
 ```
@@ -490,8 +490,8 @@ Utilisation :
 
 ```bash
 # coverage.py utilise automatiquement .coveragerc
-coverage run -m pytest
-coverage report
+coverage run -m pytest  
+coverage report  
 
 # Ou avec pytest-cov
 pytest --cov --cov-config=.coveragerc
@@ -506,9 +506,9 @@ Si vous utilisez `pyproject.toml`, vous pouvez y configurer coverage :
 ```toml
 # fichier: pyproject.toml
 [tool.coverage.run]
-branch = true
-source = ["."]
-omit = [
+branch = true  
+source = ["."]  
+omit = [  
     "*/tests/*",
     "*/test_*.py",
     "*/__pycache__/*",
@@ -523,8 +523,8 @@ exclude_lines = [
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
 ]
-show_missing = true
-precision = 2
+show_missing = true  
+precision = 2  
 
 [tool.coverage.html]
 directory = "htmlcov"
@@ -661,8 +661,8 @@ class GestionnaireUtilisateurs:
 
 ```python
 # fichier: test_utilisateur.py
-import pytest
-from utilisateur import Utilisateur, GestionnaireUtilisateurs
+import pytest  
+from utilisateur import Utilisateur, GestionnaireUtilisateurs  
 
 def test_creation_utilisateur():
     """Teste la création d'un utilisateur."""
@@ -691,8 +691,8 @@ pytest --cov=utilisateur --cov-report=term-missing --cov-branch
 ```
 Name                   Stmts   Miss Branch BrPart  Cover   Missing
 ------------------------------------------------------------------
-test_utilisateur.py        9      0      0      0   100%
-utilisateur.py            42     29     12      0    25%   12-15, 18-21, 24-29, 32-35, 38-48, 55-60
+test_utilisateur.py        9      0      0      0   100%  
+utilisateur.py            42     29     12      0    25%   12-15, 18-21, 24-29, 32-35, 38-48, 55-60  
 ------------------------------------------------------------------
 TOTAL                     51     29     12      0    37%
 ```
@@ -703,8 +703,8 @@ TOTAL                     51     29     12      0    37%
 
 ```python
 # fichier: test_utilisateur.py (version complète)
-import pytest
-from utilisateur import Utilisateur, GestionnaireUtilisateurs
+import pytest  
+from utilisateur import Utilisateur, GestionnaireUtilisateurs  
 
 # ============= Tests Utilisateur =============
 
@@ -896,8 +896,8 @@ pytest --cov=utilisateur --cov-report=term-missing --cov-branch
 ```
 Name                   Stmts   Miss Branch BrPart  Cover
 --------------------------------------------------------
-test_utilisateur.py       90      0      0      0   100%
-utilisateur.py            42      0     12      0   100%
+test_utilisateur.py       90      0      0      0   100%  
+utilisateur.py            42      0     12      0   100%  
 --------------------------------------------------------
 TOTAL                    132      0     12      0   100%
 ```
@@ -1107,8 +1107,8 @@ coverage:
 Alternative à Codecov :
 
 ```bash
-pip install coveralls
-coveralls
+pip install coveralls  
+coveralls  
 ```
 
 ### Coverage.py avec tox
@@ -1118,7 +1118,7 @@ Pour tester sur plusieurs versions de Python :
 ```ini
 # fichier: tox.ini
 [tox]
-envlist = py38,py39,py310,py311
+envlist = py310,py311,py312,py313
 
 [testenv]
 deps =
@@ -1159,9 +1159,9 @@ mon_projet/
 
 ```ini
 [run]
-branch = True
-source = src
-omit =
+branch = True  
+source = src  
+omit =  
     */tests/*
     */__pycache__/*
     */venv/*
@@ -1172,8 +1172,8 @@ exclude_lines =
     def __repr__
     raise NotImplementedError
     if __name__ == .__main__.:
-show_missing = True
-precision = 2
+show_missing = True  
+precision = 2  
 
 [html]
 directory = htmlcov
@@ -1220,10 +1220,10 @@ clean:
 Utilisation :
 
 ```bash
-make test           # Lance les tests
-make coverage       # Lance les tests avec rapport de couverture
-make coverage-report # Ouvre le rapport HTML
-make clean          # Nettoie les fichiers générés
+make test           # Lance les tests  
+make coverage       # Lance les tests avec rapport de couverture  
+make coverage-report # Ouvre le rapport HTML  
+make clean          # Nettoie les fichiers générés  
 ```
 
 ---
@@ -1243,9 +1243,9 @@ make clean          # Nettoie les fichiers générés
 ```
 Name               Stmts   Miss Branch BrPart  Cover   Missing
 --------------------------------------------------------------
-src/core.py           45      5     12      2    85%   23-25, 67->70
-src/utils.py          20      0      4      0   100%
-src/legacy.py         30     30      0      0     0%
+src/core.py           45      5     12      2    85%   23-25, 67->70  
+src/utils.py          20      0      4      0   100%  
+src/legacy.py         30     30      0      0     0%  
 --------------------------------------------------------------
 TOTAL                 95     35     16      2    61%
 ```
@@ -1258,9 +1258,9 @@ TOTAL                 95     35     16      2    61%
 
 ### Red flags (signaux d'alerte)
 
-🚩 **Couverture très basse (<50%)** : Tests insuffisants
-🚩 **Beaucoup de branches partielles** : Cas limites non testés
-🚩 **Code critique non couvert** : Risque élevé de bugs
+🚩 **Couverture très basse (<50%)** : Tests insuffisants  
+🚩 **Beaucoup de branches partielles** : Cas limites non testés  
+🚩 **Code critique non couvert** : Risque élevé de bugs  
 🚩 **Couverture qui baisse** : Nouveau code sans tests
 
 ---

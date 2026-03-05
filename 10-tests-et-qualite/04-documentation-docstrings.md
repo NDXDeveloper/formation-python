@@ -99,8 +99,8 @@ Les docstrings peuvent documenter :
 """
 Module de calculs mathématiques.
 
-Ce module fournit des fonctions pour effectuer
-des opérations mathématiques de base.
+Ce module fournit des fonctions pour effectuer  
+des opérations mathématiques de base.  
 """
 
 class Calculatrice:
@@ -353,7 +353,7 @@ def analyser_texte(texte):
 
     Example:
         >>> analyser_texte("Bonjour. Comment allez-vous?")
-        (4, 28, 2)
+        (3, 28, 2)
     """
     nb_mots = len(texte.split())
     nb_caracteres = len(texte)
@@ -367,9 +367,7 @@ def analyser_texte(texte):
 Combiner type hints et docstrings :
 
 ```python
-from typing import List, Optional
-
-def calculer_moyenne(nombres: List[float]) -> float:
+def calculer_moyenne(nombres: list[float]) -> float:
     """Calcule la moyenne d'une liste de nombres.
 
     Args:
@@ -389,7 +387,7 @@ def calculer_moyenne(nombres: List[float]) -> float:
         raise ValueError("La liste ne peut pas être vide")
     return sum(nombres) / len(nombres)
 
-def trouver_utilisateur(user_id: int) -> Optional[dict]:
+def trouver_utilisateur(user_id: int) -> dict | None:
     """Recherche un utilisateur par son ID.
 
     Args:
@@ -581,9 +579,9 @@ Chaque fichier Python devrait commencer par une docstring de module :
 """
 Module de gestion des utilisateurs.
 
-Ce module fournit des fonctions et des classes pour gérer
-les utilisateurs d'une application, incluant la création,
-la modification, la suppression et l'authentification.
+Ce module fournit des fonctions et des classes pour gérer  
+les utilisateurs d'une application, incluant la création,  
+la modification, la suppression et l'authentification.  
 
 Example:
     Utilisation basique du module::
@@ -605,8 +603,8 @@ Todo:
 """
 
 # Constantes du module
-DUREE_SESSION = 3600
-NIVEAU_LOG = "INFO"
+DUREE_SESSION = 3600  
+NIVEAU_LOG = "INFO"  
 
 # Reste du code...
 ```
@@ -619,8 +617,8 @@ Pour les modules plus complexes :
 """
 Module de traitement de données.
 
-Ce module fournit des outils pour nettoyer, transformer
-et analyser des données tabulaires.
+Ce module fournit des outils pour nettoyer, transformer  
+et analyser des données tabulaires.  
 
 Sections:
     - Nettoyage : Fonctions pour nettoyer les données
@@ -655,12 +653,12 @@ Example:
 """
 
 # Imports
-import pandas as pd
-import numpy as np
+import pandas as pd  
+import numpy as np  
 
 # Constantes
-VALEURS_MANQUANTES = ["", "NA", "N/A", None]
-FORMATS_DATE = ["%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y"]
+VALEURS_MANQUANTES = ["", "NA", "N/A", None]  
+FORMATS_DATE = ["%Y-%m-%d", "%d/%m/%Y", "%d-%m-%Y"]  
 
 # Code du module...
 ```
@@ -867,17 +865,17 @@ def analyser_image(chemin_image, format_sortie="json"):
 #### Installation
 
 ```bash
-pip install sphinx
-pip install sphinx-rtd-theme  # Thème "Read the Docs"
+pip install sphinx  
+pip install sphinx-rtd-theme  # Thème "Read the Docs"  
 ```
 
 #### Initialisation
 
 ```bash
 # Dans le répertoire de votre projet
-mkdir docs
-cd docs
-sphinx-quickstart
+mkdir docs  
+cd docs  
+sphinx-quickstart  
 ```
 
 Le script posera des questions :
@@ -890,8 +888,8 @@ Le script posera des questions :
 
 ```python
 # docs/conf.py
-import os
-import sys
+import os  
+import sys  
 
 # Ajouter le chemin du code source
 sys.path.insert(0, os.path.abspath('..'))
@@ -905,17 +903,17 @@ extensions = [
 ]
 
 # Configuration
-project = 'Mon Projet'
-author = 'Votre Nom'
-version = '1.0'
-release = '1.0.0'
+project = 'Mon Projet'  
+author = 'Votre Nom'  
+version = '1.0'  
+release = '1.0.0'  
 
 # Thème
 html_theme = 'sphinx_rtd_theme'
 
 # Support du style Google
-napoleon_google_docstring = True
-napoleon_numpy_docstring = True
+napoleon_google_docstring = True  
+napoleon_numpy_docstring = True  
 ```
 
 #### Génération de la documentation
@@ -925,8 +923,8 @@ napoleon_numpy_docstring = True
 sphinx-apidoc -o docs/ mon_package/
 
 # Générer la documentation HTML
-cd docs
-make html
+cd docs  
+make html  
 
 # Ouvrir la documentation
 open _build/html/index.html
@@ -987,8 +985,8 @@ ma_fonction(x, y)
 print(ma_fonction.__doc__)
 
 # Obtenir la signature
-import inspect
-print(inspect.signature(ma_fonction))
+import inspect  
+print(inspect.signature(ma_fonction))  
 ```
 
 ---
@@ -1001,9 +999,9 @@ Voici un exemple complet d'API bien documentée :
 """
 API de gestion de tâches.
 
-Ce module fournit une API simple pour gérer une liste de tâches
-avec des fonctionnalités de création, lecture, mise à jour et
-suppression (CRUD).
+Ce module fournit une API simple pour gérer une liste de tâches  
+avec des fonctionnalités de création, lecture, mise à jour et  
+suppression (CRUD).  
 
 Example:
     >>> from taches import GestionnaireTaches, Tache
@@ -1025,13 +1023,11 @@ Todo:
 """
 
 from datetime import datetime
-from typing import List, Optional
-
 # Constantes du module
-VERSION = "1.0.0"
-PRIORITE_HAUTE = 1
-PRIORITE_NORMALE = 2
-PRIORITE_BASSE = 3
+VERSION = "1.0.0"  
+PRIORITE_HAUTE = 1  
+PRIORITE_NORMALE = 2  
+PRIORITE_BASSE = 3  
 
 
 class Tache:
@@ -1185,7 +1181,7 @@ class GestionnaireTaches:
         self._prochain_id += 1
         return tache
 
-    def obtenir_tache(self, tache_id: int) -> Optional[Tache]:
+    def obtenir_tache(self, tache_id: int) -> Tache | None:
         """Obtient une tâche par son ID.
 
         Args:
@@ -1227,7 +1223,7 @@ class GestionnaireTaches:
             return True
         return False
 
-    def lister_taches(self, seulement_non_terminees: bool = False) -> List[Tache]:
+    def lister_taches(self, seulement_non_terminees: bool = False) -> list[Tache]:
         """Liste toutes les tâches.
 
         Args:
@@ -1373,9 +1369,9 @@ Configuration `.pydocstyle` :
 
 ```ini
 [pydocstyle]
-convention = google
-match = .*\.py
-match_dir = ^(?!tests|docs|\.)[^.].*
+convention = google  
+match = .*\.py  
+match_dir = ^(?!tests|docs|\.)[^.].*  
 ```
 
 ### darglint
@@ -1491,17 +1487,17 @@ def ma_fonction(param1, param2, param3=None):
 
 ```bash
 # Générer documentation avec Sphinx
-sphinx-quickstart
-sphinx-apidoc -o docs/ mon_package/
-cd docs && make html
+sphinx-quickstart  
+sphinx-apidoc -o docs/ mon_package/  
+cd docs && make html  
 
 # Alternative simple avec pdoc
 pdoc --html --output-dir docs mon_package
 
 # Vérifier les docstrings
-pydocstyle mon_package/
-darglint mon_package/*.py
-interrogate mon_package/
+pydocstyle mon_package/  
+darglint mon_package/*.py  
+interrogate mon_package/  
 
 # Voir la documentation dans le terminal
 python -m pydoc mon_module

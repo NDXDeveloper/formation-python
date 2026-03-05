@@ -10,9 +10,9 @@ Python est un langage à **typage dynamique** : vous n'avez pas besoin de décla
 
 ```python
 # Python devine automatiquement les types
-x = 5           # x est un int
-y = "hello"     # y est un str
-z = [1, 2, 3]   # z est une list
+x = 5           # x est un int  
+y = "hello"     # y est un str  
+z = [1, 2, 3]   # z est une list  
 ```
 
 C'est pratique pour écrire du code rapidement, mais cela peut causer des problèmes :
@@ -93,8 +93,8 @@ def saluer(nom: str) -> str:
     return f"Bonjour {nom} !"
 
 # Utilisation correcte
-message = saluer("Alice")
-print(message)
+message = saluer("Alice")  
+print(message)  
 
 # Erreur de type
 nombre = saluer(42)  # ❌ 42 est un int, pas un str
@@ -104,8 +104,8 @@ Exécutons mypy :
 
 ```bash
 $ mypy exemple.py
-exemple.py:10: error: Argument 1 to "saluer" has incompatible type "int"; expected "str"
-Found 1 error in 1 file (checked 1 source file)
+exemple.py:10: error: Argument 1 to "saluer" has incompatible type "int"; expected "str"  
+Found 1 error in 1 file (checked 1 source file)  
 ```
 
 **mypy a détecté l'erreur !** Sans exécuter le code.
@@ -139,20 +139,20 @@ Les types Python de base :
 
 ```python
 # Entiers
-age: int = 25
-annee: int = 2024
+age: int = 25  
+annee: int = 2024  
 
 # Flottants
-prix: float = 19.99
-temperature: float = -5.5
+prix: float = 19.99  
+temperature: float = -5.5  
 
 # Chaînes de caractères
-nom: str = "Alice"
-message: str = "Bonjour"
+nom: str = "Alice"  
+message: str = "Bonjour"  
 
 # Booléens
-est_actif: bool = True
-a_termine: bool = False
+est_actif: bool = True  
+a_termine: bool = False  
 
 # None
 resultat: None = None
@@ -186,8 +186,8 @@ def obtenir_nom() -> str:
 
 ```python
 # Déclaration avec valeur
-nom: str = "Bob"
-age: int = 30
+nom: str = "Bob"  
+age: int = 30  
 
 # Déclaration sans valeur (utile dans les classes)
 class Personne:
@@ -237,9 +237,9 @@ coordonnees: Tuple[int, ...] = (10, 20, 30, 40)
 
 ```python
 # Python 3.9+
-nombres: list[int] = [1, 2, 3]
-ages: dict[str, int] = {"Alice": 25}
-coordonnees: tuple[int, ...] = (10, 20)
+nombres: list[int] = [1, 2, 3]  
+ages: dict[str, int] = {"Alice": 25}  
+coordonnees: tuple[int, ...] = (10, 20)  
 
 # Plus besoin d'importer de typing !
 ```
@@ -261,8 +261,8 @@ def trouver_utilisateur(user_id: int) -> Optional[str]:
     return utilisateurs.get(user_id)
 
 # Utilisation
-nom = trouver_utilisateur(1)  # Type: Optional[str]
-if nom is not None:
+nom = trouver_utilisateur(1)  # Type: Optional[str]  
+if nom is not None:  
     print(f"Trouvé : {nom}")
 
 # Équivalent à Optional[str]
@@ -290,9 +290,9 @@ def formater_valeur(valeur: Union[int, float, str]) -> str:
     return f"Valeur : {valeur}"
 
 # Utilisations valides
-formater_valeur(42)         # int
-formater_valeur(3.14)       # float
-formater_valeur("texte")    # str
+formater_valeur(42)         # int  
+formater_valeur(3.14)       # float  
+formater_valeur("texte")    # str  
 
 # Python 3.10+ : syntaxe simplifiée avec |
 def formater_valeur(valeur: int | float | str) -> str:
@@ -311,10 +311,10 @@ def traiter_donnees(donnees: Any) -> None:
     print(donnees)
 
 # Tout est accepté
-traiter_donnees(42)
-traiter_donnees("texte")
-traiter_donnees([1, 2, 3])
-traiter_donnees({"cle": "valeur"})
+traiter_donnees(42)  
+traiter_donnees("texte")  
+traiter_donnees([1, 2, 3])  
+traiter_donnees({"cle": "valeur"})  
 ```
 
 **⚠️ Attention** : Utilisez `Any` avec parcimonie ! Cela désactive la vérification de types.
@@ -351,8 +351,8 @@ def multiplier(a: int, b: int) -> int:
     return a * b
 
 # Utilisation
-resultat1 = executer_operation(5, 3, additionner)   # 8
-resultat2 = executer_operation(5, 3, multiplier)    # 15
+resultat1 = executer_operation(5, 3, additionner)   # 8  
+resultat2 = executer_operation(5, 3, multiplier)    # 15  
 ```
 
 **Format** : `Callable[[type_param1, type_param2], type_retour]`
@@ -378,10 +378,10 @@ def somme(nombres: Iterable[int]) -> int:
     return sum(nombres)
 
 # Fonctionne avec différents types itérables
-somme([1, 2, 3])        # list
-somme((1, 2, 3))        # tuple
-somme({1, 2, 3})        # set
-somme(range(1, 4))      # range
+somme([1, 2, 3])        # list  
+somme((1, 2, 3))        # tuple  
+somme({1, 2, 3})        # set  
+somme(range(1, 4))      # range  
 
 def premier_element(sequence: Sequence[str]) -> str:
     """Retourne le premier élément d'une séquence.
@@ -395,9 +395,9 @@ def premier_element(sequence: Sequence[str]) -> str:
     return sequence[0]
 
 # Fonctionne avec des séquences
-premier_element(["a", "b", "c"])    # list
-premier_element(("a", "b", "c"))    # tuple
-premier_element("abc")              # str
+premier_element(["a", "b", "c"])    # list  
+premier_element(("a", "b", "c"))    # tuple  
+premier_element("abc")              # str  
 ```
 
 ### Mapping : dictionnaires génériques
@@ -493,8 +493,8 @@ def envoyer_email(utilisateur: Utilisateur, sujet: str, message: str) -> bool:
     return True
 
 # Utilisation
-user = Utilisateur("Alice", "alice@example.com", 25)
-envoyer_email(user, "Bienvenue", "Merci de votre inscription")
+user = Utilisateur("Alice", "alice@example.com", 25)  
+envoyer_email(user, "Bienvenue", "Merci de votre inscription")  
 ```
 
 ### TypeAlias : créer des alias de types
@@ -503,9 +503,9 @@ envoyer_email(user, "Bienvenue", "Merci de votre inscription")
 from typing import TypeAlias
 
 # Définir des alias pour des types complexes
-UserId: TypeAlias = int
-Email: TypeAlias = str
-Utilisateurs: TypeAlias = dict[UserId, Utilisateur]
+UserId: TypeAlias = int  
+Email: TypeAlias = str  
+Utilisateurs: TypeAlias = dict[UserId, Utilisateur]  
 
 def obtenir_utilisateur(
     utilisateurs: Utilisateurs,
@@ -558,15 +558,15 @@ class Boite(Generic[T]):
         self.contenu = nouveau
 
 # Utilisation avec différents types
-boite_int: Boite[int] = Boite(42)
-nombre = boite_int.obtenir()  # Type: int
+boite_int: Boite[int] = Boite(42)  
+nombre = boite_int.obtenir()  # Type: int  
 
-boite_str: Boite[str] = Boite("Hello")
-texte = boite_str.obtenir()  # Type: str
+boite_str: Boite[str] = Boite("Hello")  
+texte = boite_str.obtenir()  # Type: str  
 
 # mypy détecte les erreurs de type
-boite_int.remplacer(100)      # ✅ OK
-boite_int.remplacer("texte")  # ❌ Erreur: expected int, got str
+boite_int.remplacer(100)      # ✅ OK  
+boite_int.remplacer("texte")  # ❌ Erreur: expected int, got str  
 ```
 
 ---
@@ -591,8 +591,8 @@ def changer_couleur(
     print(f"Couleur changée en {couleur}")
 
 # Utilisations valides
-changer_couleur("rouge")   # ✅ OK
-changer_couleur("vert")    # ✅ OK
+changer_couleur("rouge")   # ✅ OK  
+changer_couleur("vert")    # ✅ OK  
 
 # Erreur détectée par mypy
 changer_couleur("jaune")   # ❌ Erreur: expected Literal["rouge", "vert", "bleu"]
@@ -639,12 +639,12 @@ def afficher_personne(personne: PersonneDict) -> None:
     print(f"{personne['nom']}, {personne['age']} ans")
 
 # mypy vérifie la structure
-personne = creer_personne("Alice", 25, "alice@example.com")
-afficher_personne(personne)  # ✅ OK
+personne = creer_personne("Alice", 25, "alice@example.com")  
+afficher_personne(personne)  # ✅ OK  
 
 # Erreur si la structure est incorrecte
-mauvaise_personne = {"nom": "Bob"}  # ❌ Manque 'age', 'email', 'actif'
-afficher_personne(mauvaise_personne)
+mauvaise_personne = {"nom": "Bob"}  # ❌ Manque 'age', 'email', 'actif'  
+afficher_personne(mauvaise_personne)  
 ```
 
 ### Final : valeurs constantes
@@ -655,8 +655,8 @@ afficher_personne(mauvaise_personne)
 from typing import Final
 
 # Constante de module
-PI: Final = 3.14159
-MAX_CONNEXIONS: Final[int] = 100
+PI: Final = 3.14159  
+MAX_CONNEXIONS: Final[int] = 100  
 
 class Configuration:
     """Configuration de l'application."""
@@ -715,11 +715,11 @@ def afficher_objet(obj: Affichable) -> None:
     print(obj.afficher())
 
 # Fonctionne avec n'importe quelle classe ayant afficher()
-user = Utilisateur("Alice")
-produit = Produit("Livre", 15.99)
+user = Utilisateur("Alice")  
+produit = Produit("Livre", 15.99)  
 
-afficher_objet(user)      # ✅ OK
-afficher_objet(produit)   # ✅ OK
+afficher_objet(user)      # ✅ OK  
+afficher_objet(produit)   # ✅ OK  
 ```
 
 ---
@@ -743,28 +743,28 @@ files = src/
 exclude = tests/|docs/|build/
 
 # Strictness (niveau de sévérité)
-warn_return_any = True
-warn_unused_configs = True
-warn_redundant_casts = True
-warn_unused_ignores = True
-warn_no_return = True
-warn_unreachable = True
+warn_return_any = True  
+warn_unused_configs = True  
+warn_redundant_casts = True  
+warn_unused_ignores = True  
+warn_no_return = True  
+warn_unreachable = True  
 
 # Erreurs de type
-disallow_untyped_defs = True
-disallow_incomplete_defs = True
-check_untyped_defs = True
-disallow_untyped_calls = False
+disallow_untyped_defs = True  
+disallow_incomplete_defs = True  
+check_untyped_defs = True  
+disallow_untyped_calls = False  
 
 # Gestion des imports
-ignore_missing_imports = False
-follow_imports = normal
+ignore_missing_imports = False  
+follow_imports = normal  
 
 # Divers
-strict_optional = True
-strict_equality = True
-show_error_codes = True
-show_column_numbers = True
+strict_optional = True  
+strict_equality = True  
+show_error_codes = True  
+show_column_numbers = True  
 ```
 
 ### Configuration dans pyproject.toml
@@ -774,37 +774,37 @@ Alternative moderne avec `pyproject.toml` :
 ```toml
 # fichier: pyproject.toml
 [tool.mypy]
-python_version = "3.10"
-files = ["src"]
-exclude = ["tests", "docs", "build"]
+python_version = "3.10"  
+files = ["src"]  
+exclude = ["tests", "docs", "build"]  
 
 # Strictness
-warn_return_any = true
-warn_unused_configs = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
+warn_return_any = true  
+warn_unused_configs = true  
+warn_redundant_casts = true  
+warn_unused_ignores = true  
+warn_no_return = true  
+warn_unreachable = true  
 
 # Type checking
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
+disallow_untyped_defs = true  
+disallow_incomplete_defs = true  
+check_untyped_defs = true  
 
 # Misc
-strict_optional = true
-strict_equality = true
-show_error_codes = true
-show_column_numbers = true
+strict_optional = true  
+strict_equality = true  
+show_error_codes = true  
+show_column_numbers = true  
 
 # Configuration par module
 [[tool.mypy.overrides]]
-module = "tests.*"
-ignore_errors = true
+module = "tests.*"  
+ignore_errors = true  
 
 [[tool.mypy.overrides]]
-module = "external_lib.*"
-ignore_missing_imports = true
+module = "external_lib.*"  
+ignore_missing_imports = true  
 ```
 
 ### Niveaux de strictness
@@ -859,8 +859,8 @@ def ma_fonction():
 ### Ignorer des imports
 
 ```python
-import numpy  # type: ignore
-import pandas as pd  # type: ignore[import]
+import numpy  # type: ignore  
+import pandas as pd  # type: ignore[import]  
 ```
 
 ### cast : forcer un type
@@ -885,9 +885,9 @@ Voici un exemple complet avec types :
 ```python
 """API de gestion de tâches avec types complets."""
 
-from typing import Optional, List, Dict, TypedDict
-from datetime import datetime
-from enum import Enum
+from typing import TypedDict  
+from datetime import datetime  
+from enum import Enum  
 
 
 class Priorite(Enum):
@@ -982,7 +982,7 @@ class GestionnaireTaches:
 
     def __init__(self) -> None:
         """Initialise un nouveau gestionnaire de tâches."""
-        self.taches: Dict[int, Tache] = {}
+        self.taches: dict[int, Tache] = {}
         self._prochain_id: int = 1
 
     def creer_tache(
@@ -1007,7 +1007,7 @@ class GestionnaireTaches:
         self._prochain_id += 1
         return tache
 
-    def obtenir_tache(self, tache_id: int) -> Optional[Tache]:
+    def obtenir_tache(self, tache_id: int) -> Tache | None:
         """Obtient une tâche par son ID.
 
         Args:
@@ -1035,8 +1035,8 @@ class GestionnaireTaches:
     def lister_taches(
         self,
         seulement_non_terminees: bool = False,
-        priorite: Optional[Priorite] = None
-    ) -> List[Tache]:
+        priorite: Priorite | None = None
+    ) -> list[Tache]:
         """Liste les tâches selon des critères.
 
         Args:
@@ -1075,7 +1075,7 @@ class GestionnaireTaches:
         """
         return len(self.lister_taches(seulement_non_terminees))
 
-    def obtenir_statistiques(self) -> Dict[str, int]:
+    def obtenir_statistiques(self) -> dict[str, int]:
         """Calcule des statistiques sur les tâches.
 
         Returns:
@@ -1110,14 +1110,14 @@ def exemple_utilisation() -> None:
     tache1.marquer_terminee()
 
     # Lister les tâches non terminées
-    non_terminees: List[Tache] = gestionnaire.lister_taches(
+    non_terminees: list[Tache] = gestionnaire.lister_taches(
         seulement_non_terminees=True
     )
 
     print(f"Tâches non terminées : {len(non_terminees)}")
 
     # Afficher les statistiques
-    stats: Dict[str, int] = gestionnaire.obtenir_statistiques()
+    stats: dict[str, int] = gestionnaire.obtenir_statistiques()
     print(f"Statistiques : {stats}")
 
 
@@ -1147,13 +1147,14 @@ Configuration `settings.json` :
 ```json
 {
     "python.analysis.typeCheckingMode": "basic",
-    "python.linting.mypyEnabled": true,
-    "python.linting.mypyArgs": [
+    "mypy-type-checker.args": [
         "--ignore-missing-imports",
         "--show-column-numbers"
     ]
 }
 ```
+
+**Note** : Installez l'extension **Mypy Type Checker** (`ms-python.mypy-type-checker`) depuis le marketplace VS Code.
 
 ### PyCharm
 
@@ -1194,10 +1195,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
@@ -1257,9 +1258,9 @@ Certaines bibliothèques n'ont pas de types. Utilisez des stubs :
 
 ```bash
 # Installer les stubs (types) pour les bibliothèques populaires
-pip install types-requests
-pip install types-PyYAML
-pip install types-redis
+pip install types-requests  
+pip install types-PyYAML  
+pip install types-redis  
 ```
 
 Ou créez vos propres stubs :
@@ -1285,10 +1286,10 @@ def calculer(x: int, y: int) -> int:
 
 # ❌ Trop complexe pour commencer
 def calculer(
-    x: Union[int, float, Decimal],
-    y: Union[int, float, Decimal],
-    options: Optional[Dict[str, Any]] = None
-) -> Union[int, float, Decimal]:
+    x: int | float | Decimal,
+    y: int | float | Decimal,
+    options: dict[str, Any] | None = None
+) -> int | float | Decimal:
     pass
 ```
 
@@ -1317,15 +1318,16 @@ def traiter(data: dict[str, str]) -> list[int]:
     pass
 ```
 
-### 4. Utilisez Optional explicitement
+### 4. Préférez la syntaxe moderne (Python 3.10+)
 
 ```python
-# ✅ Clair
-def trouver(id: int) -> Optional[str]:
+# ✅ Moderne et lisible (Python 3.10+)
+def trouver(id: int) -> str | None:
     pass
 
-# ❌ Moins clair
-def trouver(id: int) -> str | None:  # Fonctionnellement identique
+# ⚠️ Ancien style (toujours fonctionnel)
+from typing import Optional  
+def trouver(id: int) -> Optional[str]:  
     pass
 ```
 
@@ -1333,7 +1335,7 @@ def trouver(id: int) -> str | None:  # Fonctionnellement identique
 
 ```python
 # ✅ Bon - avec documentation
-UserDict: TypeAlias = Dict[int, Dict[str, Any]]
+UserDict: TypeAlias = dict[int, dict[str, Any]]
 
 def obtenir_utilisateurs() -> UserDict:
     """Retourne les utilisateurs.
@@ -1344,7 +1346,7 @@ def obtenir_utilisateurs() -> UserDict:
     pass
 
 # ❌ Mauvais - type complexe non documenté
-def obtenir_utilisateurs() -> Dict[int, Dict[str, Any]]:
+def obtenir_utilisateurs() -> dict[int, dict[str, Any]]:
     pass
 ```
 
@@ -1352,9 +1354,9 @@ def obtenir_utilisateurs() -> Dict[int, Dict[str, Any]]:
 
 ```bash
 # Ajoutez mypy à votre workflow quotidien
-git add .
-mypy src/
-git commit -m "..."
+git add .  
+mypy src/  
+git commit -m "..."  
 ```
 
 ---
@@ -1365,13 +1367,13 @@ git commit -m "..."
 
 ```python
 # ❌ Problème
-liste = []  # Type: List[Any] (trop vague)
-liste.append(1)
-liste.append("texte")  # mypy est confus
+liste = []  # Type: List[Any] (trop vague)  
+liste.append(1)  
+liste.append("texte")  # mypy est confus  
 
 # ✅ Solution : annoter explicitement
-liste: list[int] = []
-liste.append(1)
+liste: list[int] = []  
+liste.append(1)  
 ```
 
 ### Erreur : "error: Incompatible types in assignment"
@@ -1406,8 +1408,8 @@ def calculer(x: int) -> int:
 
 ```python
 # ❌ Problème
-import une_lib_sans_types
-result = une_lib_sans_types.fonction()  # error: Cannot find...
+import une_lib_sans_types  
+result = une_lib_sans_types.fonction()  # error: Cannot find...  
 
 # ✅ Solution 1 : ignorer
 import une_lib_sans_types  # type: ignore
@@ -1427,8 +1429,8 @@ import une_lib_sans_types  # type: ignore
 1. **mypy vérifie les types** avant l'exécution (analyse statique)
 2. **Les type hints** documentent le code et aident les outils
 3. **Commencez simple** : int, str, bool, list, dict
-4. **typing module** : Optional, Union, List, Dict, etc.
-5. **Python 3.9+** : syntaxe simplifiée (list[int] au lieu de List[int])
+4. **typing module** : TypedDict, Protocol, Final, Literal, etc.
+5. **Python 3.9+/3.10+** : `list[int]` au lieu de `List[int]`, `X | None` au lieu de `Optional[X]`
 6. **Configuration** : mypy.ini ou pyproject.toml
 7. **Migration progressive** : un fichier à la fois
 8. **type: ignore** pour ignorer des erreurs spécifiques
@@ -1442,8 +1444,8 @@ import une_lib_sans_types  # type: ignore
 | `int`, `str`, `bool`, `float` | Types de base | `x: int = 5` |
 | `list[T]` | Liste d'éléments de type T | `nombres: list[int]` |
 | `dict[K, V]` | Dictionnaire | `ages: dict[str, int]` |
-| `Optional[T]` | T ou None | `nom: Optional[str]` |
-| `Union[T1, T2]` | T1 ou T2 | `valeur: int \| str` |
+| `T \| None` | T ou None | `nom: str \| None` |
+| `T1 \| T2` | T1 ou T2 | `valeur: int \| str` |
 | `Any` | N'importe quel type | `data: Any` |
 | `Callable` | Fonction | `func: Callable[[int], str]` |
 | `TypedDict` | Structure de dict | `class User(TypedDict): ...` |
@@ -1486,13 +1488,13 @@ mypy --config-file mypy.ini src/
 ### Template de fonction typée
 
 ```python
-from typing import Optional, List
+from typing import Any
 
 def ma_fonction(
     param1: str,
     param2: int,
-    param3: Optional[bool] = None
-) -> List[dict[str, Any]]:
+    param3: bool | None = None
+) -> list[dict[str, Any]]:
     """Description de la fonction.
 
     Args:

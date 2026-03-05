@@ -328,9 +328,9 @@ Une **assertion** est une vérification qui échoue si la condition n'est pas vr
 
 ```python
 # Assertions de base
-assert 2 + 2 == 4              # Passe
-assert "hello".upper() == "HELLO"  # Passe
-assert len([1, 2, 3]) == 3     # Passe
+assert 2 + 2 == 4              # Passe  
+assert "hello".upper() == "HELLO"  # Passe  
+assert len([1, 2, 3]) == 3     # Passe  
 
 # Si l'assertion échoue, le test échoue
 assert 2 + 2 == 5              # ❌ Échec !
@@ -670,7 +670,7 @@ Pour un projet Python professionnel :
 **"Laissez le code plus propre que vous ne l'avez trouvé"**
 
 À chaque modification :
-- Ajoutez un test si il en manque
+- Ajoutez un test s'il en manque
 - Améliorez la documentation
 - Refactorisez un peu
 - Corrigez un problème de style
@@ -685,28 +685,28 @@ Dans les sections suivantes, vous deviendrez capable de :
 
 ### Compétences techniques
 
-✅ Écrire des tests unitaires efficaces
-✅ Mesurer et améliorer la couverture de code
-✅ Documenter clairement votre code
-✅ Respecter les conventions Python (PEP 8)
-✅ Valider les types avec mypy
-✅ Utiliser les outils professionnels
+✅ Écrire des tests unitaires efficaces  
+✅ Mesurer et améliorer la couverture de code  
+✅ Documenter clairement votre code  
+✅ Respecter les conventions Python (PEP 8)  
+✅ Valider les types avec mypy  
+✅ Utiliser les outils professionnels  
 ✅ Automatiser les vérifications
 
 ### Compétences professionnelles
 
-✅ Travailler dans une équipe de développement
-✅ Contribuer à des projets open source
-✅ Maintenir du code à long terme
-✅ Faire des revues de code constructives
+✅ Travailler dans une équipe de développement  
+✅ Contribuer à des projets open source  
+✅ Maintenir du code à long terme  
+✅ Faire des revues de code constructives  
 ✅ Écrire du code "production-ready"
 
 ### Mentalité de développeur senior
 
-✅ Anticiper les problèmes
-✅ Penser à la maintenance
-✅ Valoriser la lisibilité
-✅ Chercher la simplicité
+✅ Anticiper les problèmes  
+✅ Penser à la maintenance  
+✅ Valoriser la lisibilité  
+✅ Chercher la simplicité  
 ✅ Être fier de son code
 
 ---
@@ -777,12 +777,12 @@ mon_projet/
 
 Vous n'avez pas besoin de tout maîtriser d'un coup :
 
-**Semaine 1** : Tests de base avec pytest
-**Semaine 2** : Couverture de code
-**Semaine 3** : PEP 8 et Black
-**Semaine 4** : Documentation
-**Semaine 5** : mypy et types
-**Semaine 6** : Automatisation complète
+**Semaine 1** : Tests de base avec pytest  
+**Semaine 2** : Couverture de code  
+**Semaine 3** : PEP 8 et Black  
+**Semaine 4** : Documentation  
+**Semaine 5** : mypy et types  
+**Semaine 6** : Automatisation complète  
 
 ### Pratiquez régulièrement
 
