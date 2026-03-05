@@ -28,9 +28,9 @@ En POO, on créerait un objet "voiture" qui regroupe toutes ces caractéristique
 
 ```python
 # Exemple conceptuel (vous apprendrez la syntaxe dans les sections suivantes)
-ma_voiture = Voiture(marque="Renault", couleur="rouge")
-ma_voiture.demarrer()
-ma_voiture.accelerer(50)
+ma_voiture = Voiture(marque="Renault", couleur="rouge")  
+ma_voiture.demarrer()  
+ma_voiture.accelerer(50)  
 ```
 
 ### Comparaison : Approche Procédurale vs Orientée Objet
@@ -39,13 +39,13 @@ ma_voiture.accelerer(50)
 
 ```python
 # Variables séparées pour chaque voiture
-voiture1_marque = "Renault"
-voiture1_couleur = "rouge"
-voiture1_vitesse = 0
+voiture1_marque = "Renault"  
+voiture1_couleur = "rouge"  
+voiture1_vitesse = 0  
 
-voiture2_marque = "Peugeot"
-voiture2_couleur = "bleu"
-voiture2_vitesse = 0
+voiture2_marque = "Peugeot"  
+voiture2_couleur = "bleu"  
+voiture2_vitesse = 0  
 
 # Fonctions séparées
 def demarrer_voiture(marque):
@@ -55,8 +55,8 @@ def accelerer_voiture(vitesse_actuelle, increment):
     return vitesse_actuelle + increment
 
 # Utilisation
-demarrer_voiture(voiture1_marque)
-voiture1_vitesse = accelerer_voiture(voiture1_vitesse, 20)
+demarrer_voiture(voiture1_marque)  
+voiture1_vitesse = accelerer_voiture(voiture1_vitesse, 20)  
 ```
 
 **Problèmes** :
@@ -82,12 +82,12 @@ class Voiture:
         self.vitesse += increment
 
 # Créer plusieurs voitures facilement
-voiture1 = Voiture("Renault", "rouge")
-voiture2 = Voiture("Peugeot", "bleu")
+voiture1 = Voiture("Renault", "rouge")  
+voiture2 = Voiture("Peugeot", "bleu")  
 
 # Utilisation claire et intuitive
-voiture1.demarrer()
-voiture1.accelerer(20)
+voiture1.demarrer()  
+voiture1.accelerer(20)  
 ```
 
 **Avantages** :
@@ -134,8 +134,8 @@ L'encapsulation consiste à regrouper les données (attributs) et les méthodes 
 
 ```python
 # Les détails internes sont cachés
-compte = CompteBancaire(1000)
-compte.deposer(500)  # On utilise une méthode, pas une variable directe
+compte = CompteBancaire(1000)  
+compte.deposer(500)  # On utilise une méthode, pas une variable directe  
 ```
 
 ### 2. **Abstraction**
@@ -164,9 +164,9 @@ class Chien(Animal):  # Hérite de Animal
         print("Wouf!")
 
 # Le chien peut manger ET aboyer
-rex = Chien()
-rex.manger()  # Hérité de Animal
-rex.aboyer()  # Propre à Chien
+rex = Chien()  
+rex.manger()  # Hérité de Animal  
+rex.aboyer()  # Propre à Chien  
 ```
 
 ### 4. **Polymorphisme**
@@ -176,9 +176,9 @@ Le polymorphisme permet à différents objets de répondre différemment à la m
 **Exemple** : Différents animaux "parlent" différemment.
 
 ```python
-chien.faire_bruit()  # "Wouf!"
-chat.faire_bruit()   # "Miaou!"
-vache.faire_bruit()  # "Meuh!"
+chien.faire_bruit()  # "Wouf!"  
+chat.faire_bruit()   # "Miaou!"  
+vache.faire_bruit()  # "Meuh!"  
 ```
 
 ## Les Concepts Clés que Vous Allez Apprendre

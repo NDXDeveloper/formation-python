@@ -18,12 +18,12 @@ En Python, **tout est objet**, y compris les classes elles-mêmes !
 
 ```python
 # Les nombres sont des objets
-nombre = 42
-print(type(nombre))  # <class 'int'>
+nombre = 42  
+print(type(nombre))  # <class 'int'>  
 
 # Les chaînes sont des objets
-texte = "Bonjour"
-print(type(texte))   # <class 'str'>
+texte = "Bonjour"  
+print(type(texte))   # <class 'str'>  
 
 # Les fonctions sont des objets
 def ma_fonction():
@@ -83,8 +83,8 @@ def init_personne(self, nom):
 Personne = type('Personne', (), {'__init__': init_personne})
 
 # Les deux créent la même classe !
-p1 = Personne("Alice")
-print(p1.nom)  # Alice
+p1 = Personne("Alice")  
+print(p1.nom)  # Alice  
 ```
 
 ### Syntaxe de `type()` pour Créer des Classes
@@ -106,8 +106,8 @@ MaClasse = type(
 MaClasse = type('MaClasse', (), {})
 
 # Créer une instance
-obj = MaClasse()
-print(type(obj))  # <class '__main__.MaClasse'>
+obj = MaClasse()  
+print(type(obj))  # <class '__main__.MaClasse'>  
 ```
 
 ### Exemple avec Attributs
@@ -123,10 +123,10 @@ Personne = type('Personne', (), {
 })
 
 # Utilisation
-p = Personne()
-p.nom = "Alice"
-print(p.saluer())     # Bonjour, je suis Alice
-print(p.espece)       # Homo sapiens
+p = Personne()  
+p.nom = "Alice"  
+print(p.saluer())     # Bonjour, je suis Alice  
+print(p.espece)       # Homo sapiens  
 ```
 
 ### Exemple avec Héritage
@@ -146,9 +146,9 @@ Chien = type('Chien', (Animal,), {
 })
 
 # Utilisation
-rex = Chien()
-print(rex.respirer())  # Je respire (hérité)
-print(rex.aboyer())    # Wouf !
+rex = Chien()  
+print(rex.respirer())  # Je respire (hérité)  
+print(rex.aboyer())    # Wouf !  
 ```
 
 ## Créer une Métaclasse Personnalisée
@@ -208,8 +208,8 @@ class Service(metaclass=TimestampMeta):
         self.nom = nom
 
 # Chaque classe a maintenant un timestamp
-print(f"Produit créé le : {Produit.creation_time}")
-print(f"Service créé le : {Service.creation_time}")
+print(f"Produit créé le : {Produit.creation_time}")  
+print(f"Service créé le : {Service.creation_time}")  
 ```
 
 ### Exemple : Métaclasse de Validation
@@ -235,8 +235,8 @@ class Chien(Animal):
         return "Wouf !"
 
 # Ceci fonctionne
-rex = Chien()
-print(rex.faire_bruit())
+rex = Chien()  
+print(rex.faire_bruit())  
 
 # Ceci échouerait :
 # class Chat(Animal):
@@ -306,8 +306,8 @@ class MaClasse(metaclass=CompleteMeta):
 # 1. __new__ : Création de MaClasse
 # 2. __init__ : Initialisation de MaClasse
 
-print(MaClasse.cree_par)    # CompleteMeta
-print(MaClasse.initialise)  # True
+print(MaClasse.cree_par)    # CompleteMeta  
+print(MaClasse.initialise)  # True  
 ```
 
 ## Exemples Pratiques de Métaclasses
@@ -334,14 +334,14 @@ class Configuration(metaclass=SingletonMeta):
         self.parametre2 = "valeur2"
 
 # Créer deux "instances"
-config1 = Configuration()
-config2 = Configuration()
+config1 = Configuration()  
+config2 = Configuration()  
 
 # Ce sont en fait la même instance !
 print(config1 is config2)  # True
 
-config1.parametre1 = "nouvelle_valeur"
-print(config2.parametre1)  # nouvelle_valeur
+config1.parametre1 = "nouvelle_valeur"  
+print(config2.parametre1)  # nouvelle_valeur  
 ```
 
 ### 2. Enregistrement Automatique des Classes
@@ -373,8 +373,8 @@ class ImagePlugin(Plugin):
     pass
 
 # Voir toutes les classes enregistrées
-print("Plugins disponibles :")
-for nom, classe in RegistryMeta.registry.items():
+print("Plugins disponibles :")  
+for nom, classe in RegistryMeta.registry.items():  
     print(f"  - {nom}")
 ```
 
@@ -413,10 +413,10 @@ class MaClasse(metaclass=UpperAttrMeta):
         return "Bonjour"
 
 # Les attributs sont maintenant en majuscules
-print(MaClasse.ATTRIBUT)        # valeur
-print(MaClasse.AUTRE_ATTRIBUT)  # 42
-obj = MaClasse()
-print(obj.METHODE())            # Bonjour
+print(MaClasse.ATTRIBUT)        # valeur  
+print(MaClasse.AUTRE_ATTRIBUT)  # 42  
+obj = MaClasse()  
+print(obj.METHODE())            # Bonjour  
 ```
 
 ### 4. Métaclasse pour un ORM Simple
@@ -470,15 +470,15 @@ class Produit(Model):
     prix = Field('decimal')
 
 # Créer des instances
-user = Utilisateur(nom="Alice", age=30, email="alice@example.com")
-print(user)  # Utilisateur(nom=Alice, age=30, email=alice@example.com)
+user = Utilisateur(nom="Alice", age=30, email="alice@example.com")  
+print(user)  # Utilisateur(nom=Alice, age=30, email=alice@example.com)  
 
-produit = Produit(nom="Livre", prix=15.99)
-print(produit)  # Produit(nom=Livre, prix=15.99)
+produit = Produit(nom="Livre", prix=15.99)  
+print(produit)  # Produit(nom=Livre, prix=15.99)  
 
 # Voir les champs définis
-print(f"Champs de Utilisateur : {list(Utilisateur._fields.keys())}")
-print(f"Champs de Produit : {list(Produit._fields.keys())}")
+print(f"Champs de Utilisateur : {list(Utilisateur._fields.keys())}")  
+print(f"Champs de Produit : {list(Produit._fields.keys())}")  
 ```
 
 ## `__call__` dans les Métaclasses
@@ -511,9 +511,9 @@ p = Personne("Alice", 30)
 
 **Résultat :**
 ```
-Création d'une instance de Personne
-Arguments : ('Alice', 30), {}
-Instance créée : Personne(Alice, 30)
+Création d'une instance de Personne  
+Arguments : ('Alice', 30), {}  
+Instance créée : Personne(Alice, 30)  
 ```
 
 ## Attributs de Classe Calculés
@@ -536,10 +536,10 @@ class MaClasse(metaclass=DynamicMeta):
     static_value = "valeur statique"
 
 # Chaque accès génère une nouvelle valeur
-print(MaClasse.dynamic_value)  # Valeur générée à 2025-10-27 ...
-import time
-time.sleep(1)
-print(MaClasse.dynamic_value)  # Valeur générée à 2025-10-27 ... (temps différent)
+print(MaClasse.dynamic_value)  # Valeur générée à 2025-10-27 ...  
+import time  
+time.sleep(1)  
+print(MaClasse.dynamic_value)  # Valeur générée à 2025-10-27 ... (temps différent)  
 
 print(MaClasse.static_value)   # valeur statique
 ```
@@ -582,11 +582,11 @@ class Personne:
         self.nom = nom
         self.age = age  # Utilise le descripteur
 
-p = Personne("Alice", 30)
-print(p.age)     # 30
+p = Personne("Alice", 30)  
+print(p.age)     # 30  
 
-p.age = 31       # OK
-print(p.age)     # 31
+p.age = 31       # OK  
+print(p.age)     # 31  
 
 # p.age = "32"   # TypeError !
 ```
@@ -635,8 +635,8 @@ class Utilisateur:
         self.email = email
 
 # Utilisation
-user = Utilisateur("Alice", "alice@example.com")
-print(f"{user.nom} - {user.email}")
+user = Utilisateur("Alice", "alice@example.com")  
+print(f"{user.nom} - {user.email}")  
 
 # user2 = Utilisateur("A", "test")  # ValueError (nom trop court)
 ```
@@ -691,13 +691,13 @@ class Cercle(Forme):
         return 2 * 3.14159 * self.rayon
 
 # Utilisation
-rect = Rectangle(5, 3)
-rect.afficher()
+rect = Rectangle(5, 3)  
+rect.afficher()  
 
 print()
 
-cercle = Cercle(4)
-cercle.afficher()
+cercle = Cercle(4)  
+cercle.afficher()  
 
 # Ceci échouerait :
 # forme = Forme()  # TypeError: Can't instantiate abstract class
@@ -732,9 +732,9 @@ class Chien(Animal):
     def se_deplacer(self):
         return "Je cours"
 
-rex = Chien()
-print(rex.faire_bruit())      # Wouf
-print(rex.se_deplacer())      # Je cours
+rex = Chien()  
+print(rex.faire_bruit())      # Wouf  
+print(rex.se_deplacer())      # Je cours  
 ```
 
 ### Propriétés Abstraites
@@ -757,8 +757,8 @@ class Voiture(Vehicule):
     def vitesse_max(self):
         return self._vitesse_max
 
-voiture = Voiture()
-print(f"Vitesse max : {voiture.vitesse_max} km/h")
+voiture = Voiture()  
+print(f"Vitesse max : {voiture.vitesse_max} km/h")  
 ```
 
 ## `__init_subclass__` : Alternative aux Métaclasses
@@ -785,16 +785,16 @@ class ExcelPlugin(Plugin):
 class ImagePlugin(Plugin):
     pass
 
-print(f"\nNombre de plugins : {len(Plugin.plugins)}")
-for plugin in Plugin.plugins:
+print(f"\nNombre de plugins : {len(Plugin.plugins)}")  
+for plugin in Plugin.plugins:  
     print(f"  - {plugin.__name__}")
 ```
 
 **Résultat :**
 ```
-Plugin enregistré : PDFPlugin
-Plugin enregistré : ExcelPlugin
-Plugin enregistré : ImagePlugin
+Plugin enregistré : PDFPlugin  
+Plugin enregistré : ExcelPlugin  
+Plugin enregistré : ImagePlugin  
 
 Nombre de plugins : 3
   - PDFPlugin
@@ -811,6 +811,10 @@ class RequiredMethods:
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
+
+        # Ne pas vérifier les classes qui redéfinissent required_methods
+        if 'required_methods' in cls.__dict__:
+            return
 
         # Vérifier que toutes les méthodes requises sont présentes
         for method in cls.required_methods:
@@ -830,8 +834,8 @@ class CSVProcessor(DataProcessor):
         return True
 
 # Ceci fonctionne
-processor = CSVProcessor()
-print(processor.process("data.csv"))
+processor = CSVProcessor()  
+print(processor.process("data.csv"))  
 
 # Ceci échouerait :
 # class BadProcessor(DataProcessor):
@@ -840,6 +844,151 @@ print(processor.process("data.csv"))
 #     # Manque validate()
 # TypeError: La classe BadProcessor doit implémenter la méthode 'validate'
 ```
+
+## Dataclasses : Classes de Données Simplifiées
+
+Le décorateur `@dataclass` (module `dataclasses`, Python 3.7+) génère automatiquement les méthodes `__init__`, `__repr__`, `__eq__` et d'autres à partir de simples annotations de type. C'est l'outil de choix pour créer des classes qui servent principalement à stocker des données.
+
+### Classe Classique vs Dataclass
+
+```python
+# ❌ Classe classique : beaucoup de code répétitif
+class PointClassique:
+    def __init__(self, x: float, y: float, label: str = ""):
+        self.x = x
+        self.y = y
+        self.label = label
+
+    def __repr__(self):
+        return f"PointClassique(x={self.x}, y={self.y}, label='{self.label}')"
+
+    def __eq__(self, other):
+        if not isinstance(other, PointClassique):
+            return NotImplemented
+        return self.x == other.x and self.y == other.y and self.label == other.label
+
+
+# ✅ Dataclass : même résultat en quelques lignes
+from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: float
+    y: float
+    label: str = ""
+
+p = Point(1.0, 2.0, "A")  
+print(p)        # Point(x=1.0, y=2.0, label='A')  
+print(p == Point(1.0, 2.0, "A"))  # True  
+```
+
+### Paramètres du Décorateur
+
+```python
+from dataclasses import dataclass
+
+# Classe immuable (comme un tuple nommé, mais plus puissant)
+@dataclass(frozen=True)
+class Coordonnees:
+    latitude: float
+    longitude: float
+
+coord = Coordonnees(48.8566, 2.3522)
+# coord.latitude = 0  # ❌ FrozenInstanceError
+
+# Classe ordonnée (génère __lt__, __le__, __gt__, __ge__)
+@dataclass(order=True)
+class Version:
+    majeure: int
+    mineure: int
+    patch: int = 0
+
+versions = [Version(2, 0), Version(1, 9, 1), Version(1, 9)]  
+print(sorted(versions))  # [Version(1, 9, 0), Version(1, 9, 1), Version(2, 0, 0)]  
+
+# Tous les paramètres disponibles :
+# @dataclass(init=True, repr=True, eq=True, order=False, frozen=False, slots=False)
+# slots=True est disponible depuis Python 3.10
+```
+
+### Valeurs par Défaut et `field()`
+
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class Configuration:
+    nom: str
+    debug: bool = False
+    # ❌ Interdit : les mutables ne peuvent pas être des valeurs par défaut
+    # options: list[str] = []  # ValueError !
+
+    # ✅ Utiliser field(default_factory=...)
+    options: list[str] = field(default_factory=list)
+    metadata: dict[str, str] = field(default_factory=dict)
+
+    # Champ exclu de __repr__ et __eq__
+    _cache: dict = field(default_factory=dict, repr=False, compare=False)
+
+config = Configuration("prod", options=["verbose"])  
+print(config)  # Configuration(nom='prod', debug=False, options=['verbose'], metadata={})  
+```
+
+### Post-Initialisation avec `__post_init__`
+
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class Employe:
+    prenom: str
+    nom: str
+    salaire: float
+    email: str = field(init=False)  # Calculé automatiquement
+
+    def __post_init__(self):
+        self.email = f"{self.prenom.lower()}.{self.nom.lower()}@entreprise.fr"
+        if self.salaire < 0:
+            raise ValueError("Le salaire ne peut pas être négatif")
+
+emp = Employe("Alice", "Martin", 45000)  
+print(emp.email)  # alice.martin@entreprise.fr  
+```
+
+### Héritage de Dataclasses
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Animal:
+    nom: str
+    age: int
+
+@dataclass
+class Chien(Animal):
+    race: str
+    dresse: bool = False
+
+rex = Chien("Rex", 5, "Berger Allemand", dresse=True)  
+print(rex)  # Chien(nom='Rex', age=5, race='Berger Allemand', dresse=True)  
+```
+
+> ⚠️ **Attention** : dans l'héritage de dataclasses, les champs avec valeur par défaut de la classe parente empêchent d'ajouter des champs *sans* valeur par défaut dans la classe enfant (un champ sans défaut ne peut pas suivre un champ avec défaut dans `__init__`).
+
+### Dataclass vs Alternatives
+
+| Fonctionnalité | `dataclass` | `namedtuple` | Classe classique |
+|---|---|---|---|
+| Mutable par défaut | ✅ | ❌ | ✅ |
+| `frozen` (immuable) | ✅ | ✅ (toujours) | Manuel |
+| Valeurs par défaut | ✅ | ✅ | ✅ |
+| Héritage | ✅ | Limité | ✅ |
+| Type hints | ✅ | Optionnel | Manuel |
+| `__slots__` | ✅ (3.10+) | ✅ | Manuel |
+| Validation intégrée | ❌ (voir Pydantic) | ❌ | Manuel |
+
+> 💡 **Conseil** : utilisez `@dataclass` par défaut pour les classes de données. Si vous avez besoin de **validation** à l'exécution, utilisez [Pydantic](https://docs.pydantic.dev/) qui offre une API similaire avec validation automatique des types.
 
 ## Slots : Optimisation de la Mémoire
 
@@ -855,8 +1004,8 @@ class PersonneNormale:
 
 p = PersonneNormale("Alice", 30)
 # On peut ajouter n'importe quel attribut
-p.ville = "Paris"  # OK, stocké dans __dict__
-print(p.__dict__)  # {'nom': 'Alice', 'age': 30, 'ville': 'Paris'}
+p.ville = "Paris"  # OK, stocké dans __dict__  
+print(p.__dict__)  # {'nom': 'Alice', 'age': 30, 'ville': 'Paris'}  
 ```
 
 ### Avec Slots
@@ -869,8 +1018,8 @@ class PersonneAvecSlots:
         self.nom = nom
         self.age = age
 
-p = PersonneAvecSlots("Bob", 25)
-print(p.nom, p.age)  # Bob 25
+p = PersonneAvecSlots("Bob", 25)  
+print(p.nom, p.age)  # Bob 25  
 
 # On ne peut PAS ajouter d'autres attributs
 # p.ville = "Lyon"  # AttributeError !
@@ -897,11 +1046,11 @@ class AvecSlots:
         self.y = y
 
 # Comparer la taille en mémoire
-obj1 = SansSlots(1, 2)
-obj2 = AvecSlots(1, 2)
+obj1 = SansSlots(1, 2)  
+obj2 = AvecSlots(1, 2)  
 
-print(f"Taille sans slots : {sys.getsizeof(obj1) + sys.getsizeof(obj1.__dict__)} bytes")
-print(f"Taille avec slots : {sys.getsizeof(obj2)} bytes")
+print(f"Taille sans slots : {sys.getsizeof(obj1) + sys.getsizeof(obj1.__dict__)} bytes")  
+print(f"Taille avec slots : {sys.getsizeof(obj2)} bytes")  
 ```
 
 **Avantages** :
@@ -942,10 +1091,10 @@ class Logger:
 # logger1 = Logger(open('log.txt', 'w'))
 
 # Fonctionne aussi avec notre classe Fichier !
-fake_file = Fichier("memory.txt")
-logger2 = Logger(fake_file)
-logger2.log("Message 1")
-logger2.log("Message 2")
+fake_file = Fichier("memory.txt")  
+logger2 = Logger(fake_file)  
+logger2.log("Message 1")  
+logger2.log("Message 2")  
 
 print(fake_file.read())
 ```
@@ -973,8 +1122,8 @@ def render(shape: Drawable) -> None:
     print(shape.draw())
 
 # Fonctionne sans que Circle ou Square héritent de Drawable
-render(Circle())  # ○
-render(Square())  # □
+render(Circle())  # ○  
+render(Square())  # □  
 ```
 
 ## Bonnes Pratiques
@@ -1056,6 +1205,7 @@ class MyMeta(type):
 | **`__init_subclass__`** | Pour personnaliser les sous-classes (enregistrement, validation) |
 | **Descripteurs** | Pour des attributs avec logique complexe (validation, calcul) |
 | **ABC** | Pour définir des interfaces claires que les sous-classes doivent respecter |
+| **Dataclasses** | Pour toute classe qui stocke principalement des données |
 | **Slots** | Quand vous créez beaucoup d'instances et que la mémoire est importante |
 | **Protocoles** | Pour le duck typing avec type hints |
 
@@ -1082,6 +1232,11 @@ class MyMeta(type):
 - Utilisent `@abstractmethod`
 - Forcent l'implémentation dans les sous-classes
 
+### Dataclasses
+- Génèrent automatiquement `__init__`, `__repr__`, `__eq__`
+- Supportent `frozen=True`, `order=True`, `slots=True`
+- À préférer aux classes classiques pour les classes de données
+
 ### Slots
 - Optimisent la mémoire
 - Limitent les attributs
@@ -1102,6 +1257,7 @@ Les concepts avancés de Python comme les métaclasses, les descripteurs et les 
 - Préférez `__init_subclass__` aux métaclasses quand possible
 - Les classes abstraites (ABC) définissent des contrats
 - Les descripteurs contrôlent l'accès aux attributs
+- `@dataclass` simplifie la création de classes de données
 - Les slots économisent de la mémoire
 - Utilisez ces outils avec parcimonie
 

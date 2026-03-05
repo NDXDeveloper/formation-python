@@ -56,8 +56,8 @@ class Personne:
     def __str__(self):
         return f"{self.nom}, {self.age} ans"
 
-personne = Personne("Alice", 30)
-print(personne)      # Appelle __str__
+personne = Personne("Alice", 30)  
+print(personne)      # Appelle __str__  
 # Affiche : Alice, 30 ans
 
 print(str(personne)) # Appelle aussi __str__
@@ -86,8 +86,8 @@ class Personne:
 
 personne = Personne("Alice", 30)
 
-print(str(personne))   # Alice, 30 ans
-print(repr(personne))  # Personne('Alice', 30)
+print(str(personne))   # Alice, 30 ans  
+print(repr(personne))  # Personne('Alice', 30)  
 
 # Dans l'interpréteur interactif
 # >>> personne
@@ -117,12 +117,12 @@ class Livre:
 
 livre = Livre("1984", "George Orwell", 1949)
 
-print(livre)        # "1984" de George Orwell
-print(repr(livre))  # Livre('1984', 'George Orwell', 1949)
+print(livre)        # "1984" de George Orwell  
+print(repr(livre))  # Livre('1984', 'George Orwell', 1949)  
 
 # Créer une liste de livres
-livres = [livre, Livre("Le Petit Prince", "Saint-Exupéry", 1943)]
-print(livres)
+livres = [livre, Livre("Le Petit Prince", "Saint-Exupéry", 1943)]  
+print(livres)  
 # [Livre('1984', 'George Orwell', 1949), Livre('Le Petit Prince', 'Saint-Exupéry', 1943)]
 ```
 
@@ -145,9 +145,9 @@ class Vecteur:
     def __str__(self):
         return f"Vecteur({self.x}, {self.y})"
 
-v1 = Vecteur(2, 3)
-v2 = Vecteur(1, 4)
-v3 = v1 + v2  # Appelle v1.__add__(v2)
+v1 = Vecteur(2, 3)  
+v2 = Vecteur(1, 4)  
+v3 = v1 + v2  # Appelle v1.__add__(v2)  
 
 print(v3)  # Vecteur(3, 7)
 ```
@@ -182,13 +182,13 @@ class Nombre:
     def __str__(self):
         return str(self.valeur)
 
-a = Nombre(10)
-b = Nombre(3)
+a = Nombre(10)  
+b = Nombre(3)  
 
-print(a + b)  # 13
-print(a - b)  # 7
-print(a * b)  # 30
-print(a / b)  # 3.3333...
+print(a + b)  # 13  
+print(a - b)  # 7  
+print(a * b)  # 30  
+print(a / b)  # 3.3333...  
 ```
 
 ### Tableau des Opérateurs Arithmétiques
@@ -231,17 +231,17 @@ class Argent:
     def __repr__(self):
         return f"Argent({self.montant}, '{self.devise}')"
 
-prix1 = Argent(50.00)
-prix2 = Argent(30.50)
+prix1 = Argent(50.00)  
+prix2 = Argent(30.50)  
 
-total = prix1 + prix2
-print(total)  # 80.50 EUR
+total = prix1 + prix2  
+print(total)  # 80.50 EUR  
 
-reduction = total - Argent(10)
-print(reduction)  # 70.50 EUR
+reduction = total - Argent(10)  
+print(reduction)  # 70.50 EUR  
 
-double = prix1 * 2
-print(double)  # 100.00 EUR
+double = prix1 * 2  
+print(double)  # 100.00 EUR  
 ```
 
 ## Méthodes de Comparaison
@@ -281,31 +281,31 @@ class Personne:
     def __str__(self):
         return f"{self.nom} ({self.age} ans)"
 
-alice = Personne("Alice", 30)
-bob = Personne("Bob", 25)
-charlie = Personne("Charlie", 30)
+alice = Personne("Alice", 30)  
+bob = Personne("Bob", 25)  
+charlie = Personne("Charlie", 30)  
 
-print(alice == charlie)  # True (même âge)
-print(alice == bob)      # False
-print(bob < alice)       # True (25 < 30)
-print(alice >= charlie)  # True (30 >= 30)
+print(alice == charlie)  # True (même âge)  
+print(alice == bob)      # False  
+print(bob < alice)       # True (25 < 30)  
+print(alice >= charlie)  # True (30 >= 30)  
 
 # Trier une liste de personnes
-personnes = [alice, bob, charlie]
-personnes_triees = sorted(personnes)  # Trie par âge grâce à __lt__
-for p in personnes_triees:
+personnes = [alice, bob, charlie]  
+personnes_triees = sorted(personnes)  # Trie par âge grâce à __lt__  
+for p in personnes_triees:  
     print(p)
 ```
 
 **Résultat :**
 ```
-True
-False
-True
-True
-Bob (25 ans)
-Alice (30 ans)
-Charlie (30 ans)
+True  
+False  
+True  
+True  
+Bob (25 ans)  
+Alice (30 ans)  
+Charlie (30 ans)  
 ```
 
 ### Tableau des Opérateurs de Comparaison
@@ -340,13 +340,13 @@ class Playlist:
     def __str__(self):
         return f"Playlist '{self.nom}' avec {len(self)} chansons"
 
-ma_playlist = Playlist("Mes favoris")
-ma_playlist.ajouter("Bohemian Rhapsody")
-ma_playlist.ajouter("Imagine")
-ma_playlist.ajouter("Hotel California")
+ma_playlist = Playlist("Mes favoris")  
+ma_playlist.ajouter("Bohemian Rhapsody")  
+ma_playlist.ajouter("Imagine")  
+ma_playlist.ajouter("Hotel California")  
 
-print(len(ma_playlist))  # 3
-print(ma_playlist)       # Playlist 'Mes favoris' avec 3 chansons
+print(len(ma_playlist))  # 3  
+print(ma_playlist)       # Playlist 'Mes favoris' avec 3 chansons  
 ```
 
 ## `__getitem__` et `__setitem__` : Indexation
@@ -371,14 +371,14 @@ class Playlist:
     def __len__(self):
         return len(self.chansons)
 
-playlist = Playlist("Rock")
-playlist.ajouter("Song 1")
-playlist.ajouter("Song 2")
-playlist.ajouter("Song 3")
+playlist = Playlist("Rock")  
+playlist.ajouter("Song 1")  
+playlist.ajouter("Song 2")  
+playlist.ajouter("Song 3")  
 
-print(playlist[0])   # Song 1
-print(playlist[1])   # Song 2
-print(playlist[-1])  # Song 3 (dernier élément)
+print(playlist[0])   # Song 1  
+print(playlist[1])   # Song 2  
+print(playlist[-1])  # Song 3 (dernier élément)  
 
 # On peut même faire du slicing !
 print(playlist[0:2])  # ['Song 1', 'Song 2']
@@ -405,12 +405,12 @@ class Playlist:
     def __len__(self):
         return len(self.chansons)
 
-playlist = Playlist("Rock")
-playlist.ajouter("Old Song")
+playlist = Playlist("Rock")  
+playlist.ajouter("Old Song")  
 
-print(playlist[0])      # Old Song
-playlist[0] = "New Song"  # Utilise __setitem__
-print(playlist[0])      # New Song
+print(playlist[0])      # Old Song  
+playlist[0] = "New Song"  # Utilise __setitem__  
+print(playlist[0])      # New Song  
 ```
 
 ### `__delitem__` : Supprimer un Élément
@@ -437,17 +437,17 @@ class Playlist:
     def __len__(self):
         return len(self.chansons)
 
-playlist = Playlist("Rock")
-playlist.ajouter("Song 1")
-playlist.ajouter("Song 2")
-playlist.ajouter("Song 3")
+playlist = Playlist("Rock")  
+playlist.ajouter("Song 1")  
+playlist.ajouter("Song 2")  
+playlist.ajouter("Song 3")  
 
-print(len(playlist))  # 3
-del playlist[1]       # Supprime "Song 2"
-print(len(playlist))  # 2
+print(len(playlist))  # 3  
+del playlist[1]       # Supprime "Song 2"  
+print(len(playlist))  # 2  
 ```
 
-## `__iter__` et `__next__` : Rendre un Objet Iterable
+## `__iter__` et `__next__` : Rendre un Objet Itérable
 
 Ces méthodes permettent d'utiliser vos objets dans des boucles `for`.
 
@@ -468,8 +468,8 @@ class Compte:
         self.valeur += 1
         return self.valeur
 
-compteur = Compte()
-for nombre in compteur:
+compteur = Compte()  
+for nombre in compteur:  
     print(nombre)
 ```
 
@@ -499,10 +499,10 @@ class Bibliotheque:
     def __len__(self):
         return len(self.livres)
 
-biblio = Bibliotheque()
-biblio.ajouter_livre("1984")
-biblio.ajouter_livre("Le Petit Prince")
-biblio.ajouter_livre("Harry Potter")
+biblio = Bibliotheque()  
+biblio.ajouter_livre("1984")  
+biblio.ajouter_livre("Le Petit Prince")  
+biblio.ajouter_livre("Harry Potter")  
 
 # On peut maintenant itérer directement sur la bibliothèque !
 for livre in biblio:
@@ -536,14 +536,14 @@ class Equipe:
     def __len__(self):
         return len(self.membres)
 
-equipe = Equipe("Les Développeurs")
-equipe.ajouter_membre("Alice")
-equipe.ajouter_membre("Bob")
-equipe.ajouter_membre("Charlie")
+equipe = Equipe("Les Développeurs")  
+equipe.ajouter_membre("Alice")  
+equipe.ajouter_membre("Bob")  
+equipe.ajouter_membre("Charlie")  
 
-print("Alice" in equipe)    # True
-print("David" in equipe)    # False
-print("Bob" not in equipe)  # False
+print("Alice" in equipe)    # True  
+print("David" in equipe)    # False  
+print("Bob" not in equipe)  # False  
 ```
 
 ## `__call__` : Rendre un Objet Appelable
@@ -559,12 +559,12 @@ class Multiplicateur:
         """Permet d'appeler l'objet comme une fonction"""
         return nombre * self.facteur
 
-doubler = Multiplicateur(2)
-tripler = Multiplicateur(3)
+doubler = Multiplicateur(2)  
+tripler = Multiplicateur(3)  
 
-print(doubler(5))   # 10  (5 * 2)
-print(doubler(10))  # 20  (10 * 2)
-print(tripler(5))   # 15  (5 * 3)
+print(doubler(5))   # 10  (5 * 2)  
+print(doubler(10))  # 20  (10 * 2)  
+print(tripler(5))   # 15  (5 * 3)  
 ```
 
 ### Exemple Pratique : Compteur d'Appels
@@ -584,21 +584,21 @@ class CompteurAppels:
 def saluer(nom):
     print(f"Bonjour {nom} !")
 
-saluer("Alice")
-saluer("Bob")
-saluer("Charlie")
+saluer("Alice")  
+saluer("Bob")  
+saluer("Charlie")  
 
 print(f"\nLa fonction a été appelée {saluer.nombre_appels} fois")
 ```
 
 **Résultat :**
 ```
-Appel n°1
-Bonjour Alice !
-Appel n°2
-Bonjour Bob !
-Appel n°3
-Bonjour Charlie !
+Appel n°1  
+Bonjour Alice !  
+Appel n°2  
+Bonjour Bob !  
+Appel n°3  
+Bonjour Charlie !  
 
 La fonction a été appelée 3 fois
 ```
@@ -699,9 +699,9 @@ with Chronometre():
 
 **Résultat :**
 ```
-Chronomètre démarré...
-Somme calculée : 499999500000
-Temps écoulé : 0.0234 secondes
+Chronomètre démarré...  
+Somme calculée : 499999500000  
+Temps écoulé : 0.0234 secondes  
 ```
 
 ## Exemple Complet : Classe Vecteur
@@ -780,42 +780,42 @@ class Vecteur:
             raise IndexError("Index invalide (0 ou 1 uniquement)")
 
 # Utilisation complète
-v1 = Vecteur(3, 4)
-v2 = Vecteur(1, 2)
+v1 = Vecteur(3, 4)  
+v2 = Vecteur(1, 2)  
 
-print(f"v1 = {v1}")              # (3, 4)
-print(f"v2 = {v2}")              # (1, 2)
+print(f"v1 = {v1}")              # (3, 4)  
+print(f"v2 = {v2}")              # (1, 2)  
 
 # Opérations
-v3 = v1 + v2
-print(f"v1 + v2 = {v3}")        # (4, 6)
+v3 = v1 + v2  
+print(f"v1 + v2 = {v3}")        # (4, 6)  
 
-v4 = v1 - v2
-print(f"v1 - v2 = {v4}")        # (2, 2)
+v4 = v1 - v2  
+print(f"v1 - v2 = {v4}")        # (2, 2)  
 
-v5 = v1 * 2
-print(f"v1 * 2 = {v5}")         # (6, 8)
+v5 = v1 * 2  
+print(f"v1 * 2 = {v5}")         # (6, 8)  
 
-v6 = -v1
-print(f"-v1 = {v6}")            # (-3, -4)
+v6 = -v1  
+print(f"-v1 = {v6}")            # (-3, -4)  
 
 # Comparaison
-print(f"v1 == v2 : {v1 == v2}") # False
-print(f"v1 != v2 : {v1 != v2}") # True
+print(f"v1 == v2 : {v1 == v2}") # False  
+print(f"v1 != v2 : {v1 != v2}") # True  
 
 # Longueur
 print(f"|v1| = {abs(v1)}")      # 5.0
 
 # Booléen
-v_nul = Vecteur(0, 0)
-print(f"v1 est vrai : {bool(v1)}")      # True
-print(f"v_nul est vrai : {bool(v_nul)}") # False
+v_nul = Vecteur(0, 0)  
+print(f"v1 est vrai : {bool(v1)}")      # True  
+print(f"v_nul est vrai : {bool(v_nul)}") # False  
 
 # Indexation
-print(f"v1[0] = {v1[0]}")       # 3
-print(f"v1[1] = {v1[1]}")       # 4
-v1[0] = 10
-print(f"v1 après modification = {v1}")  # (10, 4)
+print(f"v1[0] = {v1[0]}")       # 3  
+print(f"v1[1] = {v1[1]}")       # 4  
+v1[0] = 10  
+print(f"v1 après modification = {v1}")  # (10, 4)  
 ```
 
 ## Exemple Complet : Classe Fraction
@@ -890,33 +890,33 @@ class Fraction:
         return self.numerateur // self.denominateur
 
 # Utilisation
-f1 = Fraction(1, 2)
-f2 = Fraction(1, 3)
+f1 = Fraction(1, 2)  
+f2 = Fraction(1, 3)  
 
-print(f"f1 = {f1}")                    # 1/2
-print(f"f2 = {f2}")                    # 1/3
+print(f"f1 = {f1}")                    # 1/2  
+print(f"f2 = {f2}")                    # 1/3  
 
-somme = f1 + f2
-print(f"f1 + f2 = {somme}")            # 5/6
+somme = f1 + f2  
+print(f"f1 + f2 = {somme}")            # 5/6  
 
-difference = f1 - f2
-print(f"f1 - f2 = {difference}")       # 1/6
+difference = f1 - f2  
+print(f"f1 - f2 = {difference}")       # 1/6  
 
-produit = f1 * f2
-print(f"f1 * f2 = {produit}")          # 1/6
+produit = f1 * f2  
+print(f"f1 * f2 = {produit}")          # 1/6  
 
-quotient = f1 / f2
-print(f"f1 / f2 = {quotient}")         # 3/2
+quotient = f1 / f2  
+print(f"f1 / f2 = {quotient}")         # 3/2  
 
-print(f"f1 < f2 : {f1 < f2}")          # False
-print(f"f1 > f2 : {f1 > f2}")          # True
+print(f"f1 < f2 : {f1 < f2}")          # False  
+print(f"f1 > f2 : {f1 > f2}")          # True  
 
-print(f"Valeur décimale de f1 : {float(f1)}")  # 0.5
-print(f"Partie entière de f1 : {int(f1)}")     # 0
+print(f"Valeur décimale de f1 : {float(f1)}")  # 0.5  
+print(f"Partie entière de f1 : {int(f1)}")     # 0  
 
 # Simplification automatique
-f3 = Fraction(4, 8)
-print(f"4/8 simplifié = {f3}")         # 1/2
+f3 = Fraction(4, 8)  
+print(f"4/8 simplifié = {f3}")         # 1/2  
 ```
 
 ## Récapitulatif des Principales Méthodes Spéciales
@@ -1043,8 +1043,8 @@ class Fraction:
 
 ### 5. Maintenir la Cohérence
 
-Si vous définissez `__eq__`, définissez aussi `__ne__` (ou laissez Python le déduire).
-Si vous définissez `__lt__`, envisagez de définir aussi les autres comparaisons.
+Depuis Python 3, `__ne__` est automatiquement déduit de `__eq__` (il n'est plus nécessaire de le définir manuellement).  
+Si vous définissez `__eq__` et `__lt__`, utilisez `@functools.total_ordering` pour générer les autres comparaisons.  
 
 ## Conclusion
 
@@ -1052,7 +1052,7 @@ Les méthodes spéciales (dunder methods) sont un outil puissant qui permet de :
 - **Intégrer** vos objets naturellement dans le langage Python
 - **Surcharger** les opérateurs pour qu'ils fonctionnent avec vos classes
 - **Rendre** vos objets plus intuitifs à utiliser
-- **Créer** des APIs élégantes et pythonesques
+- **Créer** des APIs élégantes et pythoniques
 
 En maîtrisant ces méthodes, vous pouvez créer des classes qui se comportent comme des types natifs Python, rendant votre code plus lisible et plus agréable à utiliser.
 

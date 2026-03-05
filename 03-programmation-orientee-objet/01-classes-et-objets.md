@@ -51,8 +51,8 @@ class Chien:
 Pour créer un objet (une instance) de cette classe :
 
 ```python
-mon_chien = Chien()
-print(mon_chien)  # <__main__.Chien object at 0x...>
+mon_chien = Chien()  
+print(mon_chien)  # <__main__.Chien object at 0x...>  
 ```
 
 Pour l'instant, notre classe est vide. Ajoutons-lui des caractéristiques !
@@ -71,9 +71,9 @@ class Chien:
 Maintenant, quand on crée un chien, on peut lui donner un nom et un âge :
 
 ```python
-mon_chien = Chien("Rex", 5)
-print(mon_chien.nom)  # Affiche : Rex
-print(mon_chien.age)  # Affiche : 5
+mon_chien = Chien("Rex", 5)  
+print(mon_chien.nom)  # Affiche : Rex  
+print(mon_chien.age)  # Affiche : 5  
 ```
 
 ### Comprendre `self`
@@ -106,13 +106,13 @@ class Chien:
         self.race = race    # Attribut d'instance
 
 # Créer deux chiens différents
-chien1 = Chien("Rex", 5, "Berger Allemand")
-chien2 = Chien("Bella", 3, "Labrador")
+chien1 = Chien("Rex", 5, "Berger Allemand")  
+chien2 = Chien("Bella", 3, "Labrador")  
 
-print(chien1.nom)   # Rex
-print(chien2.nom)   # Bella
-print(chien1.race)  # Berger Allemand
-print(chien2.race)  # Labrador
+print(chien1.nom)   # Rex  
+print(chien2.nom)   # Bella  
+print(chien1.race)  # Berger Allemand  
+print(chien2.race)  # Labrador  
 ```
 
 Chaque chien a ses propres attributs, indépendants les uns des autres.
@@ -138,10 +138,10 @@ class Chien:
         print(f"{self.nom} a maintenant {self.age} ans.")
 
 # Utilisation
-mon_chien = Chien("Rex", 5)
-mon_chien.aboyer()          # Rex dit : Wouf wouf !
-mon_chien.se_presenter()    # Je m'appelle Rex et j'ai 5 ans.
-mon_chien.vieillir()        # Rex a maintenant 6 ans.
+mon_chien = Chien("Rex", 5)  
+mon_chien.aboyer()          # Rex dit : Wouf wouf !  
+mon_chien.se_presenter()    # Je m'appelle Rex et j'ai 5 ans.  
+mon_chien.vieillir()        # Rex a maintenant 6 ans.  
 ```
 
 Notez que :
@@ -164,13 +164,13 @@ class Chien:
         self.nom = nom
         self.age = age
 
-chien1 = Chien("Rex", 5)
-chien2 = Chien("Bella", 3)
+chien1 = Chien("Rex", 5)  
+chien2 = Chien("Bella", 3)  
 
-print(chien1.espece)        # Canis familiaris
-print(chien2.espece)        # Canis familiaris
-print(Chien.espece)         # Canis familiaris
-print(Chien.nombre_pattes)  # 4
+print(chien1.espece)        # Canis familiaris  
+print(chien2.espece)        # Canis familiaris  
+print(Chien.espece)         # Canis familiaris  
+print(Chien.nombre_pattes)  # 4  
 ```
 
 **Différence clé** :
@@ -226,15 +226,15 @@ class CompteBancaire:
             print(f"  - {operation}")
 
 # Utilisation
-compte1 = CompteBancaire("Alice", 1000)
-compte1.afficher_solde()       # Compte de Alice : 1000€
-compte1.deposer(500)           # Dépôt de 500€ effectué. Nouveau solde : 1500€
-compte1.retirer(200)           # Retrait de 200€ effectué. Nouveau solde : 1300€
-compte1.appliquer_interets()   # Intérêts de 26.00€ appliqués.
-compte1.afficher_historique()  # Affiche tout l'historique
+compte1 = CompteBancaire("Alice", 1000)  
+compte1.afficher_solde()       # Compte de Alice : 1000€  
+compte1.deposer(500)           # Dépôt de 500€ effectué. Nouveau solde : 1500€  
+compte1.retirer(200)           # Retrait de 200€ effectué. Nouveau solde : 1300€  
+compte1.appliquer_interets()   # Intérêts de 26.00€ appliqués.  
+compte1.afficher_historique()  # Affiche tout l'historique  
 
-compte2 = CompteBancaire("Bob", 500)
-compte2.afficher_solde()       # Compte de Bob : 500€
+compte2 = CompteBancaire("Bob", 500)  
+compte2.afficher_solde()       # Compte de Bob : 500€  
 ```
 
 ## Exemple : Classe Personne
@@ -259,17 +259,17 @@ class Personne:
         return self.age >= 18
 
 # Créer plusieurs personnes
-personne1 = Personne("Dupont", "Marie", 25)
-personne2 = Personne("Martin", "Pierre", 17)
+personne1 = Personne("Dupont", "Marie", 25)  
+personne2 = Personne("Martin", "Pierre", 17)  
 
-personne1.se_presenter()        # Bonjour, je m'appelle Marie Dupont et j'ai 25 ans.
-personne2.se_presenter()        # Bonjour, je m'appelle Pierre Martin et j'ai 17 ans.
+personne1.se_presenter()        # Bonjour, je m'appelle Marie Dupont et j'ai 25 ans.  
+personne2.se_presenter()        # Bonjour, je m'appelle Pierre Martin et j'ai 17 ans.  
 
-print(personne1.est_majeur())   # True
-print(personne2.est_majeur())   # False
+print(personne1.est_majeur())   # True  
+print(personne2.est_majeur())   # False  
 
-personne2.avoir_anniversaire()  # Joyeux anniversaire ! Pierre a maintenant 18 ans.
-print(personne2.est_majeur())   # True
+personne2.avoir_anniversaire()  # Joyeux anniversaire ! Pierre a maintenant 18 ans.  
+print(personne2.est_majeur())   # True  
 ```
 
 ## Modification des Attributs
@@ -286,12 +286,12 @@ class Voiture:
     def afficher_info(self):
         print(f"{self.marque} {self.couleur}, {self.kilometrage} km")
 
-ma_voiture = Voiture("Renault", "rouge")
-ma_voiture.afficher_info()      # Renault rouge, 0 km
+ma_voiture = Voiture("Renault", "rouge")  
+ma_voiture.afficher_info()      # Renault rouge, 0 km  
 
 # Modifier un attribut
-ma_voiture.couleur = "bleu"
-ma_voiture.kilometrage = 15000
+ma_voiture.couleur = "bleu"  
+ma_voiture.kilometrage = 15000  
 
 ma_voiture.afficher_info()      # Renault bleu, 15000 km
 ```
@@ -311,15 +311,15 @@ class Compteur:
     def afficher(self):
         print(f"Valeur : {self.valeur}")
 
-compteur1 = Compteur()
-compteur2 = Compteur(10)
+compteur1 = Compteur()  
+compteur2 = Compteur(10)  
 
-compteur1.incrementer()
-compteur1.incrementer()
-compteur2.incrementer()
+compteur1.incrementer()  
+compteur1.incrementer()  
+compteur2.incrementer()  
 
-compteur1.afficher()  # Valeur : 2
-compteur2.afficher()  # Valeur : 11
+compteur1.afficher()  # Valeur : 2  
+compteur2.afficher()  # Valeur : 11  
 ```
 
 Même si les deux objets sont créés à partir de la même classe, leurs attributs sont complètement indépendants.
@@ -481,9 +481,9 @@ class GestionnaireTaches:
 # Utilisation
 gestionnaire = GestionnaireTaches()
 
-gestionnaire.ajouter_tache("Faire les courses", "Acheter du pain et du lait")
-gestionnaire.ajouter_tache("Répondre aux emails")
-gestionnaire.ajouter_tache("Réviser Python", "Chapitre sur les classes")
+gestionnaire.ajouter_tache("Faire les courses", "Acheter du pain et du lait")  
+gestionnaire.ajouter_tache("Répondre aux emails")  
+gestionnaire.ajouter_tache("Réviser Python", "Chapitre sur les classes")  
 
 gestionnaire.afficher_toutes()
 
@@ -492,7 +492,7 @@ gestionnaire.taches[0].marquer_terminee()
 
 gestionnaire.afficher_non_terminees()
 
-print(f"\nProgress : {gestionnaire.nombre_taches_terminees()}/{gestionnaire.nombre_taches_total()} tâches terminées")
+print(f"\nProgression : {gestionnaire.nombre_taches_terminees()}/{gestionnaire.nombre_taches_total()} tâches terminées")
 ```
 
 ## Résumé des Concepts Clés

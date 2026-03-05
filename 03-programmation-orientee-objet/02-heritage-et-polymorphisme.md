@@ -53,17 +53,17 @@ class Chien(Animal):  # Chien hérite de Animal
         print(f"{self.nom} dit : Wouf wouf !")
 
 # Utilisation
-mon_chien = Chien("Rex")
-mon_chien.manger()   # Méthode héritée de Animal
-mon_chien.dormir()   # Méthode héritée de Animal
-mon_chien.aboyer()   # Méthode propre à Chien
+mon_chien = Chien("Rex")  
+mon_chien.manger()   # Méthode héritée de Animal  
+mon_chien.dormir()   # Méthode héritée de Animal  
+mon_chien.aboyer()   # Méthode propre à Chien  
 ```
 
 **Résultat :**
 ```
-Rex est en train de manger.
-Rex dort paisiblement.
-Rex dit : Wouf wouf !
+Rex est en train de manger.  
+Rex dort paisiblement.  
+Rex dit : Wouf wouf !  
 ```
 
 Le chien peut utiliser toutes les méthodes définies dans la classe `Animal`, même si elles ne sont pas écrites dans la classe `Chien` !
@@ -122,32 +122,32 @@ class Manager(Employe):
 
 
 # Utilisation
-dev = Developpeur("Dupont", "Marie", 45000, "Python")
-dev.afficher_info()
-dev.coder()
-dev.augmentation(10)
+dev = Developpeur("Dupont", "Marie", 45000, "Python")  
+dev.afficher_info()  
+dev.coder()  
+dev.augmentation(10)  
 
 print("\n" + "="*40 + "\n")
 
-manager = Manager("Martin", "Pierre", 60000, 8)
-manager.afficher_info()
-manager.organiser_reunion()
+manager = Manager("Martin", "Pierre", 60000, 8)  
+manager.afficher_info()  
+manager.organiser_reunion()  
 ```
 
 **Résultat :**
 ```
-Employé : Marie Dupont
-Salaire : 45000€
-Langage principal : Python
-Marie code en Python...
-Nouveau salaire : 49500.00€
+Employé : Marie Dupont  
+Salaire : 45000€  
+Langage principal : Python  
+Marie code en Python...  
+Nouveau salaire : 49500.00€  
 
 ========================================
 
-Employé : Pierre Martin
-Salaire : 60000€
-Gère une équipe de 8 personnes
-Pierre organise une réunion d'équipe.
+Employé : Pierre Martin  
+Salaire : 60000€  
+Gère une équipe de 8 personnes  
+Pierre organise une réunion d'équipe.  
 ```
 
 ## Le Mot-Clé `super()`
@@ -178,8 +178,8 @@ ma_voiture = Voiture("Renault", "Clio", 5)
 
 **Résultat :**
 ```
-Création d'un véhicule : Renault Clio
-C'est une voiture avec 5 portes
+Création d'un véhicule : Renault Clio  
+C'est une voiture avec 5 portes  
 ```
 
 ### Utilisation dans les Méthodes
@@ -208,16 +208,16 @@ class RectangleColore(Rectangle):
         # Puis ajouter notre propre comportement
         print(f"Couleur : {self.couleur}")
 
-rect = RectangleColore(10, 5, "rouge")
-rect.afficher()
-print(f"Surface : {rect.surface()} cm²")
+rect = RectangleColore(10, 5, "rouge")  
+rect.afficher()  
+print(f"Surface : {rect.surface()} cm²")  
 ```
 
 **Résultat :**
 ```
-Rectangle : 10 x 5
-Couleur : rouge
-Surface : 50 cm²
+Rectangle : 10 x 5  
+Couleur : rouge  
+Surface : 50 cm²  
 ```
 
 ## Surcharge de Méthodes (Method Overriding)
@@ -249,13 +249,13 @@ class Vache(Animal):
 
 
 # Utilisation
-rex = Chien("Rex")
-felix = Chat("Felix")
-marguerite = Vache("Marguerite")
+rex = Chien("Rex")  
+felix = Chat("Felix")  
+marguerite = Vache("Marguerite")  
 
-rex.faire_bruit()         # Rex aboie : Wouf wouf !
-felix.faire_bruit()       # Felix miaule : Miaou miaou !
-marguerite.faire_bruit()  # Marguerite meugle : Meuh meuh !
+rex.faire_bruit()         # Rex aboie : Wouf wouf !  
+felix.faire_bruit()       # Felix miaule : Miaou miaou !  
+marguerite.faire_bruit()  # Marguerite meugle : Meuh meuh !  
 ```
 
 Chaque classe enfant **redéfinit** la méthode `faire_bruit()` avec son propre comportement.
@@ -320,9 +320,9 @@ for forme in formes:
 
 **Résultat :**
 ```
-Cercle - Surface : 78.53975 cm²
-Carré - Surface : 16 cm²
-Triangle - Surface : 9.0 cm²
+Cercle - Surface : 78.53975 cm²  
+Carré - Surface : 16 cm²  
+Triangle - Surface : 9.0 cm²  
 ```
 
 **Pourquoi c'est puissant ?** On peut traiter différents types d'objets de la même manière, sans se soucier de leur type spécifique. Le bon comportement est automatiquement choisi selon le type de l'objet.
@@ -411,23 +411,23 @@ for paiement in paiements:
 **Résultat :**
 ```
 --- Traitement du paiement ---
-Paiement par carte bancaire (**** **** **** 3456)
-Paiement de 150.5€ effectué.
+Paiement par carte bancaire (**** **** **** 3456)  
+Paiement de 150.5€ effectué.  
 --- Paiement terminé ---
 
 --- Traitement du paiement ---
-Paiement via PayPal avec le compte : user@example.com
-Paiement de 75.0€ effectué.
+Paiement via PayPal avec le compte : user@example.com  
+Paiement de 75.0€ effectué.  
 --- Paiement terminé ---
 
 --- Traitement du paiement ---
-Paiement en espèces
-Paiement de 30.0€ effectué.
+Paiement en espèces  
+Paiement de 30.0€ effectué.  
 --- Paiement terminé ---
 
 --- Traitement du paiement ---
-Paiement par chèque n°CH123456
-Paiement de 200.0€ effectué.
+Paiement par chèque n°CH123456  
+Paiement de 200.0€ effectué.  
 --- Paiement terminé ---
 ```
 
@@ -447,23 +447,23 @@ class Chien(Animal):
 class Chat(Animal):
     pass
 
-rex = Chien()
-felix = Chat()
+rex = Chien()  
+felix = Chat()  
 
-print(isinstance(rex, Chien))     # True
-print(isinstance(rex, Animal))    # True (un Chien est aussi un Animal)
-print(isinstance(rex, Chat))      # False
-print(isinstance(felix, Chat))    # True
-print(isinstance(felix, Animal))  # True
+print(isinstance(rex, Chien))     # True  
+print(isinstance(rex, Animal))    # True (un Chien est aussi un Animal)  
+print(isinstance(rex, Chat))      # False  
+print(isinstance(felix, Chat))    # True  
+print(isinstance(felix, Animal))  # True  
 ```
 
 ### `issubclass()` : Vérifier l'Héritage entre Classes
 
 ```python
-print(issubclass(Chien, Animal))  # True
-print(issubclass(Chat, Animal))   # True
-print(issubclass(Chien, Chat))    # False
-print(issubclass(Animal, Chien))  # False
+print(issubclass(Chien, Animal))  # True  
+print(issubclass(Chat, Animal))   # True  
+print(issubclass(Chien, Chat))    # False  
+print(issubclass(Animal, Chien))  # False  
 ```
 
 ## Héritage Multiple
@@ -490,17 +490,17 @@ class Canard(Volant, Nageant):  # Hérite de deux classes
 
 
 # Utilisation
-donald = Canard("Donald")
-donald.caqueter()  # Méthode propre
-donald.voler()     # Héritée de Volant
-donald.nager()     # Héritée de Nageant
+donald = Canard("Donald")  
+donald.caqueter()  # Méthode propre  
+donald.voler()     # Héritée de Volant  
+donald.nager()     # Héritée de Nageant  
 ```
 
 **Résultat :**
 ```
-Donald fait : Coin coin !
-Je vole dans les airs !
-Je nage dans l'eau !
+Donald fait : Coin coin !  
+Je vole dans les airs !  
+Je nage dans l'eau !  
 ```
 
 ### Attention avec l'Héritage Multiple
@@ -519,8 +519,8 @@ class B:
 class C(A, B):  # C hérite de A et B
     pass
 
-obj = C()
-obj.methode()  # Quelle méthode sera appelée ?
+obj = C()  
+obj.methode()  # Quelle méthode sera appelée ?  
 # Affiche : "Méthode de A" (A est mentionné en premier)
 
 # Voir l'ordre de résolution des méthodes
@@ -635,50 +635,50 @@ class FichierImage(Fichier):
 print("=== Création du système de fichiers ===\n")
 
 # Créer des fichiers
-doc1 = Fichier("rapport", 150, "pdf")
-doc2 = Fichier("presentation", 300, "pptx")
-image1 = FichierImage("photo_vacances", 2500, "jpg", 1920, 1080)
-image2 = FichierImage("logo", 50, "png", 512, 512)
+doc1 = Fichier("rapport", 150, "pdf")  
+doc2 = Fichier("presentation", 300, "pptx")  
+image1 = FichierImage("photo_vacances", 2500, "jpg", 1920, 1080)  
+image2 = FichierImage("logo", 50, "png", 512, 512)  
 
 # Créer des dossiers
-dossier_documents = Dossier("Documents")
-dossier_images = Dossier("Images")
-dossier_principal = Dossier("Mon_Ordinateur")
+dossier_documents = Dossier("Documents")  
+dossier_images = Dossier("Images")  
+dossier_principal = Dossier("Mon_Ordinateur")  
 
 # Organiser les fichiers
-dossier_documents.ajouter(doc1)
-dossier_documents.ajouter(doc2)
-dossier_images.ajouter(image1)
-dossier_images.ajouter(image2)
-dossier_principal.ajouter(dossier_documents)
-dossier_principal.ajouter(dossier_images)
+dossier_documents.ajouter(doc1)  
+dossier_documents.ajouter(doc2)  
+dossier_images.ajouter(image1)  
+dossier_images.ajouter(image2)  
+dossier_principal.ajouter(dossier_documents)  
+dossier_principal.ajouter(dossier_images)  
 
 print("\n" + "="*50)
 # Lister le contenu
-dossier_principal.lister_contenu()
-dossier_images.lister_contenu()
+dossier_principal.lister_contenu()  
+dossier_images.lister_contenu()  
 
 print("\n" + "="*50)
 # Afficher les infos d'un fichier image
-print("\nInformations détaillées :")
-image1.afficher_info()
+print("\nInformations détaillées :")  
+image1.afficher_info()  
 
 print("\n" + "="*50)
 # Calculer la taille totale
-taille_totale = dossier_principal.calculer_taille_totale()
-print(f"\nTaille totale de '{dossier_principal.nom}' : {taille_totale} Ko")
+taille_totale = dossier_principal.calculer_taille_totale()  
+print(f"\nTaille totale de '{dossier_principal.nom}' : {taille_totale} Ko")  
 ```
 
 **Résultat :**
 ```
 === Création du système de fichiers ===
 
-rapport ajouté dans Documents
-presentation ajouté dans Documents
-photo_vacances ajouté dans Images
-logo ajouté dans Images
-Documents ajouté dans Mon_Ordinateur
-Images ajouté dans Mon_Ordinateur
+rapport ajouté dans Documents  
+presentation ajouté dans Documents  
+photo_vacances ajouté dans Images  
+logo ajouté dans Images  
+Documents ajouté dans Mon_Ordinateur  
+Images ajouté dans Mon_Ordinateur  
 
 ==================================================
 
@@ -694,12 +694,12 @@ Contenu de 'Images' :
 
 ==================================================
 
-Informations détaillées :
-Nom : photo_vacances
-Créé le : 27/10/2025 14:30
-Type : Fichier (.jpg)
-Taille : 2500 Ko
-Dimensions : 1920 x 1080 pixels
+Informations détaillées :  
+Nom : photo_vacances  
+Créé le : 27/10/2025 14:30  
+Type : Fichier (.jpg)  
+Taille : 2500 Ko  
+Dimensions : 1920 x 1080 pixels  
 
 ==================================================
 
@@ -779,8 +779,8 @@ def nourrir_animaux(liste_animaux):
     for animal in liste_animaux:
         animal.manger()  # Peu importe le type exact
 
-animaux = [Chien("Rex"), Chat("Felix"), Oiseau("Tweety")]
-nourrir_animaux(animaux)
+animaux = [Chien("Rex"), Chat("Felix"), Oiseau("Tweety")]  
+nourrir_animaux(animaux)  
 ```
 
 ## Bonnes Pratiques
@@ -789,8 +789,10 @@ nourrir_animaux(animaux)
 
 L'héritage doit refléter une relation "est-un" :
 - Un Chien **est un** Animal ✓
-- Un Carré **est un** Rectangle ✓
+- Un Développeur **est un** Employé ✓
 - Une Voiture **est un** Véhicule ✓
+
+> ⚠️ **Piège classique** : on pourrait penser qu'un Carré "est un" Rectangle, mais hériter `Carre` de `Rectangle` pose problème. Si on change la largeur d'un carré sans changer la hauteur, il cesse d'être un carré. Ce genre de subtilité est lié au *principe de substitution de Liskov*.
 
 Contre-exemple à éviter :
 - Un Employé **est un** Salaire ✗ (un employé a un salaire, mais n'est pas un salaire)

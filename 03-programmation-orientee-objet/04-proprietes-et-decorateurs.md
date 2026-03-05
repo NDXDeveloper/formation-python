@@ -22,12 +22,12 @@ class CompteBancaire:
     def __init__(self, solde):
         self.solde = solde
 
-compte = CompteBancaire(1000)
-print(compte.solde)  # 1000
+compte = CompteBancaire(1000)  
+print(compte.solde)  # 1000  
 
 # Problème : on peut mettre n'importe quelle valeur !
-compte.solde = -5000  # Solde négatif : pas logique !
-print(compte.solde)   # -5000
+compte.solde = -5000  # Solde négatif : pas logique !  
+print(compte.solde)   # -5000  
 ```
 
 **Problème** : Rien n'empêche quelqu'un de mettre un solde négatif ou invalide. On aimerait avoir un contrôle sur les valeurs qu'on peut attribuer.
@@ -49,9 +49,9 @@ class CompteBancaire:
             raise ValueError("Le solde ne peut pas être négatif")
         self._solde = valeur
 
-compte = CompteBancaire(1000)
-print(compte.get_solde())  # 1000
-compte.set_solde(1500)     # OK
+compte = CompteBancaire(1000)  
+print(compte.get_solde())  # 1000  
+compte.set_solde(1500)     # OK  
 # compte.set_solde(-500)   # ValueError !
 ```
 
@@ -79,10 +79,10 @@ class CompteBancaire:
         self._solde = valeur
 
 # Utilisation
-compte = CompteBancaire(1000)
-print(compte.solde)      # 1000 - Appelle le getter
-compte.solde = 1500      # OK - Appelle le setter
-print(compte.solde)      # 1500
+compte = CompteBancaire(1000)  
+print(compte.solde)      # 1000 - Appelle le getter  
+compte.solde = 1500      # OK - Appelle le setter  
+print(compte.solde)      # 1500  
 
 # compte.solde = -500    # ValueError !
 ```
@@ -126,11 +126,11 @@ class Cercle:
         return 3.14159 * self.rayon ** 2
 
 # Utilisation
-cercle = Cercle(5)
-print(f"Rayon : {cercle.rayon}")              # 5
-print(f"Diamètre : {cercle.diametre}")        # 10
-print(f"Circonférence : {cercle.circonference}")  # 31.4159
-print(f"Surface : {cercle.surface}")          # 78.53975
+cercle = Cercle(5)  
+print(f"Rayon : {cercle.rayon}")              # 5  
+print(f"Diamètre : {cercle.diametre}")        # 10  
+print(f"Circonférence : {cercle.circonference}")  # 31.4159  
+print(f"Surface : {cercle.surface}")          # 78.53975  
 ```
 
 **Avantages** :
@@ -154,8 +154,8 @@ class Temperature:
         """Getter : lire la température en Celsius"""
         return self._celsius
 
-temp = Temperature(25)
-print(temp.celsius)  # 25
+temp = Temperature(25)  
+print(temp.celsius)  # 25  
 ```
 
 ### `@attribut.setter` : Setter (Écriture)
@@ -178,9 +178,9 @@ class Temperature:
             raise ValueError("Température en dessous du zéro absolu !")
         self._celsius = valeur
 
-temp = Temperature(25)
-temp.celsius = 30       # OK
-print(temp.celsius)     # 30
+temp = Temperature(25)  
+temp.celsius = 30       # OK  
+print(temp.celsius)     # 30  
 
 # temp.celsius = -300   # ValueError !
 ```
@@ -210,10 +210,10 @@ class Personne:
         print(f"Suppression du nom : {self._nom}")
         self._nom = None
 
-personne = Personne("Alice")
-print(personne.nom)    # Alice
-del personne.nom       # Suppression du nom : Alice
-print(personne.nom)    # None
+personne = Personne("Alice")  
+print(personne.nom)    # Alice  
+del personne.nom       # Suppression du nom : Alice  
+print(personne.nom)    # None  
 ```
 
 ## Exemple Complet : Classe Rectangle
@@ -263,16 +263,16 @@ class Rectangle:
         return f"Rectangle({self._largeur}x{self._hauteur})"
 
 # Utilisation
-rect = Rectangle(5, 3)
-print(rect)                    # Rectangle(5x3)
-print(f"Surface : {rect.surface}")      # Surface : 15
-print(f"Périmètre : {rect.perimetre}")  # Périmètre : 16
+rect = Rectangle(5, 3)  
+print(rect)                    # Rectangle(5x3)  
+print(f"Surface : {rect.surface}")      # Surface : 15  
+print(f"Périmètre : {rect.perimetre}")  # Périmètre : 16  
 
 # Modifier les dimensions
-rect.largeur = 10
-rect.hauteur = 4
-print(rect)                    # Rectangle(10x4)
-print(f"Surface : {rect.surface}")      # Surface : 40 (recalculée automatiquement)
+rect.largeur = 10  
+rect.hauteur = 4  
+print(rect)                    # Rectangle(10x4)  
+print(f"Surface : {rect.surface}")      # Surface : 40 (recalculée automatiquement)  
 
 # rect.largeur = -5  # ValueError !
 # rect.surface = 100  # AttributeError (read-only)
@@ -350,12 +350,12 @@ class Personne:
 # Utilisation
 personne = Personne("  dupont  ", "MARIE", 25, "Marie.Dupont@Example.COM")
 
-print(personne.nom)         # DUPONT (formaté automatiquement)
-print(personne.prenom)      # Marie (formaté automatiquement)
-print(personne.email)       # marie.dupont@example.com (formaté)
-print(personne.nom_complet) # Marie DUPONT
-print(personne.est_majeur)  # True
-print(personne)             # Marie DUPONT (25 ans)
+print(personne.nom)         # DUPONT (formaté automatiquement)  
+print(personne.prenom)      # Marie (formaté automatiquement)  
+print(personne.email)       # marie.dupont@example.com (formaté)  
+print(personne.nom_complet) # Marie DUPONT  
+print(personne.est_majeur)  # True  
+print(personne)             # Marie DUPONT (25 ans)  
 
 # Validation automatique
 personne.age = 30  # OK
@@ -387,9 +387,9 @@ dire_bonjour()
 
 **Résultat :**
 ```
-Avant l'appel de la fonction
-Bonjour !
-Après l'appel de la fonction
+Avant l'appel de la fonction  
+Bonjour !  
+Après l'appel de la fonction  
 ```
 
 **Ce qui se passe** : Le `@mon_decorateur` est équivalent à :
@@ -423,9 +423,9 @@ tache_longue()
 
 **Résultat :**
 ```
-Début de la tâche...
-Fin de la tâche.
-Temps d'exécution : 2.0012 secondes
+Début de la tâche...  
+Fin de la tâche.  
+Temps d'exécution : 2.0012 secondes  
 ```
 
 ### Décorateur avec Arguments
@@ -451,18 +451,18 @@ def saluer(nom, message="Bonjour"):
     return f"{message} {nom} !"
 
 # Utilisation
-resultat1 = additionner(5, 3)
-print()
-resultat2 = saluer("Alice", message="Salut")
+resultat1 = additionner(5, 3)  
+print()  
+resultat2 = saluer("Alice", message="Salut")  
 ```
 
 **Résultat :**
 ```
-Appel de additionner avec args=(5, 3), kwargs={}
-Résultat : 8
+Appel de additionner avec args=(5, 3), kwargs={}  
+Résultat : 8  
 
-Appel de saluer avec args=('Alice',), kwargs={'message': 'Salut'}
-Résultat : Salut Alice !
+Appel de saluer avec args=('Alice',), kwargs={'message': 'Salut'}  
+Résultat : Salut Alice !  
 ```
 
 **Explication** :
@@ -498,8 +498,8 @@ def fibonacci(n):
     return fibonacci(n-1) + fibonacci(n-2)
 
 # Premier appel : calcul complet
-print(f"fibonacci(5) = {fibonacci(5)}")
-print()
+print(f"fibonacci(5) = {fibonacci(5)}")  
+print()  
 
 # Deuxième appel : résultats en cache
 print(f"fibonacci(5) = {fibonacci(5)}")
@@ -587,10 +587,10 @@ def compteur_appels(fonction):
 def saluer(nom):
     return f"Bonjour {nom} !"
 
-print(saluer("Alice"))
-print(saluer("Bob"))
-print(saluer("Charlie"))
-print(f"\nLa fonction a été appelée {saluer.nombre_appels} fois")
+print(saluer("Alice"))  
+print(saluer("Bob"))  
+print(saluer("Charlie"))  
+print(f"\nLa fonction a été appelée {saluer.nombre_appels} fois")  
 ```
 
 ## Décorateurs avec Paramètres
@@ -618,12 +618,12 @@ afficher_message("Bonjour !")
 
 **Résultat :**
 ```
-Exécution 1/3
-Message : Bonjour !
-Exécution 2/3
-Message : Bonjour !
-Exécution 3/3
-Message : Bonjour !
+Exécution 1/3  
+Message : Bonjour !  
+Exécution 2/3  
+Message : Bonjour !  
+Exécution 3/3  
+Message : Bonjour !  
 ```
 
 ### Exemple : Décorateur de Debug avec Niveau
@@ -649,9 +649,9 @@ def multiplier(a, b):
 def diviser(a, b):
     return a / b
 
-resultat1 = multiplier(5, 3)
-print()
-resultat2 = diviser(10, 2)
+resultat1 = multiplier(5, 3)  
+print()  
+resultat2 = diviser(10, 2)  
 ```
 
 ## Empiler Plusieurs Décorateurs
@@ -712,13 +712,13 @@ class Produit:
     def __str__(self):
         return f"Produit #{self.id} : {self.nom} - {self.prix}€"
 
-p1 = Produit("Livre", 15)
-p2 = Produit("Stylo", 2)
-p3 = Produit("Cahier", 5)
+p1 = Produit("Livre", 15)  
+p2 = Produit("Stylo", 2)  
+p3 = Produit("Cahier", 5)  
 
-print(p1)  # Produit #1 : Livre - 15€
-print(p2)  # Produit #2 : Stylo - 2€
-print(p3)  # Produit #3 : Cahier - 5€
+print(p1)  # Produit #1 : Livre - 15€  
+print(p2)  # Produit #2 : Stylo - 2€  
+print(p3)  # Produit #3 : Cahier - 5€  
 ```
 
 ## Décorateurs Built-in de Python
@@ -741,12 +741,12 @@ class Mathematiques:
         return a * b
 
 # Appel sans créer d'instance
-print(Mathematiques.additionner(5, 3))   # 8
-print(Mathematiques.multiplier(4, 7))    # 28
+print(Mathematiques.additionner(5, 3))   # 8  
+print(Mathematiques.multiplier(4, 7))    # 28  
 
 # On peut aussi l'appeler depuis une instance
-math = Mathematiques()
-print(math.additionner(2, 3))  # 5
+math = Mathematiques()  
+print(math.additionner(2, 3))  # 5  
 ```
 
 ### `@classmethod`
@@ -780,8 +780,8 @@ p1 = Personne("Alice", 30)
 # Utilisation avec classmethod
 p2 = Personne.creer_depuis_naissance("Bob", 1990)
 
-print(f"{p2.nom} a {p2.age} ans")
-print(f"Nombre total de personnes : {Personne.nombre_total()}")
+print(f"{p2.nom} a {p2.age} ans")  
+print(f"Nombre total de personnes : {Personne.nombre_total()}")  
 ```
 
 ### Comparaison : Méthode d'Instance vs Statique vs Classe
@@ -814,12 +814,12 @@ obj = Demo("ma valeur")
 print(obj.methode_instance())
 
 # Méthode de classe : peut être appelée sur la classe ou l'instance
-print(Demo.methode_classe())
-print(obj.methode_classe())
+print(Demo.methode_classe())  
+print(obj.methode_classe())  
 
 # Méthode statique : peut être appelée sur la classe ou l'instance
-print(Demo.methode_statique())
-print(obj.methode_statique())
+print(Demo.methode_statique())  
+print(obj.methode_statique())  
 ```
 
 ## Exemple Complet : Classe avec Propriétés et Décorateurs
@@ -914,18 +914,18 @@ class Utilisateur:
         return f"{self.nom} ({self.age} ans) - {self.email}"
 
 # Utilisation
-user1 = Utilisateur("Alice Dupont", "alice@example.com", datetime(1995, 5, 15))
-print(user1)                      # Alice Dupont (29/30 ans) - alice@example.com
-print(f"Majeur : {user1.est_majeur}")  # True
+user1 = Utilisateur("Alice Dupont", "alice@example.com", datetime(1995, 5, 15))  
+print(user1)                      # Alice Dupont (29/30 ans) - alice@example.com  
+print(f"Majeur : {user1.est_majeur}")  # True  
 
 # Factory method
-user2 = Utilisateur.creer_mineur("Bob Martin", "bob@example.com", 16)
-print(user2)                      # Bob Martin (16 ans) - bob@example.com
-print(f"Majeur : {user2.est_majeur}")  # False
+user2 = Utilisateur.creer_mineur("Bob Martin", "bob@example.com", 16)  
+print(user2)                      # Bob Martin (16 ans) - bob@example.com  
+print(f"Majeur : {user2.est_majeur}")  # False  
 
 # Méthode statique
-email_test = "test@example.com"
-if Utilisateur.valider_format_email(email_test):
+email_test = "test@example.com"  
+if Utilisateur.valider_format_email(email_test):  
     print(f"{email_test} est valide")
 
 # Nombre total d'utilisateurs
@@ -953,8 +953,8 @@ def ma_fonction():
     """Ceci est ma fonction"""
     print("Ma fonction")
 
-print(ma_fonction.__name__)  # ma_fonction (au lieu de wrapper)
-print(ma_fonction.__doc__)   # Ceci est ma fonction
+print(ma_fonction.__name__)  # ma_fonction (au lieu de wrapper)  
+print(ma_fonction.__doc__)   # Ceci est ma fonction  
 ```
 
 **Bonne pratique** : Toujours utiliser `@wraps(fonction)` dans vos décorateurs.
