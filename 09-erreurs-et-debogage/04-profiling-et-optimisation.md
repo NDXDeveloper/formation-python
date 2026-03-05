@@ -47,16 +47,16 @@ import time
 debut = time.time()
 
 # Code à mesurer
-total = 0
-for i in range(1000000):
+total = 0  
+for i in range(1000000):  
     total += i
 
 # Enregistrer le temps de fin
 fin = time.time()
 
 # Calculer la durée
-duree = fin - debut
-print(f"Temps d'exécution : {duree:.4f} secondes")
+duree = fin - debut  
+print(f"Temps d'exécution : {duree:.4f} secondes")  
 ```
 
 **Sortie :**
@@ -93,9 +93,9 @@ def chronometrer(fonction, *args, **kwargs):
 def calculer_somme(n):
     return sum(range(n))
 
-resultat, temps = chronometrer(calculer_somme, 1000000)
-print(f"Résultat : {resultat}")
-print(f"Temps : {temps:.4f} secondes")
+resultat, temps = chronometrer(calculer_somme, 1000000)  
+print(f"Résultat : {resultat}")  
+print(f"Temps : {temps:.4f} secondes")  
 ```
 
 ### 1.3 Utiliser un gestionnaire de contexte
@@ -103,8 +103,8 @@ print(f"Temps : {temps:.4f} secondes")
 Une approche plus élégante avec un context manager :
 
 ```python
-import time
-from contextlib import contextmanager
+import time  
+from contextlib import contextmanager  
 
 @contextmanager
 def chronometre(nom="Code"):
@@ -149,9 +149,9 @@ Le module `timeit` est plus précis que `time.time()` car il :
 import timeit
 
 # Mesurer le temps d'exécution d'un code simple
-temps = timeit.timeit('sum(range(1000))', number=10000)
-print(f"Temps moyen : {temps:.6f} secondes pour 10000 exécutions")
-print(f"Temps par exécution : {temps/10000:.9f} secondes")
+temps = timeit.timeit('sum(range(1000))', number=10000)  
+print(f"Temps moyen : {temps:.6f} secondes pour 10000 exécutions")  
+print(f"Temps par exécution : {temps/10000:.9f} secondes")  
 ```
 
 ### 2.3 Comparer différentes approches
@@ -162,31 +162,31 @@ print(f"Temps par exécution : {temps/10000:.9f} secondes")
 import timeit
 
 # Méthode 1 : Boucle for classique
-code1 = """
-resultat = []
-for i in range(1000):
+code1 = """  
+resultat = []  
+for i in range(1000):  
     resultat.append(i**2)
 """
 
 # Méthode 2 : Compréhension de liste
-code2 = """
-resultat = [i**2 for i in range(1000)]
+code2 = """  
+resultat = [i**2 for i in range(1000)]  
 """
 
 # Méthode 3 : map() et lambda
-code3 = """
-resultat = list(map(lambda x: x**2, range(1000)))
+code3 = """  
+resultat = list(map(lambda x: x**2, range(1000)))  
 """
 
 # Mesurer chaque méthode
-temps1 = timeit.timeit(code1, number=10000)
-temps2 = timeit.timeit(code2, number=10000)
-temps3 = timeit.timeit(code3, number=10000)
+temps1 = timeit.timeit(code1, number=10000)  
+temps2 = timeit.timeit(code2, number=10000)  
+temps3 = timeit.timeit(code3, number=10000)  
 
-print("Comparaison des méthodes :")
-print(f"  Boucle for        : {temps1:.4f} secondes")
-print(f"  Compréhension     : {temps2:.4f} secondes ⚡ PLUS RAPIDE")
-print(f"  map() + lambda    : {temps3:.4f} secondes")
+print("Comparaison des méthodes :")  
+print(f"  Boucle for        : {temps1:.4f} secondes")  
+print(f"  Compréhension     : {temps2:.4f} secondes ⚡ PLUS RAPIDE")  
+print(f"  map() + lambda    : {temps3:.4f} secondes")  
 
 # Calculer les différences
 print(f"\nLa compréhension est {temps1/temps2:.2f}x plus rapide que la boucle")
@@ -219,12 +219,12 @@ def methode_rapide():
     return "".join(str(i) for i in range(1000))
 
 # Mesurer les deux fonctions
-temps_lent = timeit.timeit(methode_lente, number=1000)
-temps_rapide = timeit.timeit(methode_rapide, number=1000)
+temps_lent = timeit.timeit(methode_lente, number=1000)  
+temps_rapide = timeit.timeit(methode_rapide, number=1000)  
 
-print(f"Méthode lente  : {temps_lent:.4f} secondes")
-print(f"Méthode rapide : {temps_rapide:.4f} secondes")
-print(f"Amélioration   : {temps_lent/temps_rapide:.2f}x plus rapide ! 🚀")
+print(f"Méthode lente  : {temps_lent:.4f} secondes")  
+print(f"Méthode rapide : {temps_rapide:.4f} secondes")  
+print(f"Amélioration   : {temps_lent/temps_rapide:.2f}x plus rapide ! 🚀")  
 ```
 
 ### 2.5 timeit en ligne de commande
@@ -233,8 +233,8 @@ Vous pouvez aussi utiliser timeit directement depuis le terminal :
 
 ```bash
 # Depuis le terminal
-python -m timeit "sum(range(1000))"
-python -m timeit "[i**2 for i in range(1000)]"
+python -m timeit "sum(range(1000))"  
+python -m timeit "[i**2 for i in range(1000)]"  
 ```
 
 ---
@@ -279,8 +279,8 @@ cProfile.run('programme_principal()')
 
 **Sortie (simplifiée) :**
 ```
-Démarrage du programme...
-Résultats calculés : 5 valeurs
+Démarrage du programme...  
+Résultats calculés : 5 valeurs  
          15 function calls in 0.245 seconds
 
    Ordered by: standard name
@@ -302,8 +302,8 @@ Résultats calculés : 5 valeurs
 ### 3.3 Profiler et sauvegarder les résultats
 
 ```python
-import cProfile
-import pstats
+import cProfile  
+import pstats  
 
 def programme_a_profiler():
     # Votre code ici
@@ -317,34 +317,40 @@ cProfile.run('programme_a_profiler()', 'resultats_profiling.prof')
 stats = pstats.Stats('resultats_profiling.prof')
 
 # Trier par temps cumulé et afficher les 10 premières fonctions
-print("="*60)
-print("Top 10 des fonctions les plus gourmandes en temps :")
-print("="*60)
-stats.sort_stats('cumulative').print_stats(10)
+print("="*60)  
+print("Top 10 des fonctions les plus gourmandes en temps :")  
+print("="*60)  
+stats.sort_stats('cumulative').print_stats(10)  
 ```
 
 ### 3.4 Profiler une fonction spécifique avec un décorateur
 
 ```python
-import cProfile
-import pstats
-from functools import wraps
-import io
+import cProfile  
+import pstats  
+from functools import wraps  
+import io  
 
 def profiler(func):
     """Décorateur pour profiler une fonction."""
     @wraps(func)
     def wrapper(*args, **kwargs):
-        profiler = cProfile.Profile()
-        profiler.enable()
+        # Éviter de relancer le profiling lors d'appels récursifs
+        if getattr(wrapper, '_profiling', False):
+            return func(*args, **kwargs)
+
+        wrapper._profiling = True
+        pr = cProfile.Profile()
+        pr.enable()
 
         resultat = func(*args, **kwargs)
 
-        profiler.disable()
+        pr.disable()
+        wrapper._profiling = False
 
         # Créer un objet pour capturer la sortie
         s = io.StringIO()
-        stats = pstats.Stats(profiler, stream=s)
+        stats = pstats.Stats(pr, stream=s)
         stats.sort_stats('cumulative')
         stats.print_stats(10)
 
@@ -363,8 +369,8 @@ def calculer_fibonacci(n):
     return calculer_fibonacci(n-1) + calculer_fibonacci(n-2)
 
 # Test
-resultat = calculer_fibonacci(20)
-print(f"Fibonacci(20) = {resultat}")
+resultat = calculer_fibonacci(20)  
+print(f"Fibonacci(20) = {resultat}")  
 ```
 
 ---
@@ -393,23 +399,23 @@ def mesurer_taille(objet, nom="Objet"):
     print(f"{nom}: {taille:.2f} {unite}")
 
 # Exemples
-liste_petite = [1, 2, 3, 4, 5]
-liste_grande = list(range(1000000))
-dictionnaire = {i: i**2 for i in range(1000)}
-texte = "Python" * 10000
+liste_petite = [1, 2, 3, 4, 5]  
+liste_grande = list(range(1000000))  
+dictionnaire = {i: i**2 for i in range(1000)}  
+texte = "Python" * 10000  
 
-mesurer_taille(liste_petite, "Petite liste")
-mesurer_taille(liste_grande, "Grande liste")
-mesurer_taille(dictionnaire, "Dictionnaire")
-mesurer_taille(texte, "Texte")
+mesurer_taille(liste_petite, "Petite liste")  
+mesurer_taille(liste_grande, "Grande liste")  
+mesurer_taille(dictionnaire, "Dictionnaire")  
+mesurer_taille(texte, "Texte")  
 ```
 
 **Sortie :**
 ```
-Petite liste: 104 octets
-Grande liste: 8.00 Mo
-Dictionnaire: 36.66 Ko
-Texte: 58.59 Ko
+Petite liste: 104 octets  
+Grande liste: 8.00 Mo  
+Dictionnaire: 36.66 Ko  
+Texte: 58.59 Ko  
 ```
 
 ### 4.2 Comparer l'utilisation mémoire de différentes structures
@@ -504,13 +510,13 @@ def test_set(n=10000):
     return 9999 in mon_set
 
 # Comparer les performances
-temps_liste = timeit.timeit(test_liste, number=1000)
-temps_set = timeit.timeit(test_set, number=1000)
+temps_liste = timeit.timeit(test_liste, number=1000)  
+temps_set = timeit.timeit(test_set, number=1000)  
 
-print("Recherche d'un élément :")
-print(f"  Liste : {temps_liste:.4f} secondes")
-print(f"  Set   : {temps_set:.4f} secondes")
-print(f"  Amélioration : {temps_liste/temps_set:.0f}x plus rapide avec un set ! 🚀")
+print("Recherche d'un élément :")  
+print(f"  Liste : {temps_liste:.4f} secondes")  
+print(f"  Set   : {temps_set:.4f} secondes")  
+print(f"  Amélioration : {temps_liste/temps_set:.0f}x plus rapide avec un set ! 🚀")  
 ```
 
 **Résultat :**
@@ -556,13 +562,13 @@ def calculer_distances_rapide(points):
 # Comparaison
 import timeit
 
-points = list(range(1000))
-temps_lent = timeit.timeit(lambda: calculer_distances_lente(points), number=10)
-temps_rapide = timeit.timeit(lambda: calculer_distances_rapide(points), number=10)
+points = list(range(1000))  
+temps_lent = timeit.timeit(lambda: calculer_distances_lente(points), number=10)  
+temps_rapide = timeit.timeit(lambda: calculer_distances_rapide(points), number=10)  
 
-print(f"Version lente  : {temps_lent:.4f} secondes")
-print(f"Version rapide : {temps_rapide:.4f} secondes")
-print(f"Amélioration   : {(temps_lent-temps_rapide)/temps_lent*100:.1f}%")
+print(f"Version lente  : {temps_lent:.4f} secondes")  
+print(f"Version rapide : {temps_rapide:.4f} secondes")  
+print(f"Amélioration   : {(temps_lent-temps_rapide)/temps_lent*100:.1f}%")  
 ```
 
 ### 5.3 Utiliser les compréhensions au lieu des boucles
@@ -584,14 +590,14 @@ def avec_comprehension(n):
     """Créer une liste avec une compréhension."""
     return [i**2 for i in range(n) if i % 2 == 0]
 
-n = 10000
-temps_boucle = timeit.timeit(lambda: avec_boucle(n), number=1000)
-temps_comp = timeit.timeit(lambda: avec_comprehension(n), number=1000)
+n = 10000  
+temps_boucle = timeit.timeit(lambda: avec_boucle(n), number=1000)  
+temps_comp = timeit.timeit(lambda: avec_comprehension(n), number=1000)  
 
-print("Création d'une liste de carrés des nombres pairs :")
-print(f"  Boucle for       : {temps_boucle:.4f} secondes")
-print(f"  Compréhension    : {temps_comp:.4f} secondes")
-print(f"  Amélioration     : {temps_boucle/temps_comp:.2f}x plus rapide")
+print("Création d'une liste de carrés des nombres pairs :")  
+print(f"  Boucle for       : {temps_boucle:.4f} secondes")  
+print(f"  Compréhension    : {temps_comp:.4f} secondes")  
+print(f"  Amélioration     : {temps_boucle/temps_comp:.2f}x plus rapide")  
 ```
 
 ### 5.4 Utiliser les fonctions built-in de Python
@@ -615,13 +621,13 @@ def somme_manuelle(liste):
 def somme_builtin(liste):
     return sum(liste)
 
-temps_manuel = timeit.timeit(lambda: somme_manuelle(nombres), number=100)
-temps_builtin = timeit.timeit(lambda: somme_builtin(nombres), number=100)
+temps_manuel = timeit.timeit(lambda: somme_manuelle(nombres), number=100)  
+temps_builtin = timeit.timeit(lambda: somme_builtin(nombres), number=100)  
 
-print("Calcul de la somme d'une liste :")
-print(f"  Boucle manuelle : {temps_manuel:.4f} secondes")
-print(f"  Fonction sum()  : {temps_builtin:.4f} secondes")
-print(f"  Amélioration    : {temps_manuel/temps_builtin:.2f}x plus rapide")
+print("Calcul de la somme d'une liste :")  
+print(f"  Boucle manuelle : {temps_manuel:.4f} secondes")  
+print(f"  Fonction sum()  : {temps_builtin:.4f} secondes")  
+print(f"  Amélioration    : {temps_manuel/temps_builtin:.2f}x plus rapide")  
 ```
 
 **Fonctions built-in à privilégier :**
@@ -636,8 +642,8 @@ print(f"  Amélioration    : {temps_manuel/temps_builtin:.2f}x plus rapide")
 Pour éviter de recalculer les mêmes valeurs :
 
 ```python
-from functools import lru_cache
-import timeit
+from functools import lru_cache  
+import timeit  
 
 # Version sans cache (très lente)
 def fibonacci_sans_cache(n):
@@ -657,11 +663,11 @@ def fibonacci_avec_cache(n):
 # Comparaison pour n=30
 print("Calcul de Fibonacci(30) :")
 
-temps_sans = timeit.timeit(lambda: fibonacci_sans_cache(30), number=1)
-print(f"  Sans cache : {temps_sans:.4f} secondes")
+temps_sans = timeit.timeit(lambda: fibonacci_sans_cache(30), number=1)  
+print(f"  Sans cache : {temps_sans:.4f} secondes")  
 
-temps_avec = timeit.timeit(lambda: fibonacci_avec_cache(30), number=1)
-print(f"  Avec cache : {temps_avec:.6f} secondes")
+temps_avec = timeit.timeit(lambda: fibonacci_avec_cache(30), number=1)  
+print(f"  Avec cache : {temps_avec:.6f} secondes")  
 
 print(f"  Amélioration : {temps_sans/temps_avec:.0f}x plus rapide ! 🚀🚀🚀")
 
@@ -686,12 +692,12 @@ def avec_generateur(n):
 n = 1000000
 
 # Liste : stocke tout en mémoire
-ma_liste = avec_liste(n)
-print(f"Liste : {sys.getsizeof(ma_liste):,} octets")
+ma_liste = avec_liste(n)  
+print(f"Liste : {sys.getsizeof(ma_liste):,} octets")  
 
 # Générateur : calcule à la demande
-mon_gen = avec_generateur(n)
-print(f"Générateur : {sys.getsizeof(mon_gen):,} octets")
+mon_gen = avec_generateur(n)  
+print(f"Générateur : {sys.getsizeof(mon_gen):,} octets")  
 
 # Différence
 print(f"Le générateur utilise {sys.getsizeof(ma_liste)/sys.getsizeof(mon_gen):.0f}x moins de mémoire !")
@@ -699,9 +705,9 @@ print(f"Le générateur utilise {sys.getsizeof(ma_liste)/sys.getsizeof(mon_gen):
 
 **Sortie :**
 ```
-Liste : 8,448,728 octets
-Générateur : 200 octets
-Le générateur utilise 42,244x moins de mémoire !
+Liste : 8,448,728 octets  
+Générateur : 200 octets  
+Le générateur utilise 42,244x moins de mémoire !  
 ```
 
 ### 5.7 Utiliser join() pour concaténer des chaînes
@@ -722,13 +728,13 @@ def concatenation_avec_join(n):
 
 n = 5000
 
-temps_plus = timeit.timeit(lambda: concatenation_avec_plus(n), number=10)
-temps_join = timeit.timeit(lambda: concatenation_avec_join(n), number=10)
+temps_plus = timeit.timeit(lambda: concatenation_avec_plus(n), number=10)  
+temps_join = timeit.timeit(lambda: concatenation_avec_join(n), number=10)  
 
-print("Concaténation de chaînes :")
-print(f"  Opérateur +  : {temps_plus:.4f} secondes")
-print(f"  Méthode join : {temps_join:.4f} secondes")
-print(f"  Amélioration : {temps_plus/temps_join:.2f}x plus rapide")
+print("Concaténation de chaînes :")  
+print(f"  Opérateur +  : {temps_plus:.4f} secondes")  
+print(f"  Méthode join : {temps_join:.4f} secondes")  
+print(f"  Amélioration : {temps_plus/temps_join:.2f}x plus rapide")  
 ```
 
 ---
@@ -740,8 +746,8 @@ print(f"  Amélioration : {temps_plus/temps_join:.2f}x plus rapide")
 NumPy est une bibliothèque pour le calcul numérique qui est beaucoup plus rapide que les listes Python.
 
 ```python
-import numpy as np
-import timeit
+import numpy as np  
+import timeit  
 
 # Taille des données
 n = 1000000
@@ -760,13 +766,13 @@ def operation_numpy():
     resultat = array1 + array2
     return resultat
 
-temps_liste = timeit.timeit(operation_liste, number=10)
-temps_numpy = timeit.timeit(operation_numpy, number=10)
+temps_liste = timeit.timeit(operation_liste, number=10)  
+temps_numpy = timeit.timeit(operation_numpy, number=10)  
 
-print("Addition de deux séquences de 1,000,000 d'éléments :")
-print(f"  Listes Python : {temps_liste:.4f} secondes")
-print(f"  NumPy arrays  : {temps_numpy:.4f} secondes")
-print(f"  NumPy est {temps_liste/temps_numpy:.2f}x plus rapide ! 🚀")
+print("Addition de deux séquences de 1,000,000 d'éléments :")  
+print(f"  Listes Python : {temps_liste:.4f} secondes")  
+print(f"  NumPy arrays  : {temps_numpy:.4f} secondes")  
+print(f"  NumPy est {temps_liste/temps_numpy:.2f}x plus rapide ! 🚀")  
 ```
 
 **Résultat typique :**
@@ -780,8 +786,8 @@ Addition de deux séquences de 1,000,000 d'éléments :
 ### 6.2 Opérations vectorisées
 
 ```python
-import numpy as np
-import timeit
+import numpy as np  
+import timeit  
 
 def calcul_avec_boucle(n):
     """Calcul avec une boucle Python."""
@@ -798,13 +804,13 @@ def calcul_vectorise(n):
     resultats = np.sqrt(valeurs ** 2 + 2 * valeurs + 1)
     return resultats
 
-n = 100000
-temps_boucle = timeit.timeit(lambda: calcul_avec_boucle(n), number=10)
-temps_vect = timeit.timeit(lambda: calcul_vectorise(n), number=10)
+n = 100000  
+temps_boucle = timeit.timeit(lambda: calcul_avec_boucle(n), number=10)  
+temps_vect = timeit.timeit(lambda: calcul_vectorise(n), number=10)  
 
-print(f"Calcul avec boucle  : {temps_boucle:.4f} secondes")
-print(f"Calcul vectorisé    : {temps_vect:.4f} secondes")
-print(f"Amélioration        : {temps_boucle/temps_vect:.2f}x plus rapide")
+print(f"Calcul avec boucle  : {temps_boucle:.4f} secondes")  
+print(f"Calcul vectorisé    : {temps_vect:.4f} secondes")  
+print(f"Amélioration        : {temps_boucle/temps_vect:.2f}x plus rapide")  
 ```
 
 ---
@@ -880,12 +886,12 @@ def trouver_doublons_rapide(liste):
 # Test de performance
 test_liste = list(range(1000)) * 2  # Liste avec des doublons
 
-temps_lent = timeit.timeit(lambda: trouver_doublons_lent(test_liste), number=10)
-temps_rapide = timeit.timeit(lambda: trouver_doublons_rapide(test_liste), number=10)
+temps_lent = timeit.timeit(lambda: trouver_doublons_lent(test_liste), number=10)  
+temps_rapide = timeit.timeit(lambda: trouver_doublons_rapide(test_liste), number=10)  
 
-print(f"Méthode lente  : {temps_lent:.4f} secondes")
-print(f"Méthode rapide : {temps_rapide:.4f} secondes")
-print(f"Amélioration   : {temps_lent/temps_rapide:.2f}x plus rapide")
+print(f"Méthode lente  : {temps_lent:.4f} secondes")  
+print(f"Méthode rapide : {temps_rapide:.4f} secondes")  
+print(f"Amélioration   : {temps_lent/temps_rapide:.2f}x plus rapide")  
 ```
 
 ### Exemple 2 : Calculer la somme des carrés
@@ -893,8 +899,8 @@ print(f"Amélioration   : {temps_lent/temps_rapide:.2f}x plus rapide")
 **Comparaison de différentes approches :**
 
 ```python
-import timeit
-import numpy as np
+import timeit  
+import numpy as np  
 
 n = 100000
 
@@ -919,8 +925,8 @@ def methode_numpy(n):
 
 # Méthode 5 : Formule mathématique (ultra-rapide !)
 def methode_formule(n):
-    # Formule : n*(n+1)*(2n+1)/6
-    return n * (n + 1) * (2 * n + 1) // 6
+    # Formule : somme des carrés de 0 à n-1 = (n-1)*n*(2n-1)/6
+    return (n - 1) * n * (2 * n - 1) // 6
 
 # Mesurer toutes les méthodes
 methodes = {
@@ -931,8 +937,8 @@ methodes = {
     "Formule math": methode_formule
 }
 
-print(f"Somme des carrés de 0 à {n-1}:\n")
-resultats = {}
+print(f"Somme des carrés de 0 à {n-1}:\n")  
+resultats = {}  
 
 for nom, methode in methodes.items():
     temps = timeit.timeit(lambda: methode(n), number=100)
@@ -940,19 +946,19 @@ for nom, methode in methodes.items():
     print(f"{nom:20} : {temps:.6f} secondes")
 
 # Trouver la plus rapide
-plus_rapide = min(resultats, key=resultats.get)
-print(f"\n🏆 La méthode '{plus_rapide}' est la plus rapide !")
+plus_rapide = min(resultats, key=resultats.get)  
+print(f"\n🏆 La méthode '{plus_rapide}' est la plus rapide !")  
 ```
 
 **Sortie typique :**
 ```
 Somme des carrés de 0 à 99999:
 
-Boucle for           : 0.891234 secondes
-Compréhension        : 0.756789 secondes
-Générateur           : 0.734567 secondes
-NumPy                : 0.345678 secondes
-Formule math         : 0.000012 secondes
+Boucle for           : 0.891234 secondes  
+Compréhension        : 0.756789 secondes  
+Générateur           : 0.734567 secondes  
+NumPy                : 0.345678 secondes  
+Formule math         : 0.000012 secondes  
 
 🏆 La méthode 'Formule math' est la plus rapide !
 ```
@@ -984,14 +990,14 @@ def methode3(donnees):
     return list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, donnees)))
 
 # Comparaison
-temps1 = timeit.timeit(lambda: methode1(donnees), number=100)
-temps2 = timeit.timeit(lambda: methode2(donnees), number=100)
-temps3 = timeit.timeit(lambda: methode3(donnees), number=100)
+temps1 = timeit.timeit(lambda: methode1(donnees), number=100)  
+temps2 = timeit.timeit(lambda: methode2(donnees), number=100)  
+temps3 = timeit.timeit(lambda: methode3(donnees), number=100)  
 
-print("Filtrer les pairs et calculer leur carré :")
-print(f"  Boucle for      : {temps1:.4f} secondes")
-print(f"  Compréhension   : {temps2:.4f} secondes ⚡ RECOMMANDÉ")
-print(f"  filter() + map(): {temps3:.4f} secondes")
+print("Filtrer les pairs et calculer leur carré :")  
+print(f"  Boucle for      : {temps1:.4f} secondes")  
+print(f"  Compréhension   : {temps2:.4f} secondes ⚡ RECOMMANDÉ")  
+print(f"  filter() + map(): {temps3:.4f} secondes")  
 ```
 
 ---
@@ -1007,15 +1013,15 @@ pip install line_profiler
 
 **py-spy** : Profiler sans modifier le code
 ```bash
-pip install py-spy
-py-spy top -- python mon_script.py
+pip install py-spy  
+py-spy top -- python mon_script.py  
 ```
 
 **snakeviz** : Visualiser les résultats de cProfile
 ```bash
-pip install snakeviz
-python -m cProfile -o output.prof mon_script.py
-snakeviz output.prof
+pip install snakeviz  
+python -m cProfile -o output.prof mon_script.py  
+snakeviz output.prof  
 ```
 
 ### 9.2 Utiliser %timeit dans Jupyter
@@ -1028,17 +1034,16 @@ Si vous utilisez Jupyter Notebook :
 
 # Mesurer une cellule
 %%timeit
-total = 0
-for i in range(1000):
+total = 0  
+for i in range(1000):  
     total += i
 ```
 
 ### 9.3 Identifier les imports lents
 
-```python
-import importtime
+Depuis le terminal, utilisez le flag `-X importtime` pour analyser les temps d'import :
 
-# Analyse les temps d'import
+```bash
 python -X importtime mon_script.py
 ```
 
@@ -1065,9 +1070,9 @@ Un code optimisé mais incompréhensible n'est pas une bonne solution.
 result = reduce(lambda x, y: x + y, map(lambda x: x**2, filter(lambda x: x%2==0, data)))
 
 # ✅ Peut-être légèrement plus lent, mais beaucoup plus clair
-pairs = [x for x in data if x % 2 == 0]
-carres = [x ** 2 for x in pairs]
-result = sum(carres)
+pairs = [x for x in data if x % 2 == 0]  
+carres = [x ** 2 for x in pairs]  
+result = sum(carres)  
 ```
 
 ### 5. Optimiser ce qui compte vraiment
@@ -1111,8 +1116,8 @@ def test_optimisation():
 Voici un exemple complet montrant comment optimiser progressivement un programme :
 
 ```python
-import timeit
-from functools import lru_cache
+import timeit  
+from functools import lru_cache  
 
 # ============================================================================
 # VERSION 1 : Code initial (non optimisé)

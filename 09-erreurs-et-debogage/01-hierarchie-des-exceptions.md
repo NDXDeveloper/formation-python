@@ -111,8 +111,8 @@ except ZeroDivisionError:
 Se produit quand un calcul dépasse la limite numérique.
 
 ```python
-import math
-try:
+import math  
+try:  
     resultat = math.exp(1000)  # Trop grand !
 except OverflowError:
     print("Le nombre est trop grand !")
@@ -126,8 +126,8 @@ Classe parente des erreurs lors de l'accès à des éléments dans une collectio
 Se produit quand on accède à un index qui n'existe pas dans une liste.
 
 ```python
-ma_liste = [1, 2, 3]
-try:
+ma_liste = [1, 2, 3]  
+try:  
     element = ma_liste[10]  # Index 10 n'existe pas
 except IndexError:
     print("Cet index n'existe pas dans la liste !")
@@ -137,8 +137,8 @@ except IndexError:
 Se produit quand on accède à une clé qui n'existe pas dans un dictionnaire.
 
 ```python
-mon_dict = {"nom": "Alice", "age": 30}
-try:
+mon_dict = {"nom": "Alice", "age": 30}  
+try:  
     ville = mon_dict["ville"]  # La clé "ville" n'existe pas
 except KeyError:
     print("Cette clé n'existe pas dans le dictionnaire !")
@@ -182,8 +182,8 @@ except NameError:
 Se produit quand on essaie d'accéder à un attribut qui n'existe pas sur un objet.
 
 ```python
-ma_liste = [1, 2, 3]
-try:
+ma_liste = [1, 2, 3]  
+try:  
     ma_liste.append_all([4, 5])  # Cette méthode n'existe pas
 except AttributeError:
     print("Cet attribut ou cette méthode n'existe pas !")
@@ -196,7 +196,7 @@ Se produit quand on essaie d'ouvrir un fichier qui n'existe pas.
 
 ```python
 try:
-    with open("fichier_inexistant.txt", "r") as f:
+    with open("fichier_inexistant.txt", "r", encoding="utf-8") as f:
         contenu = f.read()
 except FileNotFoundError:
     print("Le fichier n'a pas été trouvé !")
@@ -207,7 +207,7 @@ Se produit quand on n'a pas les permissions nécessaires.
 
 ```python
 try:
-    with open("/root/fichier_protege.txt", "w") as f:
+    with open("/root/fichier_protege.txt", "w", encoding="utf-8") as f:
         f.write("Test")
 except PermissionError:
     print("Vous n'avez pas la permission d'accéder à ce fichier !")
@@ -270,7 +270,7 @@ except (ValueError, TypeError, KeyError) as e:
 1. **Capturer des exceptions spécifiques**
 ```python
 try:
-    fichier = open("data.txt")
+    fichier = open("data.txt", encoding="utf-8")
 except FileNotFoundError:
     print("Le fichier n'existe pas")
 ```

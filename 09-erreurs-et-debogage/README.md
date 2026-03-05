@@ -48,8 +48,8 @@ print("Bonjour"
 texte = Bonjour
 
 # Mauvaise indentation
-def ma_fonction():
-print("Hello")  # Erreur : devrait être indenté
+def ma_fonction():  
+print("Hello")  # Erreur : devrait être indenté  
 ```
 
 #### 2. Les erreurs d'exécution (Runtime Errors / Exceptions)
@@ -66,8 +66,8 @@ resultat = 10 / 0
 # ZeroDivisionError: division by zero
 
 # Accès à un index inexistant
-liste = [1, 2, 3]
-element = liste[10]
+liste = [1, 2, 3]  
+element = liste[10]  
 # IndexError: list index out of range
 ```
 
@@ -89,8 +89,8 @@ def calculer_moyenne(notes):
     moyenne = total / (len(notes) + 1)  # Devrait être len(notes)
     return moyenne
 
-notes = [15, 16, 14]
-print(calculer_moyenne(notes))  # Résultat incorrect : 11.25 au lieu de 15
+notes = [15, 16, 14]  
+print(calculer_moyenne(notes))  # Résultat incorrect : 11.25 au lieu de 15  
 ```
 
 **Caractéristiques :**
@@ -112,9 +112,9 @@ Sans gestion des erreurs, votre programme s'arrête brutalement :
 def diviser(a, b):
     return a / b
 
-print(diviser(10, 2))   # ✅ Fonctionne : 5.0
-print(diviser(10, 0))   # ❌ CRASH ! Le programme s'arrête
-print("Cette ligne ne s'exécutera jamais")
+print(diviser(10, 2))   # ✅ Fonctionne : 5.0  
+print(diviser(10, 0))   # ❌ CRASH ! Le programme s'arrête  
+print("Cette ligne ne s'exécutera jamais")  
 ```
 
 Avec gestion des erreurs, le programme continue :
@@ -128,9 +128,9 @@ def diviser(a, b):
         print("Erreur : division par zéro impossible")
         return None
 
-print(diviser(10, 2))   # ✅ 5.0
-print(diviser(10, 0))   # ✅ Affiche un message, retourne None
-print("Le programme continue normalement")  # ✅ Cette ligne s'exécute !
+print(diviser(10, 2))   # ✅ 5.0  
+print(diviser(10, 0))   # ✅ Affiche un message, retourne None  
+print("Le programme continue normalement")  # ✅ Cette ligne s'exécute !  
 ```
 
 ### 2. Fournir des messages d'erreur utiles
@@ -157,7 +157,7 @@ Une bonne gestion des erreurs aide à identifier les problèmes :
 ```python
 def traiter_donnees(fichier):
     try:
-        with open(fichier, 'r') as f:
+        with open(fichier, 'r', encoding='utf-8') as f:
             donnees = f.read()
         return donnees
     except FileNotFoundError:
@@ -245,16 +245,16 @@ int("abc")  # ValueError
 print(variable_inexistante)  # NameError
 
 # 4. IndexError - Index hors limites
-liste = [1, 2, 3]
-liste[10]  # IndexError
+liste = [1, 2, 3]  
+liste[10]  # IndexError  
 
 # 5. KeyError - Clé inexistante dans un dictionnaire
-personne = {"nom": "Alice"}
-personne["age"]  # KeyError
+personne = {"nom": "Alice"}  
+personne["age"]  # KeyError  
 
 # 6. AttributeError - Attribut inexistant
-texte = "Bonjour"
-texte.append("!")  # AttributeError (les strings n'ont pas de méthode append)
+texte = "Bonjour"  
+texte.append("!")  # AttributeError (les strings n'ont pas de méthode append)  
 
 # 7. FileNotFoundError - Fichier introuvable
 open("fichier_inexistant.txt")  # FileNotFoundError
@@ -266,8 +266,8 @@ open("fichier_inexistant.txt")  # FileNotFoundError
 import module_inexistant  # ImportError
 
 # 10. IndentationError - Problème d'indentation
-def fonction():
-print("bug")  # IndentationError
+def fonction():  
+print("bug")  # IndentationError  
 ```
 
 ---
@@ -390,7 +390,7 @@ except ValueError:
 ```python
 try:
     fichier = input("Nom du fichier : ")
-    with open(fichier, 'r') as f:
+    with open(fichier, 'r', encoding='utf-8') as f:
         contenu = f.read()
     nombre = int(contenu)
     resultat = 100 / nombre
@@ -421,7 +421,7 @@ else:
 
 ```python
 try:
-    fichier = open("donnees.txt", 'r')
+    fichier = open("donnees.txt", 'r', encoding='utf-8')
     contenu = fichier.read()
     print(contenu)
 except FileNotFoundError:
@@ -551,7 +551,7 @@ except ValueError:
 2. **Les opérations sur les fichiers**
 ```python
 try:
-    with open("config.json", 'r') as f:
+    with open("config.json", 'r', encoding='utf-8') as f:
         config = json.load(f)
 except FileNotFoundError:
     print("Fichier de configuration introuvable")
@@ -584,7 +584,7 @@ except KeyError:
     valeur = None
 
 # ✅ Bon : utiliser des conditions
-valeur = dictionnaire.get(cle, None)
+valeur = dictionnaire.get(cle)
 ```
 
 2. **Masquer les bugs**

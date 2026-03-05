@@ -63,8 +63,8 @@ class AgeInvalideError(Exception):
     pass
 
 # Utilisation
-age = -5
-if age < 0:
+age = -5  
+if age < 0:  
     raise AgeInvalideError(f"L'âge ne peut pas être négatif : {age}")
 ```
 
@@ -433,9 +433,9 @@ except MesExceptionsMetier as e:
 4. **Créer trop d'exceptions pour des cas similaires**
 ```python
 # ❌ Trop spécifique
-class EmailVide(Exception): pass
-class EmailTropCourt(Exception): pass
-class EmailSansArobase(Exception): pass
+class EmailVide(Exception): pass  
+class EmailTropCourt(Exception): pass  
+class EmailSansArobase(Exception): pass  
 
 # ✅ Plus simple
 class EmailInvalideError(Exception):
@@ -516,9 +516,9 @@ class Bibliotheque:
         print(f"✅ '{livre}' emprunté par {utilisateur}")
 
 # Utilisation
-biblio = Bibliotheque()
-biblio.ajouter_livre("Python pour les débutants")
-biblio.ajouter_livre("Le Seigneur des Anneaux")
+biblio = Bibliotheque()  
+biblio.ajouter_livre("Python pour les débutants")  
+biblio.ajouter_livre("Le Seigneur des Anneaux")  
 
 try:
     biblio.emprunter("Alice", "Python pour les débutants")

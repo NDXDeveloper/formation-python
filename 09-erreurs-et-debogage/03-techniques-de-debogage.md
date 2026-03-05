@@ -29,36 +29,36 @@ def calculer_moyenne(notes):
     print(f"Moyenne calculée : {moyenne}")  # Résultat final
     return moyenne
 
-notes = [15, 18, 12, 16]
-resultat = calculer_moyenne(notes)
+notes = [15, 18, 12, 16]  
+resultat = calculer_moyenne(notes)  
 ```
 
 ### Techniques avancées avec print()
 
 **Afficher le type d'une variable :**
 ```python
-valeur = "123"
-print(f"Valeur : {valeur}, Type : {type(valeur)}")
+valeur = "123"  
+print(f"Valeur : {valeur}, Type : {type(valeur)}")  
 # Sortie : Valeur : 123, Type : <class 'str'>
 ```
 
 **Afficher plusieurs variables en même temps :**
 ```python
-nom = "Alice"
-age = 25
-ville = "Paris"
-print(f"Nom: {nom}, Age: {age}, Ville: {ville}")
+nom = "Alice"  
+age = 25  
+ville = "Paris"  
+print(f"Nom: {nom}, Age: {age}, Ville: {ville}")  
 ```
 
 **Utiliser des séparateurs visuels :**
 ```python
-print("="*50)
-print("DÉBUT DU DÉBOGAGE")
-print("="*50)
+print("="*50)  
+print("DÉBUT DU DÉBOGAGE")  
+print("="*50)  
 # Votre code ici
-print("="*50)
-print("FIN DU DÉBOGAGE")
-print("="*50)
+print("="*50)  
+print("FIN DU DÉBOGAGE")  
+print("="*50)  
 ```
 
 ### Limites de la méthode print()
@@ -71,7 +71,7 @@ Bien que simple et efficace, `print()` présente quelques inconvénients :
 
 ---
 
-## 2. La fonction assert() - Vérifications automatiques
+## 2. L'instruction assert - Vérifications automatiques
 
 ### Qu'est-ce qu'une assertion ?
 
@@ -106,8 +106,8 @@ def concatener_textes(texte1, texte2):
     assert isinstance(texte2, str), "texte2 doit être une chaîne"
     return texte1 + " " + texte2
 
-resultat = concatener_textes("Bonjour", "monde")  # Fonctionne
-resultat = concatener_textes("Bonjour", 123)  # AssertionError
+resultat = concatener_textes("Bonjour", "monde")  # Fonctionne  
+resultat = concatener_textes("Bonjour", 123)  # AssertionError  
 ```
 
 **Vérifier qu'une liste n'est pas vide :**
@@ -116,11 +116,11 @@ def obtenir_premier_element(liste):
     assert len(liste) > 0, "La liste ne peut pas être vide"
     return liste[0]
 
-ma_liste = [1, 2, 3]
-print(obtenir_premier_element(ma_liste))  # 1
+ma_liste = [1, 2, 3]  
+print(obtenir_premier_element(ma_liste))  # 1  
 
-liste_vide = []
-print(obtenir_premier_element(liste_vide))  # AssertionError
+liste_vide = []  
+print(obtenir_premier_element(liste_vide))  # AssertionError  
 ```
 
 ### Quand utiliser les assertions
@@ -158,11 +158,11 @@ logging.basicConfig(
 )
 
 # Utilisation
-logging.debug("Message de débogage détaillé")
-logging.info("Information générale")
-logging.warning("Attention, quelque chose d'inhabituel")
-logging.error("Une erreur s'est produite")
-logging.critical("Erreur critique, le programme doit s'arrêter")
+logging.debug("Message de débogage détaillé")  
+logging.info("Information générale")  
+logging.warning("Attention, quelque chose d'inhabituel")  
+logging.error("Une erreur s'est produite")  
+logging.critical("Erreur critique, le programme doit s'arrêter")  
 ```
 
 **Sortie :**
@@ -203,8 +203,8 @@ def diviser(a, b):
     return resultat
 
 # Test
-print(diviser(10, 2))
-print(diviser(10, 0))
+print(diviser(10, 2))  
+print(diviser(10, 0))  
 ```
 
 ### Enregistrer les logs dans un fichier
@@ -258,7 +258,7 @@ def calculer_factorielle(n):
 calculer_factorielle(5)
 ```
 
-**Méthode 2 : Avec le breakpoint() (Python 3.7+)**
+**Méthode 2 : Avec breakpoint() (recommandé)**
 ```python
 def calculer_factorielle(n):
     resultat = 1
@@ -295,8 +295,8 @@ def calculer_prix_total(prix_unitaire, quantite, taux_tva):
 
     return prix_ttc
 
-resultat = calculer_prix_total(100, 3, 0.20)
-print(f"Prix total : {resultat}€")
+resultat = calculer_prix_total(100, 3, 0.20)  
+print(f"Prix total : {resultat}€")  
 ```
 
 **Session de débogage typique :**
@@ -333,8 +333,8 @@ def traiter_liste(nombres):
 
     return total / len(nombres)
 
-ma_liste = [10, 20, 30, 40, 50]
-moyenne = traiter_liste(ma_liste)
+ma_liste = [10, 20, 30, 40, 50]  
+moyenne = traiter_liste(ma_liste)  
 ```
 
 **Dans pdb, vous pouvez taper :**
@@ -428,8 +428,8 @@ except Exception as e:
 
 **Sortie :**
 ```
-Une erreur s'est produite !
-Traceback (most recent call last):
+Une erreur s'est produite !  
+Traceback (most recent call last):  
   File "script.py", line 12, in <module>
     fonction_a()
   File "script.py", line 4, in fonction_a
@@ -493,8 +493,8 @@ def saluer(nom, message="Bonjour"):
     return f"{message} {nom}"
 
 # Test
-addition(5, 3)
-saluer("Alice", message="Salut")
+addition(5, 3)  
+saluer("Alice", message="Salut")  
 ```
 
 **Sortie :**
@@ -582,8 +582,8 @@ Python fournit des messages d'erreur détaillés. Apprenez à les lire :
 
 ```python
 # Erreur typique
-liste = [1, 2, 3]
-element = liste[5]
+liste = [1, 2, 3]  
+element = liste[5]  
 ```
 
 **Message d'erreur :**
@@ -611,9 +611,9 @@ import requests
 response = requests.get('https://api.example.com/data')
 
 # Mode verbeux (affiche les détails de la requête)
-import logging
-logging.basicConfig(level=logging.DEBUG)
-response = requests.get('https://api.example.com/data')
+import logging  
+logging.basicConfig(level=logging.DEBUG)  
+response = requests.get('https://api.example.com/data')  
 ```
 
 ### 7.5 Documenter les bugs connus
@@ -692,8 +692,8 @@ Quand vous rencontrez un bug, suivez cette checklist :
 
 ```python
 # Code incorrect
-def ma_fonction():
-print("Bonjour")  # Mauvaise indentation
+def ma_fonction():  
+print("Bonjour")  # Mauvaise indentation  
 ```
 
 **Solution :**
@@ -726,36 +726,36 @@ def afficher_nom():
 
 ```python
 # Code incorrect
-age = "25"
-nouvelle_age = age + 1  # Impossible d'additionner str et int
+age = "25"  
+nouvelle_age = age + 1  # Impossible d'additionner str et int  
 ```
 
 **Débogage :**
 ```python
-age = "25"
-print(f"Type de age : {type(age)}")  # <class 'str'>
+age = "25"  
+print(f"Type de age : {type(age)}")  # <class 'str'>  
 
 # Solution
-age = int("25")
-nouvelle_age = age + 1
-print(nouvelle_age)  # 26
+age = int("25")  
+nouvelle_age = age + 1  
+print(nouvelle_age)  # 26  
 ```
 
 ### Erreur 4 : IndexError
 
 ```python
 # Code incorrect
-liste = [1, 2, 3]
-element = liste[10]  # Index hors limites
+liste = [1, 2, 3]  
+element = liste[10]  # Index hors limites  
 ```
 
 **Débogage :**
 ```python
-liste = [1, 2, 3]
-index = 10
+liste = [1, 2, 3]  
+index = 10  
 
-print(f"Longueur de la liste : {len(liste)}")
-print(f"Index demandé : {index}")
+print(f"Longueur de la liste : {len(liste)}")  
+print(f"Index demandé : {index}")  
 
 if index < len(liste):
     element = liste[index]
@@ -767,14 +767,14 @@ else:
 
 ```python
 # Code incorrect
-personne = {'nom': 'Alice', 'age': 25}
-ville = personne['ville']  # La clé 'ville' n'existe pas
+personne = {'nom': 'Alice', 'age': 25}  
+ville = personne['ville']  # La clé 'ville' n'existe pas  
 ```
 
 **Débogage :**
 ```python
-personne = {'nom': 'Alice', 'age': 25}
-cle = 'ville'
+personne = {'nom': 'Alice', 'age': 25}  
+cle = 'ville'  
 
 print(f"Clés disponibles : {list(personne.keys())}")
 
@@ -785,8 +785,8 @@ else:
     print(f"La clé '{cle}' n'existe pas")
 
 # Solution 2 : utiliser get()
-ville = personne.get('ville', 'Non spécifié')
-print(f"Ville : {ville}")
+ville = personne.get('ville', 'Non spécifié')  
+print(f"Ville : {ville}")  
 ```
 
 ---
