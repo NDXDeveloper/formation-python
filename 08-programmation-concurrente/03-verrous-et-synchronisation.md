@@ -48,8 +48,8 @@ def incrementer():
         compteur += 1  # Lecture, addition, écriture
 
 # Sans synchronisation
-threads = [threading.Thread(target=incrementer) for _ in range(5)]
-for t in threads:
+threads = [threading.Thread(target=incrementer) for _ in range(5)]  
+for t in threads:  
     t.start()
 for t in threads:
     t.join()
@@ -67,11 +67,11 @@ Un **deadlock** se produit quand deux threads attendent chacun une ressource dé
 **Analogie** : Deux personnes veulent passer une porte étroite, chacune attend que l'autre recule.
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
-verrou_a = threading.Lock()
-verrou_b = threading.Lock()
+verrou_a = threading.Lock()  
+verrou_b = threading.Lock()  
 
 def thread1():
     with verrou_a:
@@ -114,11 +114,11 @@ Le **Lock** est le mécanisme de synchronisation le plus basique. Il garantit qu
 ### Avec Threading
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
-compteur = 0
-verrou = threading.Lock()  # Créer un verrou
+compteur = 0  
+verrou = threading.Lock()  # Créer un verrou  
 
 def incrementer_avec_lock():
     global compteur
@@ -128,8 +128,8 @@ def incrementer_avec_lock():
         # Le verrou est automatiquement libéré
 
 # Avec synchronisation
-threads = [threading.Thread(target=incrementer_avec_lock) for _ in range(5)]
-for t in threads:
+threads = [threading.Thread(target=incrementer_avec_lock) for _ in range(5)]  
+for t in threads:  
     t.start()
 for t in threads:
     t.join()
@@ -156,8 +156,8 @@ def incrementer_manuel():
 ### Exemple pratique : Gestion de fichier partagé
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 class GestionnaireFichier:
     """Gère l'écriture dans un fichier par plusieurs threads"""
@@ -171,7 +171,7 @@ class GestionnaireFichier:
         with self.verrou:
             # Section critique protégée
             print(f"[Thread {thread_id}] Écriture en cours...")
-            with open(self.nom_fichier, 'a') as f:
+            with open(self.nom_fichier, 'a', encoding='utf-8') as f:
                 f.write(f"{message}\n")
             time.sleep(0.1)  # Simule une opération lente
             print(f"[Thread {thread_id}] Écriture terminée")
@@ -182,8 +182,8 @@ def worker(gestionnaire, thread_id):
         gestionnaire.ecrire(f"Message {i} du thread {thread_id}", thread_id)
 
 # Utilisation
-gestionnaire = GestionnaireFichier("log.txt")
-threads = [threading.Thread(target=worker, args=(gestionnaire, i)) for i in range(3)]
+gestionnaire = GestionnaireFichier("log.txt")  
+threads = [threading.Thread(target=worker, args=(gestionnaire, i)) for i in range(3)]  
 
 for t in threads:
     t.start()
@@ -198,8 +198,8 @@ print("✅ Toutes les écritures sont terminées")
 ```python
 import asyncio
 
-compteur = 0
-verrou = asyncio.Lock()  # Verrou asynchrone
+compteur = 0  
+verrou = asyncio.Lock()  # Verrou asynchrone  
 
 async def incrementer_async():
     global compteur
@@ -258,14 +258,14 @@ class CompteBancaire:
             self.solde += montant
 
 # Utilisation
-compte1 = CompteBancaire(1000)
-compte2 = CompteBancaire(500)
+compte1 = CompteBancaire(1000)  
+compte2 = CompteBancaire(500)  
 
 # Sans RLock, ceci causerait un deadlock car transferer()
 # et retirer() tentent d'acquérir le même lock
-compte1.transferer(compte2, 200)
-print(f"Compte 1: {compte1.solde}€")  # 800€
-print(f"Compte 2: {compte2.solde}€")  # 700€
+compte1.transferer(compte2, 200)  
+print(f"Compte 1: {compte1.solde}€")  # 800€  
+print(f"Compte 2: {compte2.solde}€")  # 700€  
 ```
 
 **Avec un Lock normal**, `transferer()` se serait bloqué en essayant d'acquérir le lock une deuxième fois.
@@ -281,9 +281,9 @@ Un **Semaphore** limite le nombre de threads qui peuvent accéder simultanément
 ### Avec Threading
 
 ```python
-import threading
-import time
-import random
+import threading  
+import time  
+import random  
 
 # Sémaphore qui autorise max 3 threads simultanés
 semaphore = threading.Semaphore(3)
@@ -312,8 +312,8 @@ print("✅ Tous les threads ont terminé")
 ### Exemple pratique : Pool de connexions
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 class PoolConnexions:
     """Gère un pool limité de connexions à une base de données"""
@@ -363,8 +363,8 @@ print("✅ Toutes les requêtes sont terminées")
 ### Avec Asyncio
 
 ```python
-import asyncio
-import random
+import asyncio  
+import random  
 
 async def tache_limitee(semaphore, numero):
     """Tâche qui utilise un sémaphore"""
@@ -395,8 +395,8 @@ Un **Event** permet à un thread d'attendre qu'un événement se produise, signa
 ### Avec Threading
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 # Créer un événement
 event = threading.Event()
@@ -417,8 +417,8 @@ def envoyer_signal():
     event.set()  # Déclenche l'événement
 
 # Créer les threads
-workers = [threading.Thread(target=attendre_signal, args=(i,)) for i in range(3)]
-controleur = threading.Thread(target=envoyer_signal)
+workers = [threading.Thread(target=attendre_signal, args=(i,)) for i in range(3)]  
+controleur = threading.Thread(target=envoyer_signal)  
 
 # Démarrer tous les threads
 for w in workers:
@@ -436,8 +436,8 @@ print("✅ Tous les threads ont terminé")
 ### Exemple pratique : Système de téléchargement
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 class GestionnaireTelechargement:
     """Gère le téléchargement et le traitement de fichiers"""
@@ -481,13 +481,13 @@ threads_traitement = [
 ]
 
 # Démarrer tous les threads
-thread_download.start()
-for t in threads_traitement:
+thread_download.start()  
+for t in threads_traitement:  
     t.start()
 
 # Attendre la fin
-thread_download.join()
-for t in threads_traitement:
+thread_download.join()  
+for t in threads_traitement:  
     t.join()
 
 print("✅ Pipeline complet terminé")
@@ -542,9 +542,9 @@ Une **Condition** permet d'attendre qu'une condition spécifique soit vraie.
 ### Avec Threading
 
 ```python
-import threading
-import time
-import random
+import threading  
+import time  
+import random  
 
 class BufferPartage:
     """Buffer partagé avec producteur/consommateur"""
@@ -600,20 +600,20 @@ def consommateur(buffer, nombre_items):
 buffer = BufferPartage(taille_max=3)
 
 # 2 producteurs, 2 consommateurs
-prod1 = threading.Thread(target=producteur, args=(buffer, 5))
-prod2 = threading.Thread(target=producteur, args=(buffer, 5))
-cons1 = threading.Thread(target=consommateur, args=(buffer, 5))
-cons2 = threading.Thread(target=consommateur, args=(buffer, 5))
+prod1 = threading.Thread(target=producteur, args=(buffer, 5))  
+prod2 = threading.Thread(target=producteur, args=(buffer, 5))  
+cons1 = threading.Thread(target=consommateur, args=(buffer, 5))  
+cons2 = threading.Thread(target=consommateur, args=(buffer, 5))  
 
-prod1.start()
-prod2.start()
-cons1.start()
-cons2.start()
+prod1.start()  
+prod2.start()  
+cons1.start()  
+cons2.start()  
 
-prod1.join()
-prod2.join()
-cons1.join()
-cons2.join()
+prod1.join()  
+prod2.join()  
+cons1.join()  
+cons2.join()  
 
 print("✅ Production/consommation terminée")
 ```
@@ -637,9 +637,9 @@ Une **Barrier** synchronise plusieurs threads pour qu'ils atteignent un point en
 ### Avec Threading
 
 ```python
-import threading
-import time
-import random
+import threading  
+import time  
+import random  
 
 def travailleur(barrier, thread_id):
     """Thread qui travaille puis attend les autres"""
@@ -673,8 +673,8 @@ print("✅ Tous les threads ont terminé de manière synchronisée")
 ### Exemple pratique : Simulation parallèle
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 class SimulationParallele:
     """Simule un système avec plusieurs composants synchronisés"""
@@ -722,11 +722,11 @@ print("✅ Simulation terminée")
 ### Synchronisation en Threading
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
-verrou = threading.Lock()
-compteur = 0
+verrou = threading.Lock()  
+compteur = 0  
 
 def incrementer_threading():
     global compteur
@@ -734,8 +734,8 @@ def incrementer_threading():
         with verrou:
             compteur += 1
 
-threads = [threading.Thread(target=incrementer_threading) for _ in range(5)]
-debut = time.time()
+threads = [threading.Thread(target=incrementer_threading) for _ in range(5)]  
+debut = time.time()  
 
 for t in threads:
     t.start()
@@ -750,8 +750,8 @@ print(f"Threading: {compteur} en {time.time() - debut:.2f}s")
 ```python
 import asyncio
 
-verrou_async = asyncio.Lock()
-compteur_async = 0
+verrou_async = asyncio.Lock()  
+compteur_async = 0  
 
 async def incrementer_asyncio():
     global compteur_async
@@ -980,9 +980,9 @@ class Compteur:
 ## Exemple complet : Système de cache thread-safe
 
 ```python
-import threading
-import time
-from typing import Any, Optional
+import threading  
+import time  
+from typing import Any  
 
 class CacheThreadSafe:
     """Cache thread-safe avec expiration automatique"""
@@ -994,7 +994,7 @@ class CacheThreadSafe:
         self.stats = {'hits': 0, 'misses': 0, 'expirations': 0}
         self.verrou_stats = threading.Lock()
 
-    def get(self, cle: str) -> Optional[Any]:
+    def get(self, cle: str) -> Any | None:
         """Récupère une valeur du cache"""
         with self.verrou:
             if cle not in self.cache:
@@ -1075,8 +1075,8 @@ threads = [
     for i in range(3)
 ]
 
-print("🚀 Démarrage des workers")
-debut = time.time()
+print("🚀 Démarrage des workers")  
+debut = time.time()  
 
 for t in threads:
     t.start()
@@ -1086,13 +1086,13 @@ for t in threads:
 duree = time.time() - debut
 
 # Afficher les statistiques
-stats = cache.get_stats()
-print(f"\n📊 Statistiques finales:")
-print(f"  • Hits: {stats['hits']}")
-print(f"  • Misses: {stats['misses']}")
-print(f"  • Expirations: {stats['expirations']}")
-print(f"  • Taux de hit: {stats['hits']/(stats['hits']+stats['misses'])*100:.1f}%")
-print(f"  • Durée totale: {duree:.2f}s")
+stats = cache.get_stats()  
+print(f"\n📊 Statistiques finales:")  
+print(f"  • Hits: {stats['hits']}")  
+print(f"  • Misses: {stats['misses']}")  
+print(f"  • Expirations: {stats['expirations']}")  
+print(f"  • Taux de hit: {stats['hits']/(stats['hits']+stats['misses'])*100:.1f}%")  
+print(f"  • Durée totale: {duree:.2f}s")  
 ```
 
 ---

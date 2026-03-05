@@ -146,8 +146,8 @@ Pour exécuter plusieurs coroutines en même temps, on crée des **tâches** (ta
 ### Exemple 2 : Plusieurs tâches en parallèle
 
 ```python
-import asyncio
-import time
+import asyncio  
+import time  
 
 async def faire_cafe(nom):
     """Simule la préparation d'un café"""
@@ -281,8 +281,8 @@ Voici un exemple réaliste qui montre la puissance d'asyncio.
 ### Exemple 5 : Télécharger plusieurs pages web
 
 ```python
-import asyncio
-import time
+import asyncio  
+import time  
 
 # Simulation d'une bibliothèque de requêtes HTTP asynchrone
 async def fetch_page(url, duree):
@@ -384,8 +384,8 @@ Pour utiliser pleinement asyncio, vous aurez besoin de bibliothèques qui suppor
 ### Exemple 6 : Utiliser aiohttp pour de vraies requêtes HTTP
 
 ```python
-import asyncio
-import aiohttp
+import asyncio  
+import aiohttp  
 
 async def telecharger_url(session, url):
     """Télécharge le contenu d'une URL"""
@@ -489,8 +489,8 @@ asyncio.run(main())
 ### Pattern 1 : Queue asynchrone (Producer-Consumer)
 
 ```python
-import asyncio
-import random
+import asyncio  
+import random  
 
 async def producteur(queue, nom, nb_items):
     """Produit des items dans la queue"""
@@ -577,9 +577,9 @@ asyncio.run(main())
 ### Exemple 9 : Comparaison des performances
 
 ```python
-import asyncio
-import threading
-import time
+import asyncio  
+import threading  
+import time  
 
 # === VERSION THREADING ===
 def operation_io_thread(numero):
@@ -667,15 +667,15 @@ async def main():
 asyncio.run(main())
 
 # ❌ Mauvais (ancien style)
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+loop = asyncio.get_event_loop()  
+loop.run_until_complete(main())  
 ```
 
 ### 2. Ne jamais bloquer l'event loop
 
 ```python
-import asyncio
-import time
+import asyncio  
+import time  
 
 async def mauvaise_pratique():
     """❌ Ne fait pas ça!"""
@@ -837,9 +837,8 @@ async def solution():
 Voici un exemple réaliste et complet qui combine tous les concepts :
 
 ```python
-import asyncio
-import time
-from typing import List, Dict
+import asyncio  
+import time  
 
 class GestionnaireTelechargement:
     """Gestionnaire de téléchargements asynchrones avec contrôle"""
@@ -853,7 +852,7 @@ class GestionnaireTelechargement:
             'total': 0
         }
 
-    async def telecharger_fichier(self, url: str, timeout: float = 10.0) -> Dict:
+    async def telecharger_fichier(self, url: str, timeout: float = 10.0) -> dict:
         """Télécharge un fichier avec gestion d'erreurs et timeout"""
         async with self.semaphore:
             self.statistiques['total'] += 1
@@ -902,7 +901,7 @@ class GestionnaireTelechargement:
         duree = len(url) % 5 + 1
         await asyncio.sleep(duree)
 
-    async def telecharger_liste(self, urls: List[str]) -> List[Dict]:
+    async def telecharger_liste(self, urls: list[str]) -> list[dict]:
         """Télécharge une liste d'URLs"""
         print(f"🚀 Lancement de {len(urls)} téléchargements")
         print(f"📊 Concurrence max: {self.max_concurrent}")

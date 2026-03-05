@@ -60,8 +60,8 @@ Le module `threading` permet de créer et gérer des threads facilement.
 ### Exemple 1 : Premier thread simple
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 def afficher_nombres():
     """Fonction qui affiche des nombres"""
@@ -79,8 +79,8 @@ thread.start()
 print("Le thread a été lancé!")
 
 # Attendre que le thread se termine
-thread.join()
-print("Le thread est terminé")
+thread.join()  
+print("Le thread est terminé")  
 ```
 
 **Explication** :
@@ -91,8 +91,8 @@ print("Le thread est terminé")
 ### Exemple 2 : Plusieurs threads simultanés
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 def telecharger_fichier(nom_fichier):
     """Simule le téléchargement d'un fichier"""
@@ -101,8 +101,8 @@ def telecharger_fichier(nom_fichier):
     print(f"Téléchargement de {nom_fichier} terminé")
 
 # Créer plusieurs threads
-fichiers = ["image1.jpg", "image2.jpg", "image3.jpg"]
-threads = []
+fichiers = ["image1.jpg", "image2.jpg", "image3.jpg"]  
+threads = []  
 
 for fichier in fichiers:
     thread = threading.Thread(target=telecharger_fichier, args=(fichier,))
@@ -121,8 +121,8 @@ print("Tous les téléchargements sont terminés")
 ### Exemple 3 : Thread avec classe
 
 ```python
-import threading
-import time
+import threading  
+import time  
 
 class MonThread(threading.Thread):
     def __init__(self, nom, duree):
@@ -137,14 +137,14 @@ class MonThread(threading.Thread):
         print(f"{self.nom} termine")
 
 # Créer et lancer des threads
-thread1 = MonThread("Thread-1", 2)
-thread2 = MonThread("Thread-2", 3)
+thread1 = MonThread("Thread-1", 2)  
+thread2 = MonThread("Thread-2", 3)  
 
-thread1.start()
-thread2.start()
+thread1.start()  
+thread2.start()  
 
-thread1.join()
-thread2.join()
+thread1.join()  
+thread2.join()  
 
 print("Tous les threads sont terminés")
 ```
@@ -169,8 +169,8 @@ def incrementer():
             compteur += 1
 
 # Créer plusieurs threads
-threads = []
-for _ in range(5):
+threads = []  
+for _ in range(5):  
     thread = threading.Thread(target=incrementer)
     threads.append(thread)
     thread.start()
@@ -197,8 +197,8 @@ Le module `multiprocessing` permet de créer des processus indépendants, idéal
 ### Exemple 1 : Premier processus simple
 
 ```python
-import multiprocessing
-import time
+import multiprocessing  
+import time  
 
 def calculer_carre(nombre):
     """Calcule le carré d'un nombre"""
@@ -253,8 +253,8 @@ if __name__ == '__main__':
 ### Exemple 3 : Calcul intensif - Comparaison séquentiel vs parallèle
 
 ```python
-import multiprocessing
-import time
+import multiprocessing  
+import time  
 
 def calcul_intensif(n):
     """Fonction qui effectue un calcul coûteux"""
@@ -295,8 +295,8 @@ if __name__ == '__main__':
 Les processus ne partagent pas la mémoire, il faut utiliser des mécanismes de communication comme `Queue`.
 
 ```python
-import multiprocessing
-import time
+import multiprocessing  
+import time  
 
 def producteur(queue, nombre_items):
     """Produit des données et les met dans la queue"""
@@ -405,10 +405,10 @@ with multiprocessing.Pool() as pool:
     resultats = pool.map(fonction, donnees)
 
 # Moins bon (il faut fermer manuellement)
-pool = multiprocessing.Pool()
-resultats = pool.map(fonction, donnees)
-pool.close()
-pool.join()
+pool = multiprocessing.Pool()  
+resultats = pool.map(fonction, donnees)  
+pool.close()  
+pool.join()  
 ```
 
 ### 3. Limiter le nombre de threads/processus
@@ -452,9 +452,9 @@ def fonction_avec_erreur():
     except Exception as e:
         print(f"Erreur dans le thread: {e}")
 
-thread = threading.Thread(target=fonction_avec_erreur)
-thread.start()
-thread.join()
+thread = threading.Thread(target=fonction_avec_erreur)  
+thread.start()  
+thread.join()  
 ```
 
 ---
@@ -464,16 +464,15 @@ thread.join()
 Voici un exemple réaliste qui combine les concepts vus :
 
 ```python
-import threading
-import time
-from typing import List
+import threading  
+import time  
 
 class TelechargeParallele:
     """Gestionnaire de téléchargements parallèles"""
 
     def __init__(self, max_threads: int = 5):
         self.max_threads = max_threads
-        self.resultats = []
+        self.resultats: list[dict] = []
         self.lock = threading.Lock()
 
     def telecharger_fichier(self, url: str):
@@ -494,7 +493,7 @@ class TelechargeParallele:
 
         print(f"[Terminé] {url}")
 
-    def telecharger_liste(self, urls: List[str]):
+    def telecharger_liste(self, urls: list[str]):
         """Télécharge une liste d'URLs en parallèle"""
         threads = []
 

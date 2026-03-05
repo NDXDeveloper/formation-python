@@ -46,10 +46,10 @@ Les producteurs et consommateurs travaillent à leur propre rythme sans se bloqu
 ### Implémentation avec Threading
 
 ```python
-import threading
-import queue
-import time
-import random
+import threading  
+import queue  
+import time  
+import random  
 
 def producteur(q, producteur_id, nombre_items):
     """Produit des items et les met dans la queue"""
@@ -97,8 +97,8 @@ consommateurs = [
 ]
 
 # Démarrer tous les threads
-print("🚀 Démarrage du système Producer-Consumer\n")
-for p in producteurs:
+print("🚀 Démarrage du système Producer-Consumer\n")  
+for p in producteurs:  
     p.start()
 for c in consommateurs:
     c.start()
@@ -114,8 +114,8 @@ print("\n✅ Tous les items ont été produits et consommés")
 ### Implémentation avec Asyncio
 
 ```python
-import asyncio
-import random
+import asyncio  
+import random  
 
 async def producteur_async(q, producteur_id, nombre_items):
     """Producteur asynchrone"""
@@ -184,9 +184,10 @@ Quand un opérateur est libre, il prend le prochain appel dans la file.
 ### Implémentation avec concurrent.futures
 
 ```python
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import time
-import random
+from concurrent.futures import ThreadPoolExecutor, as_completed  
+import threading  
+import time  
+import random  
 
 def traiter_tache(tache_id):
     """Traite une tâche"""
@@ -219,8 +220,8 @@ print("\n✅ Toutes les tâches sont terminées")
 ### Worker Pool avec map()
 
 ```python
-from concurrent.futures import ThreadPoolExecutor
-import time
+from concurrent.futures import ThreadPoolExecutor  
+import time  
 
 def calculer_carre(nombre):
     """Calcule le carré d'un nombre"""
@@ -233,15 +234,15 @@ nombres = list(range(1, 11))
 with ThreadPoolExecutor(max_workers=4) as executor:
     resultats = list(executor.map(calculer_carre, nombres))
 
-print(f"Nombres: {nombres}")
-print(f"Carrés: {resultats}")
+print(f"Nombres: {nombres}")  
+print(f"Carrés: {resultats}")  
 ```
 
 ### Worker Pool avec Asyncio
 
 ```python
-import asyncio
-import random
+import asyncio  
+import random  
 
 async def worker(nom, queue_taches, queue_resultats):
     """Worker asynchrone qui traite des tâches"""
@@ -314,10 +315,10 @@ Chaque étape travaille en parallèle sur différentes voitures.
 ### Implémentation
 
 ```python
-import threading
-import queue
-import time
-import random
+import threading  
+import queue  
+import time  
+import random  
 
 def etape_1_collecte(queue_sortie, nombre_items):
     """Étape 1: Collecte des données"""
@@ -380,9 +381,9 @@ def etape_4_sauvegarde(queue_entree):
     return resultats
 
 # Créer les queues entre les étapes
-q1_to_2 = queue.Queue(maxsize=5)
-q2_to_3 = queue.Queue(maxsize=5)
-q3_to_4 = queue.Queue(maxsize=5)
+q1_to_2 = queue.Queue(maxsize=5)  
+q2_to_3 = queue.Queue(maxsize=5)  
+q3_to_4 = queue.Queue(maxsize=5)  
 
 # Créer les threads pour chaque étape
 threads = [
@@ -393,24 +394,24 @@ threads = [
 ]
 
 # Démarrer le pipeline
-print("🚀 Démarrage du pipeline\n")
-debut = time.time()
+print("🚀 Démarrage du pipeline\n")  
+debut = time.time()  
 
 for t in threads:
     t.start()
 for t in threads:
     t.join()
 
-duree = time.time() - debut
-print(f"\n✅ Pipeline complet en {duree:.2f}s")
+duree = time.time() - debut  
+print(f"\n✅ Pipeline complet en {duree:.2f}s")  
 ```
 
 ---
 
 ## Pattern 4 : Fan-Out / Fan-In
 
-**Fan-Out** : Une tâche distribue le travail à plusieurs workers
-**Fan-In** : Plusieurs workers envoient leurs résultats à un collecteur
+**Fan-Out** : Une tâche distribue le travail à plusieurs workers  
+**Fan-In** : Plusieurs workers envoient leurs résultats à un collecteur  
 
 ### Analogie
 
@@ -428,10 +429,10 @@ Un restaurant :
 ### Implémentation
 
 ```python
-import threading
-import queue
-import time
-import random
+import threading  
+import queue  
+import time  
+import random  
 
 def dispatcher(taches, queues_workers):
     """Fan-Out: Distribue les tâches aux workers"""
@@ -481,12 +482,12 @@ def collecteur(queue_resultats, nombre_taches):
     return resultats
 
 # Configuration
-taches = [f"Tâche-{i}" for i in range(12)]
-nombre_workers = 4
+taches = [f"Tâche-{i}" for i in range(12)]  
+nombre_workers = 4  
 
 # Créer les queues
-queues_workers = [queue.Queue() for _ in range(nombre_workers)]
-queue_resultats = queue.Queue()
+queues_workers = [queue.Queue() for _ in range(nombre_workers)]  
+queue_resultats = queue.Queue()  
 
 # Créer les threads
 thread_dispatcher = threading.Thread(
@@ -505,22 +506,22 @@ thread_collecteur = threading.Thread(
 )
 
 # Démarrer
-print("🚀 Démarrage Fan-Out/Fan-In\n")
-debut = time.time()
+print("🚀 Démarrage Fan-Out/Fan-In\n")  
+debut = time.time()  
 
-thread_dispatcher.start()
-for t in threads_workers:
+thread_dispatcher.start()  
+for t in threads_workers:  
     t.start()
 thread_collecteur.start()
 
 # Attendre la fin
-thread_dispatcher.join()
-for t in threads_workers:
+thread_dispatcher.join()  
+for t in threads_workers:  
     t.join()
 thread_collecteur.join()
 
-duree = time.time() - debut
-print(f"\n✅ Fan-Out/Fan-In complet en {duree:.2f}s")
+duree = time.time() - debut  
+print(f"\n✅ Fan-Out/Fan-In complet en {duree:.2f}s")  
 ```
 
 ---
@@ -546,9 +547,9 @@ Comme un ticket de pressing :
 ### Implémentation avec concurrent.futures
 
 ```python
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import time
-import random
+from concurrent.futures import ThreadPoolExecutor, as_completed  
+import time  
+import random  
 
 def tache_longue(nom, duree):
     """Simule une tâche qui prend du temps"""
@@ -562,34 +563,34 @@ def tache_longue(nom, duree):
 executor = ThreadPoolExecutor(max_workers=3)
 
 # Soumettre plusieurs tâches et obtenir des Futures
-print("📤 Soumission des tâches\n")
-future1 = executor.submit(tache_longue, "Tâche-A", 2)
-future2 = executor.submit(tache_longue, "Tâche-B", 1)
-future3 = executor.submit(tache_longue, "Tâche-C", 3)
+print("📤 Soumission des tâches\n")  
+future1 = executor.submit(tache_longue, "Tâche-A", 2)  
+future2 = executor.submit(tache_longue, "Tâche-B", 1)  
+future3 = executor.submit(tache_longue, "Tâche-C", 3)  
 
-print("💼 Les tâches sont lancées, on peut faire autre chose...\n")
-time.sleep(0.5)
-print("💼 Autre travail en cours...\n")
+print("💼 Les tâches sont lancées, on peut faire autre chose...\n")  
+time.sleep(0.5)  
+print("💼 Autre travail en cours...\n")  
 
 # Récupérer les résultats quand ils sont prêts
-print("📥 Récupération des résultats:")
-print(f"  • Future1 terminé? {future1.done()}")
-print(f"  • Future2 terminé? {future2.done()}")
+print("📥 Récupération des résultats:")  
+print(f"  • Future1 terminé? {future1.done()}")  
+print(f"  • Future2 terminé? {future2.done()}")  
 
 # Attendre et récupérer les résultats
-print(f"  • Résultat 1: {future1.result()}")  # Bloque si pas encore prêt
-print(f"  • Résultat 2: {future2.result()}")
-print(f"  • Résultat 3: {future3.result()}")
+print(f"  • Résultat 1: {future1.result()}")  # Bloque si pas encore prêt  
+print(f"  • Résultat 2: {future2.result()}")  
+print(f"  • Résultat 3: {future3.result()}")  
 
-executor.shutdown()
-print("\n✅ Toutes les futures résolues")
+executor.shutdown()  
+print("\n✅ Toutes les futures résolues")  
 ```
 
 ### Gestion d'erreurs avec Future
 
 ```python
-from concurrent.futures import ThreadPoolExecutor
-import time
+from concurrent.futures import ThreadPoolExecutor  
+import time  
 
 def tache_avec_erreur(numero):
     """Tâche qui peut échouer"""
@@ -612,9 +613,9 @@ with ThreadPoolExecutor(max_workers=3) as executor:
 ### Avec as_completed() - Traiter au fur et à mesure
 
 ```python
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import time
-import random
+from concurrent.futures import ThreadPoolExecutor, as_completed  
+import time  
+import random  
 
 def telecharger_fichier(url):
     """Simule le téléchargement d'un fichier"""
@@ -662,8 +663,8 @@ Comptage des votes dans une élection :
 ### Implémentation simple
 
 ```python
-from concurrent.futures import ProcessPoolExecutor
-import time
+from concurrent.futures import ProcessPoolExecutor  
+import time  
 
 def map_function(nombre):
     """Phase Map: Calcule le carré"""
@@ -683,23 +684,23 @@ with ProcessPoolExecutor() as executor:
     duree_map = time.time() - debut
 
 # Phase Reduce
-debut = time.time()
-total = reduce_function(carres)
-duree_reduce = time.time() - debut
+debut = time.time()  
+total = reduce_function(carres)  
+duree_reduce = time.time() - debut  
 
-print(f"📊 Map-Reduce:")
-print(f"  • Nombres: 1-100")
-print(f"  • Somme des carrés: {total}")
-print(f"  • Temps Map: {duree_map:.3f}s")
-print(f"  • Temps Reduce: {duree_reduce:.3f}s")
+print(f"📊 Map-Reduce:")  
+print(f"  • Nombres: 1-100")  
+print(f"  • Somme des carrés: {total}")  
+print(f"  • Temps Map: {duree_map:.3f}s")  
+print(f"  • Temps Reduce: {duree_reduce:.3f}s")  
 ```
 
 ### Exemple avancé : Analyse de texte
 
 ```python
-from concurrent.futures import ProcessPoolExecutor
-from collections import Counter
-import re
+from concurrent.futures import ProcessPoolExecutor  
+from collections import Counter  
+import re  
 
 def compter_mots(texte):
     """Phase Map: Compte les mots dans un texte"""
@@ -729,9 +730,9 @@ with ProcessPoolExecutor() as executor:
 compteur_total = fusionner_compteurs(compteurs)
 
 # Afficher les 5 mots les plus fréquents
-print("📊 Analyse Map-Reduce:")
-print("\nTop 5 des mots les plus fréquents:")
-for mot, compte in compteur_total.most_common(5):
+print("📊 Analyse Map-Reduce:")  
+print("\nTop 5 des mots les plus fréquents:")  
+for mot, compte in compteur_total.most_common(5):  
     print(f"  • {mot}: {compte} fois")
 ```
 
@@ -758,10 +759,9 @@ Des employés dans une entreprise :
 ### Implémentation simple
 
 ```python
-import threading
-import queue
-import time
-from typing import Any
+import threading  
+import queue  
+import time  
 
 class Actor:
     """Acteur simple avec sa propre queue de messages"""
@@ -818,20 +818,20 @@ class LoggerActor(Actor):
         print(f"📝 [{timestamp}] {message}")
 
 # Utilisation
-calculator = CalculatorActor("Calculatrice")
-logger = LoggerActor("Logger")
+calculator = CalculatorActor("Calculatrice")  
+logger = LoggerActor("Logger")  
 
 # Envoyer des messages
-logger.send("Système démarré")
-calculator.send(("add", 5, 3))
-calculator.send(("multiply", 4, 7))
-logger.send("Calculs terminés")
+logger.send("Système démarré")  
+calculator.send(("add", 5, 3))  
+calculator.send(("multiply", 4, 7))  
+logger.send("Calculs terminés")  
 
 time.sleep(2)
 
 # Arrêter les acteurs
-calculator.stop()
-logger.stop()
+calculator.stop()  
+logger.stop()  
 ```
 
 ---
@@ -856,8 +856,8 @@ Comparer les prix dans plusieurs magasins :
 ### Implémentation
 
 ```python
-import asyncio
-import random
+import asyncio  
+import random  
 
 async def interroger_service(nom_service, requete):
     """Interroge un service distant"""
@@ -895,7 +895,8 @@ async def scatter_gather_first(requete, services):
     """Retourne la première réponse"""
     print(f"🚀 Scatter: Envoi vers {len(services)} services\n")
 
-    taches = [interroger_service(service, requete) for service in services]
+    taches = [asyncio.create_task(interroger_service(service, requete))
+              for service in services]
 
     # Attendre la première réponse
     done, pending = await asyncio.wait(taches, return_when=asyncio.FIRST_COMPLETED)
@@ -953,8 +954,8 @@ Un barrage qui régule le débit d'eau :
 ### Implémentation simple
 
 ```python
-import asyncio
-import time
+import asyncio  
+import time  
 
 class RateLimiter:
     """Limiteur de débit simple"""
@@ -1010,8 +1011,8 @@ asyncio.run(main())
 ### Implémentation avec Semaphore et délai
 
 ```python
-import asyncio
-import time
+import asyncio  
+import time  
 
 class TokenBucket:
     """Implémentation Token Bucket pour rate limiting"""
@@ -1084,11 +1085,9 @@ Voici un guide pour choisir le pattern approprié selon votre situation :
 Voici un exemple réaliste qui combine plusieurs patterns :
 
 ```python
-import asyncio
-import aiohttp
-import time
-from typing import List, Dict
-from collections import Counter
+import asyncio  
+import time  
+from collections import Counter  
 
 class WebScraperSystem:
     """Système de scraping combinant plusieurs patterns"""
@@ -1153,7 +1152,7 @@ class WebScraperSystem:
 
         return donnees_extraites
 
-    async def scraper_urls(self, urls: List[str]):
+    async def scraper_urls(self, urls: list[str]):
         """
         Scrape plusieurs URLs
         Pattern: Fan-Out/Fan-In + Worker Pool
@@ -1277,9 +1276,9 @@ def mesurer_performance(fonction, *args):
     return resultat
 
 # Comparer les approches
-donnees = list(range(1000))
-mesurer_performance(traiter_sequentiel, donnees)
-mesurer_performance(traiter_parallele, donnees)
+donnees = list(range(1000))  
+mesurer_performance(traiter_sequentiel, donnees)  
+mesurer_performance(traiter_parallele, donnees)  
 ```
 
 ### 3. Gérez les erreurs proprement

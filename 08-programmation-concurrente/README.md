@@ -29,26 +29,26 @@ Vos programmes doivent souvent refléter cette réalité !
 
 **1. Serveur web**
 ```
-Utilisateur A fait une requête → En traitement
-Utilisateur B fait une requête → En traitement (en même temps!)
-Utilisateur C fait une requête → En traitement (en même temps!)
+Utilisateur A fait une requête → En traitement  
+Utilisateur B fait une requête → En traitement (en même temps!)  
+Utilisateur C fait une requête → En traitement (en même temps!)  
 ```
 
 Sans concurrence, l'utilisateur B devrait attendre que A soit servi, puis C devrait attendre B, etc. Avec concurrence, tous sont traités simultanément.
 
 **2. Téléchargement de fichiers**
 ```
-Fichier 1: ████████░░░░░░░░ 50%
-Fichier 2: ███████████░░░░░ 70%
-Fichier 3: █████░░░░░░░░░░░ 30%
+Fichier 1: ████████░░░░░░░░ 50%  
+Fichier 2: ███████████░░░░░ 70%  
+Fichier 3: █████░░░░░░░░░░░ 30%  
 ```
 
 Au lieu de télécharger les fichiers un par un, vous les téléchargez tous en même temps.
 
 **3. Interface graphique**
 ```
-Thread principal: Gère l'interface (boutons, fenêtres)
-Thread secondaire: Effectue un calcul long
+Thread principal: Gère l'interface (boutons, fenêtres)  
+Thread secondaire: Effectue un calcul long  
 ```
 
 Sans concurrence, votre interface "gèlerait" pendant les calculs longs. Avec concurrence, l'interface reste réactive.
@@ -107,8 +107,8 @@ Ces deux termes sont souvent confondus, mais ils sont différents :
 **Analogie** : Un seul jongleur qui jongle avec plusieurs balles. Il ne tient jamais toutes les balles en même temps, mais il passe rapidement de l'une à l'autre.
 
 ```
-Processeur unique qui bascule entre les tâches:
-Temps: |--A--|--B--|--A--|--C--|--B--|--A--|
+Processeur unique qui bascule entre les tâches:  
+Temps: |--A--|--B--|--A--|--C--|--B--|--A--|  
 ```
 
 ### Parallélisme
@@ -118,10 +118,10 @@ Temps: |--A--|--B--|--A--|--C--|--B--|--A--|
 **Analogie** : Plusieurs jongleurs, chacun jonglant avec ses propres balles.
 
 ```
-Plusieurs processeurs travaillant simultanément:
-CPU 1: |------A------|------A------|
-CPU 2: |------B------|------B------|
-CPU 3: |------C------|------C------|
+Plusieurs processeurs travaillant simultanément:  
+CPU 1: |------A------|------A------|  
+CPU 2: |------B------|------B------|  
+CPU 3: |------C------|------C------|  
 ```
 
 ### Tableau comparatif
@@ -158,8 +158,8 @@ def tache():
     print("Tâche exécutée")
 
 # Créer un thread
-thread = threading.Thread(target=tache)
-thread.start()
+thread = threading.Thread(target=tache)  
+thread.start()  
 ```
 
 ### 2. Multiprocessing (Multi-processus)
@@ -180,8 +180,8 @@ def tache():
     print("Tâche exécutée dans un processus")
 
 # Créer un processus
-process = multiprocessing.Process(target=tache)
-process.start()
+process = multiprocessing.Process(target=tache)  
+process.start()  
 ```
 
 ### 3. Asyncio (Asynchrone)
@@ -355,8 +355,8 @@ def incrementer():
 Quand des threads s'attendent mutuellement et se bloquent.
 
 ```
-Thread A détient la ressource 1, veut la ressource 2
-Thread B détient la ressource 2, veut la ressource 1
+Thread A détient la ressource 1, veut la ressource 2  
+Thread B détient la ressource 2, veut la ressource 1  
 → Les deux threads sont bloqués indéfiniment!
 ```
 
@@ -404,8 +404,8 @@ def telecharger_sequentiel(urls):
 
 **Avec threading** :
 ```python
-import threading
-import time
+import threading  
+import time  
 
 def telecharger_concurrent(urls):
     threads = []
@@ -434,11 +434,16 @@ def calculer_sequentiel(nombres):
 ```python
 from multiprocessing import Pool
 
+def carre(x):
+    return x ** 2
+
 def calculer_parallele(nombres):
     with Pool() as pool:
-        resultats = pool.map(lambda x: x ** 2, nombres)
-    # 100 calculs répartis sur 8 cœurs = 8× plus rapide!
+        resultats = pool.map(carre, nombres)
+    # 100 calculs répartis sur plusieurs cœurs = beaucoup plus rapide!
 ```
+
+> **Note :** On ne peut pas utiliser `lambda` avec `multiprocessing.Pool.map()` car les fonctions lambda ne sont pas sérialisables (picklables). Il faut toujours utiliser une fonction nommée.
 
 ---
 
@@ -455,10 +460,10 @@ Si seulement 50% de votre programme peut être parallélisé, vous ne pourrez ja
 ```
 Speedup maximal = 1 / (S + P/N)
 
-Où:
-S = Partie séquentielle (0.5 = 50%)
-P = Partie parallélisable (0.5 = 50%)
-N = Nombre de processeurs
+Où:  
+S = Partie séquentielle (0.5 = 50%)  
+P = Partie parallélisable (0.5 = 50%)  
+N = Nombre de processeurs  
 ```
 
 ### Quand la concurrence est contre-productive
@@ -555,8 +560,8 @@ with ThreadPoolExecutor() as executor:
     resultats = executor.map(fonction, donnees)
 
 # ❌ Moins bon : Gestion manuelle des threads
-threads = []
-for donnee in donnees:
+threads = []  
+for donnee in donnees:  
     t = threading.Thread(target=fonction, args=(donnee,))
     threads.append(t)
     t.start()
@@ -630,11 +635,11 @@ Pour vous inspirer, voici quelques applications concrètes de la programmation c
 
 ### Ce que vous allez apprendre
 
-✅ Les trois approches principales : Threading, Multiprocessing, Asyncio
-✅ Comment choisir la bonne approche pour votre problème
-✅ Les mécanismes de synchronisation (locks, semaphores, etc.)
-✅ Des patterns éprouvés pour résoudre des problèmes courants
-✅ Comment éviter les pièges et les bugs concurrents
+✅ Les trois approches principales : Threading, Multiprocessing, Asyncio  
+✅ Comment choisir la bonne approche pour votre problème  
+✅ Les mécanismes de synchronisation (locks, semaphores, etc.)  
+✅ Des patterns éprouvés pour résoudre des problèmes courants  
+✅ Comment éviter les pièges et les bugs concurrents  
 ✅ Des exemples pratiques et réalistes
 
 ### Ce que vous serez capable de faire
@@ -652,14 +657,14 @@ Pour vous inspirer, voici quelques applications concrètes de la programmation c
 
 Avant de plonger dans ce chapitre, assurez-vous d'être à l'aise avec :
 
-✅ **Python de base** : fonctions, classes, modules
-✅ **Gestion d'erreurs** : try/except
-✅ **Compréhension des boucles** : for, while
+✅ **Python de base** : fonctions, classes, modules  
+✅ **Gestion d'erreurs** : try/except  
+✅ **Compréhension des boucles** : for, while  
 ✅ **Concepts de programmation** : variables, types de données
 
 **Pas besoin** :
-❌ Connaissances en systèmes d'exploitation
-❌ Expérience préalable en concurrence
+❌ Connaissances en systèmes d'exploitation  
+❌ Expérience préalable en concurrence  
 ❌ Mathématiques avancées
 
 ---
