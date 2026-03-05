@@ -1,6 +1,6 @@
 # 🐍 Formation Python - Du Débutant à l'Avancé
 
-![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)
+![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Modules](https://img.shields.io/badge/Modules-13-brightgreen.svg)
 ![Language](https://img.shields.io/badge/Langue-Français-blue.svg)
@@ -31,10 +31,10 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 
 **✨ Points clés :**
 - 📚 **13 modules progressifs** du niveau débutant à expert
-- 🎯 **60+ sujets** couverts avec exemples concrets
+- 🎯 **75+ sujets** couverts avec exemples concrets
 - 🆕 **Technologies modernes** (FastAPI, Type Hints, Poetry, SQLAlchemy)
 - 📊 **Module Data Science** complet (NumPy, Pandas, Matplotlib)
-- 🔥 **Édition 2025** avec les dernières pratiques Python
+- 🔥 **Édition 2025-2026** avec les dernières pratiques Python
 - 🇫🇷 **100% en français** et gratuit (MIT License)
 
 **Durée estimée :** 40-60 heures • **Niveau :** Tous niveaux • **Prérequis :** Aucun
@@ -45,25 +45,25 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 
 ### 🎓 Modules Fondamentaux (1-4)
 
-**Module 1 : Fondamentaux** - Installation, variables, structures de contrôle, fonctions, **Type Hints** 🆕
-**Module 2 : Structures de données** - Listes, dicts, sets, compréhensions, collections spécialisées
-**Module 3 : POO** - Classes, héritage, polymorphisme, méthodes spéciales, métaclasses
-**Module 4 : Fichiers** - Lecture/écriture, JSON/CSV/XML, pathlib
+**Module 1 : Fondamentaux** - Installation, variables, structures de contrôle, fonctions, gestion des erreurs, **Type Hints** 🆕  
+**Module 2 : Structures de données** - Listes, dicts, sets, compréhensions, collections spécialisées  
+**Module 3 : POO** - Classes, héritage, polymorphisme, méthodes spéciales, métaclasses  
+**Module 4 : Fichiers** - Lecture/écriture, JSON/CSV/XML, sérialisation (pickle), pathlib  
 
 ### 🚀 Modules Intermédiaires (5-8)
 
-**Module 5 : Programmation fonctionnelle** - Lambda, map/filter/reduce, décorateurs, générateurs
-**Module 6 : Modules** - Packages, pip, venv, **Poetry/Pipenv** 🆕
-**Module 7 : Bibliothèques standard** - os/sys, datetime, itertools, **typing avancé** 🆕
-**Module 8 : Concurrence** - Threading, multiprocessing, asyncio, patterns
+**Module 5 : Programmation fonctionnelle** - Lambda, map/filter/reduce, décorateurs, générateurs, closures  
+**Module 6 : Modules** - Packages, pip, venv, **Poetry/Pipenv** 🆕  
+**Module 7 : Bibliothèques standard** - os/sys, datetime, math/random, itertools, logging, **typing avancé** 🆕  
+**Module 8 : Concurrence** - Threading, multiprocessing, asyncio, patterns  
 
 ### 🎯 Modules Avancés (9-13)
 
-**Module 9 : Débogage** - Exceptions, debugging, profiling, optimisation
-**Module 10 : Tests** - unittest, pytest, mocking, PEP 8, **mypy** 🆕
-**Module 11 : Web/APIs** - **FastAPI** 🆕, Flask, REST, **SQLAlchemy** 🆕
-**Module 12 : Bonnes pratiques** - Architecture, Git, design patterns, déploiement
-**Module 13 : Data Science** 📊 - **NumPy, Pandas, Matplotlib/Plotly** 🆕 *(optionnel)*
+**Module 9 : Débogage** - Exceptions, debugging, profiling, optimisation  
+**Module 10 : Tests** - unittest, pytest, mocking, couverture de code, documentation, PEP 8, **mypy** 🆕  
+**Module 11 : Web/APIs** - **FastAPI** 🆕, Flask, REST, **SQLAlchemy** 🆕  
+**Module 12 : Bonnes pratiques** - Architecture, Git, design patterns, optimisation, déploiement  
+**Module 13 : Data Science** 📊 - **NumPy, Pandas, Matplotlib/Plotly** 🆕 *(optionnel)*  
 
 > 📋 Consultez [SOMMAIRE.md](SOMMAIRE.md) pour la table des matières complète
 
@@ -77,7 +77,7 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 # Vérifier la version de Python
 python --version  # ou python3 --version
 
-# Télécharger Python 3.11+ (recommandé)
+# Télécharger Python 3.10+ (recommandé : 3.13+)
 # 🌐 https://www.python.org/downloads/
 ```
 
@@ -85,8 +85,8 @@ python --version  # ou python3 --version
 
 ```bash
 # Cloner cette formation
-git clone https://github.com/NDXDeveloper/formation-python-complete.git
-cd formation-python-complete
+git clone https://github.com/NDXDeveloper/formation-python.git  
+cd formation-python  
 
 # Créer un environnement virtuel
 python -m venv venv
@@ -95,8 +95,25 @@ python -m venv venv
 source venv/bin/activate      # 🐧 Linux/Mac
 # venv\Scripts\activate       # 🪟 Windows
 
-# Installer les dépendances (si nécessaire)
-pip install -r requirements.txt
+# Installer les dépendances avec pip
+pip install fastapi uvicorn flask requests sqlalchemy pydantic  # Modules web  
+pip install numpy pandas matplotlib plotly                       # Modules data science  
+```
+
+### Alternative avec Poetry (recommandé)
+
+```bash
+# Installer Poetry (si pas encore installé)
+pip install poetry
+
+# Installer toutes les dépendances
+poetry install --all-extras
+
+# Ou seulement les dépendances web
+poetry install -E web
+
+# Ou seulement les dépendances data science
+poetry install -E data
 ```
 
 ### Votre premier programme
@@ -124,8 +141,9 @@ python hello.py
 formation-python-complete/
 ├── 📄 README.md
 ├── 📋 SOMMAIRE.md (table des matières détaillée)
+├── 🛠️ VSCODE-SETUP.md (configuration VS Code)
 ├── 📜 LICENSE
-├── 📦 requirements.txt
+├── 📦 pyproject.toml (dépendances Poetry)
 ├── 📂 01-fondamentaux-et-syntaxe/
 │   ├── README.md
 │   ├── 01-installation-et-configuration.md
@@ -164,10 +182,10 @@ formation-python-complete/
 **💡 Conseil :** Créez un dossier d'entraînement et testez tous les exemples de code !
 
 ```bash
-mkdir mon-apprentissage-python
-cd mon-apprentissage-python
-python -m venv venv
-source venv/bin/activate
+mkdir mon-apprentissage-python  
+cd mon-apprentissage-python  
+python -m venv venv  
+source venv/bin/activate  
 ```
 
 ---
@@ -186,7 +204,7 @@ source venv/bin/activate
 ## 🛠️ Technologies couvertes
 
 ### Langage & Outils
-![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
 ![Type Hints](https://img.shields.io/badge/Type_Hints-mypy-blue)
 ![Poetry](https://img.shields.io/badge/Poetry-Package_Manager-60A5FA)
 
@@ -211,15 +229,15 @@ source venv/bin/activate
 
 ## 🎓 Ce que vous apprendrez
 
-✅ Écrire du code Python propre, maintenable et professionnel
-✅ Maîtriser la **POO** et les **design patterns**
-✅ Créer des **APIs REST modernes** avec FastAPI
-✅ Gérer les bases de données avec **SQLAlchemy**
-✅ Écrire des **tests unitaires** et assurer la qualité du code
-✅ Utiliser le **typage statique** (Type Hints + mypy)
-✅ Développer des applications **asynchrones** performantes
-✅ Analyser des données avec **NumPy** et **Pandas**
-✅ Créer des visualisations avec **Matplotlib** et **Plotly**
+✅ Écrire du code Python propre, maintenable et professionnel  
+✅ Maîtriser la **POO** et les **design patterns**  
+✅ Créer des **APIs REST modernes** avec FastAPI  
+✅ Gérer les bases de données avec **SQLAlchemy**  
+✅ Écrire des **tests unitaires** et assurer la qualité du code  
+✅ Utiliser le **typage statique** (Type Hints + mypy)  
+✅ Développer des applications **asynchrones** performantes  
+✅ Analyser des données avec **NumPy** et **Pandas**  
+✅ Créer des visualisations avec **Matplotlib** et **Plotly**  
 ✅ Suivre les **bonnes pratiques** de l'industrie
 
 ---
@@ -228,10 +246,9 @@ source venv/bin/activate
 
 ```python
 # Module 11 : FastAPI + Type Hints + SQLAlchemy
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from typing import List
-from pydantic import BaseModel
+from fastapi import FastAPI, Depends, HTTPException  
+from sqlalchemy.orm import Session  
+from pydantic import BaseModel  
 
 app = FastAPI()
 
@@ -240,7 +257,7 @@ class Utilisateur(BaseModel):
     nom: str
     email: str
 
-@app.get("/utilisateurs", response_model=List[Utilisateur])
+@app.get("/utilisateurs", response_model=list[Utilisateur])
 async def obtenir_utilisateurs(db: Session = Depends(get_db)):
     """Récupère tous les utilisateurs de la base de données."""
     utilisateurs = db.query(UtilisateurModel).all()
@@ -249,7 +266,7 @@ async def obtenir_utilisateurs(db: Session = Depends(get_db)):
 @app.post("/utilisateurs", response_model=Utilisateur, status_code=201)
 async def creer_utilisateur(user: Utilisateur, db: Session = Depends(get_db)):
     """Crée un nouvel utilisateur avec validation Pydantic."""
-    db_user = UtilisateurModel(**user.dict())
+    db_user = UtilisateurModel(**user.model_dump())
     db.add(db_user)
     db.commit()
     return db_user
@@ -271,8 +288,8 @@ R : Non, c'est un module optionnel pour ceux qui s'intéressent à l'analyse de 
 **Q : Puis-je utiliser cette formation pour enseigner ?**
 R : Oui ! La licence MIT vous permet d'utiliser, modifier et partager ce contenu librement.
 
-**Q : Les exemples de code fonctionnent-ils avec Python 3.8+ ?**
-R : Oui, tous les exemples sont testés avec Python 3.8 minimum (recommandé : Python 3.11+).
+**Q : Quelle version de Python dois-je utiliser ?**
+R : Python 3.10 ou supérieur est recommandé. Les exemples utilisent la syntaxe moderne (type hints natifs comme `list[str]`, `dict[str, int]`, match/case, etc.). Python 3.13+ est idéal pour bénéficier des dernières améliorations.
 
 ---
 
@@ -331,8 +348,8 @@ Merci à la communauté Python, aux créateurs de frameworks open source (FastAP
 [![Python](https://img.shields.io/badge/Made_with-Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Love](https://img.shields.io/badge/Made_with-❤️-red)](https://github.com/NDXDeveloper)
 
-**[⬆ Retour en haut](#-formation-python-complète---du-débutant-à-lavancé)**
+**[⬆ Retour en haut](#-formation-python---du-débutant-à-lavancé)**
 
-*Dernière mise à jour : Novembre 2025*
+*Dernière mise à jour : Mars 2026*
 
 </div>

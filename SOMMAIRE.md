@@ -113,7 +113,7 @@
 
 | Symbole | Signification |
 |---------|---------------|
-| 🆕 | Contenu nouveau / modernisé pour 2025 |
+| 🆕 | Contenu nouveau / modernisé pour 2026 |
 | ⚠️ | Niveau expert / optionnel |
 | 📊 | Module spécialisé Data Science |
 
