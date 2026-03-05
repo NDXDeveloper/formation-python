@@ -81,8 +81,8 @@ repertoire_actuel = Path('.')
 # Chemin du répertoire parent
 repertoire_parent = Path('..')
 
-print(chemin1)
-print(type(chemin1))  # <class 'pathlib.PosixPath'> ou WindowsPath
+print(chemin1)  
+print(type(chemin1))  # <class 'pathlib.PosixPath'> ou WindowsPath  
 ```
 
 ---
@@ -97,9 +97,9 @@ L'une des fonctionnalités les plus élégantes de pathlib est l'utilisation de 
 from pathlib import Path
 
 # Construction progressive
-base = Path('mes_documents')
-sous_dossier = base / 'projets'
-fichier = sous_dossier / 'python' / 'script.py'
+base = Path('mes_documents')  
+sous_dossier = base / 'projets'  
+fichier = sous_dossier / 'python' / 'script.py'  
 
 print(fichier)
 # Résultat : mes_documents/projets/python/script.py
@@ -110,8 +110,8 @@ print(fichier)
 ```python
 from pathlib import Path
 
-chemin = Path('dossier').joinpath('sous_dossier', 'fichier.txt')
-print(chemin)
+chemin = Path('dossier').joinpath('sous_dossier', 'fichier.txt')  
+print(chemin)  
 # Résultat : dossier/sous_dossier/fichier.txt
 ```
 
@@ -121,13 +121,13 @@ print(chemin)
 from pathlib import Path
 
 # Créer un chemin complexe
-projet = Path('projets')
-python = 'python'
-app = 'mon_app'
-fichier = 'main.py'
+projet = Path('projets')  
+python = 'python'  
+app = 'mon_app'  
+fichier = 'main.py'  
 
-chemin_complet = projet / python / app / fichier
-print(chemin_complet)
+chemin_complet = projet / python / app / fichier  
+print(chemin_complet)  
 # Résultat : projets/python/mon_app/main.py
 ```
 
@@ -155,8 +155,8 @@ print(f"Extension : {chemin.suffix}")
 # Résultat : .py
 
 # Toutes les extensions (pour .tar.gz par exemple)
-chemin2 = Path('archive.tar.gz')
-print(f"Extensions : {chemin2.suffixes}")
+chemin2 = Path('archive.tar.gz')  
+print(f"Extensions : {chemin2.suffixes}")  
 # Résultat : ['.tar', '.gz']
 
 # Répertoire parent
@@ -179,12 +179,12 @@ from pathlib import Path
 
 fichier = Path('documents/photos/vacances/plage.jpg')
 
-print(f"📁 Chemin complet : {fichier}")
-print(f"📄 Nom du fichier : {fichier.name}")
-print(f"🏷️  Nom sans extension : {fichier.stem}")
-print(f"🔖 Extension : {fichier.suffix}")
-print(f"📂 Dossier parent : {fichier.parent}")
-print(f"🗂️  Grand-parent : {fichier.parent.parent}")
+print(f"📁 Chemin complet : {fichier}")  
+print(f"📄 Nom du fichier : {fichier.name}")  
+print(f"🏷️  Nom sans extension : {fichier.stem}")  
+print(f"🔖 Extension : {fichier.suffix}")  
+print(f"📂 Dossier parent : {fichier.parent}")  
+print(f"🗂️  Grand-parent : {fichier.parent.parent}")  
 ```
 
 ---
@@ -199,11 +199,11 @@ Un **chemin absolu** commence à la racine du système de fichiers :
 from pathlib import Path
 
 # Obtenir le chemin absolu
-chemin_relatif = Path('mon_fichier.txt')
-chemin_absolu = chemin_relatif.absolute()
+chemin_relatif = Path('mon_fichier.txt')  
+chemin_absolu = chemin_relatif.absolute()  
 
-print(f"Relatif : {chemin_relatif}")
-print(f"Absolu : {chemin_absolu}")
+print(f"Relatif : {chemin_relatif}")  
+print(f"Absolu : {chemin_absolu}")  
 ```
 
 ### Résoudre un Chemin (resolve)
@@ -213,8 +213,8 @@ La méthode `resolve()` retourne le chemin absolu en résolvant les liens symbol
 ```python
 from pathlib import Path
 
-chemin = Path('.')
-chemin_resolu = chemin.resolve()
+chemin = Path('.')  
+chemin_resolu = chemin.resolve()  
 
 print(f"Répertoire courant : {chemin_resolu}")
 ```
@@ -224,12 +224,12 @@ print(f"Répertoire courant : {chemin_resolu}")
 ```python
 from pathlib import Path
 
-chemin1 = Path('/home/alice/projets/python/app')
-chemin2 = Path('/home/alice/projets/data/fichier.csv')
+chemin1 = Path('/home/alice/projets/python/app')  
+chemin2 = Path('/home/alice/projets/data/fichier.csv')  
 
 # Obtenir le chemin relatif de chemin2 par rapport à chemin1
-relatif = chemin2.relative_to(Path('/home/alice/projets'))
-print(relatif)
+relatif = chemin2.relative_to(Path('/home/alice/projets'))  
+print(relatif)  
 # Résultat : data/fichier.csv
 ```
 
@@ -316,14 +316,14 @@ analyser_chemin('mon_fichier.txt')
 from pathlib import Path
 
 # Créer un dossier
-nouveau_dossier = Path('mon_nouveau_dossier')
-nouveau_dossier.mkdir(exist_ok=True)
-print(f"Dossier créé : {nouveau_dossier}")
+nouveau_dossier = Path('mon_nouveau_dossier')  
+nouveau_dossier.mkdir(exist_ok=True)  
+print(f"Dossier créé : {nouveau_dossier}")  
 
 # Créer une hiérarchie de dossiers
-chemin = Path('projets/python/mon_app/src')
-chemin.mkdir(parents=True, exist_ok=True)
-print(f"Hiérarchie créée : {chemin}")
+chemin = Path('projets/python/mon_app/src')  
+chemin.mkdir(parents=True, exist_ok=True)  
+print(f"Hiérarchie créée : {chemin}")  
 ```
 
 **Paramètres importants :**
@@ -336,14 +336,14 @@ print(f"Hiérarchie créée : {chemin}")
 from pathlib import Path
 
 # Supprimer un fichier
-fichier = Path('fichier_temporaire.txt')
-if fichier.exists():
+fichier = Path('fichier_temporaire.txt')  
+if fichier.exists():  
     fichier.unlink()
     print("Fichier supprimé")
 
 # Supprimer un dossier vide
-dossier = Path('dossier_vide')
-if dossier.exists() and dossier.is_dir():
+dossier = Path('dossier_vide')  
+if dossier.exists() and dossier.is_dir():  
     dossier.rmdir()
     print("Dossier supprimé")
 ```
@@ -353,11 +353,11 @@ if dossier.exists() and dossier.is_dir():
 ### Supprimer un Dossier Non Vide
 
 ```python
-import shutil
-from pathlib import Path
+import shutil  
+from pathlib import Path  
 
-dossier = Path('dossier_avec_contenu')
-if dossier.exists():
+dossier = Path('dossier_avec_contenu')  
+if dossier.exists():  
     shutil.rmtree(dossier)
     print("Dossier et contenu supprimés")
 ```
@@ -368,16 +368,16 @@ if dossier.exists():
 from pathlib import Path
 
 # Renommer un fichier
-ancien = Path('ancien_nom.txt')
-nouveau = Path('nouveau_nom.txt')
+ancien = Path('ancien_nom.txt')  
+nouveau = Path('nouveau_nom.txt')  
 
 if ancien.exists():
     ancien.rename(nouveau)
     print(f"Renommé : {ancien} → {nouveau}")
 
 # Déplacer vers un autre dossier
-fichier = Path('fichier.txt')
-destination = Path('dossier/fichier.txt')
+fichier = Path('fichier.txt')  
+destination = Path('dossier/fichier.txt')  
 
 if fichier.exists():
     fichier.rename(destination)
@@ -387,11 +387,11 @@ if fichier.exists():
 ### Copier un Fichier
 
 ```python
-import shutil
-from pathlib import Path
+import shutil  
+from pathlib import Path  
 
-source = Path('original.txt')
-destination = Path('copie.txt')
+source = Path('original.txt')  
+destination = Path('copie.txt')  
 
 if source.exists():
     shutil.copy(source, destination)
@@ -409,8 +409,8 @@ from pathlib import Path
 
 dossier = Path('.')
 
-print("Contenu du dossier courant :")
-for element in dossier.iterdir():
+print("Contenu du dossier courant :")  
+for element in dossier.iterdir():  
     type_element = "📁" if element.is_dir() else "📄"
     print(f"{type_element} {element.name}")
 ```
@@ -423,14 +423,14 @@ from pathlib import Path
 dossier = Path('.')
 
 # Seulement les fichiers
-print("Fichiers :")
-for fichier in dossier.iterdir():
+print("Fichiers :")  
+for fichier in dossier.iterdir():  
     if fichier.is_file():
         print(f"  📄 {fichier.name}")
 
 # Seulement les dossiers
-print("\nDossiers :")
-for sous_dossier in dossier.iterdir():
+print("\nDossiers :")  
+for sous_dossier in dossier.iterdir():  
     if sous_dossier.is_dir():
         print(f"  📁 {sous_dossier.name}")
 ```
@@ -449,13 +449,13 @@ from pathlib import Path
 dossier = Path('.')
 
 # Tous les fichiers .txt
-print("Fichiers .txt :")
-for fichier in dossier.glob('*.txt'):
+print("Fichiers .txt :")  
+for fichier in dossier.glob('*.txt'):  
     print(f"  {fichier.name}")
 
 # Tous les fichiers .py
-print("\nFichiers .py :")
-for fichier in dossier.glob('*.py'):
+print("\nFichiers .py :")  
+for fichier in dossier.glob('*.py'):  
     print(f"  {fichier.name}")
 ```
 
@@ -467,8 +467,8 @@ from pathlib import Path
 dossier = Path('.')
 
 # Rechercher tous les .txt récursivement (dans tous les sous-dossiers)
-print("Tous les .txt (récursif) :")
-for fichier in dossier.rglob('*.txt'):
+print("Tous les .txt (récursif) :")  
+for fichier in dossier.rglob('*.txt'):  
     print(f"  {fichier}")
 ```
 
@@ -489,9 +489,10 @@ for fichier in dossier.glob('test*.py'):
 for fichier in dossier.glob('scripts/*.py'):
     print(fichier)
 
-# Plusieurs extensions
-for fichier in dossier.glob('*.{txt,md,pdf}'):
-    print(fichier)
+# Plusieurs extensions (glob ne supporte pas {txt,md,pdf})
+for fichier in dossier.iterdir():
+    if fichier.suffix in ('.txt', '.md', '.pdf'):
+        print(fichier)
 ```
 
 ### Exemple : Trouver Tous les Scripts Python
@@ -523,8 +524,8 @@ trouver_scripts_python('.')
 ### Obtenir les Statistiques
 
 ```python
-from pathlib import Path
-from datetime import datetime
+from pathlib import Path  
+from datetime import datetime  
 
 fichier = Path('mon_fichier.txt')
 
@@ -549,8 +550,8 @@ if fichier.exists():
 ### Exemple : Afficher des Informations Détaillées
 
 ```python
-from pathlib import Path
-from datetime import datetime
+from pathlib import Path  
+from datetime import datetime  
 
 def infos_fichier(chemin_str):
     """Affiche des informations détaillées sur un fichier"""
@@ -607,13 +608,13 @@ from pathlib import Path
 fichier = Path('mon_fichier.txt')
 
 # Lire tout le contenu
-contenu = fichier.read_text(encoding='utf-8')
-print(contenu)
+contenu = fichier.read_text(encoding='utf-8')  
+print(contenu)  
 
 # Lire un fichier binaire
-fichier_bin = Path('image.jpg')
-contenu_bin = fichier_bin.read_bytes()
-print(f"Taille : {len(contenu_bin)} octets")
+fichier_bin = Path('image.jpg')  
+contenu_bin = fichier_bin.read_bytes()  
+print(f"Taille : {len(contenu_bin)} octets")  
 ```
 
 ### Écrire dans un Fichier
@@ -627,9 +628,9 @@ fichier = Path('nouveau_fichier.txt')
 fichier.write_text("Bonjour depuis pathlib !\n", encoding='utf-8')
 
 # Écrire des données binaires
-fichier_bin = Path('donnees.bin')
-donnees = bytes([0, 1, 2, 3, 4])
-fichier_bin.write_bytes(donnees)
+fichier_bin = Path('donnees.bin')  
+donnees = bytes([0, 1, 2, 3, 4])  
+fichier_bin.write_bytes(donnees)  
 ```
 
 ### Exemple : Traiter des Fichiers
@@ -661,8 +662,8 @@ traiter_fichiers_texte('documents')
 Voici un exemple complet qui organise des fichiers par extension :
 
 ```python
-from pathlib import Path
-import shutil
+from pathlib import Path  
+import shutil  
 
 def organiser_fichiers(dossier_source):
     """Organise les fichiers par extension dans des sous-dossiers"""
@@ -697,7 +698,7 @@ def organiser_fichiers(dossier_source):
             destination = dossier_extension / nouveau_nom
             compteur += 1
 
-        shutil.move(str(fichier), str(destination))
+        shutil.move(fichier, destination)
         print(f"📁 {fichier.name} → {extension}/{destination.name}")
 
     print("\n✅ Organisation terminée !")
@@ -711,9 +712,9 @@ organiser_fichiers('telechargements')
 ## Exemple Pratique : Backup de Fichiers
 
 ```python
-from pathlib import Path
-import shutil
-from datetime import datetime
+from pathlib import Path  
+import shutil  
+from datetime import datetime  
 
 def backup_fichiers(dossier_source, dossier_backup):
     """Crée une sauvegarde horodatée d'un dossier"""
@@ -773,8 +774,8 @@ chemin_windows = Path('C:/Users/Alice/Documents/fichier.txt')
 chemin_unix = Path('/home/alice/documents/fichier.txt')
 
 # Pathlib adapte automatiquement selon l'OS
-chemin = Path.home() / 'documents' / 'fichier.txt'
-print(chemin)
+chemin = Path.home() / 'documents' / 'fichier.txt'  
+print(chemin)  
 # Windows : C:\Users\Alice\documents\fichier.txt
 # Linux : /home/alice/documents/fichier.txt
 ```
@@ -785,12 +786,12 @@ print(chemin)
 from pathlib import Path
 
 # Dossier personnel de l'utilisateur
-home = Path.home()
-print(f"Home : {home}")
+home = Path.home()  
+print(f"Home : {home}")  
 
 # Répertoire de travail actuel
-cwd = Path.cwd()
-print(f"Répertoire courant : {cwd}")
+cwd = Path.cwd()  
+print(f"Répertoire courant : {cwd}")  
 ```
 
 ---
@@ -800,20 +801,20 @@ print(f"Répertoire courant : {cwd}")
 Si nécessaire, vous pouvez convertir entre Path et chaînes :
 
 ```python
-from pathlib import Path
-import os
+from pathlib import Path  
+import os  
 
 # Path → str
-chemin = Path('dossier/fichier.txt')
-chemin_str = str(chemin)
-print(f"String : {chemin_str}")
+chemin = Path('dossier/fichier.txt')  
+chemin_str = str(chemin)  
+print(f"String : {chemin_str}")  
 
-# Utiliser avec des fonctions os
-os.path.exists(str(chemin))
-
-# Certaines fonctions acceptent directement des objets Path (Python 3.6+)
-with open(chemin, 'r') as f:
+# Les fonctions standard acceptent directement des objets Path
+with open(chemin, 'r', encoding='utf-8') as f:
     contenu = f.read()
+
+# os.path fonctionne aussi directement avec Path
+os.path.exists(chemin)  # Pas besoin de str()
 ```
 
 ---
@@ -840,9 +841,9 @@ with open(chemin, 'r') as f:
 ```python
 import os
 
-base = 'projets'
-sous_dossier = 'python'
-fichier = 'script.py'
+base = 'projets'  
+sous_dossier = 'python'  
+fichier = 'script.py'  
 
 chemin = os.path.join(base, sous_dossier, fichier)
 
@@ -872,20 +873,20 @@ if chemin.exists():
 
 ```python
 # ✅ Recommandé
-from pathlib import Path
-chemin = Path('dossier') / 'fichier.txt'
+from pathlib import Path  
+chemin = Path('dossier') / 'fichier.txt'  
 
 # ❌ Ancien style
-import os
-chemin = os.path.join('dossier', 'fichier.txt')
+import os  
+chemin = os.path.join('dossier', 'fichier.txt')  
 ```
 
 ### 2. Utiliser Path.home() pour les chemins utilisateurs
 
 ```python
 # ✅ Portable
-from pathlib import Path
-config = Path.home() / '.config' / 'mon_app' / 'config.json'
+from pathlib import Path  
+config = Path.home() / '.config' / 'mon_app' / 'config.json'  
 
 # ❌ Codé en dur
 config = '/home/alice/.config/mon_app/config.json'  # Ne marche que sur Linux !
@@ -912,8 +913,8 @@ contenu = fichier.read_text()  # FileNotFoundError si n'existe pas
 from pathlib import Path
 
 # ✅ Crée toute la hiérarchie
-chemin = Path('projets/python/mon_app/src')
-chemin.mkdir(parents=True, exist_ok=True)
+chemin = Path('projets/python/mon_app/src')  
+chemin.mkdir(parents=True, exist_ok=True)  
 
 # ❌ Erreur si les parents n'existent pas
 chemin.mkdir()  # FileNotFoundError
@@ -928,9 +929,9 @@ from pathlib import Path
 fichiers = list(Path('.').rglob('*.py'))
 
 # ❌ Moins lisible avec os.walk
-import os
-fichiers = []
-for root, dirs, files in os.walk('.'):
+import os  
+fichiers = []  
+for root, dirs, files in os.walk('.'):  
     for file in files:
         if file.endswith('.py'):
             fichiers.append(os.path.join(root, file))
@@ -940,22 +941,7 @@ for root, dirs, files in os.walk('.'):
 
 ## Pièges Courants et Solutions
 
-### 1. Oublier de convertir en str pour certaines fonctions
-
-```python
-from pathlib import Path
-import subprocess
-
-chemin = Path('script.sh')
-
-# ❌ Peut ne pas fonctionner
-subprocess.run([chemin])
-
-# ✅ Convertir en str si nécessaire
-subprocess.run([str(chemin)])
-```
-
-### 2. Confondre / avec +
+### 1. Confondre / avec +
 
 ```python
 from pathlib import Path
@@ -967,11 +953,11 @@ chemin = Path('base') / 'sous_dossier'
 # chemin = Path('base') + 'sous_dossier'  # TypeError
 ```
 
-### 3. Utiliser rmdir() sur un dossier non vide
+### 2. Utiliser rmdir() sur un dossier non vide
 
 ```python
-from pathlib import Path
-import shutil
+from pathlib import Path  
+import shutil  
 
 dossier = Path('mon_dossier')
 
@@ -995,40 +981,40 @@ from pathlib import Path
 chemin = Path('dossier') / 'fichier.txt'
 
 # Propriétés
-chemin.name          # Nom du fichier
-chemin.stem          # Nom sans extension
-chemin.suffix        # Extension
-chemin.parent        # Dossier parent
-chemin.absolute()    # Chemin absolu
+chemin.name          # Nom du fichier  
+chemin.stem          # Nom sans extension  
+chemin.suffix        # Extension  
+chemin.parent        # Dossier parent  
+chemin.absolute()    # Chemin absolu  
 
 # Tests
-chemin.exists()      # Existe ?
-chemin.is_file()     # Est un fichier ?
-chemin.is_dir()      # Est un dossier ?
+chemin.exists()      # Existe ?  
+chemin.is_file()     # Est un fichier ?  
+chemin.is_dir()      # Est un dossier ?  
 
 # Opérations
-chemin.mkdir()       # Créer un dossier
-chemin.unlink()      # Supprimer un fichier
-chemin.rename(new)   # Renommer/déplacer
+chemin.mkdir()       # Créer un dossier  
+chemin.unlink()      # Supprimer un fichier  
+chemin.rename(new)   # Renommer/déplacer  
 
 # Lecture/Écriture
-chemin.read_text()   # Lire le contenu
-chemin.write_text()  # Écrire du contenu
+chemin.read_text()   # Lire le contenu  
+chemin.write_text()  # Écrire du contenu  
 
 # Recherche
-Path('.').iterdir()  # Lister le contenu
-Path('.').glob('*.txt')   # Recherche
-Path('.').rglob('*.py')   # Recherche récursive
+Path('.').iterdir()  # Lister le contenu  
+Path('.').glob('*.txt')   # Recherche  
+Path('.').rglob('*.py')   # Recherche récursive  
 ```
 
 ### Points Clés
 
-✅ **pathlib** est la méthode moderne pour gérer les chemins
-✅ Syntaxe orientée objet plus claire que os.path
-✅ Opérateur `/` pour joindre des chemins naturellement
-✅ Compatible Windows, Linux et macOS automatiquement
-✅ Méthodes intégrées pour toutes les opérations courantes
-✅ Utilisez `rglob()` pour les recherches récursives
+✅ **pathlib** est la méthode moderne pour gérer les chemins  
+✅ Syntaxe orientée objet plus claire que os.path  
+✅ Opérateur `/` pour joindre des chemins naturellement  
+✅ Compatible Windows, Linux et macOS automatiquement  
+✅ Méthodes intégrées pour toutes les opérations courantes  
+✅ Utilisez `rglob()` pour les recherches récursives  
 ✅ Toujours utiliser `parents=True` et `exist_ok=True` pour mkdir()
 
 ### Migration de os.path

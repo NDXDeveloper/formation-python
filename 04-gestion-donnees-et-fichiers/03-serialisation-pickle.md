@@ -103,9 +103,9 @@ print("Utilisateur sauvegardé !")
 ```python
 import pickle
 
-nom = "Alice"
-age = 30
-hobbies = ["lecture", "natation", "musique"]
+nom = "Alice"  
+age = 30  
+hobbies = ["lecture", "natation", "musique"]  
 
 # Sauvegarder plusieurs objets dans le même fichier
 with open('donnees_multiples.pkl', 'wb') as fichier:
@@ -129,8 +129,8 @@ import pickle
 with open('ma_liste.pkl', 'rb') as fichier:
     ma_liste = pickle.load(fichier)
 
-print("Liste chargée :", ma_liste)
-print("Type :", type(ma_liste))
+print("Liste chargée :", ma_liste)  
+print("Type :", type(ma_liste))  
 ```
 
 **Point important :** Mode `'rb'` : **r**ead **b**inary (lecture binaire)
@@ -145,9 +145,9 @@ with open('utilisateur.pkl', 'rb') as fichier:
     utilisateur = pickle.load(fichier)
 
 # Utiliser les données
-print(f"Nom : {utilisateur['nom']}")
-print(f"Âge : {utilisateur['age']} ans")
-print(f"Compétences : {', '.join(utilisateur['competences'])}")
+print(f"Nom : {utilisateur['nom']}")  
+print(f"Âge : {utilisateur['age']} ans")  
+print(f"Compétences : {', '.join(utilisateur['competences'])}")  
 ```
 
 ### Exemple 3 : Charger plusieurs objets
@@ -161,8 +161,8 @@ with open('donnees_multiples.pkl', 'rb') as fichier:
     age = pickle.load(fichier)
     hobbies = pickle.load(fichier)
 
-print(f"{nom}, {age} ans")
-print(f"Hobbies : {hobbies}")
+print(f"{nom}, {age} ans")  
+print(f"Hobbies : {hobbies}")  
 ```
 
 **Attention :** Il faut charger les objets dans le **même ordre** qu'ils ont été sauvegardés !
@@ -184,12 +184,12 @@ donnees = {'nom': 'Python', 'version': 3.12, 'tags': ['simple', 'puissant']}
 # Sérialiser en bytes
 donnees_bytes = pickle.dumps(donnees)
 
-print("Type :", type(donnees_bytes))  # <class 'bytes'>
-print("Taille :", len(donnees_bytes), "octets")
+print("Type :", type(donnees_bytes))  # <class 'bytes'>  
+print("Taille :", len(donnees_bytes), "octets")  
 
 # Désérialiser
-donnees_restaurees = pickle.loads(donnees_bytes)
-print("Données restaurées :", donnees_restaurees)
+donnees_restaurees = pickle.loads(donnees_bytes)  
+print("Données restaurées :", donnees_restaurees)  
 ```
 
 ---
@@ -214,8 +214,8 @@ class Personne:
         return f"Je m'appelle {self.nom}, j'ai {self.age} ans et j'habite à {self.ville}"
 
 # Créer une instance
-personne1 = Personne("Marie", 28, "Paris")
-print(personne1.se_presenter())
+personne1 = Personne("Marie", 28, "Paris")  
+print(personne1.se_presenter())  
 
 # Sauvegarder l'objet
 with open('personne.pkl', 'wb') as fichier:
@@ -244,8 +244,8 @@ with open('personne.pkl', 'rb') as fichier:
     personne_chargee = pickle.load(fichier)
 
 # L'objet fonctionne normalement !
-print(personne_chargee.se_presenter())
-print(f"Type : {type(personne_chargee)}")
+print(personne_chargee.se_presenter())  
+print(f"Type : {type(personne_chargee)}")  
 ```
 
 **Important :** La définition de la classe doit être disponible lors du chargement !
@@ -300,11 +300,11 @@ def charger_partie(fichier='sauvegarde.pkl'):
         return None
 
 # === Nouvelle partie ===
-joueur = Joueur("Alice")
-joueur.gagner_points(100)
-joueur.ajouter_objet("Épée")
-joueur.ajouter_objet("Potion")
-joueur.afficher_stats()
+joueur = Joueur("Alice")  
+joueur.gagner_points(100)  
+joueur.ajouter_objet("Épée")  
+joueur.ajouter_objet("Potion")  
+joueur.afficher_stats()  
 
 # Sauvegarder
 sauvegarder_partie(joueur)
@@ -313,8 +313,8 @@ sauvegarder_partie(joueur)
 del joueur
 
 # === Relancer le jeu ===
-joueur = charger_partie()
-if joueur:
+joueur = charger_partie()  
+if joueur:  
     joueur.afficher_stats()
     joueur.gagner_points(50)
     joueur.ajouter_objet("Bouclier")
@@ -328,8 +328,8 @@ if joueur:
 Pickle est utile pour mettre en cache des calculs coûteux :
 
 ```python
-import pickle
-import time
+import pickle  
+import time  
 
 def calcul_long(n):
     """Simule un calcul long"""
@@ -362,14 +362,14 @@ def calcul_avec_cache(n, fichier_cache='cache.pkl'):
     return resultat
 
 # Premier appel : calcul de 2 secondes
-print("Premier appel :")
-resultat = calcul_avec_cache(10)
-print(f"Résultat : {resultat}\n")
+print("Premier appel :")  
+resultat = calcul_avec_cache(10)  
+print(f"Résultat : {resultat}\n")  
 
 # Deuxième appel : instantané (depuis le cache)
-print("Deuxième appel :")
-resultat = calcul_avec_cache(10)
-print(f"Résultat : {resultat}")
+print("Deuxième appel :")  
+resultat = calcul_avec_cache(10)  
+print(f"Résultat : {resultat}")  
 ```
 
 ---
@@ -410,12 +410,12 @@ def charger_securise(fichier, defaut=None):
         return defaut
 
 # Utilisation
-donnees = {'clé': 'valeur'}
-sauvegarder_securise(donnees, 'donnees.pkl')
+donnees = {'clé': 'valeur'}  
+sauvegarder_securise(donnees, 'donnees.pkl')  
 
 # Charger avec valeur par défaut
-resultat = charger_securise('donnees.pkl', defaut={})
-print(f"Données : {resultat}")
+resultat = charger_securise('donnees.pkl', defaut={})  
+print(f"Données : {resultat}")  
 ```
 
 ---
@@ -462,8 +462,8 @@ print(f"Protocole le plus récent : {pickle.HIGHEST_PROTOCOL}")
 ### Exemple Comparatif
 
 ```python
-import pickle
-import json
+import pickle  
+import json  
 
 # Données complexes
 donnees = {
@@ -489,15 +489,15 @@ except TypeError as e:
 ### Quand Utiliser Quoi ?
 
 #### Utilisez Pickle quand :
-✅ Vous travaillez uniquement avec Python
-✅ Vous devez sauvegarder des objets complexes
-✅ Vous voulez la meilleure performance
+✅ Vous travaillez uniquement avec Python  
+✅ Vous devez sauvegarder des objets complexes  
+✅ Vous voulez la meilleure performance  
 ✅ Les données restent dans votre système (pas d'échange externe)
 
 #### Utilisez JSON quand :
-✅ Vous devez échanger des données avec d'autres langages
-✅ Vous voulez un format lisible par l'humain
-✅ Vous travaillez avec des APIs web
+✅ Vous devez échanger des données avec d'autres langages  
+✅ Vous voulez un format lisible par l'humain  
+✅ Vous travaillez avec des APIs web  
 ✅ La sécurité est une priorité
 
 ---
@@ -557,8 +557,8 @@ Certains objets ne peuvent pas être pickled :
 import pickle
 
 # ❌ Ne fonctionne pas
-fichier_ouvert = open('test.txt', 'r')
-try:
+fichier_ouvert = open('test.txt', 'r')  
+try:  
     pickle.dumps(fichier_ouvert)
 except TypeError as e:
     print(f"Erreur : {e}")
@@ -572,8 +572,8 @@ finally:
 import pickle
 
 # ❌ Ne fonctionne pas
-ma_fonction = lambda x: x * 2
-try:
+ma_fonction = lambda x: x * 2  
+try:  
     pickle.dumps(ma_fonction)
 except AttributeError as e:
     print(f"Erreur : impossible de pickler une lambda")
@@ -650,8 +650,8 @@ with open('save.pkl', 'rb') as f:
 ### 5. Créer des fonctions réutilisables
 
 ```python
-import pickle
-from pathlib import Path
+import pickle  
+from pathlib import Path  
 
 def sauvegarder(objet, fichier):
     """Sauvegarde un objet avec pickle"""
@@ -666,8 +666,8 @@ def charger(fichier, defaut=None):
         return pickle.load(f)
 
 # Utilisation simple
-sauvegarder({'key': 'value'}, 'data.pkl')
-data = charger('data.pkl', defaut={})
+sauvegarder({'key': 'value'}, 'data.pkl')  
+data = charger('data.pkl', defaut={})  
 ```
 
 ---
@@ -694,12 +694,12 @@ objet = pickle.loads(bytes_data)
 
 ### Points Clés à Retenir
 
-✅ **Pickle** permet de sauvegarder n'importe quel objet Python
-✅ Parfait pour **sauvegardes** et **caches** locaux
-✅ Utiliser toujours le mode **binaire** (`'wb'` et `'rb'`)
-✅ Peut sauvegarder des **objets personnalisés**
-⚠️ **DANGER** : ne jamais charger de fichiers pickle non fiables
-⚠️ Format **Python uniquement**, pas pour l'échange avec d'autres langages
+✅ **Pickle** permet de sauvegarder n'importe quel objet Python  
+✅ Parfait pour **sauvegardes** et **caches** locaux  
+✅ Utiliser toujours le mode **binaire** (`'wb'` et `'rb'`)  
+✅ Peut sauvegarder des **objets personnalisés**  
+⚠️ **DANGER** : ne jamais charger de fichiers pickle non fiables  
+⚠️ Format **Python uniquement**, pas pour l'échange avec d'autres langages  
 ⚠️ Certains objets ne peuvent pas être picklés (fichiers, connexions)
 
 ### Quand Utiliser Pickle ?

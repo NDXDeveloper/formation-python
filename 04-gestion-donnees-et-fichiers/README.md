@@ -191,8 +191,8 @@ for fichier in Path('.').rglob('*.py'):
     print(fichier.name)
 
 # Informations sur un fichier
-fichier = Path('script.py')
-if fichier.exists():
+fichier = Path('script.py')  
+if fichier.exists():  
     print(f"Taille : {fichier.stat().st_size} octets")
 ```
 
@@ -211,8 +211,8 @@ notes = ["Faire les courses", "Appeler Marie"]
 # Programme terminé → données perdues
 
 # Avec persistance
-import json
-with open('notes.json', 'w') as f:
+import json  
+with open('notes.json', 'w') as f:  
     json.dump(notes, f)
 # Programme terminé → données sauvegardées ✅
 ```
@@ -233,9 +233,9 @@ with open('notes.json', 'w') as f:
 
 ```python
 # ❌ Mauvaise pratique
-f = open('fichier.txt', 'r')
-contenu = f.read()
-f.close()  # On peut oublier !
+f = open('fichier.txt', 'r')  
+contenu = f.read()  
+f.close()  # On peut oublier !  
 
 # ✅ Bonne pratique
 with open('fichier.txt', 'r') as f:
@@ -275,14 +275,14 @@ chemin = 'dossier/sous_dossier/fichier.txt'
 Voici un exemple complet montrant comment ces compétences s'articulent :
 
 ```python
-from pathlib import Path
-import json
-import csv
+from pathlib import Path  
+import json  
+import csv  
 
 # 1. Organisation des fichiers (pathlib)
-projet = Path('mon_projet')
-dossier_data = projet / 'data'
-dossier_data.mkdir(parents=True, exist_ok=True)
+projet = Path('mon_projet')  
+dossier_data = projet / 'data'  
+dossier_data.mkdir(parents=True, exist_ok=True)  
 
 # 2. Collecter des données
 utilisateurs = [
@@ -292,27 +292,27 @@ utilisateurs = [
 ]
 
 # 3. Sauvegarder en JSON (configuration, API)
-fichier_json = dossier_data / 'utilisateurs.json'
-with open(fichier_json, 'w', encoding='utf-8') as f:
+fichier_json = dossier_data / 'utilisateurs.json'  
+with open(fichier_json, 'w', encoding='utf-8') as f:  
     json.dump(utilisateurs, f, indent=4, ensure_ascii=False)
 
 # 4. Exporter en CSV (pour Excel)
-fichier_csv = dossier_data / 'utilisateurs.csv'
-with open(fichier_csv, 'w', encoding='utf-8', newline='') as f:
+fichier_csv = dossier_data / 'utilisateurs.csv'  
+with open(fichier_csv, 'w', encoding='utf-8', newline='') as f:  
     writer = csv.DictWriter(f, fieldnames=['nom', 'age', 'ville'])
     writer.writeheader()
     writer.writerows(utilisateurs)
 
 # 5. Créer un rapport texte
-rapport = dossier_data / 'rapport.txt'
-with open(rapport, 'w', encoding='utf-8') as f:
+rapport = dossier_data / 'rapport.txt'  
+with open(rapport, 'w', encoding='utf-8') as f:  
     f.write("=== RAPPORT D'ANALYSE ===\n\n")
     f.write(f"Nombre d'utilisateurs : {len(utilisateurs)}\n")
     age_moyen = sum(u['age'] for u in utilisateurs) / len(utilisateurs)
     f.write(f"Âge moyen : {age_moyen:.1f} ans\n")
 
-print("✅ Traitement terminé !")
-print(f"📁 Fichiers créés dans : {dossier_data}")
+print("✅ Traitement terminé !")  
+print(f"📁 Fichiers créés dans : {dossier_data}")  
 ```
 
 **Ce code illustre :**
@@ -329,8 +329,8 @@ print(f"📁 Fichiers créés dans : {dossier_data}")
 
 ```python
 # ❌ Dangereux
-f = open('fichier.txt', 'r')
-contenu = f.read()
+f = open('fichier.txt', 'r')  
+contenu = f.read()  
 # Oubli de f.close() → fuite de ressources
 
 # ✅ Sûr avec 'with'
@@ -360,8 +360,8 @@ chemin = '/home/alice/documents/fichier.txt'
 chemin = 'C:\\Users\\Alice\\Documents\\fichier.txt'
 
 # ✅ Portable
-from pathlib import Path
-chemin = Path.home() / 'documents' / 'fichier.txt'
+from pathlib import Path  
+chemin = Path.home() / 'documents' / 'fichier.txt'  
 ```
 
 ### 4. Ne pas gérer les erreurs
@@ -399,39 +399,24 @@ with open('important.txt', 'a') as f:
 
 Avant de commencer, assurez-vous de maîtriser :
 
-✅ **Variables et types de données** : chaînes, listes, dictionnaires
-✅ **Structures de contrôle** : if/else, boucles for/while
-✅ **Fonctions** : définition et appel de fonctions
-✅ **Gestion des exceptions** : try/except (sera approfondi)
+✅ **Variables et types de données** : chaînes, listes, dictionnaires  
+✅ **Structures de contrôle** : if/else, boucles for/while  
+✅ **Fonctions** : définition et appel de fonctions  
+✅ **Gestion des exceptions** : try/except (sera approfondi)  
 ✅ **Compréhension de base** : ce qu'est un fichier, un dossier, un chemin
 
 Si vous n'êtes pas à l'aise avec ces concepts, nous vous recommandons de réviser les chapitres précédents.
 
 ---
 
-## Ce que Vous Allez Construire
+## Ce que Vous Allez Apprendre
 
-Au fil de ce chapitre, vous allez créer plusieurs petits projets pratiques :
+Au fil de ce chapitre, vous découvrirez des exemples concrets couvrant des cas d'usage fréquents :
 
-### Projet 1 : Gestionnaire de Notes
-- Sauvegarder des notes dans des fichiers texte
-- Lire et afficher les notes existantes
-- Organiser les notes par catégorie
-
-### Projet 2 : Analyseur de Données CSV
-- Lire un fichier CSV de ventes
-- Calculer des statistiques (total, moyenne)
-- Exporter un rapport en JSON
-
-### Projet 3 : Système de Configuration
-- Créer un fichier de configuration JSON
-- Lire et modifier la configuration
-- Valider les paramètres
-
-### Projet 4 : Organisateur de Fichiers
-- Scanner un dossier
-- Organiser les fichiers par extension
-- Créer des backups automatiques
+- **Gestion de notes** : sauvegarder, lire et organiser des fichiers texte
+- **Analyse de données CSV** : lire un fichier de ventes, calculer des statistiques, exporter en JSON
+- **Configuration d'application** : créer et exploiter un fichier de configuration JSON
+- **Organisation de fichiers** : scanner un dossier, rechercher par extension, manipuler des chemins
 
 ---
 
@@ -510,10 +495,10 @@ mon_projet/
 
 Vous avez maintenant une vue d'ensemble complète de ce chapitre. Vous comprenez :
 
-✅ Pourquoi la gestion des fichiers est essentielle
-✅ Les différents formats de données disponibles
-✅ Comment organiser votre code et vos fichiers
-✅ Les pièges à éviter
+✅ Pourquoi la gestion des fichiers est essentielle  
+✅ Les différents formats de données disponibles  
+✅ Comment organiser votre code et vos fichiers  
+✅ Les pièges à éviter  
 ✅ Ce que vous allez apprendre dans chaque section
 
 **Dans la prochaine section (4.1)**, nous allons entrer dans le vif du sujet avec la lecture et l'écriture de fichiers texte et binaires. C'est la base de tout le reste !
@@ -534,21 +519,21 @@ with open('fichier.txt', 'w', encoding='utf-8') as f:
     f.write("Mon contenu")
 
 # JSON
-import json
-with open('data.json', 'w') as f:
-    json.dump(donnees, f, indent=4)
+import json  
+with open('data.json', 'w', encoding='utf-8') as f:  
+    json.dump(donnees, f, indent=4, ensure_ascii=False)
 
 # CSV
-import csv
-with open('data.csv', 'r') as f:
+import csv  
+with open('data.csv', 'r', encoding='utf-8') as f:  
     lecteur = csv.DictReader(f)
     for ligne in lecteur:
         print(ligne)
 
 # Pathlib
-from pathlib import Path
-chemin = Path('dossier') / 'fichier.txt'
-if chemin.exists():
+from pathlib import Path  
+chemin = Path('dossier') / 'fichier.txt'  
+if chemin.exists():  
     print(chemin.read_text())
 ```
 

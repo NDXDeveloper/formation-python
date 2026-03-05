@@ -65,10 +65,10 @@ with open('personne.json', 'r', encoding='utf-8') as fichier:
     donnees = json.load(fichier)
 
 # Accéder aux données
-print(donnees['nom'])           # Dupont
-print(donnees['age'])            # 28
-print(donnees['competences'])    # ['Python', 'JavaScript', 'SQL']
-print(donnees['adresse']['ville'])  # Paris
+print(donnees['nom'])           # Dupont  
+print(donnees['age'])            # 28  
+print(donnees['competences'])    # ['Python', 'JavaScript', 'SQL']  
+print(donnees['adresse']['rue'])     # 12 rue de la Paix  
 ```
 
 **Note :** `json.load()` lit directement depuis un fichier et retourne un dictionnaire Python.
@@ -109,9 +109,9 @@ import json
 data = {"nom": "Alice", "age": 30}
 
 # Convertir en chaîne JSON
-json_string = json.dumps(data, indent=2)
-print(json_string)
-print(type(json_string))  # <class 'str'>
+json_string = json.dumps(data, indent=2)  
+print(json_string)  
+print(type(json_string))  # <class 'str'>  
 ```
 
 #### JSON → Python
@@ -122,9 +122,9 @@ import json
 json_string = '{"nom": "Bob", "age": 25}'
 
 # Convertir en dictionnaire Python
-data = json.loads(json_string)
-print(data)
-print(type(data))  # <class 'dict'>
+data = json.loads(json_string)  
+print(data)  
+print(type(data))  # <class 'dict'>  
 ```
 
 **Résumé des fonctions :**
@@ -185,10 +185,10 @@ CSV est un format de fichier **tabulaire** (comme un tableau) où les valeurs so
 Exemple de fichier `employes.csv` :
 
 ```csv
-nom,prenom,age,salaire,service
-Dupont,Marie,28,35000,Informatique
-Martin,Pierre,35,42000,Marketing
-Bernard,Sophie,32,38000,Informatique
+nom,prenom,age,salaire,service  
+Dupont,Marie,28,35000,Informatique  
+Martin,Pierre,35,42000,Marketing  
+Bernard,Sophie,32,38000,Informatique  
 ```
 
 **Caractéristiques :**
@@ -316,8 +316,8 @@ with open('export_fr.csv', 'w', encoding='utf-8', newline='') as fichier:
 import csv
 
 # Lire les données
-employes = []
-with open('employes.csv', 'r', encoding='utf-8') as fichier:
+employes = []  
+with open('employes.csv', 'r', encoding='utf-8') as fichier:  
     lecteur = csv.DictReader(fichier)
     for ligne in lecteur:
         employes.append(ligne)
@@ -328,7 +328,7 @@ informaticiens = [e for e in employes if e['service'] == 'Informatique']
 # Exporter les résultats
 with open('informaticiens.csv', 'w', encoding='utf-8', newline='') as fichier:
     colonnes = ['nom', 'prenom', 'age', 'salaire']
-    ecrivain = csv.DictWriter(fichier, fieldnames=colonnes)
+    ecrivain = csv.DictWriter(fichier, fieldnames=colonnes, extrasaction='ignore')
     ecrivain.writeheader()
     ecrivain.writerows(informaticiens)
 
@@ -384,8 +384,8 @@ import xml.etree.ElementTree as ET
 import xml.etree.ElementTree as ET
 
 # Charger le fichier XML
-arbre = ET.parse('bibliotheque.xml')
-racine = arbre.getroot()
+arbre = ET.parse('bibliotheque.xml')  
+racine = arbre.getroot()  
 
 print(f"Élément racine : {racine.tag}")
 
@@ -413,35 +413,35 @@ import xml.etree.ElementTree as ET
 bibliotheque = ET.Element('bibliotheque')
 
 # Créer le premier livre
-livre1 = ET.SubElement(bibliotheque, 'livre')
-livre1.set('id', '1')  # Ajouter un attribut
+livre1 = ET.SubElement(bibliotheque, 'livre')  
+livre1.set('id', '1')  # Ajouter un attribut  
 
-titre1 = ET.SubElement(livre1, 'titre')
-titre1.text = 'Introduction à Python'
+titre1 = ET.SubElement(livre1, 'titre')  
+titre1.text = 'Introduction à Python'  
 
-auteur1 = ET.SubElement(livre1, 'auteur')
-auteur1.text = 'Alice Dupont'
+auteur1 = ET.SubElement(livre1, 'auteur')  
+auteur1.text = 'Alice Dupont'  
 
-annee1 = ET.SubElement(livre1, 'annee')
-annee1.text = '2024'
+annee1 = ET.SubElement(livre1, 'annee')  
+annee1.text = '2024'  
 
 # Créer le deuxième livre
-livre2 = ET.SubElement(bibliotheque, 'livre')
-livre2.set('id', '2')
+livre2 = ET.SubElement(bibliotheque, 'livre')  
+livre2.set('id', '2')  
 
-titre2 = ET.SubElement(livre2, 'titre')
-titre2.text = 'Data Science en Python'
+titre2 = ET.SubElement(livre2, 'titre')  
+titre2.text = 'Data Science en Python'  
 
-auteur2 = ET.SubElement(livre2, 'auteur')
-auteur2.text = 'Bob Martin'
+auteur2 = ET.SubElement(livre2, 'auteur')  
+auteur2.text = 'Bob Martin'  
 
-annee2 = ET.SubElement(livre2, 'annee')
-annee2.text = '2024'
+annee2 = ET.SubElement(livre2, 'annee')  
+annee2.text = '2024'  
 
 # Créer l'arbre et sauvegarder
-arbre = ET.ElementTree(bibliotheque)
-ET.indent(arbre, space='    ')  # Python 3.9+, pour l'indentation
-arbre.write('nouvelle_bibliotheque.xml', encoding='utf-8', xml_declaration=True)
+arbre = ET.ElementTree(bibliotheque)  
+ET.indent(arbre, space='    ')  # Python 3.9+, pour l'indentation  
+arbre.write('nouvelle_bibliotheque.xml', encoding='utf-8', xml_declaration=True)  
 
 print("Fichier XML créé !")
 ```
@@ -452,8 +452,8 @@ print("Fichier XML créé !")
 import xml.etree.ElementTree as ET
 
 # Charger le fichier
-arbre = ET.parse('bibliotheque.xml')
-racine = arbre.getroot()
+arbre = ET.parse('bibliotheque.xml')  
+racine = arbre.getroot()  
 
 # Trouver un livre spécifique et modifier son prix
 for livre in racine.findall('livre'):
@@ -473,17 +473,17 @@ arbre.write('bibliotheque_modifiee.xml', encoding='utf-8', xml_declaration=True)
 ```python
 import xml.etree.ElementTree as ET
 
-arbre = ET.parse('bibliotheque.xml')
-racine = arbre.getroot()
+arbre = ET.parse('bibliotheque.xml')  
+racine = arbre.getroot()  
 
 # Trouver tous les titres
-titres = racine.findall('.//titre')
-for titre in titres:
+titres = racine.findall('.//titre')  
+for titre in titres:  
     print(titre.text)
 
 # Trouver les livres de 2024
-livres_2024 = racine.findall(".//livre[annee='2024']")
-print(f"\n{len(livres_2024)} livres de 2024")
+livres_2024 = racine.findall(".//livre[annee='2024']")  
+print(f"\n{len(livres_2024)} livres de 2024")  
 ```
 
 ### Exemple : Parser un flux RSS (XML)
@@ -575,12 +575,12 @@ for item in racine.findall('.//item'):
 ### CSV → JSON
 
 ```python
-import csv
-import json
+import csv  
+import json  
 
 # Lire le CSV
-employes = []
-with open('employes.csv', 'r', encoding='utf-8') as fichier:
+employes = []  
+with open('employes.csv', 'r', encoding='utf-8') as fichier:  
     lecteur = csv.DictReader(fichier)
     for ligne in lecteur:
         employes.append(ligne)
@@ -595,8 +595,8 @@ print("Conversion CSV → JSON terminée")
 ### JSON → CSV
 
 ```python
-import json
-import csv
+import json  
+import csv  
 
 # Lire le JSON
 with open('employes.json', 'r', encoding='utf-8') as fichier:
@@ -616,16 +616,16 @@ print("Conversion JSON → CSV terminée")
 ### XML → JSON
 
 ```python
-import xml.etree.ElementTree as ET
-import json
+import xml.etree.ElementTree as ET  
+import json  
 
 # Lire le XML
-arbre = ET.parse('bibliotheque.xml')
-racine = arbre.getroot()
+arbre = ET.parse('bibliotheque.xml')  
+racine = arbre.getroot()  
 
 # Convertir en dictionnaires
-livres = []
-for livre in racine.findall('livre'):
+livres = []  
+for livre in racine.findall('livre'):  
     livre_dict = {
         'id': livre.get('id'),
         'titre': livre.find('titre').text,
@@ -724,12 +724,12 @@ json.dump(data, f)
 import json
 
 # Fichiers
-json.load(fichier)      # Lire depuis un fichier
-json.dump(data, fichier) # Écrire dans un fichier
+json.load(fichier)      # Lire depuis un fichier  
+json.dump(data, fichier) # Écrire dans un fichier  
 
 # Chaînes
-json.loads(string)      # Parser une chaîne JSON
-json.dumps(data)        # Convertir en chaîne JSON
+json.loads(string)      # Parser une chaîne JSON  
+json.dumps(data)        # Convertir en chaîne JSON  
 ```
 
 #### CSV
@@ -737,12 +737,12 @@ json.dumps(data)        # Convertir en chaîne JSON
 import csv
 
 # Lecture
-csv.reader(fichier)           # Liste de listes
-csv.DictReader(fichier)       # Liste de dictionnaires
+csv.reader(fichier)           # Liste de listes  
+csv.DictReader(fichier)       # Liste de dictionnaires  
 
 # Écriture
-csv.writer(fichier)           # Écrire des listes
-csv.DictWriter(fichier, ...)  # Écrire des dictionnaires
+csv.writer(fichier)           # Écrire des listes  
+csv.DictWriter(fichier, ...)  # Écrire des dictionnaires  
 ```
 
 #### XML
@@ -750,12 +750,12 @@ csv.DictWriter(fichier, ...)  # Écrire des dictionnaires
 import xml.etree.ElementTree as ET
 
 # Lecture
-ET.parse('fichier.xml')       # Parser un fichier
-ET.fromstring(string)         # Parser une chaîne
+ET.parse('fichier.xml')       # Parser un fichier  
+ET.fromstring(string)         # Parser une chaîne  
 
 # Recherche
-racine.find('balise')         # Trouver un élément
-racine.findall('balise')      # Trouver tous les éléments
+racine.find('balise')         # Trouver un élément  
+racine.findall('balise')      # Trouver tous les éléments  
 
 # Écriture
 arbre.write('fichier.xml')    # Sauvegarder
@@ -763,10 +763,10 @@ arbre.write('fichier.xml')    # Sauvegarder
 
 ### Points clés
 
-✅ **JSON** est le format moderne pour les APIs et configurations
-✅ **CSV** est idéal pour les données tabulaires et les tableurs
-✅ **XML** reste utilisé pour les systèmes legacy et documents structurés
-✅ Python offre des outils natifs excellents pour ces trois formats
+✅ **JSON** est le format moderne pour les APIs et configurations  
+✅ **CSV** est idéal pour les données tabulaires et les tableurs  
+✅ **XML** reste utilisé pour les systèmes legacy et documents structurés  
+✅ Python offre des outils natifs excellents pour ces trois formats  
 ✅ Toujours gérer les erreurs et spécifier l'encodage UTF-8
 
 ---

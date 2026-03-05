@@ -41,8 +41,8 @@ La méthode `read()` permet de lire l'intégralité d'un fichier en une seule fo
 fichier = open('mon_document.txt', 'r', encoding='utf-8')
 
 # Lire tout le contenu
-contenu = fichier.read()
-print(contenu)
+contenu = fichier.read()  
+print(contenu)  
 
 # Toujours fermer le fichier !
 fichier.close()
@@ -70,12 +70,12 @@ fichier.close()
 La méthode `readlines()` retourne une liste contenant toutes les lignes :
 
 ```python
-fichier = open('mon_document.txt', 'r', encoding='utf-8')
-lignes = fichier.readlines()
-fichier.close()
+fichier = open('mon_document.txt', 'r', encoding='utf-8')  
+lignes = fichier.readlines()  
+fichier.close()  
 
-print(f"Le fichier contient {len(lignes)} lignes")
-for i, ligne in enumerate(lignes, 1):
+print(f"Le fichier contient {len(lignes)} lignes")  
+for i, ligne in enumerate(lignes, 1):  
     print(f"Ligne {i}: {ligne.strip()}")
 ```
 
@@ -86,11 +86,11 @@ La méthode `readline()` lit une ligne à la fois :
 ```python
 fichier = open('mon_document.txt', 'r', encoding='utf-8')
 
-premiere_ligne = fichier.readline()
-deuxieme_ligne = fichier.readline()
+premiere_ligne = fichier.readline()  
+deuxieme_ligne = fichier.readline()  
 
-print("Première ligne:", premiere_ligne.strip())
-print("Deuxième ligne:", deuxieme_ligne.strip())
+print("Première ligne:", premiere_ligne.strip())  
+print("Deuxième ligne:", deuxieme_ligne.strip())  
 
 fichier.close()
 ```
@@ -105,8 +105,8 @@ fichier.close()
 # Attention : le mode 'w' efface le contenu existant !
 fichier = open('nouveau_fichier.txt', 'w', encoding='utf-8')
 
-fichier.write("Bonjour, ceci est la première ligne\n")
-fichier.write("Et voici la deuxième ligne\n")
+fichier.write("Bonjour, ceci est la première ligne\n")  
+fichier.write("Et voici la deuxième ligne\n")  
 
 fichier.close()
 ```
@@ -119,8 +119,8 @@ fichier.close()
 # Le mode 'a' ajoute à la fin sans effacer
 fichier = open('nouveau_fichier.txt', 'a', encoding='utf-8')
 
-fichier.write("Cette ligne est ajoutée à la fin\n")
-fichier.write("Et encore une autre ligne\n")
+fichier.write("Cette ligne est ajoutée à la fin\n")  
+fichier.write("Et encore une autre ligne\n")  
 
 fichier.close()
 ```
@@ -137,8 +137,8 @@ courses = [
     "Fromage\n"
 ]
 
-fichier.writelines(courses)
-fichier.close()
+fichier.writelines(courses)  
+fichier.close()  
 ```
 
 ---
@@ -254,26 +254,7 @@ with open('gros_fichier.bin', 'rb') as fichier:
 
 ## Vérifier l'Existence d'un Fichier
 
-Avant d'ouvrir un fichier, on peut vérifier s'il existe :
-
-```python
-import os
-
-chemin_fichier = 'mon_document.txt'
-
-if os.path.exists(chemin_fichier):
-    print("Le fichier existe")
-
-    if os.path.isfile(chemin_fichier):
-        print("C'est bien un fichier (pas un dossier)")
-
-    taille = os.path.getsize(chemin_fichier)
-    print(f"Taille : {taille} octets")
-else:
-    print("Le fichier n'existe pas")
-```
-
-Avec Python 3.4+, on peut aussi utiliser `pathlib` (plus moderne) :
+Avant d'ouvrir un fichier, on peut vérifier s'il existe avec `pathlib` :
 
 ```python
 from pathlib import Path
@@ -282,8 +263,16 @@ chemin = Path('mon_document.txt')
 
 if chemin.exists():
     print("Le fichier existe")
+
+    if chemin.is_file():
+        print("C'est bien un fichier (pas un dossier)")
+
     print(f"Taille : {chemin.stat().st_size} octets")
+else:
+    print("Le fichier n'existe pas")
 ```
+
+> 💡 Vous verrez parfois l'approche plus ancienne avec `os.path.exists()` et `os.path.isfile()`. Les deux fonctionnent, mais `pathlib` est l'approche moderne recommandée (voir section 4.4).
 
 ---
 
@@ -293,13 +282,13 @@ if chemin.exists():
 
 ```python
 # ✅ Bon
-with open('fichier.txt', 'r') as f:
+with open('fichier.txt', 'r', encoding='utf-8') as f:
     contenu = f.read()
 
 # ❌ À éviter
-f = open('fichier.txt', 'r')
-contenu = f.read()
-f.close()  # On peut oublier !
+f = open('fichier.txt', 'r')  
+contenu = f.read()  
+f.close()  # On peut oublier !  
 ```
 
 ### 2. Toujours spécifier l'encodage pour les fichiers texte
@@ -360,9 +349,9 @@ def ajouter_log(message):
         log.write(f"[{timestamp}] {message}\n")
 
 # Utilisation
-ajouter_log("Application démarrée")
-ajouter_log("Traitement des données...")
-ajouter_log("Application terminée")
+ajouter_log("Application démarrée")  
+ajouter_log("Traitement des données...")  
+ajouter_log("Application terminée")  
 ```
 
 ### Exemple 3 : Lire un fichier CSV simple
