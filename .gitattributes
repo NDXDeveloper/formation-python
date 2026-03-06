@@ -1,1 +1,8 @@
 *.md linguist-documentation
+
+# Exclude generated Plotly HTML outputs
+13-introduction-data-science/exemples/output_plotly/* linguist-generated=true
+
+# Optionally exclude other generated outputs like PNG images (though binaries are often ignored anyway)
+13-introduction-data-science/exemples/output_matplotlib/* linguist-generated=true
+13-introduction-data-science/exemples/output_eda/* linguist-generated=true
