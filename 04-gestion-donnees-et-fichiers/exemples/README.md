@@ -1,8 +1,25 @@
 # Exemples - Chapitre 04 : Gestion des données et fichiers
 
-35 fichiers d'exemples exécutables, répartis sur 4 fichiers source.
+37 fichiers d'exemples exécutables, répartis sur 4 fichiers source.
 
-## Fichier 01 : Lecture et écriture de fichiers (7 fichiers)
+**Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 04) et `NN` l'ordre de l'exemple. Exemple : `02_04_csv_lecture.py` = section 4.2, 4ᵉ exemple.
+
+## Prérequis
+
+- **Python 3.10+** (le cours utilise la syntaxe moderne ; `ET.indent` requiert 3.9+).
+- **Aucune dépendance externe** : uniquement la bibliothèque standard (`json`, `csv`, `xml.etree.ElementTree`, `pickle`, `pathlib`, `datetime`, `shutil`, `os`).
+
+## Correspondance avec le cours
+
+Chaque exemple reprend le code de son fichier `.md` source (indiqué sous chaque tableau). Pour rester **exécutables et autonomes**, les `.py` adaptent légèrement le cours :
+
+- ils sont **auto-contenus** : chaque fichier crée ses propres fichiers de test, puis les **supprime** en fin d'exécution (`os.remove`, `shutil.rmtree`) — aucun résidu sur le disque ;
+- les **symboles décoratifs** du cours (émojis 📰/✅, `€`…) sont rendus en **ASCII** dans les sorties (`[F]`/`[D]`, `[ok]`, `>>`, `EUR`) pour un affichage portable sur tous les terminaux ;
+- les calculs volontairement longs (`time.sleep`) sont remplacés par un calcul rapide équivalent.
+
+La **logique et les valeurs** restent identiques à celles du cours.
+
+## Fichier 01 : Lecture et écriture de fichiers (8 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
@@ -13,6 +30,7 @@
 | `01_05_fichiers_binaires.py` | 4.1 | Écriture, lecture, copie, lecture par morceaux de binaires | 6 octets, copie, 1024+1024+512 octets |
 | `01_06_verifier_existence.py` | 4.1 | pathlib.Path exists(), is_file(), stat() | Existe, fichier, 16 octets |
 | `01_07_exemples_pratiques.py` | 4.1 | Compter mots, log, CSV simple, sauvegarder/relire liste | 11 mots, 3 logs, 3 lignes CSV, 4 noms |
+| `01_08_positionnement_seek_tell.py` | 4.1 | `tell()`, `seek()`, mode `'r+'` | Position 0→3, seek, `12345FGHIJ` |
 
 **Fichier source** : `01-lecture-ecriture-fichiers.md`
 
@@ -21,11 +39,11 @@
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
 | `02_01_json_lire_ecrire.py` | 4.2 | json.load() et json.dump() | Dupont, 28, compétences, fichier JSON indenté |
-| `02_02_json_conversion.py` | 4.2 | json.dumps() et json.loads() sans fichier | JSON string, dict Python |
+| `02_02_json_conversion.py` | 4.2 | json.dumps()/loads() + pièges de conversion | JSON string, dict, tuple→liste, clé→str, datetime→erreur |
 | `02_03_json_liste_erreurs.py` | 4.2 | Liste de personnes, gestion erreurs JSON | 3 personnes, FileNotFoundError, JSONDecodeError |
-| `02_04_csv_lecture.py` | 4.2 | csv.reader() et csv.DictReader() | 3 employés avec colonnes nommées |
+| `02_04_csv_lecture.py` | 4.2 | csv.reader(), csv.DictReader(), csv vs split(',') | 3 employés ; split casse sur une virgule dans un champ |
 | `02_05_csv_ecriture.py` | 4.2 | csv.writer() et csv.DictWriter() | Fichiers CSV avec en-têtes |
-| `02_06_csv_delimiteurs_filtrage.py` | 4.2 | Délimiteur point-virgule, filtrage par service | 2 informaticiens exportés |
+| `02_06_csv_delimiteurs_filtrage.py` | 4.2 | Délimiteur `;`, filtrage, calcul (conversion int) | 2 informaticiens, masse salariale 73000 |
 | `02_07_xml_lecture.py` | 4.2 | Parser un fichier XML avec ElementTree | 2 livres avec ID, titre, auteur, prix |
 | `02_08_xml_ecriture.py` | 4.2 | Construire et sauvegarder un arbre XML | XML indenté avec 2 livres |
 | `02_09_xml_modification_xpath.py` | 4.2 | Modifier XML, recherche XPath, parser RSS | Prix modifié, 1 livre 2024, 2 articles RSS |
@@ -48,12 +66,12 @@
 
 **Fichier source** : `03-serialisation-pickle.md`
 
-## Fichier 04 : Gestion des chemins avec pathlib (10 fichiers)
+## Fichier 04 : Gestion des chemins avec pathlib (11 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
 | `04_01_path_creation.py` | 4.4 | Créer des Path, opérateur /, joinpath() | Chemins construits progressivement |
-| `04_02_proprietes_chemin.py` | 4.4 | name, stem, suffix, suffixes, parent, parts | script.py, .py, ['.tar','.gz'], parents |
+| `04_02_proprietes_chemin.py` | 4.4 | name, stem, suffix, suffixes, parent, parts | script.py, .py, ['.tar','.gz'], parties du chemin |
 | `04_03_chemins_absolus_relatifs.py` | 4.4 | absolute(), resolve(), relative_to(), home(), cwd() | Chemins absolus, relatifs, spéciaux |
 | `04_04_verifications.py` | 4.4 | exists(), is_file(), is_dir(), analyse complète | Fichier 15 octets, dossier 0 éléments |
 | `04_05_operations_dossiers.py` | 4.4 | mkdir(), rename(), copy(), unlink(), rmtree() | Création, renommage, copie, suppression |
@@ -62,6 +80,7 @@
 | `04_08_lecture_ecriture_pathlib.py` | 4.4 | read_text(), write_text(), read_bytes(), traitement | Texte lu, 5 octets binaires, comptage lignes/mots |
 | `04_09_organiser_fichiers.py` | 4.4 | Organiser des fichiers par extension | 6 fichiers classés en jpg/, pdf/, py/, etc. |
 | `04_10_backup_fichiers.py` | 4.4 | Backup horodaté d'un dossier complet | 3 fichiers copiés avec structure préservée |
+| `04_11_transformer_chemin.py` | 4.4 | `with_suffix()`, `with_name()`, `with_stem()` | donnees.json, resume.txt, donnees_2024.csv |
 
 **Fichier source** : `04-gestion-chemins-pathlib.md`
 

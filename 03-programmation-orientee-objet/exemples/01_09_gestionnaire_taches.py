@@ -15,14 +15,14 @@ class Tache:
 
     def marquer_terminee(self):
         self.terminee = True
-        print(f"Tâche '{self.titre}' marquée comme terminée.")
+        print(f"✓ Tâche '{self.titre}' marquée comme terminée.")
 
     def marquer_non_terminee(self):
         self.terminee = False
-        print(f"Tâche '{self.titre}' marquée comme non terminée.")
+        print(f"○ Tâche '{self.titre}' marquée comme non terminée.")
 
     def afficher(self):
-        statut = "[x]" if self.terminee else "[ ]"
+        statut = "✓" if self.terminee else "○"
         print(f"{statut} {self.titre}")
         if self.description:
             print(f"  Description : {self.description}")
@@ -52,7 +52,7 @@ class GestionnaireTaches:
     def afficher_non_terminees(self):
         taches_non_terminees = [t for t in self.taches if not t.terminee]
         if not taches_non_terminees:
-            print("Toutes les tâches sont terminées !")
+            print("Toutes les tâches sont terminées ! 🎉")
             return
 
         print("\n=== Tâches à faire ===")

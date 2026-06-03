@@ -49,7 +49,7 @@ print(peut_conduire)  # Affiche : False
 # Avec parenthèses pour clarifier
 est_weekend = True
 a_argent = False
-peut_sortir = est_weekend and (a_argent or not a_argent)  # Toujours vrai !
+peut_sortir = est_weekend and (a_argent or not a_argent)  # (a_argent or not a_argent) = toujours True, donc ceci vaut est_weekend (ici True)
 print(peut_sortir)  # Affiche : True
 
 # --- Priorité des opérateurs logiques ---

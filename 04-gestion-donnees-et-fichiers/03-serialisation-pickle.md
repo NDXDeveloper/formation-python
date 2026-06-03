@@ -556,12 +556,12 @@ Certains objets ne peuvent pas être pickled :
 ```python
 import pickle
 
-# ❌ Ne fonctionne pas
-fichier_ouvert = open('test.txt', 'r')  
+# ❌ Ne fonctionne pas : un objet fichier ouvert n'est pas sérialisable
+fichier_ouvert = open('test.txt', 'w')  
 try:  
     pickle.dumps(fichier_ouvert)
 except TypeError as e:
-    print(f"Erreur : {e}")
+    print(f"Erreur : {e}")  # cannot pickle 'TextIOWrapper' instances
 finally:
     fichier_ouvert.close()
 ```
@@ -575,8 +575,9 @@ import pickle
 ma_fonction = lambda x: x * 2  
 try:  
     pickle.dumps(ma_fonction)
-except AttributeError as e:
-    print(f"Erreur : impossible de pickler une lambda")
+except (pickle.PicklingError, AttributeError):
+    # PicklingError pour une lambda de module, AttributeError si elle est locale
+    print("Erreur : impossible de pickler une lambda")
 ```
 
 ### 3. Objets avec des connexions réseau

@@ -62,3 +62,7 @@ nombres = [1, 4, 6, 4, 1]
 for x in itertools.dropwhile(lambda x: x < 5, nombres):
     print(x, end=" ")  # 6 4 1
 print()
+
+# --- accumulate() : totaux cumulés (comme reduce, mais en gardant chaque étape) ---
+print("\n=== accumulate() ===")
+print(list(itertools.accumulate([1, 2, 3, 4, 5])))  # [1, 3, 6, 10, 15]

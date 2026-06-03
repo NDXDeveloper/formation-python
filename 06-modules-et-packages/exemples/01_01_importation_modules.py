@@ -69,3 +69,11 @@ import re
 texte = "Mon email est exemple@email.com"
 email = re.search(r'\S+@\S+', texte)
 print(email.group())  # exemple@email.com
+
+# --- Explorer un module avec dir() ---
+print("\n=== dir() ===")
+
+# dir(module) renvoie la liste triée des noms définis par le module
+publics = [n for n in dir(math) if not n.startswith('_')]
+print("Noms publics de math (6 premiers) :", publics[:6])
+print("'pi' et 'sqrt' présents :", 'pi' in dir(math) and 'sqrt' in dir(math))

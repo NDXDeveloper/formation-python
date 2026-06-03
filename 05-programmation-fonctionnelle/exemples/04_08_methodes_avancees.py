@@ -63,3 +63,27 @@ next(gen)  # Démarrer
 gen.send(10)  # Reçu : 10
 gen.throw(ValueError("Une erreur"))  # Erreur ValueError capturée !
 gen.send(20)  # Reçu : 20
+
+# --- return dans un générateur ---
+print("\n=== return dans un générateur ===")
+
+# return seul : arrête le générateur prématurément
+def generer_jusqu_a_negatif(nombres):
+    for n in nombres:
+        if n < 0:
+            return          # stoppe dès qu'on rencontre un négatif
+        yield n
+
+print(list(generer_jusqu_a_negatif([1, 2, 3, -1, 4])))  # [1, 2, 3]
+
+# return valeur : récupéré par yield from
+def sous_generateur():
+    yield "a"
+    yield "b"
+    return "FINI"
+
+def delegue():
+    resultat = yield from sous_generateur()
+    print(f"Valeur de return : {resultat}")
+
+list(delegue())  # affiche : Valeur de return : FINI

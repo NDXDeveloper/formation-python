@@ -20,7 +20,7 @@ Ce dossier contient **13 fichiers** Python exécutables extraits des cours du ch
 | `02_02_init_avance.py` | `__init__.py` avancé : imports simplifiés, `__version__`, `__all__` | 02-structure-des-packages.md |
 | `02_03_sous_packages.py` | Sous-packages (utilitaires/texte/), imports relatifs, formatage et validation | 02-structure-des-packages.md |
 | `02_04_main_et_all.py` | `__main__.py` (python -m package), `__all__` pour contrôler les exports | 02-structure-des-packages.md |
-| `02_05_exemple_complet_bibliotheque.py` | Package complet : bibliotheque avec models/livre.py, services/gestion_livres.py | 02-structure-des-packages.md |
+| `02_05_exemple_complet_bibliotheque.py` | Package complet : bibliotheque (models : livre/auteur/emprunt, services : gestion_livres/gestion_emprunts), imports relatifs, démo d'emprunt | 02-structure-des-packages.md |
 
 ### Section 6.3 : Gestion des dépendances avec pip
 
@@ -40,76 +40,86 @@ Ce dossier contient **13 fichiers** Python exécutables extraits des cours du ch
 | Fichier | Description | Source |
 |---------|-------------|--------|
 | `05_01_pyproject_toml.py` | Créer et parser un pyproject.toml (Poetry), groupes de dépendances, notations de versions | 05-outils-modernes-poetry-pipenv.md |
-| `05_02_pipfile_demo.py` | Créer et parser un Pipfile (Pipenv), comparaison pip/Pipenv/Poetry, workflows | 05-outils-modernes-poetry-pipenv.md |
+| `05_02_pipfile_demo.py` | Créer et parser un Pipfile (Pipenv), comparaison pip/Pipenv/Poetry/uv, workflows (Poetry/Pipenv/uv) | 05-outils-modernes-poetry-pipenv.md |
 
 ## Sorties attendues
 
 ### 01_01_importation_modules.py
 ```
-=== import math ===
-pi = 3.141592653589793
-sqrt(16) = 4.0
-cos(0) = 1.0
+=== import simple ===
+4.0
+3.141592653589793
 
 === import avec alias ===
-Aujourd'hui : (date du jour)
-Dans 30 jours : (date + 30 jours)
+5.0
+3.141592653589793
 
-=== from ... import ===
-Dossier courant : (chemin courant)
-Fichiers Python : (liste des .py)
+=== from import ===
+6.0
+3.141592653589793
 
-=== Modules standard utiles ===
-random.randint(1, 100) = (valeur aléatoire)
-re.findall('[0-9]+', 'Il a 25 ans et 3 enfants') = ['25', '3']
+=== alias sur éléments ===
+7.0
+
+=== import * ===
+8.0
+
+=== Modules standard ===
+Date actuelle : (date du jour)
+Répertoire : (chemin courant)
+exemple@email.com
+
+=== dir() ===
+Noms publics de math (6 premiers) : ['acos', 'acosh', 'asin', 'asinh', 'atan', 'atan2']
+'pi' et 'sqrt' présents : True
 ```
 
 ### 01_02_creation_modules.py
 ```
 === Module operations ===
-addition(10, 5) = 15
-soustraction(10, 5) = 5
-multiplication(6, 7) = 42
+10 + 5 = 15
+7 x 3 = 21
+Valeur de PI : 3.14159
 
 === Module geometrie ===
-aire_cercle(5) = 78.53975
-aire_rectangle(4, 6) = 24
-perimetre_rectangle(4, 6) = 20
+Aire du rectangle : 15
+Périmètre du rectangle : 16
+Aire du cercle : 153.93791
+Circonférence du cercle : 43.98226
 ```
 
 ### 01_03_name_et_organisation.py
 ```
-=== Exécution directe (python calculs.py) ===
-[module calculs] __name__ = __main__
-Exécution directe : tests...
-addition(3, 5) = 8
-multiplication(4, 7) = 28
+=== __name__ ===
+Exécution directe :
+Test du module calculs
+Carré de 5 : 25
+Cube de 3 : 27
 
-=== Import du module ===
-[module calculs] __name__ = calculs
-Résultat : 15
+Importation :
+Carré de 10 : 100
 
-=== Module utilitaires ===
+=== Module bien structuré ===
 Version : 1.0.0
-Documentation : Module utilitaires - fonctions d'aide.
-Nom du module : utilitaires
+Nettoyé : 'Bonjour'
+Majuscules : PYTHON
+Mots : 3
 
-=== sys.path (3 premiers) ===
+=== sys.path (premiers chemins) ===
   (chemins du sys.path)
 ```
 
 ### 02_01_package_simple.py
 ```
-=== Méthode 1 : import complet ===
-5 + 3 = 8
-5 - 3 = 2
+=== Import complet ===
+10 + 5 = 15
+Aire du cercle : 153.93791
 
-=== Méthode 2 : import avec alias ===
-Aire du cercle (r=5) : 78.53975
-
-=== Méthode 3 : from ... import ===
+=== Import avec alias ===
 6 x 7 = 42
-10 / 3 = 3.33
+
+=== Import spécifique ===
+Aire du rectangle : 15
 ```
 
 ### 02_02_init_avance.py
@@ -171,7 +181,10 @@ Catalogue :
   - JavaScript avancé par Jane Smith (disponible)
   - Data Science avec Python par Alice Martin (disponible)
 
+Après emprunt : Python pour débutants par John Doe (emprunté)
+
 Version : 1.0.0
+Exports : ['Livre', 'Auteur', 'Emprunt', 'ajouter_livre', 'rechercher_livre', 'emprunter_livre', 'retourner_livre']
 ```
 
 ### 03_01_pip_et_requirements.py
@@ -248,11 +261,11 @@ Nombre d'éléments : 0
 === Structure de projet recommandée ===
 (arbre du projet)
 
-=== Fichiers a committer vs ignorer ===
-A COMMITTER :
+=== Fichiers à committer vs ignorer ===
+À COMMITTER :
   [OK] Code source (.py)
   ...
-A NE PAS COMMITTER :
+À NE PAS COMMITTER :
   [X]  venv/ ou env/
   ...
 
@@ -269,11 +282,11 @@ A NE PAS COMMITTER :
 === Lecture du pyproject.toml ===
 Nom du projet : mon-api
 Version : 0.1.0
-Dependances principales (5) :
+Dépendances principales (5) :
   python = ^3.11
   fastapi = ^0.104.0
   ...
-Dependances de dev (4) :
+Dépendances de dev (4) :
   pytest = ^7.4.0
   ...
 Scripts (entry points) :
@@ -302,12 +315,13 @@ Packages de dev (3) :
   ...
 
 === Comparaison des formats ===
-  (tableau comparatif pip/Pipenv/Poetry)
+  (tableau comparatif pip/Pipenv/Poetry/uv)
 
 === Quand utiliser quel outil ? ===
   pip + venv : ...
   Pipenv : ...
   Poetry : ...
+  uv : ...
 
 === Workflow typique Poetry ===
   1. poetry new mon_projet
@@ -315,6 +329,10 @@ Packages de dev (3) :
 
 === Workflow typique Pipenv ===
   1. mkdir mon_projet && cd mon_projet
+  ...
+
+=== Workflow typique uv ===
+  1. uv init mon_projet
   ...
 ```
 

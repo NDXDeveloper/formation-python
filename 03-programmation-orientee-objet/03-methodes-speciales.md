@@ -244,6 +244,21 @@ double = prix1 * 2
 print(double)  # 100.00 EUR  
 ```
 
+> 📝 **Et `2 * prix1` ? Les opérateurs réfléchis.** Avec la définition ci-dessus, `prix1 * 2` fonctionne (Python appelle `prix1.__mul__(2)`), mais `2 * prix1` **échoue** :
+>
+> ```python
+> 2 * prix1   # ❌ TypeError: unsupported operand type(s) for *: 'int' and 'Argent'
+> ```
+>
+> En effet, Python essaie d'abord `(2).__mul__(prix1)` ; l'entier ne sait pas multiplier un `Argent` et renvoie `NotImplemented`. Python tente alors la version **réfléchie** (*reflected*) sur l'opérande de droite : `prix1.__rmul__(2)`. Comme `__rmul__` n'est pas défini, l'opération échoue. Pour rendre l'opérateur **commutatif**, ajoutez la méthode réfléchie :
+>
+> ```python
+> def __rmul__(self, facteur):      # appelée quand l'objet est à droite : 2 * prix1
+>     return self.__mul__(facteur)
+> ```
+>
+> Chaque opérateur binaire possède ainsi sa variante réfléchie : `__radd__`, `__rsub__`, `__rmul__`, `__rtruediv__`, etc.
+
 ## Méthodes de Comparaison
 
 Ces méthodes permettent de comparer vos objets avec les opérateurs de comparaison.
@@ -320,6 +335,8 @@ Charlie (30 ans)
 | `>=` | `__ge__(self, other)` | `a >= b` |
 
 **Astuce** : Python peut déduire certaines comparaisons. Si vous définissez `__eq__` et `__lt__`, Python peut souvent déduire les autres. Vous pouvez utiliser le décorateur `@functools.total_ordering` pour cela.
+
+> ⚠️ **`__eq__` et `__hash__` vont de pair.** Dès que vous définissez `__eq__`, Python met `__hash__` à `None` : vos instances deviennent **non hashables** (impossible de les utiliser comme clés de dictionnaire ou de les mettre dans un `set`). Si vous en avez besoin, définissez aussi `__hash__` à partir des **mêmes** attributs que `__eq__` (deux objets égaux doivent avoir le même hash), par exemple `def __hash__(self): return hash((self.nom, self.age))`.
 
 ## `__len__` : Longueur d'un Objet
 
@@ -1041,7 +1058,38 @@ class Fraction:
         # ... suite du code
 ```
 
-### 5. Maintenir la Cohérence
+### 5. Retourner `NotImplemented` pour les Types Incompatibles
+
+Les exemples de ce chapitre supposent, pour rester lisibles, que l'autre opérande est du même type. En réalité, comparer ou additionner avec un type imprévu provoque une erreur peu claire :
+
+```python
+class Vecteur:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+    def __eq__(self, autre):
+        return self.x == autre.x and self.y == autre.y
+
+Vecteur(3, 4) == 5   # ❌ AttributeError: 'int' object has no attribute 'x'
+```
+
+La bonne pratique consiste à retourner la valeur spéciale **`NotImplemented`** quand on ne sait pas traiter l'autre opérande. Python se charge alors de la suite : il renvoie `False` pour `==`, ou lève un `TypeError` clair pour `<`, `+`, etc.
+
+```python
+class Vecteur:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+    def __eq__(self, autre):
+        if not isinstance(autre, Vecteur):
+            return NotImplemented          # ✅ on laisse Python décider
+        return self.x == autre.x and self.y == autre.y
+
+print(Vecteur(3, 4) == 5)            # False (au lieu de planter)
+print(Vecteur(3, 4) == Vecteur(3, 4))  # True
+```
+
+> 💡 Ne confondez pas `NotImplemented` (une **valeur** à *retourner*) avec l'exception `NotImplementedError` (que l'on *lève*, par exemple dans une méthode abstraite).
+
+### 6. Maintenir la Cohérence
 
 Depuis Python 3, `__ne__` est automatiquement déduit de `__eq__` (il n'est plus nécessaire de le définir manuellement).  
 Si vous définissez `__eq__` et `__lt__`, utilisez `@functools.total_ordering` pour générer les autres comparaisons.  

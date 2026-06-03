@@ -369,6 +369,8 @@ phrase = reduce(lambda acc, mot: acc + " " + mot, mots, "Langage:")
 print(phrase)  # Langage: Python est génial
 ```
 
+> ⚠️ La valeur initiale n'est pas qu'une commodité : **sans elle, `reduce()` sur une séquence vide lève une erreur** (`TypeError: reduce() of empty iterable with no initial value`). Avec une valeur initiale, `reduce(f, [], initiale)` retourne simplement `initiale`. Fournissez-la donc dès que la séquence peut être vide.
+
 #### Exemple 4 : Compter les occurrences
 
 ```python
@@ -690,6 +692,14 @@ doubles = map(lambda x: x * 2, nombres)
 # liste_doubles = list(doubles)  # Ceci prendrait du temps
 ```
 
+> ⚠️ **Un itérateur `map`/`filter` ne se parcourt qu'une seule fois.** Une fois épuisé, il est vide — c'est un piège classique :
+> ```python
+> doubles = map(lambda x: x * 2, [1, 2, 3])
+> print(list(doubles))  # [2, 4, 6]
+> print(list(doubles))  # [] — l'itérateur est déjà épuisé !
+> ```
+> Si vous devez parcourir le résultat **plusieurs fois**, convertissez-le d'abord en liste avec `list()`.
+
 ### Quand utiliser list() ?
 
 ```python
@@ -761,6 +771,49 @@ tous_pairs = all(x % 2 == 0 for x in nombres)
 
 print(tous_pairs)  # True
 ```
+
+---
+
+## Le module `operator`
+
+Le module `operator` fournit les opérateurs de Python sous forme de **fonctions**. C'est une alternative plus claire (et légèrement plus rapide) aux petites lambdas comme `lambda a, b: a + b`.
+
+```python
+import operator
+from functools import reduce
+
+# Au lieu de  lambda acc, x: acc + x
+somme = reduce(operator.add, [1, 2, 3, 4, 5])   # 15
+
+# Au lieu de  lambda acc, x: acc * x
+produit = reduce(operator.mul, [2, 3, 4, 5])    # 120
+```
+
+### itemgetter et attrgetter
+
+`operator.itemgetter` et `operator.attrgetter` remplacent élégamment les lambdas d'accès, par exemple comme clé de tri :
+
+```python
+from operator import itemgetter
+
+personnes = [
+    {"nom": "Alice", "age": 30},
+    {"nom": "Bob", "age": 25},
+    {"nom": "Charlie", "age": 35},
+]
+
+# Au lieu de  key=lambda p: p["age"]
+par_age = sorted(personnes, key=itemgetter("age"))
+print([p["nom"] for p in par_age])  # ['Bob', 'Alice', 'Charlie']
+
+# Extraire une "colonne"
+ages = list(map(itemgetter("age"), personnes))
+print(ages)  # [30, 25, 35]
+```
+
+`operator.attrgetter("age")` fait de même pour les **attributs** d'objets (ex. `key=attrgetter("age")` pour trier des instances de classe).
+
+> 💡 Pour le cas particulier du **produit**, Python fournit une fonction native depuis la 3.8 : `math.prod([2, 3, 4, 5])` donne `120`, sans avoir recours à `reduce`.
 
 ---
 

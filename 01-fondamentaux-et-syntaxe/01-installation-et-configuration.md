@@ -16,7 +16,7 @@ Actuellement, il existe deux grandes versions de Python :
 - **Python 2.x** : ancienne version, qui n'est plus maintenue depuis 2020
 - **Python 3.x** : version moderne et activement maintenue
 
-**Recommandation** : Installez toujours Python 3.x (la version la plus récente, Python 3.13 au moment de la rédaction). Python 2 est obsolète et ne devrait plus être utilisé pour de nouveaux projets.
+**Recommandation** : Installez toujours Python 3.x (la version la plus récente, Python 3.14 au moment de la rédaction). Python 2 est obsolète et ne devrait plus être utilisé pour de nouveaux projets.
 
 ---
 
@@ -47,7 +47,7 @@ Actuellement, il existe deux grandes versions de Python :
 #### Méthode 2 : Installation via le Microsoft Store
 
 1. Ouvrez le Microsoft Store
-2. Recherchez "Python 3.13" (ou la version la plus récente disponible)
+2. Recherchez "Python 3.14" (ou la version la plus récente disponible)
 3. Cliquez sur "Obtenir" ou "Installer"
 4. Cette méthode configure automatiquement le PATH
 
@@ -148,7 +148,7 @@ Une fois l'installation terminée, il est important de vérifier que Python fonc
 
 3. Vous devriez voir s'afficher quelque chose comme :
    ```
-   Python 3.12.1
+   Python 3.14.0
    ```
 
 ### Sur macOS et Linux
@@ -197,8 +197,7 @@ python3
 Vous verrez apparaître quelque chose comme :
 
 ```
-Python 3.12.1 (main, Dec 18 2024, 12:00:00)
-[GCC 11.3.0] on linux
+Python 3.14.0 (main, Oct  7 2025, 10:30:00) [GCC 13.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>>
 ```
@@ -290,8 +289,8 @@ Cette extension vous fournira :
 
 5. **Exécuter le programme**
    - Sauvegardez le fichier (`Ctrl+S` ou `Cmd+S`)
-   - Cliquez avec le bouton droit dans l'éditeur et sélectionnez "Run Python File in Terminal"
-   - Ou ouvrez un terminal dans VS Code (`Ctrl+ù` ou `Cmd+ù`) et tapez :
+   - Cliquez sur le bouton ▶ "Run Python File" en haut à droite de l'éditeur, ou faites un clic droit dans l'éditeur et sélectionnez "Run Python File in Terminal"
+   - Ou ouvrez un terminal intégré (menu "Terminal > Nouveau terminal", ou le raccourci `` Ctrl+` `` — la touche backtick, à gauche de la touche `1`) et tapez :
      ```bash
      python hello.py
      ```
@@ -362,7 +361,7 @@ pip uninstall nom_du_paquet
 
 **Note** : Sur certains systèmes (surtout Linux et macOS), vous devrez peut-être utiliser `pip3` au lieu de `pip`.
 
-> ⚠️ **Important (Python 3.12+)** : Sur les distributions Linux récentes, pip refuse d'installer des paquets en dehors d'un environnement virtuel pour protéger le système (PEP 668). Si vous voyez l'erreur `externally-managed-environment`, créez d'abord un environnement virtuel (voir section 6.4) :
+> ⚠️ **Important — erreur `externally-managed-environment` (PEP 668)** : Sur les distributions Linux récentes (Ubuntu 23.04+, Debian 12+...), pip refuse d'installer des paquets en dehors d'un environnement virtuel pour protéger le système. Si vous voyez cette erreur, créez d'abord un environnement virtuel (voir section 6.4) :
 > ```bash
 > python3 -m venv mon_env
 > source mon_env/bin/activate
@@ -397,8 +396,8 @@ Nous reviendrons sur ce concept important plus tard dans la formation.
 ### Plusieurs versions de Python installées
 
 Si vous avez plusieurs versions de Python, utilisez des commandes plus spécifiques :
-- `python3.12` pour Python 3.12
-- `python3.11` pour Python 3.11
+- `python3.14` pour Python 3.14
+- `python3.13` pour Python 3.13
 - etc.
 
 ### Problèmes de permissions sur Linux/macOS

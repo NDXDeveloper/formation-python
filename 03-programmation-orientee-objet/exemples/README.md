@@ -1,20 +1,37 @@
 # Exemples - Chapitre 03 : Programmation orientée objet
 
-67 fichiers d'exemples exécutables, répartis sur 5 fichiers source.
+69 fichiers d'exemples exécutables, répartis sur 5 fichiers source.
+
+**Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 05) et `NN` l'ordre de l'exemple. Exemple : `03_05_len_getitem_setitem.py` = section 3.3, 5ᵉ exemple.
+
+## Prérequis
+
+- **Python 3.10+** (le cours s'appuie sur la syntaxe moderne ; `@dataclass` requiert 3.7+, l'affichage des erreurs d'`abstractmethod` suit le format de Python 3.12).
+- **Aucune dépendance externe** : uniquement la bibliothèque standard (`dataclasses`, `abc`, `functools`, `typing`, `datetime`, `math`).
+
+## Correspondance avec le cours
+
+Chaque exemple reprend le code de son fichier `.md` source (indiqué sous chaque tableau). Pour rester **exécutables et autonomes**, les `.py` adaptent parfois le cours :
+
+- les erreurs volontaires (`ValueError`, `TypeError`, `AttributeError`…) sont encadrées par `try/except` au lieu d'être laissées en commentaire ;
+- plusieurs redéfinitions successives d'une même classe dans le cours sont parfois **fusionnées** en une seule classe cohérente (ex. `Playlist`) ;
+- certains calculs longs (`time.sleep`) sont remplacés par un calcul rapide équivalent.
+
+La **logique et les valeurs** restent identiques à celles du cours.
 
 ## Fichier 01 : Classes et objets (9 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
-| `01_01_premiere_classe.py` | 3.1 | Première classe, `__init__`, attributs d'instance | Rex (Labrador), 3 ans |
-| `01_02_methodes_instance.py` | 3.1 | Méthodes d'instance (aboyer, se_presenter, vieillir) | Rex aboie, se présente, vieillit à 4 ans |
-| `01_03_attributs_classe.py` | 3.1 | Attributs de classe vs instance | espece=Canis familiaris, nb_pattes=4 partagés |
+| `01_01_premiere_classe.py` | 3.1 | Première classe, `__init__`, attributs d'instance | Rex 5 ans (Berger Allemand), Bella 3 ans (Labrador) |
+| `01_02_methodes_instance.py` | 3.1 | Méthodes d'instance (aboyer, se_presenter, vieillir) | Rex aboie, se présente, vieillit à 6 ans |
+| `01_03_attributs_classe.py` | 3.1 | Attributs de classe vs instance (+ piège des mutables) | Canis familiaris, nb_pattes=4 ; liste partagée vs init dans `__init__` |
 | `01_04_compte_bancaire.py` | 3.1 | Classe CompteBancaire complète | 1500 -> 1300 -> intérêts 26.00 -> historique |
-| `01_05_classe_personne.py` | 3.1 | Classe Personne avec anniversaire et majorité | Alice 30 ans, est_majeur, anniversaire -> 31 |
+| `01_05_classe_personne.py` | 3.1 | Classe Personne avec anniversaire et majorité | Marie 25 ans / Pierre 17 ans (majorité True/False), Pierre -> 18 ans |
 | `01_06_modification_attributs.py` | 3.1 | Modification directe d'attributs | Voiture change de couleur et kilométrage |
 | `01_07_instances_independantes.py` | 3.1 | Instances indépendantes (Compteur) | compteur1=2, compteur2=11 (indépendants) |
-| `01_08_bonnes_pratiques.py` | 3.1 | Bonnes pratiques (Livre, Rectangle, Etudiant) | Surface 15/70, moyenne 15.0/16.0 |
-| `01_09_gestionnaire_taches.py` | 3.1 | Gestionnaire de tâches complet | 3 tâches, 1/3 terminées, filtrage par priorité |
+| `01_08_bonnes_pratiques.py` | 3.1 | Bonnes pratiques (Livre, Rectangle, Etudiant) | Surface 15/70, moyenne 15.0 |
+| `01_09_gestionnaire_taches.py` | 3.1 | Gestionnaire de tâches complet | 3 tâches, 1/3 terminées, filtrage des non-terminées |
 
 **Fichier source** : `01-classes-et-objets.md`
 
@@ -29,7 +46,7 @@
 | `02_05_polymorphisme.py` | 3.2 | Polymorphisme des formes géométriques | Cercle 78.54, Carré 16, Triangle 9.0 |
 | `02_06_systeme_paiement.py` | 3.2 | Système de paiement polymorphe | 4 types de paiement traités |
 | `02_07_isinstance_issubclass.py` | 3.2 | isinstance et issubclass | Vérifications de type True/False |
-| `02_08_heritage_multiple.py` | 3.2 | Héritage multiple et MRO | Ordre de résolution des méthodes |
+| `02_08_heritage_multiple.py` | 3.2 | Héritage multiple, MRO et `super()` coopératif | Ordre de résolution ; `super()` suit le MRO (A puis B) |
 | `02_09_systeme_fichiers.py` | 3.2 | Système de fichiers (Fichier, Dossier) | Taille totale 3000 Ko |
 | `02_10_heritage_vs_composition.py` | 3.2 | Héritage vs composition | Comparaison des deux approches |
 
@@ -41,8 +58,8 @@
 |---------|---------|-------------|-----------------|
 | `03_01_str_repr.py` | 3.3 | `__str__` et `__repr__` | Personne affichée, Livre avec liste |
 | `03_02_operateurs_arithmetiques.py` | 3.3 | `__add__`, `__sub__`, etc. (Vecteur, Nombre) | Vecteur(3,7), Nombre 13/7/30/3.33 |
-| `03_03_classe_argent.py` | 3.3 | Classe Argent avec opérateurs | 80.50, 70.50, 100.00 EUR |
-| `03_04_comparaisons.py` | 3.3 | Opérateurs de comparaison (Personne) | Tri par âge : Bob 25, Alice 30, Charlie 30 |
+| `03_03_classe_argent.py` | 3.3 | Classe Argent avec opérateurs (+ réfléchi `__rmul__`) | 80.50, 70.50, 100.00 EUR ; `2 * prix` = 100.00 |
+| `03_04_comparaisons.py` | 3.3 | Comparaisons (Personne) + piège `__eq__`/`__hash__` | Tri Bob/Alice/Charlie ; non hashable puis correction |
 | `03_05_len_getitem_setitem.py` | 3.3 | Playlist avec indexation et slicing | Accès par index, slice, del |
 | `03_06_iter_next.py` | 3.3 | `__iter__`/`__next__` (Compte, Bibliothèque) | Compte 1-5, itération livres |
 | `03_07_contains_call_bool.py` | 3.3 | `__contains__`, `__call__`, `__bool__` | Equipe/Multiplicateur/Panier |
@@ -52,14 +69,14 @@
 
 **Fichier source** : `03-methodes-speciales.md`
 
-## Fichier 04 : Propriétés et décorateurs (15 fichiers)
+## Fichier 04 : Propriétés et décorateurs (17 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
-| `04_01_property_base.py` | 3.4 | Problème d'accès direct vs @property | Accès contrôlé à l'âge |
+| `04_01_property_base.py` | 3.4 | Problème d'accès direct vs @property | Accès contrôlé au solde (validation < 0) |
 | `04_02_cercle_proprietes.py` | 3.4 | Propriétés en lecture seule (Cercle) | Diamètre, surface, périmètre calculés |
-| `04_03_property_setter_deleter.py` | 3.4 | Setter et deleter de propriétés | Temperature °C/°F, Personne avec deleter |
-| `04_04_rectangle_proprietes.py` | 3.4 | Rectangle avec propriétés calculées | 5*3=15, 10*4=40, est_carre=True/False |
+| `04_03_property_setter_deleter.py` | 3.4 | Setter et deleter de propriétés | Temperature °C (validation zéro absolu), Personne avec deleter |
+| `04_04_rectangle_proprietes.py` | 3.4 | Rectangle avec propriétés calculées | 5*3=15, 10*4=40, validation des dimensions |
 | `04_05_personne_validation.py` | 3.4 | Validation dans les setters | Nom DUPONT, prénom Marie, email lowercase |
 | `04_06_decorateur_base.py` | 3.4 | Premier décorateur (avant/après, chronomètre) | Messages avant/après, temps d'exécution |
 | `04_07_decorateur_arguments.py` | 3.4 | Décorateur avec *args et **kwargs | Logger affichant arguments et résultat |
@@ -71,6 +88,8 @@
 | `04_13_staticmethod_classmethod.py` | 3.4 | @staticmethod et @classmethod | 8, 28, factory method, Demo comparaison |
 | `04_14_exemple_complet_utilisateur.py` | 3.4 | Classe Utilisateur complète | Properties + décorateurs combinés |
 | `04_15_functools_wraps.py` | 3.4 | functools.wraps pour métadonnées | __name__ et __doc__ préservés |
+| `04_16_encapsulation.py` | 3.4 | Conventions `_` (interne) et `__` (name mangling) | `_solde` accessible, `__solde` manglé, anti-collision en héritage |
+| `04_17_cached_property.py` | 3.4 | `@cached_property` : calcul mémorisé une fois | « Calcul… » une seule fois puis 4, invalidation par `del` |
 
 **Fichier source** : `04-proprietes-et-decorateurs.md`
 
@@ -97,7 +116,7 @@
 | `05_17_dataclass_parametres.py` | 3.5 | frozen=True, order=True | FrozenInstanceError, versions triées |
 | `05_18_dataclass_field.py` | 3.5 | field() et default_factory | Configuration avec options et metadata |
 | `05_19_dataclass_post_init.py` | 3.5 | `__post_init__` (champs calculés) | email généré automatiquement |
-| `05_20_dataclass_heritage.py` | 3.5 | Héritage de dataclasses | Chien(nom='Rex', age=5, race=...) |
+| `05_20_dataclass_heritage.py` | 3.5 | Héritage de dataclasses (+ piège d'ordre, `kw_only`) | Chien(...) ; TypeError d'ordre puis solution `kw_only=True` |
 | `05_21_slots.py` | 3.5 | `__slots__` optimisation mémoire | 344 bytes vs 48 bytes |
 | `05_22_duck_typing_protocoles.py` | 3.5 | Duck typing et typing.Protocol | Logger avec fake_file, Circle/Square |
 | `05_23_bonnes_pratiques.py` | 3.5 | Bonnes pratiques avancées | init_subclass, ABC, slots, MyMeta |

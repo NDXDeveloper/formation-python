@@ -28,12 +28,20 @@ alice: Personne = {
 afficher_personne(alice)
 afficher_personne(creer_personne("Bob", 30, "Lyon"))
 
-# --- TypedDict avec champs optionnels ---
-class Utilisateur(TypedDict, total=False):
+# --- TypedDict avec champs obligatoires ET facultatifs ---
+# Champs obligatoires (par défaut, total=True)
+class UtilisateurBase(TypedDict):
     nom: str
     age: int
-    email: str | None
-    telephone: str | None
 
+# Champs facultatifs regroupés dans un TypedDict total=False hérité
+class Utilisateur(UtilisateurBase, total=False):
+    email: str       # Facultatif (la clé peut être absente)
+    telephone: str   # Facultatif
+
+# nom et age obligatoires ; email / telephone facultatifs
 user: Utilisateur = {"nom": "Charlie", "age": 28}
 print(f"Utilisateur : {user}")
+
+user2: Utilisateur = {"nom": "Dina", "age": 35, "email": "dina@example.com"}
+print(f"Utilisateur : {user2}")

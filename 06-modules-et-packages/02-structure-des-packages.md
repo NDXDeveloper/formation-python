@@ -334,8 +334,8 @@ __all__ = [
 __version__ = "1.0.0"
 
 # Faciliter l'accès aux sous-packages
-from . import texte  
-from . import fichiers  
+from . import texte
+# from . import fichiers   # à ajouter de la même façon, une fois le sous-package fichiers/ créé
 ```
 
 ### Utilisation des sous-packages
@@ -375,9 +375,11 @@ print(resultat)  # "trop d'espaces"
 
 ### Syntaxe des imports relatifs
 
-- `.` : Répertoire courant
-- `..` : Répertoire parent
-- `...` : Deux niveaux au-dessus
+- `.` : le **package courant** (celui qui contient le module)
+- `..` : le **package parent** (un niveau au-dessus)
+- `...` : le **package grand-parent** (deux niveaux au-dessus)
+
+> 📝 Les points désignent la hiérarchie de **packages**, pas les dossiers du système de fichiers. Un import relatif n'a donc de sens qu'à l'intérieur d'un package — d'où le piège décrit plus bas lorsqu'on exécute un module directement.
 
 ### Exemple pratique
 
@@ -467,6 +469,29 @@ def lancer_application():
 - Dans le script principal (fichier lancé directement)
 - Pour importer des packages externes
 - Si cela rend le code moins lisible
+
+### Le piège classique : exécuter directement un module à imports relatifs
+
+C'est l'erreur la plus fréquente avec les packages. Si vous lancez **directement** un fichier qui contient un import relatif :
+
+```bash
+python application/core/moteur.py
+```
+
+Python lève l'erreur :
+```
+ImportError: attempted relative import with no known parent package
+```
+
+**Pourquoi ?** Lancé directement, `moteur.py` est traité comme un script isolé : Python ignore qu'il fait partie du package `application`, donc `from .config import ...` n'a aucun parent vers lequel pointer.
+
+**La solution** est d'exécuter le module *en tant que membre du package*, avec l'option `-m`, depuis la racine du projet (le dossier qui contient `application/`) :
+
+```bash
+python -m application.core.moteur
+```
+
+Notez la syntaxe : des **points** (et non des barres obliques `/`) et **pas** d'extension `.py`. C'est aussi pourquoi on réserve les imports relatifs aux modules *internes* d'un package, et on prévoit un point d'entrée (un `main.py` à la racine, ou un `__main__.py`) qui, lui, importe le package normalement.
 
 ---
 
@@ -587,6 +612,8 @@ mon_projet/
     data/
         sample_data.json
 ```
+
+> 📝 **`setup.py` ou `pyproject.toml` ?** Les arborescences ci-dessus montrent un `setup.py`, l'approche historique. Aujourd'hui, le standard est de décrire le projet dans un **`pyproject.toml`** (voir sections 6.3 et 6.5) ; pour un nouveau projet, créez plutôt un `pyproject.toml`. La structure des dossiers, elle, reste identique.
 
 ---
 
@@ -861,6 +888,8 @@ bibliotheque/
         database.py
 ```
 
+> 📝 Pour que cet exemple soit **reproductible tel quel**, nous fournissons ci-dessous tous les fichiers des sous-packages `models/` et `services/`. Les dossiers `utils/` et `data/` de la structure ci-dessus suivent exactement le même principe ; ils ne sont pas nécessaires pour exécuter l'exemple (le `__init__.py` n'importe que depuis `models` et `services`).
+
 **Fichier : `bibliotheque/__init__.py`**
 ```python
 """
@@ -909,6 +938,45 @@ class Livre:
         return f"{self.titre} par {self.auteur} ({statut})"
 ```
 
+**Fichier : `bibliotheque/models/auteur.py`**
+```python
+"""Modèle de données pour les auteurs."""
+
+class Auteur:
+    """Représente un auteur."""
+
+    def __init__(self, nom, nationalite=None):
+        self.nom = nom
+        self.nationalite = nationalite
+
+    def __str__(self):
+        return self.nom
+```
+
+**Fichier : `bibliotheque/models/emprunt.py`**
+```python
+"""Modèle de données pour les emprunts."""
+
+from datetime import date
+
+class Emprunt:
+    """Représente l'emprunt d'un livre par une personne."""
+
+    def __init__(self, livre, emprunteur):
+        self.livre = livre
+        self.emprunteur = emprunteur
+        self.date_emprunt = date.today()
+```
+
+**Fichier : `bibliotheque/models/__init__.py`** (rend les modèles accessibles via `bibliotheque.models`)
+```python
+"""Sous-package des modèles de données."""
+
+from .livre import Livre
+from .auteur import Auteur
+from .emprunt import Emprunt
+```
+
 **Fichier : `bibliotheque/services/gestion_livres.py`**
 ```python
 """Services de gestion des livres."""
@@ -936,17 +1004,44 @@ def lister_livres():
     return _catalogue.copy()
 ```
 
+**Fichier : `bibliotheque/services/gestion_emprunts.py`**
+```python
+"""Services de gestion des emprunts."""
+
+def emprunter_livre(livre):
+    """Marque un livre comme emprunté."""
+    livre.disponible = False
+    return livre
+
+def retourner_livre(livre):
+    """Marque un livre comme disponible."""
+    livre.disponible = True
+    return livre
+```
+
+**Fichier : `bibliotheque/services/__init__.py`** (rassemble les services du package)
+```python
+"""Sous-package des services métier."""
+
+from .gestion_livres import ajouter_livre, rechercher_livre, lister_livres
+from .gestion_emprunts import emprunter_livre, retourner_livre
+```
+
 **Utilisation :**
 ```python
-from bibliotheque import ajouter_livre, rechercher_livre
+from bibliotheque import ajouter_livre, rechercher_livre, emprunter_livre
 
 # Ajouter des livres
-livre1 = ajouter_livre("Python pour débutants", "John Doe", "123-456")  
-livre2 = ajouter_livre("JavaScript avancé", "Jane Smith", "789-012")  
+livre1 = ajouter_livre("Python pour débutants", "John Doe", "123-456")
+livre2 = ajouter_livre("JavaScript avancé", "Jane Smith", "789-012")
 
 # Rechercher un livre
-livre = rechercher_livre("Python")  
-print(livre)  # Python pour débutants par John Doe (disponible)  
+livre = rechercher_livre("Python")
+print(livre)  # Python pour débutants par John Doe (disponible)
+
+# Emprunter ce livre, puis le rechercher de nouveau
+emprunter_livre(livre)
+print(rechercher_livre("Python"))  # Python pour débutants par John Doe (emprunté)
 ```
 
 ---

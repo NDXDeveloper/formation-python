@@ -76,6 +76,8 @@ print(mon_chien.nom)  # Affiche : Rex
 print(mon_chien.age)  # Affiche : 5  
 ```
 
+> 📝 **Précision** : on parle souvent de `__init__` comme du « constructeur », et c'est l'usage courant. En toute rigueur, `__init__` ne *construit* pas l'objet : il l'**initialise** (il remplit un objet déjà créé). La véritable création est assurée par une autre méthode spéciale, `__new__`, que l'on rencontre rarement et qui est présentée dans la section avancée [3.5 Métaclasses](/03-programmation-orientee-objet/05-metaclasses-et-prog-avancee.md). Pour débuter, retenez simplement que `__init__` est appelée automatiquement à chaque création d'objet.
+
 ### Comprendre `self`
 
 Le mot `self` représente **l'instance elle-même**. C'est une référence à l'objet qui est en train d'être manipulé.
@@ -176,6 +178,22 @@ print(Chien.nombre_pattes)  # 4
 **Différence clé** :
 - **Attributs de classe** : partagés par tous les objets, même valeur pour tous
 - **Attributs d'instance** : propres à chaque objet, peuvent être différents
+
+### ⚠️ Piège : les attributs de classe mutables
+
+N'utilisez **jamais** un objet *mutable* (liste, dictionnaire, set) comme attribut de classe pour stocker l'état propre à chaque instance : il serait **partagé** par toutes les instances.
+
+```python
+class Panier:
+    articles = []          # ❌ attribut de CLASSE, partagé par toutes les instances !
+
+p1 = Panier()
+p2 = Panier()
+p1.articles.append("pomme")
+print(p2.articles)         # ['pomme'] — p2 est affecté lui aussi !
+```
+
+La bonne pratique est d'initialiser ces collections **dans `__init__`** (`self.articles = []`), comme l'attribut `self.historique = []` de l'exemple `CompteBancaire` ci-dessous. Réservez les attributs de classe aux valeurs **partagées et constantes** (comme `taux_interet` ou `espece`).
 
 ## Exemple Complet : Classe Compte Bancaire
 
@@ -510,7 +528,7 @@ print(f"\nProgression : {gestionnaire.nombre_taches_terminees()}/{gestionnaire.n
 ### `__init__` (Constructeur)
 - Méthode spéciale appelée automatiquement lors de la création d'un objet
 - Permet d'initialiser les attributs de l'objet
-- Toujours le premier paramètre est `self`
+- Le premier paramètre est toujours `self`
 
 ### `self`
 - Référence à l'instance courante

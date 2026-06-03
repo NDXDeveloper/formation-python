@@ -9,16 +9,20 @@
 age = 25  # Commentaire après du code
 print(age)  # 25
 
-# --- Commentaires multi-lignes ---
+# --- "Commentaires" multi-lignes : ATTENTION, ce ne sont pas de vrais commentaires ! ---
+# Une chaîne entre triple guillemets n'est PAS un commentaire : c'est une chaîne de
+# caractères que Python crée puis ignore si on ne l'utilise pas. Son seul rôle spécial
+# est d'être une docstring (1re instruction d'une fonction/classe/module, voir 1.4).
 """
-Ceci est un commentaire
-sur plusieurs lignes.
-Python l'ignore complètement.
+Ceci ressemble à un commentaire,
+mais c'est en réalité une chaîne de caractères.
+Python n'en fait rien ici (elle est créée puis ignorée).
 """
 
 nom = "Alice"
 print(nom)  # Alice
 
+# La vraie façon de "commenter" sur plusieurs lignes : préfixer CHAQUE ligne par #
 # Ceci est également un commentaire
 # sur plusieurs lignes
 # avec des dièses

@@ -189,7 +189,7 @@ print(combinaisons)
 #  ('vert', 'S'), ('vert', 'M'), ('vert', 'L'),
 #  ('bleu', 'S'), ('bleu', 'M'), ('bleu', 'L')]
 
-# Multiplication de matrices (liste de listes)
+# Parcourir tous les éléments d'une matrice (liste de listes), ligne par ligne
 matrice = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]  
 elements = [element for ligne in matrice for element in ligne]  
 print(elements)  # [1, 2, 3, 4, 5, 6, 7, 8, 9]  
@@ -318,7 +318,7 @@ print(bonnes_notes)  # {'Alice': 18, 'Charlie': 15}
 nombres = {f"n{i}": i for i in range(10) if i % 2 == 0}  
 print(nombres)  # {'n0': 0, 'n2': 2, 'n4': 4, 'n6': 6, 'n8': 8}  
 
-# Créer un dictionnaire de mots avec plus de 4 lettres
+# Créer un dictionnaire de mots de plus de 2 lettres
 mots = ["le", "chat", "et", "le", "chien"]  
 mots_longs = {mot: len(mot) for mot in mots if len(mot) > 2}  
 print(mots_longs)  # {'chat': 4, 'chien': 5}  
@@ -329,7 +329,7 @@ print(mots_longs)  # {'chat': 4, 'chien': 5}
 ```python
 # Appliquer une réduction de 20% sur tous les prix
 prix = {"pomme": 2.5, "banane": 1.8, "orange": 3.0}  
-prix_soldes = {produit: prix * 0.8 for produit, prix in prix.items()}  
+prix_soldes = {produit: round(prix * 0.8, 2) for produit, prix in prix.items()}  
 print(prix_soldes)  # {'pomme': 2.0, 'banane': 1.44, 'orange': 2.4}  
 
 # Convertir toutes les valeurs en chaînes de caractères
@@ -463,7 +463,7 @@ print(pairs_uniques)  # {2, 4, 6}
 # Voyelles présentes dans un texte
 texte = "Python est un excellent langage"  
 voyelles = {c.lower() for c in texte if c.lower() in 'aeiouy'}  
-print(voyelles)  # {'e', 'a', 'o', 'u'}  
+print(voyelles)  # {'e', 'a', 'o', 'u', 'y'} (le 'y' de « Python » compte ; ordre variable)  
 
 # Domaines uniques d'emails
 emails = ["alice@example.com", "bob@test.com", "charlie@example.com"]  
@@ -589,6 +589,16 @@ nombres = [-5, 2, -8, 3]
 max_abs = max(abs(x) for x in nombres)  
 print(max_abs)  # 8  
 ```
+
+**⚠️ Un générateur ne se parcourt qu'une seule fois.** Une fois épuisé, il ne produit plus rien :
+
+```python
+gen = (x**2 for x in range(5))
+print(list(gen))  # [0, 1, 4, 9, 16]
+print(list(gen))  # [] — le générateur est déjà épuisé !
+```
+
+Si vous devez parcourir les données plusieurs fois, conservez-les dans une liste.
 
 **Quand utiliser les expressions génératrices ?**
 - Quand vous traitez de grandes quantités de données

@@ -1,7 +1,7 @@
 # ============================================================================
 #   Section 2.3 : namedtuple - Tuples avec des noms
 #   Description : Créer, accéder, immuabilité, unpacking, _asdict, _replace,
-#                 valeurs par défaut
+#                 valeurs par défaut, comparaison tuple / namedtuple / classe
 #   Fichier source : 03-collections-specialisees.md
 # ============================================================================
 
@@ -53,3 +53,23 @@ p1 = Personne2('Alice', 25)
 print(f"Défaut : {p1}")  # Personne2(nom='Alice', age=25, ville='Inconnu')
 p2 = Personne2('Bob', 30, 'Lyon')
 print(f"Fourni : {p2}")  # Personne2(nom='Bob', age=30, ville='Lyon')
+
+# --- Comparaison : tuple vs namedtuple vs classe ---
+print()
+
+# 1. Tuple classique : accès par indice (peu lisible)
+personne_tuple = ('Alice', 25, 'Paris')
+print(f"Tuple      : {personne_tuple[0]}")  # indice « magique »
+
+# 2. namedtuple : accès par nom (lisible et léger)
+print(f"namedtuple : {alice.nom}")
+
+# 3. Classe : plus de possibilités mais plus verbeux
+class PersonneClasse:
+    def __init__(self, nom, age, ville):
+        self.nom = nom
+        self.age = age
+        self.ville = ville
+
+pc = PersonneClasse('Alice', 25, 'Paris')
+print(f"Classe     : {pc.nom}")

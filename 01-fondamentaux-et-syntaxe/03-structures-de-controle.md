@@ -67,6 +67,8 @@ print("Ligne en dehors du if")
 
 **Convention** : Utilisez toujours **4 espaces** pour l'indentation (la plupart des éditeurs de code le font automatiquement quand vous appuyez sur Tab).
 
+> ⚠️ **Ne mélangez jamais tabulations et espaces** pour indenter un même bloc : Python lèverait une erreur `TabError: inconsistent use of tabs and spaces in indentation`. Le plus simple est de configurer votre éditeur pour qu'il insère 4 espaces quand vous appuyez sur Tab — VS Code le fait par défaut pour les fichiers `.py`.
+
 ❌ **Erreur d'indentation** :
 ```python
 if age >= 18:  
@@ -897,6 +899,8 @@ Externe : i = 2
   Interne : j = 1
 ```
 
+> ⚠️ **`break` et `continue` n'agissent que sur la boucle qui les contient directement** (la plus interne). Pour interrompre d'un coup plusieurs boucles imbriquées, extrayez le code dans une fonction et utilisez `return`, ou servez-vous d'un drapeau (variable booléenne).
+
 ---
 
 ## La Clause `else` avec les Boucles
@@ -938,6 +942,63 @@ else:
 ```
 
 **Note** : Cette fonctionnalité est peu utilisée en pratique car elle peut rendre le code moins lisible. Elle est surtout utile dans des algorithmes de recherche.
+
+---
+
+## L'opérateur *walrus* `:=` (Python 3.8+)
+
+L'opérateur `:=`, surnommé *walrus* (« morse » — il évoque deux yeux `:` et des défenses `=`), est un **opérateur d'affectation dans une expression** : il **affecte une valeur à une variable ET renvoie cette valeur**, au même endroit. Il évite de répéter un calcul ou une saisie et rend souvent les `while` et les `if` plus concis.
+
+### Dans une boucle `while` : lire et tester en une fois
+
+Sans le walrus, il faut écrire la saisie **deux fois** (avant la boucle, puis à la fin) :
+
+```python
+ligne = input("Mot (ou 'fin' pour arrêter) : ")
+while ligne != "fin":
+    print(f"Vous avez tapé : {ligne}")
+    ligne = input("Mot (ou 'fin' pour arrêter) : ")  # répétition !
+```
+
+Avec le walrus, la saisie et le test tiennent sur **une seule ligne** :
+
+```python
+while (ligne := input("Mot (ou 'fin' pour arrêter) : ")) != "fin":
+    print(f"Vous avez tapé : {ligne}")
+```
+
+> 💡 Les parenthèses autour de `(ligne := ...)` sont **souvent nécessaires** : elles lèvent l'ambiguïté avec l'opérateur de comparaison.
+
+### Dans un `if` : calculer une fois, réutiliser ensuite
+
+```python
+nombres = [3, 7, 2, 9, 4, 8, 1]
+
+if (n := len(nombres)) > 5:
+    print(f"La liste contient {n} éléments (plus de 5)")
+# La liste contient 7 éléments (plus de 5)
+```
+
+Ici, `len(nombres)` n'est calculé **qu'une seule fois** : le résultat est stocké dans `n`, testé, puis réutilisé dans le message.
+
+### Dans une compréhension : éviter un double calcul
+
+```python
+def carre(x):
+    return x * x
+
+# carre(x) n'est évalué qu'une seule fois par élément
+resultats = [c for x in range(6) if (c := carre(x)) > 4]
+print(resultats)  # [9, 16, 25]
+```
+
+### Quand l'utiliser ? (avec parcimonie)
+
+✅ **Utile** quand il évite une vraie répétition : saisie dans un `while`, calcul réutilisé dans un `if`.
+
+❌ **À éviter** s'il rend la ligne difficile à lire — dans le doute, une affectation classique sur sa propre ligne reste parfaitement valable.
+
+⚠️ **Ne confondez pas** `=` (affectation classique : une instruction) et `:=` (affectation-expression : elle renvoie une valeur). `:=` ne remplace pas un simple `=` en début de ligne.
 
 ---
 

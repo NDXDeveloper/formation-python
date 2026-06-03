@@ -20,7 +20,7 @@ resultat = 0.1 + 0.2
 print(resultat)  # Affiche : 0.30000000000000004 (!)
 
 # --- Notation scientifique ---
-grand_nombre = 3e8       # 3 × 10^8 = 300000000
+grand_nombre = 3e8       # 3 × 10^8 = 300000000.0 (la notation scientifique donne toujours un float)
 petit_nombre = 1.5e-4    # 1.5 × 10^-4 = 0.00015
 
 print(grand_nombre)   # 300000000.0

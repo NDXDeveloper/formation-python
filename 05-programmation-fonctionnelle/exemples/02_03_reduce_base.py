@@ -93,3 +93,12 @@ def factorielle(n):
 
 print(f"5! = {factorielle(5)}")  # 5! = 120
 print(f"7! = {factorielle(7)}")  # 7! = 5040
+
+# --- Piège : reduce() sur une séquence vide ---
+print("\n=== Séquence vide ===")
+try:
+    reduce(lambda acc, x: acc + x, [])
+except TypeError as e:
+    print(f"Erreur : {e}")   # reduce() of empty iterable with no initial value
+# Avec une valeur initiale, aucun problème :
+print(reduce(lambda acc, x: acc + x, [], 0))  # 0

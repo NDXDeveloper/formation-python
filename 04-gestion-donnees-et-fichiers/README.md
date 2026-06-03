@@ -226,6 +226,8 @@ with open('notes.json', 'w') as f:
 | JSON | APIs, configuration |
 | CSV | Données tabulaires |
 | XML | Documents structurés |
+| TOML | Configuration (ex. `pyproject.toml`) |
+| YAML | Configuration (Docker, CI…) |
 | Pickle | Objets Python complexes |
 
 ### 3. Gestion des Ressources
@@ -258,13 +260,15 @@ with open('texte.txt', 'r', encoding='utf-8') as f:
 ```python
 from pathlib import Path
 
-# ✅ Portable (fonctionne partout)
+# ✅ Idéal : Path choisit le bon séparateur selon l'OS
 chemin = Path('dossier') / 'sous_dossier' / 'fichier.txt'
 
-# ❌ Pas portable (seulement Windows)
+# ❌ Fragile : le backslash est le séparateur Windows ; sous Linux/macOS,
+#    « \ » est un caractère ordinaire, ce n'est donc pas un chemin valide
 chemin = 'dossier\\sous_dossier\\fichier.txt'
 
-# ❌ Pas portable (seulement Unix)
+# ⚠️ Les « / » fonctionnent sur tous les OS en Python (même Windows),
+#    mais coder le séparateur en dur reste moins robuste que Path
 chemin = 'dossier/sous_dossier/fichier.txt'
 ```
 
@@ -430,6 +434,7 @@ Au fil de ce chapitre, vous découvrirez des exemples concrets couvrant des cas 
 | `json` | Format JSON | 4.2 |
 | `csv` | Format CSV | 4.2 |
 | `xml.etree.ElementTree` | Format XML | 4.2 |
+| `tomllib` | Format TOML — lecture (Python 3.11+) | 4.2 |
 | `pickle` | Sérialisation | 4.3 |
 | `pathlib` | Gestion de chemins | 4.4 |
 

@@ -1,6 +1,8 @@
 # Exemples - Chapitre 01 : Fondamentaux et syntaxe
 
-Ce dossier contient **84 fichiers** d'exemples exécutables correspondant aux 6 sections du chapitre 01.
+Ce dossier contient **85 fichiers** d'exemples exécutables correspondant aux 6 sections du chapitre 01.
+
+**Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 06) et `NN` l'ordre de l'exemple dans la section. Exemple : `03_07_boucle_while.py` = section 3, 7ᵉ exemple.
 
 ## Exécution
 
@@ -8,15 +10,30 @@ Ce dossier contient **84 fichiers** d'exemples exécutables correspondant aux 6 
 python3 nom_du_fichier.py
 ```
 
-Certains fichiers contiennent des exemples interactifs (utilisant `input()`). Pour les exécuter :
+Deux fichiers proposent des démonstrations **interactives** (avec `input()`) : `02_15_entree_utilisateur.py` et `03_17_exemples_pratiques.py`. Sans argument, ils affichent une démonstration non-interactive ; ajoutez `--interactif` pour saisir les valeurs au clavier :
 
 ```bash
-python3 nom_du_fichier.py --interactif
+python3 02_15_entree_utilisateur.py --interactif
+python3 03_17_exemples_pratiques.py --interactif
 ```
 
 ## Prérequis
 
-- Python 3.10+ (pour la syntaxe `match/case` et `type | None`)
+- **Python 3.10+** (pour la syntaxe `match/case` et `type | None`)
+- **Aucune dépendance externe** : tous les exemples n'utilisent que la bibliothèque standard
+- Tous les exemples sont autonomes et ont été testés (exécution sans erreur sur Python 3.12)
+
+---
+
+## Correspondance avec le cours
+
+Chaque exemple reprend le code de son fichier `.md` source (colonne « Source »). Pour rester **exécutables et autonomes**, les `.py` adaptent parfois le cours :
+
+- les appels `input()` sont remplacés par des valeurs fixes (ou placés derrière `--interactif`) ;
+- des `print()` et des séparateurs sont ajoutés pour visualiser les résultats ;
+- les docstrings peuvent être abrégées, et plusieurs extraits d'une même section sont regroupés dans un seul fichier.
+
+En revanche, la **logique et les valeurs** des exemples restent identiques à celles du cours.
 
 ---
 
@@ -66,17 +83,18 @@ python3 nom_du_fichier.py --interactif
 | `03_05_conditions_imbriquees.py` | Conditions imbriquées | 03-structures-de-controle.md |
 | `03_06_operateur_ternaire.py` | Expression conditionnelle (ternaire) | 03-structures-de-controle.md |
 | `03_07_boucle_while.py` | Boucle while avec compteur, somme, etc. | 03-structures-de-controle.md |
-| `03_08_boucle_for.py` | Boucle for, range(), enumerate(), zip() | 03-structures-de-controle.md |
+| `03_08_boucle_for.py` | Boucle for : parcourir une chaîne, range(), somme, table de multiplication, triangle | 03-structures-de-controle.md |
 | `03_09_for_vs_while.py` | Comparaison for vs while | 03-structures-de-controle.md |
 | `03_10_instruction_break.py` | Instruction break | 03-structures-de-controle.md |
 | `03_11_instruction_continue.py` | Instruction continue | 03-structures-de-controle.md |
 | `03_12_instruction_pass.py` | Instruction pass | 03-structures-de-controle.md |
 | `03_13_boucles_imbriquees.py` | Boucles imbriquées et tables de multiplication | 03-structures-de-controle.md |
 | `03_14_else_avec_boucles.py` | Clause else avec for et while | 03-structures-de-controle.md |
-| `03_15_match_case.py` | Pattern matching (Python 3.10+) | 03-structures-de-controle.md |
+| `03_15_match_case.py` | Pattern matching : menu, motifs multiples (`\|`), codes HTTP (Python 3.10+) | 03-structures-de-controle.md |
 | `03_16_bonnes_pratiques.py` | Bonnes pratiques des structures de contrôle | 03-structures-de-controle.md |
 | `03_17_exemples_pratiques.py` | Exemples pratiques : nombres premiers, Pascal, PGCD (--interactif) | 03-structures-de-controle.md |
 | `03_18_piege_range.py` | Piège courant avec range() | 03-structures-de-controle.md |
+| `03_19_operateur_walrus.py` | Opérateur walrus `:=` : `if` (réutiliser une valeur), compréhension, `while` (lire et tester) — Python 3.8+ | 03-structures-de-controle.md |
 
 ---
 
@@ -92,7 +110,7 @@ python3 nom_du_fichier.py --interactif
 | `04_06_args_kwargs.py` | *args et **kwargs | 04-fonctions-et-portee.md |
 | `04_07_docstrings.py` | Documentation avec docstrings | 04-fonctions-et-portee.md |
 | `04_08_portee_variables.py` | Portée des variables (locale, globale, LEGB) | 04-fonctions-et-portee.md |
-| `04_09_fonctions_imbriquees.py` | Fonctions imbriquées et closures | 04-fonctions-et-portee.md |
+| `04_09_fonctions_imbriquees.py` | Fonctions imbriquées, closures et `nonlocal` | 04-fonctions-et-portee.md |
 | `04_10_fonctions_premiere_classe.py` | Fonctions comme objets de première classe | 04-fonctions-et-portee.md |
 | `04_11_fonctions_recursives.py` | Récursivité : factorielle, fibonacci, somme | 04-fonctions-et-portee.md |
 | `04_12_fonctions_lambda.py` | Fonctions lambda | 04-fonctions-et-portee.md |
@@ -132,7 +150,7 @@ python3 nom_du_fichier.py --interactif
 | `06_03_types_optionnels_unions.py` | Type \| None, unions de types | 06-type-hints-et-annotations.md |
 | `06_04_any_callable.py` | Any, object et Callable | 06-type-hints-et-annotations.md |
 | `06_05_type_aliases.py` | Alias de types : Vector, Matrix, JSON | 06-type-hints-et-annotations.md |
-| `06_06_typeddict.py` | TypedDict : dictionnaires avec structure fixe | 06-type-hints-et-annotations.md |
+| `06_06_typeddict.py` | TypedDict : structure fixe, champs obligatoires et facultatifs | 06-type-hints-et-annotations.md |
 | `06_07_generiques.py` | Génériques : TypeVar, Generic, classe Pile | 06-type-hints-et-annotations.md |
 | `06_08_literal_final.py` | Literal pour valeurs exactes, Final pour constantes | 06-type-hints-et-annotations.md |
 | `06_09_classvar.py` | ClassVar pour attributs de classe | 06-type-hints-et-annotations.md |

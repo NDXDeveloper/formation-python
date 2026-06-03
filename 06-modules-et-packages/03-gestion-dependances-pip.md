@@ -91,6 +91,7 @@ Opérateurs de version disponibles :
 - `>` : Strictement supérieur
 - `<` : Strictement inférieur
 - `!=` : Exclure une version
+- `~=` : Version compatible (par exemple : `~=2.28.0` autorise les correctifs `2.28.1`, `2.28.5`… mais **pas** `2.29.0`)
 
 ### Utilisation après installation
 
@@ -690,11 +691,29 @@ ERROR: Could not install packages due to an OSError: [Errno 13] Permission denie
 **Solution :**
 N'utilisez JAMAIS `sudo pip install`. Utilisez un environnement virtuel à la place.
 
-> 📝 **PEP 668 :** Sur les distributions Linux récentes (Ubuntu 23.04+, Fedora 38+, etc.), `pip install` en dehors d'un environnement virtuel est **bloqué** par défaut avec l'erreur `externally-managed-environment`. C'est un comportement voulu pour protéger les packages système. La solution est toujours d'utiliser un environnement virtuel (voir section 6.4).
+> 📝 **PEP 668 :** Sur les distributions Linux récentes (Ubuntu 23.04+, Fedora 38+, etc.) et avec le Python d'Homebrew sur macOS, `pip install` en dehors d'un environnement virtuel est **bloqué** par défaut avec l'erreur `externally-managed-environment`. C'est un comportement voulu pour protéger les packages gérés par le système. La solution est toujours d'utiliser un environnement virtuel (voir section 6.4).
+>
+> ⚠️ Attention : `pip install --user` est **lui aussi** bloqué par la PEP 668 ; ce n'est donc *pas* un contournement.
 
-Si vous devez absolument installer globalement :
+**Pour installer une application en ligne de commande** (par exemple `black`, `ruff`, ou même `poetry`) de façon globale tout en restant isolée, l'outil moderne est **pipx** :
+
 ```bash
-pip install --user package_name
+# Installer pipx (une seule fois) -- via le gestionnaire système sur les distributions récentes
+sudo apt install pipx        # Debian/Ubuntu
+# ou : brew install pipx     # macOS
+# (sur un système non « externally-managed » : python -m pip install --user pipx)
+pipx ensurepath
+
+# Installer une application dans son propre environnement isolé
+pipx install black
+pipx install ruff
+```
+
+`pipx` place chaque application dans un environnement virtuel dédié, puis expose sa commande dans votre `PATH` : vous obtenez l'outil globalement, sans polluer le Python système ni vos projets. C'est la méthode recommandée pour les outils, là où **venv** reste la méthode pour les dépendances *d'un projet*.
+
+En dernier recours seulement, pour forcer une installation dans le Python système (rarement une bonne idée) :
+```bash
+pip install --break-system-packages package_name
 ```
 
 ### Problème 2 : Package introuvable

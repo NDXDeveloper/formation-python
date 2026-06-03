@@ -57,6 +57,8 @@ print(f"Prix TTC : {resultat['montant_ttc']:.2f}€")
 # 100*5 = 500, remise 10% = 50, HT après remise = 450, TVA = 90, TTC = 540
 
 # --- Générateur de mot de passe ---
+# NOTE SÉCURITÉ : 'random' n'est PAS sûr pour de vrais secrets (suite prévisible).
+# Pour un vrai mot de passe / jeton, utilisez le module 'secrets' : secrets.choice(caracteres).
 print("\n=== Générateur de mot de passe ===")
 
 def generer_mot_de_passe(longueur: int = 12,
@@ -86,7 +88,7 @@ print("\n=== Statistiques ===")
 def calculer_statistiques(nombres: list) -> dict:
     """Calcule diverses statistiques sur une liste de nombres."""
     if not nombres:
-        return None
+        return {}  # liste vide → dictionnaire vide (cohérent avec -> dict)
 
     nombres_tries = sorted(nombres)
     n = len(nombres)

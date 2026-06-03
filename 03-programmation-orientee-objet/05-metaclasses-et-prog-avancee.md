@@ -904,7 +904,8 @@ class Version:
     patch: int = 0
 
 versions = [Version(2, 0), Version(1, 9, 1), Version(1, 9)]  
-print(sorted(versions))  # [Version(1, 9, 0), Version(1, 9, 1), Version(2, 0, 0)]  
+print(sorted(versions))
+# [Version(majeure=1, mineure=9, patch=0), Version(majeure=1, mineure=9, patch=1), Version(majeure=2, mineure=0, patch=0)]  
 
 # Tous les paramètres disponibles :
 # @dataclass(init=True, repr=True, eq=True, order=False, frozen=False, slots=False)
@@ -974,7 +975,22 @@ rex = Chien("Rex", 5, "Berger Allemand", dresse=True)
 print(rex)  # Chien(nom='Rex', age=5, race='Berger Allemand', dresse=True)  
 ```
 
-> ⚠️ **Attention** : dans l'héritage de dataclasses, les champs avec valeur par défaut de la classe parente empêchent d'ajouter des champs *sans* valeur par défaut dans la classe enfant (un champ sans défaut ne peut pas suivre un champ avec défaut dans `__init__`).
+> ⚠️ **Attention** : dans l'héritage de dataclasses, les champs avec valeur par défaut de la classe parente empêchent d'ajouter des champs *sans* valeur par défaut dans la classe enfant (un champ sans défaut ne peut pas suivre un champ avec défaut dans `__init__`). On obtient alors `TypeError: non-default argument ... follows default argument`.
+>
+> **Solution moderne (Python 3.10+)** : passez `kw_only=True` au décorateur. Tous les champs deviennent **passables uniquement par mot-clé**, ce qui supprime la contrainte d'ordre :
+>
+> ```python
+> @dataclass(kw_only=True)
+> class Animal:
+>     nom: str
+>     actif: bool = True
+>
+> @dataclass(kw_only=True)
+> class Chien(Animal):
+>     race: str          # ✅ plus d'erreur, même sans valeur par défaut
+>
+> Chien(nom="Rex", race="Berger")   # les arguments doivent être nommés
+> ```
 
 ### Dataclass vs Alternatives
 

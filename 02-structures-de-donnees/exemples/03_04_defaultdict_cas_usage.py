@@ -83,3 +83,13 @@ for region, produits in sorted(ventes_groupees.items()):
     print(f"{region}:")
     for produit, montants in sorted(produits.items()):
         print(f"  {produit}: {sum(montants)}€ ({len(montants)} ventes)")
+
+# --- 8. Comptage avec filtrage par seuil ---
+print()
+visites = ['alice', 'bob', 'alice', 'charlie', 'alice', 'bob', 'alice']
+compteur_visites = defaultdict(int)
+for utilisateur in visites:
+    compteur_visites[utilisateur] += 1
+# Garder les utilisateurs actifs (plus de 2 visites)
+actifs = {user: count for user, count in compteur_visites.items() if count > 2}
+print(f"Utilisateurs actifs : {actifs}")  # {'alice': 4}

@@ -26,16 +26,16 @@ Les **erreurs de syntaxe** se produisent quand vous écrivez du code qui ne resp
 # Oublier les deux points
 if age >= 18
     print("Majeur")
-# SyntaxError: invalid syntax
+# SyntaxError: expected ':'
 
 # Oublier de fermer une parenthèse
 print("Bonjour"
-# SyntaxError: unexpected EOF while parsing
+# SyntaxError: '(' was never closed
 
 # Indentation incorrecte
 def ma_fonction():  
 print("Erreur")  
-# IndentationError: expected an indented block
+# IndentationError: expected an indented block after function definition
 ```
 
 Ces erreurs doivent être **corrigées dans le code**. Elles ne peuvent pas être gérées avec try/except car le programme ne peut pas s'exécuter.
@@ -149,7 +149,7 @@ Utiliser `except` sans spécifier le type d'erreur capture **toutes** les erreur
 try:
     # Code risqué
     pass
-except TypeErreur:
+except ExceptionType:  # ExceptionType = à remplacer par le vrai type (ValueError, KeyError...)
     # Gérer ce type d'erreur spécifique
     pass
 ```
@@ -371,7 +371,7 @@ Vous pouvez **lever** (déclencher) volontairement une exception avec le mot-cl�
 ### Syntaxe
 
 ```python
-raise TypeException("Message d'erreur")
+raise ExceptionType("Message d'erreur")  # ExceptionType = ValueError, RuntimeError, une exception perso...
 ```
 
 ### Exemples
@@ -578,7 +578,7 @@ except KeyError:
     valeur = None
 ```
 
-**Exception** : Le principe EAFP ("Easier to Ask for Forgiveness than Permission") est parfois préféré en Python, mais avec modération.
+**Exception** : Le principe EAFP (« Easier to Ask for Forgiveness than Permission ») est souvent préféré en Python (voir la section dédiée plus bas). Pour ce cas précis d'un dictionnaire, la méthode la plus idiomatique reste cependant `dictionnaire.get(cle)`, qui renvoie `None` (ou une valeur par défaut que vous précisez) lorsque la clé est absente.
 
 ### 3. Ne cachez pas les erreurs
 
@@ -704,6 +704,8 @@ except LookupError:
     # Capture à la fois IndexError et KeyError
     print("Erreur de recherche")
 ```
+
+> 💡 `SystemExit` (déclenché par `sys.exit()`) et `KeyboardInterrupt` (Ctrl+C pour interrompre le programme) héritent directement de `BaseException`, **pas** de `Exception`. Conséquence pratique : un `except Exception:` ne les capture **pas** — l'utilisateur peut donc toujours arrêter le programme avec Ctrl+C. C'est une raison de plus de préférer `except Exception:` au `except:` nu, qui, lui, attrape absolument tout.
 
 ### Ordre des blocs except
 

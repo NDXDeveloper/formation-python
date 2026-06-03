@@ -84,8 +84,10 @@ _variable_privee = 42
 2age = 30        # Commence par un chiffre ❌
 mon-age = 25     # Contient un tiret ❌  
 for = 10         # Mot réservé Python ❌  
-mon âge = 25     # Contient un espace et un accent ❌  
+mon âge = 25     # Contient un espace ❌  
 ```
+
+> 💡 **À noter** : depuis Python 3, les caractères accentués sont en réalité **autorisés** dans les noms de variables — `âge = 25` ou `prénom = "Bob"` fonctionnent parfaitement. C'est donc l'**espace** qui rend `mon âge` invalide, pas l'accent. Cela dit, la convention (PEP 8) recommande de se limiter à l'alphabet anglais (ASCII) pour les noms : préférez `age` à `âge`.
 
 **Conventions (bonnes pratiques)** :
 - Utilisez des noms descriptifs : `age_utilisateur` plutôt que `a`
@@ -159,9 +161,11 @@ Cette particularité est commune à tous les langages de programmation et est li
 **Notation scientifique** :
 
 ```python
-grand_nombre = 3e8  # 3 × 10^8 = 300000000  
+grand_nombre = 3e8  # 3 × 10^8 = 300000000.0  
 petit_nombre = 1.5e-4  # 1.5 × 10^-4 = 0.00015  
 ```
+
+> 💡 La notation scientifique produit **toujours un `float`**, même lorsque le résultat est rond : `3e8` vaut `300000000.0` (un float), et non `300000000` (un int).
 
 ### 3. Les Chaînes de Caractères (str)
 
@@ -635,7 +639,7 @@ print(peut_conduire)  # Affiche : False
 # Avec parenthèses pour clarifier
 est_weekend = True  
 a_argent = False  
-peut_sortir = est_weekend and (a_argent or not a_argent)  # Toujours vrai !  
+peut_sortir = est_weekend and (a_argent or not a_argent)  # (a_argent or not a_argent) vaut toujours True, donc ceci équivaut à est_weekend (ici True)  
 ```
 
 ### Priorité des opérateurs logiques
@@ -718,6 +722,8 @@ print(valeur == None)      # Affiche : True (fonctionne mais moins idiomatique)
 ```
 
 **Note** : Pour comparer avec `None`, on utilise généralement `is None` plutôt que `== None`.
+
+> ⚠️ **N'utilisez `is` que pour l'identité** (typiquement avec `None`), **jamais pour comparer des valeurs** — pour cela, utilisez `==`. `is` teste si deux variables désignent le **même objet en mémoire**, ce qui ne garantit pas l'égalité des valeurs (et dépend de détails d'implémentation, comme la mise en cache des petits entiers). Écrire `x is 5` déclenche d'ailleurs un avertissement en Python 3 : `SyntaxWarning: "is" with 'int' literal. Did you mean "=="?`. Règle simple : **`==` pour les valeurs, `is` pour `None`**.
 
 ---
 
@@ -820,6 +826,18 @@ print(f"{nom:<10}")   # Aligné à gauche sur 10 caractères
 print(f"{nom:^10}")   # Centré sur 10 caractères  
 ```
 
+### Expressions auto-documentées (`f"{...=}"`)
+
+Depuis Python 3.8, ajouter `=` à la fin d'une expression dans une f-string affiche à la fois l'expression **et** sa valeur — très pratique pour le débogage :
+
+```python
+nom = "Alice"
+age = 25
+print(f"{nom=}")        # Affiche : nom='Alice'
+print(f"{age=}")        # Affiche : age=25
+print(f"{age * 2=}")    # Affiche : age * 2=50
+```
+
 ---
 
 ## Commentaires dans le Code
@@ -835,13 +853,13 @@ age = 25  # Commentaire après du code
 
 ### Commentaires multi-lignes
 
-Pour des explications plus longues, utilisez trois guillemets :
+Vous rencontrerez souvent des chaînes entre triple guillemets (`"""`) utilisées comme « commentaires » sur plusieurs lignes :
 
 ```python
 """
-Ceci est un commentaire  
-sur plusieurs lignes.  
-Python l'ignore complètement.  
+Ceci ressemble à un commentaire,
+mais c'est en réalité une chaîne de caractères.
+Python n'en fait rien ici (elle est créée puis ignorée).
 """
 
 nom = "Alice"
@@ -854,6 +872,8 @@ Ou utilisez plusieurs lignes avec `#` :
 # sur plusieurs lignes
 # avec des dièses
 ```
+
+> ⚠️ **Nuance importante** : une chaîne entre triple guillemets (`"""..."""`) n'est **pas** un commentaire au sens strict — c'est une *chaîne de caractères*. Python l'évalue bien (il crée l'objet `str`) puis la jette si elle n'est ni assignée ni utilisée. Le seul cas où une telle chaîne joue un rôle particulier est la **docstring** : la première instruction d'un module, d'une fonction ou d'une classe (voir la section 1.4). Pour de vrais commentaires, privilégiez toujours `#`.
 
 ### Bonnes pratiques pour les commentaires
 

@@ -649,6 +649,28 @@ print(bonsoir("Bob"))     # Affiche : Bonsoir Bob !
 print(hello("Charlie"))   # Affiche : Hello Charlie !  
 ```
 
+### Modifier une variable englobante avec `nonlocal`
+
+Tout comme `global` donne accès à une variable globale, le mot-clé `nonlocal` permet à une fonction imbriquée de **modifier** une variable de la fonction qui l'englobe (au lieu d'en créer une nouvelle, locale) :
+
+```python
+def compteur():
+    total = 0  # variable de la fonction englobante
+
+    def incrementer():
+        nonlocal total  # on modifie le `total` de compteur(), pas une nouvelle variable
+        total += 1
+        return total
+
+    print(incrementer())  # Affiche : 1
+    print(incrementer())  # Affiche : 2
+    print(incrementer())  # Affiche : 3
+
+compteur()
+```
+
+Sans `nonlocal`, la ligne `total += 1` lèverait une `UnboundLocalError` : Python considérerait `total` comme une nouvelle variable locale à `incrementer`. Nous approfondirons ce mécanisme (les *closures*) au module 5.
+
 ---
 
 ## Fonctions comme Objets de Première Classe
@@ -908,7 +930,7 @@ def diviser(a: float, b: float) -> float:
 
 ### Types complexes
 
-Depuis Python 3.10, les types génériques s'écrivent directement avec les types natifs (plus besoin d'importer depuis `typing`) :
+Depuis Python 3.9, les types génériques s'écrivent directement avec les types natifs comme `list`, `dict` ou `tuple` (plus besoin d'importer `List`, `Dict`, etc. depuis `typing`) :
 
 ```python
 def traiter_nombres(nombres: list[int]) -> int:
@@ -1093,7 +1115,7 @@ def calculer_imc(poids: float, taille: float) -> float:
         float: L'IMC calculé
 
     Exemple:
-        >>> calculer_imc(70, 1.75)
+        >>> round(calculer_imc(70, 1.75), 2)
         22.86
     """
     return poids / (taille ** 2)
@@ -1220,6 +1242,8 @@ print(generer_mot_de_passe(8, avec_symboles=False))
 print(generer_mot_de_passe(16))  
 ```
 
+> ⚠️ **Sécurité** : le module `random` n'est **pas** adapté à la génération de secrets (sa suite de nombres est prévisible). Pour de vrais mots de passe ou jetons, utilisez le module `secrets` (cryptographiquement sûr) : remplacez `random.choice(caracteres)` par `secrets.choice(caracteres)`.
+
 ### Exemple 4 : Calculateur de statistiques
 
 ```python
@@ -1234,7 +1258,7 @@ def calculer_statistiques(nombres: list) -> dict:
         dict: Dictionnaire contenant les statistiques
     """
     if not nombres:
-        return None
+        return {}  # liste vide → dictionnaire vide (cohérent avec l'annotation -> dict)
 
     nombres_tries = sorted(nombres)
     n = len(nombres)

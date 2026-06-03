@@ -16,3 +16,6 @@ print(a is c)   # Affiche : True (c pointe vers le même objet que a)
 valeur = None
 print(valeur is None)      # Affiche : True (recommandé)
 print(valeur == None)      # Affiche : True (fonctionne mais moins idiomatique)
+
+# Règle : 'is' uniquement pour l'identité (souvent avec None), '==' pour les valeurs.
+# Écrire 'x is 5' déclenche un SyntaxWarning : "is" with 'int' literal. Did you mean "=="?

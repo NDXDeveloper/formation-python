@@ -2,11 +2,30 @@
 
 Ce dossier contient **80 fichiers** d'exemples exécutables correspondant aux 4 sections du chapitre 2.
 
+**Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 04) et `NN` l'ordre de l'exemple. Exemple : `03_05_counter_base.py` = section 2.3, 5ᵉ exemple.
+
 ## Exécution
 
 ```bash
 python3 nom_du_fichier.py
 ```
+
+Aucun de ces exemples n'est interactif : ils s'exécutent directement et affichent leur résultat.
+
+## Prérequis
+
+- **Python 3.10+** (le cours utilise la syntaxe moderne : `removeprefix`/`removesuffix`, f-strings avancées, etc.)
+- **Aucune dépendance externe** : uniquement la bibliothèque standard (`collections`, `re`, `datetime`)
+
+## Correspondance avec le cours
+
+Chaque exemple reprend le code de son fichier `.md` source (colonne « Source »). Pour rester **exécutables et lisibles**, les `.py` adaptent parfois le cours :
+
+- sorties formatées avec des **f-strings** (`print(f"...")`) au lieu de `print()` bruts ;
+- `sorted(...)` appliqué aux sets pour rendre l'affichage **déterministe** ;
+- exemples volontairement invalides mis en commentaire ou encadrés par `try/except`.
+
+La **logique et les valeurs** restent identiques à celles du cours.
 
 ---
 
@@ -20,7 +39,7 @@ Source : `01-listes-tuples-dicts-sets.md`
 | `01_02_acces_slicing.py` | Accès par indice et slicing | Indices positifs/négatifs, slices, pas |
 | `01_03_modifier_liste.py` | Modifier une liste | append, insert, extend |
 | `01_04_supprimer_elements_liste.py` | Supprimer des éléments | remove, pop, del, clear |
-| `01_05_operations_listes.py` | Opérations sur les listes | len, in, count, sort, sorted, reverse |
+| `01_05_operations_listes.py` | Opérations sur les listes | len, in, count, sort/sorted (avec `key`), reverse |
 | `01_06_copier_liste.py` | Copier une liste | Référence vs copie, copy(), deepcopy |
 | `01_07_listes_imbriquees.py` | Listes imbriquées | Matrice 3x3, accès, modification |
 | `01_08_creer_tuple.py` | Créer des tuples | Tuples, tuple d'un élément, packing |
@@ -29,7 +48,7 @@ Source : `01-listes-tuples-dicts-sets.md`
 | `01_11_operations_tuples.py` | Opérations sur les tuples | count, index, clés dict, retours multiples |
 | `01_12_creer_dictionnaire.py` | Créer des dictionnaires | {}, dict(), fromkeys, zip |
 | `01_13_acceder_valeurs_dict.py` | Accéder aux valeurs | [], get(), KeyError |
-| `01_14_modifier_dictionnaire.py` | Modifier un dictionnaire | Ajout, modification, update() |
+| `01_14_modifier_dictionnaire.py` | Modifier un dictionnaire | Ajout, modification, update(), fusion `\|` (3.9+) |
 | `01_15_supprimer_elements_dict.py` | Supprimer des éléments | del, pop(), clear() |
 | `01_16_parcourir_dictionnaire.py` | Parcourir un dictionnaire | keys(), values(), items() |
 | `01_17_operations_dict.py` | Opérations sur les dicts | len, in, copy, setdefault |
@@ -60,7 +79,7 @@ Source : `02-comprehensions.md`
 | `02_08_comprehension_sets.py` | Compréhension de sets | Voyelles, longueurs uniques |
 | `02_09_comparaison_comprehensions.py` | Comparaison list/dict/set | Même donnée, 3 types |
 | `02_10_comprehensions_avancees.py` | Avancées | Matrice identité, filtrage imbriqué |
-| `02_11_expressions_generatrices.py` | Expressions génératrices | Mémoire, sum, max, any, all |
+| `02_11_expressions_generatrices.py` | Expressions génératrices | Mémoire, sum, max, épuisement (usage unique) |
 | `02_12_bonnes_pratiques_comprehensions.py` | Bonnes pratiques | Lisibilité, étapes intermédiaires |
 | `02_13_exemple_analyse_texte.py` | Exemple : analyse texte | Fréquence des mots |
 | `02_14_exemple_transformation_donnees.py` | Exemple : transformation | Salaires augmentés |
@@ -75,10 +94,10 @@ Source : `03-collections-specialisees.md`
 
 | Fichier | Description | Sortie attendue |
 |---------|-------------|-----------------|
-| `03_01_namedtuple_base.py` | namedtuple : base | Création, accès, _asdict, _replace, defaults |
+| `03_01_namedtuple_base.py` | namedtuple : base | Création, accès, _asdict, _replace, defaults, comparaison tuple/classe |
 | `03_02_namedtuple_cas_usage.py` | namedtuple : cas d'usage | Distance 11.18, salaire moyen 51667 |
 | `03_03_defaultdict_base.py` | defaultdict : base | Problème KeyError, factory int/list/set/str |
-| `03_04_defaultdict_cas_usage.py` | defaultdict : cas d'usage | Comptage mots, groupement, graphe |
+| `03_04_defaultdict_cas_usage.py` | defaultdict : cas d'usage | Comptage mots, groupement, graphe, comptage avec seuil, multi-niveaux |
 | `03_05_counter_base.py` | Counter : base | most_common, elements, update, subtract, arithmétique |
 | `03_06_counter_cas_usage.py` | Counter : cas d'usage | Votes Alice 54.5%, inventaire, logs |
 | `03_07_autres_collections.py` | deque, OrderedDict, ChainMap | Rotation, move_to_end, priorité config |
@@ -107,7 +126,7 @@ Source : `04-chaines-et-regex.md`
 | `04_13_formatage_ancien.py` | format() et % | Indices, noms, dicts, style C |
 | `04_14_fstrings_avances.py` | f-strings avancés | Dates, binaire/octal/hex, debug =, multi-lignes |
 | `04_15_regex_search_match.py` | Regex : search et match | Trouvé 2020 position 25, début de chaîne |
-| `04_16_regex_findall_finditer.py` | Regex : findall et finditer | Tous les nombres, positions |
+| `04_16_regex_findall_finditer.py` | Regex : findall et finditer | Tous les nombres, positions, gourmand vs non-gourmand |
 | `04_17_regex_sub_split.py` | Regex : sub et split | Remplacement, fonction doubler, split multi-séparateurs |
 | `04_18_groupes_capture.py` | Regex : groupes de capture | Email décomposé, groupes nommés, groupdict |
 | `04_19_compilation_flags.py` | Regex : compilation et flags | compile, IGNORECASE, MULTILINE, DOTALL |

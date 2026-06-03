@@ -285,12 +285,13 @@ Contrairement à des langages comme Haskell ou Elixir, Python est **multi-paradi
 
 Python fournit de nombreux outils pour la programmation fonctionnelle :
 
-**Fonctions natives** :
+**Fonctions natives (*built-in*)** :
 - `map()` : applique une fonction à chaque élément
 - `filter()` : filtre les éléments selon une condition
-- `reduce()` : réduit une séquence à une valeur unique
 - `zip()` : combine plusieurs séquences
 - `enumerate()` : itère avec des indices
+
+> ℹ️ `reduce()` (réduire une séquence à une valeur unique) était native en Python 2, mais se trouve désormais dans le module **`functools`** (`from functools import reduce`) — voir la section 5.2.
 
 **Fonctionnalités du langage** :
 - Fonctions lambda (anonymes)

@@ -15,6 +15,8 @@ Les outils modernes comme **Poetry** et **Pipenv** ont été créés pour simpli
 
 **Analogie :** Si pip + venv sont comme utiliser des outils séparés (tournevis, marteau, clés), Poetry et Pipenv sont comme des couteaux suisses qui intègrent tout en un seul outil.
 
+> 📝 **Et uv ?** Depuis 2024, un nouvel outil écrit en Rust, **uv** (par Astral), bouscule cet écosystème en étant nettement plus rapide. Nous le présentons en détail plus loin dans ce chapitre ; en 2026, c'est souvent lui que l'on conseille pour démarrer un nouveau projet.
+
 ---
 
 ## Pourquoi des outils modernes ?
@@ -76,7 +78,9 @@ deactivate
 
 ### Qu'est-ce que Pipenv ?
 
-**Pipenv** est un outil qui combine pip et virtualenv en une seule interface cohérente. Il a été créé par Kenneth Reitz (créateur de requests) et est recommandé officiellement par Python.org.
+**Pipenv** est un outil qui combine pip et virtualenv en une seule interface cohérente. Il a été créé par Kenneth Reitz (créateur de requests) et est aujourd'hui maintenu par la **PyPA** (Python Packaging Authority), l'organisation qui chapeaute aussi pip.
+
+> 📝 **En 2026 :** Pipenv reste maintenu et stable, mais il a nettement perdu en popularité face à **Poetry** et surtout **uv** (voir plus loin dans ce chapitre). Il n'est plus *l'*outil unanimement recommandé qu'il a pu être vers 2018-2019. Nous le présentons ici car vous le rencontrerez encore dans de nombreux projets existants.
 
 **Philosophie :** "Pipenv vise à apporter le meilleur de tous les mondes de packaging à Python."
 
@@ -95,7 +99,7 @@ pipenv --version
 
 Résultat attendu :
 ```
-pipenv, version 2023.10.20
+pipenv, version 2026.6.1
 ```
 
 ### Les fichiers de Pipenv
@@ -385,8 +389,15 @@ poetry --version
 
 Résultat :
 ```
-Poetry (version 1.7.0)
+Poetry (version 2.3.2)
 ```
+
+> ⚠️ **Poetry 2.0 (janvier 2025) — changements importants :** Poetry est passé à la version 2.x, qui introduit plusieurs changements par rapport aux anciens tutoriels que vous trouverez sur le web :  
+> - `poetry shell` a été **retiré** du cœur de Poetry → utilisez `poetry env activate` (voir plus bas) ou installez le plugin `poetry-plugin-shell` ;  
+> - `poetry export` n'est **plus inclus par défaut** → il faut installer le plugin `poetry-plugin-export` ;  
+> - Poetry supporte désormais la table standard **`[project]`** (PEP 621) en plus de `[tool.poetry]`.
+>
+> Ces points sont détaillés dans les sections concernées ci-dessous.
 
 **Configuration PATH :**
 Ajoutez Poetry à votre PATH si nécessaire :
@@ -463,6 +474,25 @@ python = "^3.11"
 requires = ["poetry-core"]  
 build-backend = "poetry.core.masonry.api"  
 ```
+
+> 📝 **Format `[project]` (PEP 621) — Poetry 2.0+ :** Depuis la version 2.0, Poetry comprend aussi la table standard `[project]` définie par la [PEP 621](https://peps.python.org/pep-0621/) (la même que celle utilisée par les autres outils modernes). Les métadonnées peuvent alors s'écrire de façon portable :
+>
+> ```toml
+> [project]
+> name = "mon-projet"
+> version = "0.1.0"
+> description = ""
+> authors = [{name = "Votre Nom", email = "email@example.com"}]
+> readme = "README.md"
+> requires-python = ">=3.11"
+> dependencies = ["requests>=2.31.0,<3.0.0"]
+>
+> [build-system]
+> requires = ["poetry-core>=2.0"]
+> build-backend = "poetry.core.masonry.api"
+> ```
+>
+> Le format historique `[tool.poetry]` montré ci-dessus **fonctionne toujours**, et la section `[tool.poetry]` reste utilisée pour les fonctionnalités spécifiques à Poetry (groupes de dépendances, sources personnalisées, etc.). Pour un nouveau projet, le format `[project]` est toutefois à privilégier : il facilite le passage d'un outil à l'autre (setuptools, Hatch, uv…).
 
 ### Installer des dépendances
 
@@ -543,20 +573,28 @@ poetry run python mon_script.py
 
 ### Activer l'environnement virtuel
 
+Depuis Poetry 2.0, la commande recommandée est `poetry env activate`. Attention : elle ne fait qu'**afficher** la commande d'activation adaptée à votre shell ; pour activer réellement l'environnement, exécutez cette commande (ou enveloppez-la dans `eval`) :
+
 ```bash
-# Ouvrir un shell dans l'environnement
-poetry shell
+# Afficher la commande d'activation
+poetry env activate
+
+# Activer directement (Linux/macOS, bash/zsh)
+eval $(poetry env activate)
 ```
 
-Vous entrez dans l'environnement :
+Une fois activé, vous voyez l'environnement dans votre invite :
 ```bash
 (mon-projet-py3.11) user@computer:~/mon_projet$
 ```
 
-Pour sortir :
-```bash
-exit
-```
+Pour sortir, utilisez `deactivate`.
+
+> 📝 **Et `poetry shell` ?** L'ancienne commande `poetry shell` (qui ouvrait un sous-shell) a été **retirée du cœur de Poetry en 2.0**. Pour la retrouver, installez le plugin dédié :
+> ```bash
+> poetry self add poetry-plugin-shell
+> ```
+> Le plus souvent, `poetry run <commande>` (vu juste au-dessus) suffit et évite d'avoir à activer l'environnement.
 
 ### Afficher les dépendances
 
@@ -656,6 +694,11 @@ poetry add flask@2.3.3 requests@2.31.0 pandas@2.0.3
 
 ### Exporter vers requirements.txt
 
+> 📝 **Poetry 2.0+ :** la commande `poetry export` n'est plus incluse par défaut. Installez d'abord le plugin (une seule fois) :
+> ```bash
+> poetry self add poetry-plugin-export
+> ```
+
 ```bash
 # Exporter vers requirements.txt
 poetry export -f requirements.txt --output requirements.txt
@@ -742,22 +785,92 @@ poetry publish
 
 ---
 
-## Comparaison : pip/venv vs Pipenv vs Poetry
+## uv — l'outil ultra-rapide (Astral)
 
-| Fonctionnalité | pip + venv | Pipenv | Poetry |
-|----------------|-----------|--------|--------|
-| **Installation** | Intégré à Python | `pip install pipenv` | Installation séparée |
-| **Fichier de config** | requirements.txt | Pipfile | pyproject.toml |
-| **Lock file** | ❌ Non | ✅ Pipfile.lock | ✅ poetry.lock |
-| **Gestion venv** | Manuelle | ✅ Automatique | ✅ Automatique |
-| **Résolution dépendances** | ⚠️ Basique | ✅ Avancée | ✅ Très avancée |
-| **Dev vs Prod** | Fichiers séparés | ✅ Section [dev-packages] | ✅ Groupes |
-| **Graphe dépendances** | ❌ Non (pipdeptree) | ✅ `pipenv graph` | ✅ `poetry show --tree` |
-| **Build packages** | setuptools | ⚠️ Limité | ✅ Intégré |
-| **Publication PyPI** | twine | ⚠️ Non | ✅ `poetry publish` |
-| **Performance** | ✅ Rapide | ⚠️ Peut être lent | ✅ Rapide |
-| **Courbe apprentissage** | ⚠️ Plusieurs outils | ⚠️ Moyenne | ⚠️ Moyenne |
-| **Standard** | ✅ Officiel | ⚠️ Recommandé | ⚠️ Populaire |
+**uv** est un gestionnaire de packages et de projets Python écrit en Rust par Astral (l'éditeur du linter Ruff). Apparu en 2024, il s'est imposé très vite : il vise à remplacer à lui seul `pip`, `venv`, `pipx`, `pip-tools` et une bonne partie de Poetry/Pipenv, le tout **10 à 100 fois plus rapidement**.
+
+> 📝 **Pourquoi uv est devenu incontournable en 2026 :** uv a dépassé Poetry en nombre de téléchargements mensuels sur PyPI et est devenu l'installeur par défaut dans de nombreuses chaînes d'intégration continue. Pour un **nouveau projet**, c'est aujourd'hui le choix le plus souvent recommandé. Il reste plus récent que Poetry/Pipenv, qui gardent un écosystème et une documentation très matures.
+
+### Installation
+
+```bash
+# macOS / Linux (installeur autonome)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Ou via un gestionnaire que vous avez déjà
+pipx install uv      # recommandé si vous avez déjà pipx
+brew install uv      # macOS (Homebrew)
+pip install uv       # dans un environnement Python
+```
+
+Vérification :
+```bash
+uv --version
+```
+
+### Les fichiers de uv
+
+Comme Poetry 2.0, uv s'appuie sur les standards :
+
+**1. pyproject.toml** : configuration du projet, avec la table `[project]` (PEP 621)  
+**2. uv.lock** : fichier de verrouillage multiplateforme (à committer dans Git)  
+**3. .venv/** : environnement virtuel créé et géré automatiquement (à ignorer dans Git)  
+
+### Commandes essentielles
+
+```bash
+# Créer un nouveau projet
+uv init mon_projet
+cd mon_projet
+
+# Ajouter une dépendance (crée .venv et met à jour pyproject.toml + uv.lock)
+uv add requests
+uv add 'fastapi>=0.110'
+
+# Ajouter une dépendance de développement
+uv add --dev pytest ruff mypy
+
+# Supprimer une dépendance
+uv remove requests
+
+# Installer / synchroniser l'environnement depuis le lock
+uv sync
+
+# Exécuter une commande dans l'environnement du projet (sans activation manuelle)
+uv run python app.py
+uv run pytest
+```
+
+> 💡 uv n'oblige jamais à activer un environnement à la main : `uv run` s'en charge. uv sait aussi installer Python lui-même (`uv python install 3.12`) et offre une interface compatible pip (`uv pip install ...`) pour servir simplement de remplaçant rapide à pip.
+
+### Migrer un requirements.txt vers uv
+
+```bash
+uv init
+uv add -r requirements.txt
+```
+
+---
+
+## Comparaison : pip/venv vs Pipenv vs Poetry vs uv
+
+| Fonctionnalité | pip + venv | Pipenv | Poetry | uv |
+|----------------|-----------|--------|--------|----|
+| **Installation** | Intégré à Python | `pip install pipenv` | Installation séparée | Installation séparée |
+| **Fichier de config** | requirements.txt | Pipfile | pyproject.toml | pyproject.toml |
+| **Lock file** | ❌ Non | ✅ Pipfile.lock | ✅ poetry.lock | ✅ uv.lock |
+| **Gestion venv** | Manuelle | ✅ Automatique | ✅ Automatique | ✅ Automatique |
+| **Résolution dépendances** | ⚠️ Basique | ✅ Avancée | ✅ Très avancée | ✅ Très avancée |
+| **Dev vs Prod** | Fichiers séparés | ✅ Section [dev-packages] | ✅ Groupes | ✅ Groupes |
+| **Graphe dépendances** | ❌ Non (pipdeptree) | ✅ `pipenv graph` | ✅ `poetry show --tree` | ✅ `uv tree` |
+| **Build packages** | setuptools | ⚠️ Limité | ✅ Intégré | ✅ `uv build` |
+| **Publication PyPI** | twine | ⚠️ Non | ✅ `poetry publish` | ✅ `uv publish` |
+| **Performance** | ✅ Rapide | ⚠️ Peut être lent | ✅ Rapide | ✅✅ Ultra-rapide (Rust) |
+| **Courbe apprentissage** | ⚠️ Plusieurs outils | ⚠️ Moyenne | ⚠️ Moyenne | ✅ Simple |
+| **Standard** | ✅ Officiel (PyPA) | ⚠️ Maintenu (PyPA) | ✅ Très répandu | ✅ Montée en puissance |
 
 ---
 
@@ -775,15 +888,21 @@ poetry publish
 - ✅ Projet de taille moyenne
 - ✅ Vous voulez une meilleure gestion des dépendances que pip
 - ✅ Migration facile depuis requirements.txt
-- ✅ Recommandation officielle de Python.org
+- ✅ Vous appréciez sa syntaxe (Pipfile) et préférez un outil maintenu par la PyPA
 
 ### Utilisez Poetry si :
 - ✅ Nouveau projet professionnel
 - ✅ Vous allez créer un package à publier
 - ✅ Projet avec nombreuses dépendances
-- ✅ Vous voulez les meilleures performances
+- ✅ Vous voulez un outil mature et éprouvé, à la documentation abondante
 - ✅ Workflow moderne et complet
 - ✅ Gestion avancée de versions
+
+### Utilisez uv si :
+- ✅ Vous démarrez un nouveau projet en 2026 (choix par défaut conseillé)
+- ✅ La vitesse d'installation compte (CI, gros projets, images Docker)
+- ✅ Vous voulez un seul outil pour Python, venv, dépendances et build
+- ✅ Vous venez de pip et cherchez un remplaçant rapide sans tout réapprendre
 
 ---
 
@@ -1118,7 +1237,7 @@ poetry add $(cat requirements.txt | xargs)
 ### De Poetry vers Pipenv
 
 ```bash
-# Exporter depuis Poetry
+# Exporter depuis Poetry (nécessite le plugin poetry-plugin-export, cf. plus haut)
 poetry export -f requirements.txt -o requirements.txt
 
 # Importer dans Pipenv
@@ -1169,7 +1288,7 @@ Ce projet utilise Poetry pour la gestion des dépendances.
 
 ### Prérequis
 - Python 3.11+
-- Poetry 1.7+
+- Poetry 2.0+
 
 ### Setup
 ```bash
@@ -1325,6 +1444,7 @@ Dans cette section, vous avez appris :
   - Utilisation de pyproject.toml (standard PEP 518)
   - Gestion avancée des dépendances avec groupes
   - Création et publication de packages
+- **uv** : gestionnaire ultra-rapide (Rust), devenu en 2026 le choix le plus souvent conseillé pour démarrer un nouveau projet
 - **Comparaison des outils** et quand utiliser chacun
 - **Exemples pratiques** avec FastAPI et Flask
 - **Migration** entre différents outils
@@ -1333,13 +1453,14 @@ Dans cette section, vous avez appris :
 **Points clés à retenir :**
 
 1. **pip + venv** : Standard, simple, mais manuel
-2. **Pipenv** : Bon compromis entre simplicité et fonctionnalités
-3. **Poetry** : Outil le plus complet pour projets professionnels
-4. Choisissez un outil adapté à vos besoins et votre niveau
-5. Les lock files sont essentiels pour la reproductibilité
+2. **Pipenv** : Bon compromis, maintenu par la PyPA mais en perte de vitesse
+3. **Poetry** : Outil complet pour projets professionnels (attention aux changements de la v2.0)
+4. **uv** : Le plus rapide, choix conseillé pour les nouveaux projets en 2026
+5. Choisissez un outil adapté à vos besoins et votre niveau
+6. Les lock files sont essentiels pour la reproductibilité
 
 Les outils modernes simplifient considérablement la gestion des dépendances Python. Bien qu'ils ajoutent une couche d'abstraction, ils résolvent de nombreux problèmes et rendent le développement plus efficace et moins sujet aux erreurs.
 
-Pour les débutants, commencez avec pip + venv pour bien comprendre les concepts de base, puis explorez Pipenv ou Poetry quand vous serez plus à l'aise.
+Pour les débutants, commencez avec pip + venv pour bien comprendre les concepts de base (environnement isolé, dépendances, lock files), puis adoptez un outil intégré : **uv** est aujourd'hui le choix le plus simple et le plus rapide, Poetry restant une valeur sûre, en particulier pour publier des packages.
 
 ⏭️ [Bibliothèques standard essentielles](/07-bibliotheques-standard/README.md)

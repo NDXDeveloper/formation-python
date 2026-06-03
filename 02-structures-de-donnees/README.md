@@ -418,7 +418,7 @@ print(ajouter_entree("bob"))     # {'bob': 1} — un nouveau dict à chaque appe
 Pour approfondir votre apprentissage :
 
 - **Documentation officielle Python** : [docs.python.org](https://docs.python.org/fr/3/)
-- **Python Tutor** : Visualisez l'exécution de votre code étape par étape
+- **[Python Tutor](https://pythontutor.com/)** : Visualisez l'exécution de votre code étape par étape
 - **StackOverflow** : Une mine d'or pour les questions spécifiques
 - **Real Python** : Tutoriels de qualité sur tous les aspects de Python
 

@@ -25,9 +25,11 @@ print(sorted(lettres))  # ['e', 'h', 'l', 'o']
 nombres = {1, 2, 2, 3, 3, 3}
 print(nombres)  # {1, 2, 3}
 
-# Les éléments doivent être immuables (hashables)
-valide = {1, "texte", (1, 2), True}
+# Les éléments doivent être immuables (hashables) : nombres (int, float), booléens, chaînes, tuples
+valide = {1, "texte", (1, 2), 3.14, True}
 print(f"Set valide : {sorted(str(e) for e in valide)}")
+# Note : True et 1 partagent la même valeur et le même hachage → ils comptent comme UN
+# seul élément (l'ensemble ci-dessus contient donc 4 éléments distincts, pas 5)
 
 # Les listes ne peuvent pas être dans un set
 try:

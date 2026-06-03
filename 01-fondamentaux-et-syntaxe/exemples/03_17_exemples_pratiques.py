@@ -142,6 +142,5 @@ if len(sys.argv) > 1 and sys.argv[1] == "--interactif":
             else:
                 print(f"{nombre} n'est pas premier")
 else:
-    if not (len(sys.argv) > 1 and sys.argv[1] == "--interactif"):
-        print("\nExemples interactifs disponibles avec --interactif")
-        print("  python3 03_17_exemples_pratiques.py --interactif")
+    print("\nExemples interactifs disponibles avec --interactif")
+    print("  python3 03_17_exemples_pratiques.py --interactif")

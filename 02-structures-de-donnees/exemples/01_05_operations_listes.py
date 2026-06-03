@@ -1,6 +1,6 @@
 # ============================================================================
 #   Section 2.1 : Les Listes - Opérations courantes
-#   Description : len, in, count, index, sort, sorted, reverse
+#   Description : len, in, count, index, sort, sorted, reverse, tri par clé (key)
 #   Fichier source : 01-listes-tuples-dicts-sets.md
 # ============================================================================
 
@@ -36,3 +36,15 @@ print(nombres_tries)      # [1, 1, 3, 4, 5]
 # Inverser l'ordre de la liste
 nombres.reverse()
 print(nombres)  # [1, 1, 2, 3, 4, 5, 6, 9]
+
+# --- Trier avec une clé (key) ---
+print()
+mots = ["python", "go", "javascript", "c"]
+print(sorted(mots, key=len))         # ['c', 'go', 'python', 'javascript']
+
+noms = ["alice", "Bob", "charlie", "David"]
+print(sorted(noms, key=str.lower))   # ['alice', 'Bob', 'charlie', 'David']
+
+personnes = [("Alice", 30), ("Bob", 25), ("Charlie", 35)]
+print(sorted(personnes, key=lambda p: p[1]))                # [('Bob', 25), ('Alice', 30), ('Charlie', 35)]
+print(sorted(personnes, key=lambda p: p[1], reverse=True))  # [('Charlie', 35), ('Alice', 30), ('Bob', 25)]

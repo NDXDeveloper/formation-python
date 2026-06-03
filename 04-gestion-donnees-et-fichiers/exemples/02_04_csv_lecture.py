@@ -38,10 +38,28 @@ with open('employes.csv', 'r', encoding='utf-8') as fichier:
 
     for ligne in lecteur:
         print(f"{ligne['prenom']} {ligne['nom']}")
-        print(f"  Age: {ligne['age']} ans")
+        print(f"  Âge: {ligne['age']} ans")
         print(f"  Salaire: {ligne['salaire']} EUR")
         print(f"  Service: {ligne['service']}")
         print()
 
+# --- Pourquoi le module csv (et pas split(',')) ? ---
+# Sur un champ contenant une virgule (entre guillemets), split(',') se trompe :
+print("=== csv.reader vs split(',') ===")
+with open('villes.csv', 'w', encoding='utf-8', newline='') as f:
+    f.write('ville,population\n')
+    f.write('"Lyon, France",515000\n')   # virgule DANS le champ ville
+
+with open('villes.csv', 'r', encoding='utf-8') as f:
+    next(f)  # ignorer l'en-tête
+    ligne = next(f)
+    print("split(',') :", ligne.strip().split(','))   # 3 morceaux -> FAUX
+
+with open('villes.csv', 'r', encoding='utf-8') as f:
+    lecteur = csv.reader(f)
+    next(lecteur)
+    print("csv.reader :", next(lecteur))               # 2 champs -> correct
+
 # Nettoyage
 os.remove('employes.csv')
+os.remove('villes.csv')

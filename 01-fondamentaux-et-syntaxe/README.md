@@ -16,7 +16,7 @@ Avant de plonger dans le code, prenons un moment pour comprendre pourquoi Python
 
 ### Un langage créé pour les humains
 
-Python a été conçu dans les années 1990 par Guido van Rossum avec une philosophie claire : **la lisibilité compte**. Contrairement à de nombreux autres langages qui ressemblent à du charabia incompréhensible, Python se lit presque comme de l'anglais.
+Python a été créé par Guido van Rossum, qui en a débuté le développement en décembre 1989 pour aboutir à une première version publique en 1991. Dès l'origine, le langage repose sur une philosophie claire : **la lisibilité compte**. Contrairement à de nombreux autres langages qui ressemblent à du charabia incompréhensible, Python se lit presque comme de l'anglais.
 
 Comparez par vous-même :
 
@@ -53,7 +53,7 @@ Python n'est pas cantonné à un seul domaine. Il excelle dans de nombreux domai
 
 Python possède l'une des communautés les plus actives et bienveillantes :
 
-- **Plus de 400 000 packages** disponibles sur PyPI (Python Package Index)
+- **Plus de 690 000 packages** disponibles sur PyPI (Python Package Index)
 - Des millions de développeurs dans le monde
 - Une documentation abondante et des tutoriels pour tous les niveaux
 - Des forums d'entraide actifs (Stack Overflow, Reddit, Discord)
@@ -74,19 +74,19 @@ Python a une philosophie, une sorte de guide spirituel pour les programmeurs Pyt
 
 Voici quelques principes clés qui guident Python :
 
-> **Beautiful is better than ugly.**
+> **Beautiful is better than ugly.**  
 > La beauté vaut mieux que la laideur. (Un code propre et lisible)
 
-> **Explicit is better than implicit.**
+> **Explicit is better than implicit.**  
 > L'explicite vaut mieux que l'implicite. (Soyez clair dans vos intentions)
 
-> **Simple is better than complex.**
+> **Simple is better than complex.**  
 > La simplicité vaut mieux que la complexité. (Ne compliquez pas inutilement)
 
-> **Readability counts.**
+> **Readability counts.**  
 > La lisibilité compte. (Votre code sera lu plus souvent qu'il ne sera écrit)
 
-> **There should be one-- and preferably only one --obvious way to do it.**
+> **There should be one-- and preferably only one --obvious way to do it.**  
 > Il devrait y avoir une -- et de préférence une seule -- façon évidente de faire quelque chose.
 
 Ces principes vous guideront tout au long de votre apprentissage et de votre carrière Python.
@@ -330,7 +330,7 @@ La programmation est une compétence qui se développe avec le temps et la prati
 
 ### Citation inspirante
 
-> "Le seul moyen d'apprendre un nouveau langage de programmation est d'écrire des programmes dans ce langage."
+> "Le seul moyen d'apprendre un nouveau langage de programmation est d'écrire des programmes dans ce langage."  
 > — **Dennis Ritchie**, créateur du langage C
 
 ---
@@ -354,14 +354,14 @@ Bonne chance et surtout... **amusez-vous bien !** 🚀
 - [Tutoriel officiel Python](https://docs.python.org/fr/3/tutorial/)
 
 ### Communautés francophones
-- [Discord Python France](https://discord.gg/python-fr)
-- [Reddit r/FrancePython](https://www.reddit.com/r/FrancePython/)
-- [Forum OpenClassrooms Python](https://openclassrooms.com/fr/courses)
+- [AFPy - Association Francophone Python](https://www.afpy.org/) - La communauté Python francophone de référence (conférence PyConFR, traduction de la documentation officielle...)
+- [Forum de l'AFPy](https://discuss.afpy.org/) - Entraide, discussions, offres d'emploi et événements
+- [Forum OpenClassrooms Python](https://openclassrooms.com/fr/courses) - Cours et discussions en français
 
 ### Outils recommandés
 - [Python.org](https://www.python.org/) - Site officiel
 - [Visual Studio Code](https://code.visualstudio.com/) - Éditeur de code
-- [Python Tutor](http://pythontutor.com/) - Visualiser l'exécution du code
+- [Python Tutor](https://pythontutor.com/) - Visualiser l'exécution du code
 - [Repl.it](https://replit.com/) - Coder Python en ligne sans installation
 
 ---

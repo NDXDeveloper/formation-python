@@ -1,6 +1,6 @@
 # ============================================================================
 #   Section 2.4 : Regex - re.findall() et re.finditer()
-#   Description : Trouver toutes les occurrences, itérer sur les correspondances
+#   Description : Trouver toutes les occurrences, itérer ; gourmand vs non-gourmand
 #   Fichier source : 04-chaines-et-regex.md
 # ============================================================================
 
@@ -23,3 +23,9 @@ texte = "Python 3.9, Java 11, C++ 17"
 
 for match in re.finditer(r'\d+', texte):
     print(f"Trouvé '{match.group()}' à la position {match.start()}")
+
+# --- Quantificateurs gourmands vs non-gourmands ---
+print()
+balises = "<balise1> contenu <balise2>"
+print(re.findall(r'<.*>', balises))   # ['<balise1> contenu <balise2>'] (gourmand)
+print(re.findall(r'<.*?>', balises))  # ['<balise1>', '<balise2>'] (non-gourmand)

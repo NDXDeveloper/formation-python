@@ -34,7 +34,7 @@ def calculer_statistiques(donnees: list[Nombre]) -> Statistiques:
         "ecart_type": stdev(donnees) if len(donnees) > 1 else 0.0
     }
 
-def analyser_notes(notes: list[int]) -> tuple[float, list[str]]:
+def analyser_notes(notes: list[Nombre]) -> tuple[float, list[str]]:
     """
     Analyse une liste de notes et retourne la moyenne et les appréciations.
 
@@ -63,7 +63,7 @@ def analyser_notes(notes: list[int]) -> tuple[float, list[str]]:
     return moyenne, appreciations
 
 # Utilisation
-notes_classe = [12, 15, 8, 18, 14, 11, 16, 13]
+notes_classe: list[Nombre] = [12, 15, 8, 18, 14, 11, 16, 13]
 moyenne, appreciations = analyser_notes(notes_classe)
 print(f"Moyenne de la classe : {moyenne:.2f}")
 

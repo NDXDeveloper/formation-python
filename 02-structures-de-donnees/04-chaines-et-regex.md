@@ -577,6 +577,24 @@ parties = re.split(r'-', texte3, maxsplit=2)
 print(parties)  # ['a', 'b', 'c-d-e']  
 ```
 
+### Quantificateurs gourmands et non-gourmands
+
+Par défaut, les quantificateurs `*`, `+`, `?` et `{n,m}` sont **gourmands** (*greedy*) : ils capturent le plus de caractères possible. En ajoutant `?` juste après, ils deviennent **non-gourmands** (*lazy*) et capturent le moins possible.
+
+```python
+import re
+
+texte = "<balise1> contenu <balise2>"
+
+# Gourmand : .* va jusqu'au DERNIER '>'
+print(re.findall(r'<.*>', texte))    # ['<balise1> contenu <balise2>']
+
+# Non-gourmand : .*? s'arrête au PREMIER '>'
+print(re.findall(r'<.*?>', texte))   # ['<balise1>', '<balise2>']
+```
+
+La version non-gourmande est indispensable pour extraire des balises, des portions entre guillemets, ou tout motif délimité.
+
 ### Groupes de capture
 
 Les parenthèses `()` créent des groupes qui peuvent être extraits séparément.
@@ -712,7 +730,7 @@ print(texte_nettoye.strip())  # "Python est un langage génial!!!"
 
 # Supprimer la ponctuation excessive
 texte_nettoye = re.sub(r'[!?]{2,}', '.', texte_nettoye)  
-print(texte_nettoye)  # "Python est un langage génial."  
+print(texte_nettoye.strip())  # "Python est un langage génial."  
 
 # Supprimer tous les caractères non-alphanumériques sauf espaces
 texte = "Python@2024! est #1"  

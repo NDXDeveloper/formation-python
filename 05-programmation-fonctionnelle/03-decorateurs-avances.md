@@ -14,6 +14,8 @@ Dans ce chapitre, nous allons explorer les décorateurs en profondeur, des conce
 
 Un **décorateur** est une fonction qui prend une autre fonction en paramètre, lui ajoute des fonctionnalités, et retourne la fonction modifiée.
 
+> 📚 Les bases des décorateurs (syntaxe `@`, `@property`, `@staticmethod`/`@classmethod`) ont été introduites au chapitre [3.4 Propriétés et décorateurs](/03-programmation-orientee-objet/04-proprietes-et-decorateurs.md). Ce chapitre-ci approfondit le sujet : décorateurs **paramétrés**, décorateurs **de classe**, décorateurs **implémentés comme des classes**, et cas d'usage avancés.
+
 ### Exemple simple sans décorateur
 
 ```python

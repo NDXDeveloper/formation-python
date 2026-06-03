@@ -60,7 +60,7 @@ Pour les fichiers volumineux, il est préférable de lire ligne par ligne :
 fichier = open('mon_document.txt', 'r', encoding='utf-8')
 
 for ligne in fichier:
-    print(ligne.strip())  # strip() enlève les retours à la ligne
+    print(ligne.strip())  # strip() enlève le retour à la ligne (et les espaces) en début/fin
 
 fichier.close()
 ```
@@ -252,6 +252,46 @@ with open('gros_fichier.bin', 'rb') as fichier:
 
 ---
 
+## Positionnement dans un Fichier : `seek()` et `tell()`
+
+Lorsqu'on lit ou écrit, Python maintient une **position courante** dans le fichier (le « curseur »). Deux méthodes permettent de la consulter et de la modifier :
+
+- `tell()` : retourne la position actuelle (en octets depuis le début) ;
+- `seek(position)` : déplace le curseur à la position voulue.
+
+```python
+with open('donnees.txt', 'w', encoding='utf-8') as f:
+    f.write("ABCDEFGHIJ")
+
+with open('donnees.txt', 'r', encoding='utf-8') as f:
+    print(f.tell())        # 0  (début du fichier)
+    print(f.read(3))       # ABC
+    print(f.tell())        # 3  (le curseur a avancé)
+
+    f.seek(0)              # revenir au début
+    print(f.read(2))       # AB
+
+    f.seek(5)              # sauter directement à la position 5
+    print(f.read())        # FGHIJ
+```
+
+### Le mode `'r+'` : lire *et* écrire
+
+Le mode `'r+'` ouvre le fichier en lecture **et** écriture sans l'effacer (contrairement à `'w'`). Combiné à `seek()`, il permet de modifier une partie d'un fichier existant :
+
+```python
+with open('donnees.txt', 'r+', encoding='utf-8') as f:
+    f.seek(0)
+    f.write("12345")       # remplace les 5 premiers caractères
+
+with open('donnees.txt', 'r', encoding='utf-8') as f:
+    print(f.read())        # 12345FGHIJ
+```
+
+> ⚠️ En mode **texte**, n'utilisez `seek()` qu'avec `0` ou une position renvoyée par `tell()` : à cause de l'encodage, un caractère peut occuper plusieurs octets, donc « compter en caractères » n'est pas fiable. Pour un contrôle précis octet par octet, travaillez en mode binaire (`'rb+'`).
+
+---
+
 ## Vérifier l'Existence d'un Fichier
 
 Avant d'ouvrir un fichier, on peut vérifier s'il existe avec `pathlib` :
@@ -302,6 +342,8 @@ with open('fichier.txt', 'r', encoding='utf-8') as f:
 with open('fichier.txt', 'r') as f:
     contenu = f.read()
 ```
+
+> 💡 **Pourquoi est-ce important ?** Sans le paramètre `encoding`, Python utilise l'encodage **par défaut du système**, qui dépend de la plateforme : souvent UTF-8 sous Linux/macOS, mais parfois `cp1252` sous Windows. Un fichier UTF-8 contenant des accents, lu sans préciser l'encodage, peut alors lever une `UnicodeDecodeError` ou afficher des caractères incohérents (le fameux « mojibake », par ex. `Ã©` au lieu de `é`). Préciser `encoding='utf-8'` garantit le **même comportement sur tous les systèmes**.
 
 ### 3. Gérer les erreurs
 
@@ -366,6 +408,8 @@ with open('donnees.csv', 'r', encoding='utf-8') as fichier:
         valeurs = ligne.strip().split(',')
         print(valeurs)
 ```
+
+> ⚠️ Cette méthode « maison » ne convient qu'aux CSV **très simples**. Elle se casse dès qu'un champ contient lui-même une virgule : sur `"Paris, France",75000`, `split(',')` produit **trois** morceaux au lieu de deux. Pour lire des CSV réels de façon fiable (champs entre guillemets, virgules ou retours à la ligne internes…), utilisez le **module `csv`** présenté à la [section 4.2](/04-gestion-donnees-et-fichiers/02-formats-de-donnees.md).
 
 ### Exemple 4 : Sauvegarder une liste en fichier
 

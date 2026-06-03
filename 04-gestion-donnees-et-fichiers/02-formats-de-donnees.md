@@ -133,6 +133,24 @@ print(type(data))  # <class 'dict'>
 - `json.dump()` : écrit dans un **fichier**
 - `json.dumps()` : écrit dans une **chaîne de caractères**
 
+### Correspondance des types Python ↔ JSON
+
+Lors de la conversion, Python traduit ses types vers leurs équivalents JSON (et inversement) :
+
+| Python | JSON |
+|--------|------|
+| `dict` | objet `{ }` |
+| `list`, `tuple` | tableau `[ ]` |
+| `str` | chaîne |
+| `int`, `float` | nombre |
+| `True` / `False` | `true` / `false` |
+| `None` | `null` |
+
+> ⚠️ **Trois pièges classiques à connaître :**  
+> - **Les `tuple` deviennent des tableaux** : `json.dumps({"t": (1, 2)})` donne `{"t": [1, 2]}`. À la relecture, vous récupérez une **liste**, pas un tuple.  
+> - **Les clés de dictionnaire sont toujours converties en chaînes** : `json.dumps({1: "a"})` donne `{"1": "a"}`. Après `json.loads`, la clé `1` est devenue `"1"`.  
+> - **Tous les objets ne sont pas sérialisables** : un `datetime`, un `set` ou un objet de vos classes lèvent `TypeError: Object of type ... is not JSON serializable`. Solution simple : `json.dump(data, f, default=str)` (convertit en texte), ou un encodeur personnalisé pour un contrôle précis.
+
 ### Exemple : Liste de personnes
 
 ```python
@@ -242,6 +260,16 @@ with open('employes.csv', 'r', encoding='utf-8') as fichier:
         print(f"  Service: {ligne['service']}")
         print()
 ```
+
+> ⚠️ **Toutes les valeurs lues d'un CSV sont des chaînes de caractères**, même les nombres : `ligne['age']` vaut `'30'` (type `str`), pas `30` (type `int`). Le module `csv` ne devine **jamais** les types. Pour faire des calculs, convertissez explicitement avec `int()`, `float()`, etc. :
+>
+> ```python
+> # ❌ Erreur : on additionne des chaînes
+> total = sum(ligne['salaire'] for ligne in csv.DictReader(f))   # TypeError
+>
+> # ✅ Correct : conversion explicite
+> total = sum(int(ligne['salaire']) for ligne in csv.DictReader(f))
+> ```
 
 ### Écrire dans un fichier CSV
 
@@ -377,6 +405,8 @@ Python dispose d'un module intégré pour manipuler XML :
 ```python
 import xml.etree.ElementTree as ET
 ```
+
+> ⚠️ **Sécurité : ne parsez pas de XML non fiable tel quel.** Comme l'indique la documentation officielle, `xml.etree.ElementTree` n'est **pas conçu pour résister à du XML malveillant**. Certains documents piégés (attaques par expansion d'entités, dites « billion laughs ») peuvent saturer la mémoire. Pour parser des données provenant d'une source non fiable (réseau, fichier externe), utilisez le paquet tiers [`defusedxml`](https://pypi.org/project/defusedxml/), conçu pour neutraliser ces attaques.
 
 ### Lire un fichier XML
 
@@ -567,6 +597,41 @@ for item in racine.findall('.//item'):
 - Configurations complexes
 
 **Exemple d'usage :** Flux RSS, documents techniques, échange B2B
+
+---
+
+## Autres Formats à Connaître : TOML et YAML
+
+JSON, CSV et XML ne sont pas les seuls formats que vous croiserez. Deux autres sont devenus incontournables, surtout pour la **configuration**.
+
+### TOML
+
+**TOML** est le format de configuration de l'écosystème Python moderne : c'est celui du fichier `pyproject.toml`. Il est lisible, **typé** (nombres, booléens, dates) et organisé en sections. Depuis **Python 3.11**, le module **`tomllib`** permet de le lire sans rien installer :
+
+```python
+import tomllib
+
+# tomllib.load() exige le mode binaire ('rb')
+with open('config.toml', 'rb') as f:
+    config = tomllib.load(f)
+
+print(config['serveur']['port'])   # 8000 — un vrai int, pas une chaîne
+```
+
+> 💡 `tomllib` est en **lecture seule** (pas de fonction `dump()`). Pour *écrire* du TOML, utilisez un paquet tiers comme `tomli-w` ou `tomlkit`.
+
+### YAML
+
+**YAML** est très répandu pour la configuration (Docker, GitHub Actions, Ansible…). Plus concis que JSON et acceptant les commentaires, il n'est **pas** dans la bibliothèque standard : il faut installer `PyYAML` (`pip install pyyaml`).
+
+```python
+import yaml
+
+with open('config.yaml', 'r', encoding='utf-8') as f:
+    config = yaml.safe_load(f)      # ✅ safe_load, jamais load() !
+```
+
+> ⚠️ **Sécurité** : utilisez toujours `yaml.safe_load()`, et non `yaml.load()`. Comme pickle, le chargement complet de YAML peut instancier des objets arbitraires et exécuter du code à partir d'un fichier malveillant.
 
 ---
 

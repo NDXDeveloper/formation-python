@@ -395,7 +395,7 @@ Ce changement de perspective prend du temps, mais une fois que vous l'aurez maî
 Pendant votre apprentissage de ce chapitre, vous pouvez consulter :
 
 ### Documentation Officielle Python
-- La documentation officielle sur les classes : https://docs.python.org/fr/3/tutorial/classes.html
+- [La documentation officielle sur les classes](https://docs.python.org/fr/3/tutorial/classes.html)
 
 ### Pratique Interactive
 - Essayez les exemples dans un notebook Jupyter ou dans l'interpréteur Python interactif

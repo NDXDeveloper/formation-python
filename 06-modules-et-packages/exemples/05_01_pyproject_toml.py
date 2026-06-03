@@ -70,7 +70,7 @@ if sys.version_info >= (3, 11):
 else:
     # Pour Python < 3.11, on simule
     config = None
-    print("(tomllib necessaire Python 3.11+, simulation)")
+    print("(tomllib nécessaire en Python 3.11+, simulation)")
 
 if config:
     poetry = config.get('tool', {}).get('poetry', {})
@@ -82,7 +82,7 @@ if config:
 
     # Dépendances principales
     deps = poetry.get('dependencies', {})
-    print(f"\nDependances principales ({len(deps)}) :")
+    print(f"\nDépendances principales ({len(deps)}) :")
     for nom, version in deps.items():
         if isinstance(version, dict):
             print(f"  {nom} = {version}")
@@ -91,27 +91,27 @@ if config:
 
     # Dépendances de développement
     dev_deps = poetry.get('group', {}).get('dev', {}).get('dependencies', {})
-    print(f"\nDependances de dev ({len(dev_deps)}) :")
+    print(f"\nDépendances de dev ({len(dev_deps)}) :")
     for nom, version in dev_deps.items():
         print(f"  {nom} = {version}")
 
     # Dépendances optionnelles (docs)
     docs_deps = poetry.get('group', {}).get('docs', {}).get('dependencies', {})
     if docs_deps:
-        print(f"\nDependances docs ({len(docs_deps)}) :")
+        print(f"\nDépendances docs ({len(docs_deps)}) :")
         for nom, version in docs_deps.items():
             print(f"  {nom} = {version}")
 
     # Scripts
     scripts = poetry.get('scripts', {})
     if scripts:
-        print(f"\nScripts (entry points) :")
+        print("\nScripts (entry points) :")
         for nom, cible in scripts.items():
             print(f"  {nom} -> {cible}")
 
     # Build system
     build = config.get('build-system', {})
-    print(f"\nBuild system :")
+    print("\nBuild system :")
     print(f"  requires : {build.get('requires')}")
     print(f"  backend  : {build.get('build-backend')}")
 

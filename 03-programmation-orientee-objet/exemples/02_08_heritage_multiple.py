@@ -47,3 +47,20 @@ obj.methode()  # Méthode de A (A est mentionné en premier)
 
 # Voir l'ordre de résolution des méthodes
 print(C.__mro__)
+
+# --- super() suit le MRO, pas "le parent direct" ---
+print()
+
+class Salut_A:
+    def saluer(self):
+        print("A")
+        super().saluer()      # depuis une instance de Salut_C, appelle Salut_B !
+
+class Salut_B:
+    def saluer(self):
+        print("B")             # pas de super() ici -> la chaîne s'arrête
+
+class Salut_C(Salut_A, Salut_B):
+    pass
+
+Salut_C().saluer()   # Affiche : A puis B  (MRO : C -> A -> B -> object)

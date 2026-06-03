@@ -1,7 +1,7 @@
 # ============================================================================
 #   Section 3.3 : Classe Argent
-#   Description : Exemple pratique avec addition, soustraction, multiplication
-#                 et vérification de devise
+#   Description : Exemple pratique avec addition, soustraction, multiplication,
+#                 vérification de devise et opérateur réfléchi (__rmul__)
 #   Fichier source : 03-methodes-speciales.md
 # ============================================================================
 
@@ -23,6 +23,11 @@ class Argent:
     def __mul__(self, facteur):
         return Argent(self.montant * facteur, self.devise)
 
+    def __rmul__(self, facteur):
+        # Appelée quand l'objet est à DROITE : 2 * prix1
+        # (sans elle, 2 * prix1 lèverait TypeError)
+        return self.__mul__(facteur)
+
     def __str__(self):
         return f"{self.montant:.2f} {self.devise}"
 
@@ -40,3 +45,6 @@ print(reduction)  # 70.50 EUR
 
 double = prix1 * 2
 print(double)  # 100.00 EUR
+
+# --- Opérateur réfléchi : l'objet à droite du * ---
+print(2 * prix1)  # 100.00 EUR (grâce à __rmul__)

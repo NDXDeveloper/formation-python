@@ -1,7 +1,7 @@
 # ============================================================================
 #   Section 2.2 : Expressions génératrices (Generator Expressions)
 #   Description : Parenthèses au lieu de crochets, utilisation avec sum/max,
-#                 valeurs produites à la demande
+#                 valeurs produites à la demande, épuisement (usage unique)
 #   Fichier source : 02-comprehensions.md
 # ============================================================================
 
@@ -25,3 +25,8 @@ print(f"Somme des carrés : {somme}")  # 55
 nombres = [-5, 2, -8, 3]
 max_abs = max(abs(x) for x in nombres)
 print(f"Max absolu : {max_abs}")  # 8
+
+# --- Un générateur ne se parcourt qu'une seule fois ---
+gen = (x**2 for x in range(5))
+print(list(gen))  # [0, 1, 4, 9, 16]
+print(list(gen))  # [] - le générateur est déjà épuisé !

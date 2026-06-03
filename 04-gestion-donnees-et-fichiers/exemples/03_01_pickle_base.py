@@ -41,7 +41,7 @@ print("Utilisateur sauvegardé !")
 with open('utilisateur.pkl', 'rb') as fichier:
     utilisateur = pickle.load(fichier)
 print(f"Nom : {utilisateur['nom']}")
-print(f"Age : {utilisateur['age']} ans")
+print(f"Âge : {utilisateur['age']} ans")
 print(f"Compétences : {', '.join(utilisateur['competences'])}")
 
 # --- Sauvegarder et charger plusieurs objets ---

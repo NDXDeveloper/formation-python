@@ -19,7 +19,9 @@ print(_variable_privee)     # 42
 # 2age = 30        # Commence par un chiffre
 # mon-age = 25     # Contient un tiret
 # for = 10         # Mot réservé Python
-# mon âge = 25     # Contient un espace et un accent
+# mon âge = 25     # Contient un espace (c'est l'espace le problème, PAS l'accent)
+# Remarque : depuis Python 3, les accents sont AUTORISÉS dans les noms (âge = 25 fonctionne) ;
+#            PEP 8 recommande toutefois de s'en tenir à l'ASCII (préférez 'age' à 'âge').
 
 # --- Bons noms de variables ---
 nom_complet = "Alice Dupont"

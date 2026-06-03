@@ -200,6 +200,8 @@ pip        23.2.1
 setuptools 68.0.0  
 ```
 
+> 📝 **Python 3.12+ :** Depuis Python 3.12, `venv` n'installe plus `setuptools` par défaut — un environnement fraîchement créé ne contient plus que `pip`. Sur Python 3.10 et 3.11, `setuptools` est encore présent, comme dans l'exemple ci-dessus. Si un outil en a besoin sous 3.12+, installez-le explicitement : `pip install setuptools`.
+
 Après installation de packages :
 ```
 Package    Version
@@ -485,6 +487,11 @@ Noms recommandés :
 ```bash
 (venv) $ pip install --upgrade pip
 ```
+
+> 💡 **Astuce :** vous pouvez aussi demander la mise à jour de pip dès la création de l'environnement, en une seule commande, avec l'option `--upgrade-deps` (Python 3.9+) :
+> ```bash
+> python -m venv --upgrade-deps venv
+> ```
 
 ### 5. Maintenir requirements.txt à jour
 

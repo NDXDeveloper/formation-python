@@ -45,7 +45,7 @@ print(mots_longs)  # {'chat': 4, 'chien': 5}
 print()
 # Réduction de 20% sur tous les prix
 prix = {"pomme": 2.5, "banane": 1.8, "orange": 3.0}
-prix_soldes = {produit: prix * 0.8 for produit, prix in prix.items()}
+prix_soldes = {produit: round(prix * 0.8, 2) for produit, prix in prix.items()}
 print(prix_soldes)  # {'pomme': 2.0, 'banane': 1.44, 'orange': 2.4}
 
 # Convertir valeurs en chaînes

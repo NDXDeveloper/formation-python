@@ -187,6 +187,31 @@ print(f"📂 Dossier parent : {fichier.parent}")
 print(f"🗂️  Grand-parent : {fichier.parent.parent}")  
 ```
 
+### Transformer un chemin : `with_suffix()`, `with_name()`, `with_stem()`
+
+Ces méthodes ne modifient pas l'objet d'origine : elles **retournent un nouveau** `Path` avec un composant changé. Très pratique pour dériver un chemin à partir d'un autre (changer d'extension, renommer…) :
+
+```python
+from pathlib import Path
+
+fichier = Path('rapports/donnees.csv')
+
+# Changer l'extension
+print(fichier.with_suffix('.json'))     # rapports/donnees.json
+
+# Changer le nom complet (nom + extension)
+print(fichier.with_name('resume.txt'))  # rapports/resume.txt
+
+# Changer le nom sans toucher à l'extension (Python 3.9+)
+print(fichier.with_stem('donnees_2024'))  # rapports/donnees_2024.csv
+```
+
+> 💡 Cas d'usage fréquent : créer un fichier dérivé à côté d'un fichier existant, par exemple une sauvegarde ou une version convertie.
+> ```python
+> source = Path('document.txt')
+> sauvegarde = source.with_suffix('.bak')   # document.bak
+> ```
+
 ---
 
 ## Chemins Absolus et Relatifs

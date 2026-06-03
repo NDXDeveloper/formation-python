@@ -6,7 +6,6 @@
 # ============================================================================
 
 from pathlib import Path
-import importlib
 import sys
 
 # --- Créer le module operations.py dans un sous-dossier temporaire ---

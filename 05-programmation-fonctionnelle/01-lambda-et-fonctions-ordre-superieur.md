@@ -51,6 +51,8 @@ print(resultat)  # Affiche : 8
 
 Les deux approches donnent le même résultat, mais la lambda est plus concise.
 
+> 💡 **Bonne pratique (PEP 8)** : ici on **nomme** la lambda (`additionner = lambda ...`) uniquement pour comparer les deux syntaxes. En réalité, **dès que vous donnez un nom à une fonction, préférez `def`** : c'est la recommandation de PEP 8 (les linters signalent d'ailleurs un avertissement `E731`). Tout l'intérêt d'une lambda est d'être **anonyme et utilisée sur place** — par exemple passée en argument à `sorted()`, `map()` ou `filter()`, comme dans les sections suivantes.
+
 ### Exemples de fonctions lambda
 
 #### Exemple 1 : Doubler un nombre

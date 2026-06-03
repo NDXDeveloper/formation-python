@@ -117,7 +117,7 @@ def afficher_arbre(dossier, prefixe=""):
         est_dernier = i == len(items) - 1
         connecteur = "--- " if est_dernier else "|-- "
         if item.name == 'venv':
-            print(f"{prefixe}{connecteur}{item.name}/  (ignore par Git)")
+            print(f"{prefixe}{connecteur}{item.name}/  (ignoré par Git)")
             continue
         if item.is_dir():
             print(f"{prefixe}{connecteur}{item.name}/")
@@ -126,19 +126,19 @@ def afficher_arbre(dossier, prefixe=""):
         else:
             note = ""
             if item.name == '.gitignore':
-                note = "  (committe)"
+                note = "  (committé)"
             elif item.name == '.env.example':
-                note = "  (committe)"
+                note = "  (committé)"
             elif item.name == '.env':
-                note = "  (ignore par Git)"
+                note = "  (ignoré par Git)"
             elif item.name == 'requirements.txt':
-                note = "  (committe)"
+                note = "  (committé)"
             print(f"{prefixe}{connecteur}{item.name}{note}")
 
 afficher_arbre(base)
 
 # --- Ce qu'il faut committer ---
-print("\n=== Fichiers a committer vs ignorer ===")
+print("\n=== Fichiers à committer vs ignorer ===")
 
 a_committer = [
     "Code source (.py)",
@@ -157,11 +157,11 @@ a_ignorer = [
     "dist/ et build/",
 ]
 
-print("A COMMITTER :")
+print("À COMMITTER :")
 for item in a_committer:
     print(f"  [OK] {item}")
 
-print("\nA NE PAS COMMITTER :")
+print("\nÀ NE PAS COMMITTER :")
 for item in a_ignorer:
     print(f"  [X]  {item}")
 
@@ -172,9 +172,9 @@ bonnes_pratiques = [
     "Un environnement virtuel par projet",
     "Toujours activer le venv avant de travailler",
     "Nommer le venv : venv, .venv ou env",
-    "Mettre a jour pip apres creation",
-    "Maintenir requirements.txt a jour",
-    "Documenter les prerequis dans README.md",
+    "Mettre à jour pip après création",
+    "Maintenir requirements.txt à jour",
+    "Documenter les prérequis dans README.md",
 ]
 
 for i, pratique in enumerate(bonnes_pratiques, 1):
@@ -182,4 +182,4 @@ for i, pratique in enumerate(bonnes_pratiques, 1):
 
 # Nettoyage
 shutil.rmtree(base)
-print(f"\nNettoyage : {base} supprime")
+print(f"\nNettoyage : {base} supprimé")

@@ -57,6 +57,12 @@ print(f"{len(informaticiens)} informaticiens exportés")
 with open('informaticiens.csv', 'r', encoding='utf-8') as f:
     print(f.read())
 
+# --- Calcul de statistiques : convertir les chaînes en nombres ---
+# Toutes les valeurs CSV sont des chaînes : il faut convertir avec int() / float()
+print("=== Statistiques (conversion int) ===")
+masse_salariale = sum(int(e['salaire']) for e in informaticiens)
+print(f"Masse salariale Informatique : {masse_salariale} EUR")  # 73000
+
 # Nettoyage
 os.remove('donnees_fr.csv')
 os.remove('employes.csv')

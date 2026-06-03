@@ -6,11 +6,15 @@
 # ============================================================================
 
 # --- Typage dynamique de Python ---
-age = 25        # int
-nom = "Alice"   # str
-prix = 19.99    # float
+# (dans une fonction pour ne pas entrer en conflit avec les variables
+#  annotées plus bas : Python infère les types tout seul)
+def demo_typage_dynamique() -> None:
+    age = 25        # int
+    nom = "Alice"   # str
+    prix = 19.99    # float
+    print(type(age), type(nom), type(prix))
 
-print(type(age), type(nom), type(prix))
+demo_typage_dynamique()
 
 # --- Sans vs avec type hints ---
 # Sans type hints

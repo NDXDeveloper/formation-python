@@ -43,3 +43,10 @@ nom = "Alice"
 print(f"{nom:>10}")   # Aligné à droite sur 10 caractères
 print(f"{nom:<10}")   # Aligné à gauche sur 10 caractères
 print(f"{nom:^10}")   # Centré sur 10 caractères
+
+# --- Expressions auto-documentées f"{...=}" (Python 3.8+, utile au débogage) ---
+nom = "Alice"
+age = 25
+print(f"{nom=}")        # Affiche : nom='Alice'
+print(f"{age=}")        # Affiche : age=25
+print(f"{age * 2=}")    # Affiche : age * 2=50

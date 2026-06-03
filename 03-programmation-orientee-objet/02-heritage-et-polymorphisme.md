@@ -260,6 +260,8 @@ marguerite.faire_bruit()  # Marguerite meugle : Meuh meuh !
 
 Chaque classe enfant **redéfinit** la méthode `faire_bruit()` avec son propre comportement.
 
+> 📝 **Vocabulaire : « surcharge » ou « redéfinition » ?** Le terme français exact pour ce mécanisme (*overriding* en anglais) est la **redéfinition** (ou *substitution*) : une classe enfant remplace une méthode héritée. À ne pas confondre avec la **surcharge** (*overloading*) qui désigne plusieurs méthodes de même nom mais de signatures différentes — un concept que **Python ne possède pas** : si vous définissez deux fois `faire_bruit` dans la même classe, seule la dernière définition est conservée. Pour adapter le comportement selon les arguments, on utilise plutôt les paramètres par défaut, `*args`/`**kwargs`, ou `functools.singledispatch`. Le mot « surcharge » reste très répandu dans la pratique francophone, mais gardez la distinction à l'esprit.
+
 ## Le Polymorphisme : Concept Fondamental
 
 Le **polymorphisme** (du grec "plusieurs formes") est la capacité d'utiliser une même interface pour différents types d'objets.
@@ -503,6 +505,8 @@ Je vole dans les airs !
 Je nage dans l'eau !  
 ```
 
+> 📝 **Le motif *mixin*.** Des classes comme `Volant` et `Nageant`, conçues pour **ajouter des capacités** à d'autres classes sans être destinées à être instanciées seules, portent un nom : ce sont des **mixins**. C'est l'un des usages les plus sains de l'héritage multiple, très répandu dans les frameworks Python (Django, Django REST Framework…). Par convention, un mixin ne définit que quelques méthodes liées à une seule responsabilité et ne possède souvent pas de `__init__`.
+
 ### Attention avec l'Héritage Multiple
 
 L'héritage multiple peut devenir complexe. En cas de conflit (deux classes parentes ont une méthode de même nom), Python utilise le **MRO** (Method Resolution Order) pour déterminer quelle méthode appeler.
@@ -527,6 +531,24 @@ obj.methode()  # Quelle méthode sera appelée ?
 print(C.__mro__)
 # (<class '__main__.C'>, <class '__main__.A'>, <class '__main__.B'>, <class 'object'>)
 ```
+
+> 📝 **`super()` suit le MRO, pas « le parent direct ».** On présente souvent `super()` comme « la classe parente », ce qui est exact en héritage *simple*. En héritage *multiple*, c'est plus subtil : `super()` renvoie à la **classe suivante dans le MRO** de l'objet réel. Ainsi, le `super()` écrit dans une classe peut pointer vers une classe « sœur » que cette classe ne connaît même pas :
+>
+> ```python
+> class A:
+>     def saluer(self):
+>         print("A")
+>         super().saluer()   # depuis une instance de C, ce super() appelle B !
+> class B:
+>     def saluer(self):
+>         print("B")          # pas de super() ici → la chaîne s'arrête
+> class C(A, B):
+>     pass
+>
+> C().saluer()   # Affiche : A puis B  (MRO : C → A → B → object)
+> ```
+>
+> C'est ce mécanisme « coopératif » qui rend le MRO essentiel : chaque `super()` passe le relais au maillon suivant de la chaîne.
 
 **Bonne pratique** : L'héritage multiple est puissant mais peut rendre le code difficile à comprendre. Utilisez-le avec parcimonie.
 

@@ -356,6 +356,8 @@ dd_custom = defaultdict(valeur_par_defaut)
 print(dd_custom['cle_inexistante'])  # 'N/A'  
 ```
 
+> ⚠️ **Effet de bord** : accéder à une clé absente d'un `defaultdict` (même seulement pour la lire) **crée** cette clé avec la valeur par défaut. Après `print(dd_int['cle_inexistante'])`, la clé `'cle_inexistante'` existe donc désormais dans le dictionnaire (avec la valeur `0`). Pour tester l'existence d'une clé **sans la créer**, utilisez `'cle' in dd` ou `dd.get('cle')`.
+
 ### Valeurs par défaut courantes
 
 **1. defaultdict(int) - pour compter**
@@ -681,7 +683,7 @@ c1 = Counter(a=4, b=3, c=2)
 c2 = Counter(a=1, b=2, d=1)  
 
 c1.subtract(c2)  
-print(c1)  # Counter({'a': 3, 'b': 1, 'c': 2, 'd': -1})  
+print(c1)  # Counter({'a': 3, 'c': 2, 'b': 1, 'd': -1})  
 # Notez que les valeurs peuvent être négatives !
 ```
 
@@ -773,7 +775,7 @@ ventes = Counter(pommes=10, bananes=5, oranges=15)
 # Mettre à jour le stock
 stock_restant = stock - ventes  
 print("Stock restant :", stock_restant)  
-# Counter({'pommes': 40, 'oranges': 25, 'bananes': 25})
+# Counter({'pommes': 40, 'bananes': 25, 'oranges': 25})
 
 # Nouvelle livraison
 livraison = Counter(pommes=20, bananes=15, kiwis=10)  

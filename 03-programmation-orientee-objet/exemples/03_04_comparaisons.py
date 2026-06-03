@@ -45,3 +45,26 @@ personnes = [alice, bob, charlie]
 personnes_triees = sorted(personnes)  # Trie par âge grâce à __lt__
 for p in personnes_triees:
     print(p)
+
+# --- ⚠️ Piège : définir __eq__ rend les instances NON hashables ---
+print()
+try:
+    ensemble = {alice, bob}   # impossible : Personne n'a plus de __hash__
+except TypeError as e:
+    print(f"TypeError : {e}")
+
+# --- ✅ Pour rester hashable, définir __hash__ sur les MÊMES attributs que __eq__ ---
+class PersonneHashable:
+    def __init__(self, nom, age):
+        self.nom = nom
+        self.age = age
+
+    def __eq__(self, autre):
+        return self.age == autre.age
+
+    def __hash__(self):
+        return hash(self.age)   # cohérent avec __eq__ (qui compare l'âge)
+
+p1 = PersonneHashable("Alice", 30)
+p2 = PersonneHashable("Bob", 25)
+print(len({p1, p2}))   # 2 — utilisable dans un set

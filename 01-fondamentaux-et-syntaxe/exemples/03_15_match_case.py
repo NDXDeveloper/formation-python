@@ -1,10 +1,35 @@
 # ============================================================================
 #   Section 3.15 : L'instruction match/case (Python 3.10+)
-#   Description : Pattern matching - codes HTTP, motifs multiples
+#   Description : Pattern matching - menu (motif simple), motifs multiples (|),
+#                 codes HTTP
 #   Fichier source : 03-structures-de-controle.md
 # ============================================================================
 
+# --- Menu de commande (motif simple) ---
+commande = "thé"  # en interactif : commande = input("Votre commande : ")
+match commande:
+    case "café":
+        print("Voici votre café ☕")
+    case "thé":
+        print("Voici votre thé 🍵")
+    case "jus":
+        print("Voici votre jus 🧃")
+    case _:
+        print("Commande non disponible")
+
+# --- Motifs multiples avec | ---
+print()
+jour = "samedi"  # en interactif : jour = input("Quel jour ? ")
+match jour:
+    case "samedi" | "dimanche":
+        print("C'est le weekend !")
+    case "lundi" | "mardi" | "mercredi" | "jeudi" | "vendredi":
+        print("C'est un jour de semaine")
+    case _:
+        print("Jour non reconnu")
+
 # --- Exemple : code HTTP ---
+print()
 code = 404
 
 match code:

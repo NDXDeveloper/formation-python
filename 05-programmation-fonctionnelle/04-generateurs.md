@@ -590,9 +590,27 @@ gen = generateur_resilient()
 next(gen)  # Démarrer  
 
 gen.send(10)  # Reçu : 10  
-gen.throw(ValueError, "Une erreur")  # Erreur ValueError capturée !  
+gen.throw(ValueError("Une erreur"))  # Erreur ValueError capturée !  
 gen.send(20)  # Reçu : 20  
 ```
+
+### `return` dans un générateur
+
+Un générateur **peut** contenir `return` (l'introduction le contraste avec `yield`, mais les deux coexistent) :
+- **`return` seul** arrête le générateur prématurément, comme une fin de fonction ;
+- **`return valeur`** transmet une valeur finale, récupérable via `yield from`.
+
+```python
+def generer_jusqu_a_negatif(nombres):
+    for n in nombres:
+        if n < 0:
+            return          # arrête dès qu'on rencontre un nombre négatif
+        yield n
+
+print(list(generer_jusqu_a_negatif([1, 2, 3, -1, 4])))  # [1, 2, 3]
+```
+
+> 💡 La valeur d'un `return valeur` **n'apparaît pas** dans l'itération : elle est rangée dans l'exception `StopIteration` et n'est récupérée que par `yield from` (`resultat = yield from sous_generateur()`).
 
 ---
 
@@ -781,6 +799,9 @@ nombres = [1, 4, 6, 4, 1]
 for x in itertools.dropwhile(lambda x: x < 5, nombres):  
     print(x, end=" ")  # 6 4 1
 print()
+
+# accumulate() - Totaux cumulés (comme reduce, mais en gardant chaque étape)
+print(list(itertools.accumulate([1, 2, 3, 4, 5])))  # [1, 3, 6, 10, 15]
 ```
 
 ---
@@ -854,13 +875,13 @@ def lire_fichier_securise_v2(nom_fichier):
 
 ```python
 # ❌ Inutile de convertir en liste si on itère une fois
-nombres = (x ** 2 for x in range(1000))  
-liste_nombres = list(nombres)  # Consomme la mémoire  
+nombres = (x ** 2 for x in range(5))  
+liste_nombres = list(nombres)  # Matérialise tout en mémoire  
 for n in liste_nombres:  
     print(n)
 
-# ✅ Mieux : itérer directement
-nombres = (x ** 2 for x in range(1000))  
+# ✅ Mieux : itérer directement (rien n'est stocké)
+nombres = (x ** 2 for x in range(5))  
 for n in nombres:  
     print(n)
 ```

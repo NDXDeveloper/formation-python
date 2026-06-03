@@ -38,7 +38,7 @@ def diviser(a: int | float, b: int | float) -> float:
 print(f"diviser(10, 3) = {diviser(10, 3):.4f}")
 
 def obtenir_valeur(cle: str) -> str | int:
-    valeurs = {"nom": "Alice", "age": 25}
+    valeurs: dict[str, str | int] = {"nom": "Alice", "age": 25}
     return valeurs.get(cle, "inconnu")
 
 print(f"obtenir_valeur('nom') = {obtenir_valeur('nom')}")

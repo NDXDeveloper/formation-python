@@ -127,6 +127,31 @@ print(email.group())
 
 ---
 
+## Explorer un module : la fonction `dir()`
+
+La fonction intégrée `dir()` permet de **découvrir les noms définis dans un module** (fonctions, classes, variables). Elle renvoie une liste triée de chaînes :
+
+```python
+import math
+
+print(dir(math))
+# ['__doc__', '__loader__', '__name__', '__package__', ..., 'cos', 'pi', 'sqrt', 'tan', ...]
+```
+
+C'est très pratique pour explorer un module que vous connaissez mal, directement depuis l'interpréteur. Appelée **sans argument**, `dir()` liste les noms définis dans le contexte courant :
+
+```python
+import math
+a = 5
+
+print(dir())
+# [..., 'a', 'math']   (vos variables et imports du moment)
+```
+
+> 📝 `dir()` ne liste pas les fonctions intégrées comme `print()` ou `len()` : celles-ci sont définies dans le module standard `builtins` (essayez `import builtins; dir(builtins)`).
+
+---
+
 ## Création de vos propres modules
 
 ### Module simple
@@ -270,6 +295,29 @@ print(resultat)  # Affiche : 100
 
 ---
 
+## Le dossier `__pycache__`
+
+Lorsque vous importez un module pour la première fois, Python compile son code en **bytecode** et le met en cache dans un dossier `__pycache__/`, sous un nom comme `operations.cpython-312.pyc` (le suffixe correspond à la version de Python). Au prochain import, si le fichier `.py` n'a pas changé, Python réutilise ce `.pyc` : le démarrage est plus rapide.
+
+```
+mon_projet/
+    operations.py
+    __pycache__/
+        operations.cpython-312.pyc
+```
+
+Ce dossier est **généré automatiquement** : vous n'avez jamais à le modifier ni à le partager. On l'ignore donc dans Git (voir la section 6.4) :
+
+```
+# .gitignore
+__pycache__/
+*.pyc
+```
+
+> 📝 Le bytecode est créé lors de l'**import** d'un module, pas lors de l'exécution directe d'un script : lancer `python operations.py` ne crée pas de `.pyc` pour `operations.py` lui-même.
+
+---
+
 ## Organisation des modules
 
 ### Structure recommandée d'un module
@@ -393,6 +441,8 @@ sys.path.append('/chemin/vers/mes/modules')
 import mon_module
 ```
 
+> 📝 **L'erreur `ModuleNotFoundError` ?** Si Python affiche `ModuleNotFoundError: No module named 'mon_module'`, c'est que le module est introuvable dans `sys.path`. Les causes les plus fréquentes sont une **faute de frappe** dans le nom, ou un terminal lancé depuis un **autre dossier** que celui du module. Vérifiez d'abord le nom et le répertoire courant ; n'ajoutez un chemin à `sys.path` qu'en dernier recours.
+
 ---
 
 ## Bonnes pratiques pour les modules
@@ -497,7 +547,7 @@ from mon_projet.utils import helpers
 
 ## Recharger un module
 
-Pendant le développement, si vous modifiez un module déjà importé, vous devez le recharger :
+Pendant le développement, si vous modifiez un module déjà importé, vous devez le recharger. **Pourquoi ?** Pour des raisons d'efficacité, Python n'importe chaque module qu'**une seule fois par session** : il conserve les modules déjà chargés dans `sys.modules` et réutilise cette version en cache lors des imports suivants. Un nouvel `import` ne relit donc pas le fichier modifié — il faut forcer le rechargement :
 
 ```python
 import mon_module  

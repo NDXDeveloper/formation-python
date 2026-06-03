@@ -177,6 +177,37 @@ exemple_avec_nonlocal()
 
 ---
 
+## ⚠️ Piège classique : la liaison tardive (*late binding*)
+
+Une closure capture la **variable**, pas sa **valeur** au moment de sa création. Cela produit un résultat surprenant quand on crée plusieurs closures dans une boucle :
+
+```python
+# ❌ Piège : toutes les fonctions partagent la même variable i
+fonctions = [lambda: i for i in range(3)]
+print([f() for f in fonctions])  # [2, 2, 2] — et non [0, 1, 2] !
+```
+
+Au moment où les lambdas sont **appelées**, la boucle est déjà terminée et `i` vaut `2` pour toutes.
+
+**Solution 1 — figer la valeur avec un argument par défaut :**
+
+```python
+fonctions = [lambda i=i: i for i in range(3)]
+print([f() for f in fonctions])  # [0, 1, 2] ✅
+```
+
+**Solution 2 — une fabrique de fonctions (chaque appel crée une nouvelle portée) :**
+
+```python
+def faire(i):
+    return lambda: i
+
+fonctions = [faire(i) for i in range(3)]
+print([f() for f in fonctions])  # [0, 1, 2] ✅
+```
+
+---
+
 ## Cas d'usage pratiques des closures
 
 ### 1. Fabrique de fonctions
@@ -683,6 +714,8 @@ print(creer_url_https("example.com", "api/users"))  # https://example.com/api/us
 print(creer_url_site("products"))  # https://example.com/products  
 ```
 
+> 📝 **Curryfication ou application partielle ?** À proprement parler, `curryfier` ci-dessus réalise une **application partielle** : on fixe certains arguments, puis on appelle la fonction avec les arguments *restants groupés*. Ce n'est pas tout à fait la *curryfication* au sens strict, qui transformerait `f(a, b, c)` en `f(a)(b)(c)` — un seul argument à la fois. Les deux notions sont proches et souvent confondues. En pratique, Python fournit directement l'outil adapté à l'application partielle : **`functools.partial`**, présenté ci-dessous (inutile de réécrire `curryfier`).
+
 ---
 
 ## Application partielle avec functools.partial
@@ -1052,7 +1085,7 @@ Dans ce chapitre, nous avons exploré les closures et la programmation fonctionn
 **Techniques** :
 - map(), filter(), reduce()
 - Compréhensions de listes
-- functools.partial pour curryfication
+- functools.partial pour l'application partielle
 - Composition de fonctions
 - Récursion
 

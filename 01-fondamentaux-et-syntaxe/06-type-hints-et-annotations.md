@@ -138,7 +138,7 @@ def exemples_types_base():
 
 ## Types Génériques (Collections)
 
-Depuis Python 3.10, les types génériques s'écrivent directement avec les types natifs. Plus besoin d'importer depuis le module `typing` pour les cas courants.
+Depuis Python 3.9, les types génériques s'écrivent directement avec les types natifs. Plus besoin d'importer depuis le module `typing` pour les cas courants.
 
 > 💡 Dans du code plus ancien (Python < 3.9), vous verrez `from typing import List, Dict, Tuple, Set`. C'est la même chose, juste l'ancienne syntaxe.
 
@@ -264,7 +264,7 @@ def diviser(a: int | float, b: int | float) -> float:
 
 # Fonction qui peut retourner str ou int
 def obtenir_valeur(cle: str) -> str | int:
-    valeurs = {"nom": "Alice", "age": 25}
+    valeurs: dict[str, str | int] = {"nom": "Alice", "age": 25}
     return valeurs.get(cle, "inconnu")
 ```
 
@@ -309,6 +309,8 @@ def afficher(valeur: object) -> None:
 ## Callable (Fonctions comme Paramètres)
 
 `Callable` permet d'annoter des fonctions passées en paramètre.
+
+> 💡 `Callable` peut s'importer depuis `typing` **ou**, de préférence depuis Python 3.9, depuis `collections.abc` (`from collections.abc import Callable`). Les deux sont équivalents ; `typing.Callable` est aujourd'hui considéré comme « doucement déprécié ». Vous croiserez les deux dans cette section.
 
 ```python
 from typing import Callable
@@ -367,7 +369,7 @@ Pour des types complexes répétés, vous pouvez créer des alias :
 ```python
 from typing import Any
 
-# Créer un alias avec l'affectation simple (Python 3.10+)
+# Créer un alias avec une simple affectation (Python 3.9+)
 Vector = list[float]  
 Matrix = list[list[float]]  
 JSON = dict[str, Any]  
@@ -429,18 +431,26 @@ afficher_personne(alice)
 ```python
 from typing import TypedDict
 
-class Utilisateur(TypedDict, total=False):
-    nom: str  # Obligatoire
-    age: int  # Obligatoire
-    email: str | None  # Optionnel
-    telephone: str | None  # Optionnel
+# Champs obligatoires (par défaut, total=True)
+class UtilisateurBase(TypedDict):
+    nom: str
+    age: int
+
+# Champs facultatifs : regroupés dans un TypedDict total=False hérité
+class Utilisateur(UtilisateurBase, total=False):
+    email: str       # Facultatif (la clé peut être absente)
+    telephone: str   # Facultatif
 ```
+
+> 💡 `total=False` rend **tous** les champs d'un `TypedDict` facultatifs. Pour mélanger champs obligatoires et facultatifs, on combine deux `TypedDict` par héritage (comme ci-dessus) ou — depuis Python 3.11 — on marque chaque champ avec `Required[...]` / `NotRequired[...]`.
 
 ---
 
 ## Génériques (Generics)
 
 Les génériques permettent de créer des fonctions et classes qui fonctionnent avec n'importe quel type.
+
+> 💡 **Deux syntaxes coexistent.** Cette section présente la syntaxe classique avec `TypeVar`, valable dans toutes les versions. Depuis **Python 3.12** (PEP 695), une syntaxe plus concise évite de déclarer `TypeVar` : `def premier_element[T](liste: list[T]) -> T:` et `class Pile[T]:`. Les deux produisent le même résultat.
 
 ### TypeVar
 
@@ -921,7 +931,7 @@ def calculer_statistiques(donnees: list[Nombre]) -> Statistiques:
         "ecart_type": stdev(donnees) if len(donnees) > 1 else 0.0
     }
 
-def analyser_notes(notes: list[int]) -> tuple[float, list[str]]:
+def analyser_notes(notes: list[Nombre]) -> tuple[float, list[str]]:
     """
     Analyse une liste de notes et retourne la moyenne et les appréciations.
 
@@ -950,7 +960,7 @@ def analyser_notes(notes: list[int]) -> tuple[float, list[str]]:
     return moyenne, appreciations
 
 # Utilisation
-notes_classe = [12, 15, 8, 18, 14, 11, 16, 13]  
+notes_classe: list[Nombre] = [12, 15, 8, 18, 14, 11, 16, 13]  
 moyenne, appreciations = analyser_notes(notes_classe)  
 print(f"Moyenne de la classe : {moyenne:.2f}")  
 ```

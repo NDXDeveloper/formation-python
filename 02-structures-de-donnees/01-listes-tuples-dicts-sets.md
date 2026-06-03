@@ -154,6 +154,29 @@ nombres.reverse()
 print(nombres)  # [1, 1, 2, 3, 4, 5, 6, 9]  
 ```
 
+### Trier avec une clé (`key`)
+
+Le paramètre `key` accepte une fonction appliquée à chaque élément pour décider de l'ordre. C'est l'une des fonctionnalités de tri les plus utiles.
+
+```python
+# Trier des mots par longueur
+mots = ["python", "go", "javascript", "c"]
+print(sorted(mots, key=len))  # ['c', 'go', 'python', 'javascript']
+
+# Trier sans tenir compte de la casse
+noms = ["alice", "Bob", "charlie", "David"]
+print(sorted(noms, key=str.lower))  # ['alice', 'Bob', 'charlie', 'David']
+
+# Trier une liste de tuples par le 2e élément (l'âge)
+personnes = [("Alice", 30), ("Bob", 25), ("Charlie", 35)]
+print(sorted(personnes, key=lambda p: p[1]))
+# [('Bob', 25), ('Alice', 30), ('Charlie', 35)]
+
+# Combiner key et reverse (du plus âgé au plus jeune)
+print(sorted(personnes, key=lambda p: p[1], reverse=True))
+# [('Charlie', 35), ('Alice', 30), ('Bob', 25)]
+```
+
 ### Copier une liste
 
 Attention : l'affectation simple ne crée pas une copie !
@@ -176,6 +199,28 @@ liste4 = list(liste1)
 liste2.append(4)  
 print(liste1)  # [1, 2, 3] - liste1 n'est pas modifiée  
 print(liste2)  # [1, 2, 3, 4]  
+```
+
+### Copie superficielle vs copie profonde
+
+Les méthodes ci-dessus font une **copie superficielle** (*shallow copy*) : elles dupliquent la liste de premier niveau, mais **pas** les objets imbriqués. Pour une liste de listes, les sous-listes restent donc partagées :
+
+```python
+original = [[1, 2], [3, 4]]
+copie = original.copy()
+copie[0].append(99)      # on modifie la sous-liste partagée
+print(original)  # [[1, 2, 99], [3, 4]] — l'original est touché !
+```
+
+Pour une copie totalement indépendante (sous-objets inclus), utilisez `copy.deepcopy` :
+
+```python
+import copy
+
+original = [[1, 2], [3, 4]]
+copie = copy.deepcopy(original)
+copie[0].append(99)
+print(original)  # [[1, 2], [3, 4]] — l'original est intact
 ```
 
 ### Listes imbriquées
@@ -211,7 +256,7 @@ for etudiant in etudiants:
 
 ### Qu'est-ce qu'un tuple ?
 
-Un tuple est similaire à une liste, mais il est **immuable** (non modifiable). Une fois créé, vous ne pouvez pas modifier, ajouter ou supprimer ses éléments. Les tuples sont plus rapides que les listes et protègent vos données contre les modifications accidentelles.
+Un tuple est similaire à une liste, mais il est **immuable** (non modifiable). Une fois créé, vous ne pouvez pas modifier, ajouter ou supprimer ses éléments. Les tuples sont légèrement plus rapides à créer et plus économes en mémoire que les listes, mais leur véritable atout est ailleurs : ils protègent vos données contre les modifications accidentelles et peuvent servir de clés de dictionnaire (contrairement aux listes).
 
 ### Créer un tuple
 
@@ -566,6 +611,23 @@ print(personne.setdefault("ville", "Paris"))  # 'Paris'
 print(personne)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris'}  
 ```
 
+### Fusionner des dictionnaires (Python 3.9+)
+
+Depuis Python 3.9, on peut fusionner deux dictionnaires avec l'opérateur `|` (et `|=` pour fusionner en place) :
+
+```python
+defaut = {"couleur": "noir", "taille": "M"}
+choix = {"taille": "L", "motif": "rayé"}
+
+# | crée un NOUVEAU dictionnaire ; en cas de clé commune, la valeur de droite l'emporte
+fusion = defaut | choix
+print(fusion)  # {'couleur': 'noir', 'taille': 'L', 'motif': 'rayé'}
+
+# |= met à jour le dictionnaire de gauche en place (équivalent à update())
+defaut |= choix
+print(defaut)  # {'couleur': 'noir', 'taille': 'L', 'motif': 'rayé'}
+```
+
 ---
 
 ## Les Sets (Ensembles)
@@ -606,12 +668,14 @@ nombres = {1, 2, 2, 3, 3, 3}
 print(nombres)  # {1, 2, 3}  
 
 # Les éléments doivent être immuables (hashables)
-# Vous pouvez avoir des nombres, des chaînes, des tuples
-valide = {1, "texte", (1, 2), True}
+# Vous pouvez avoir des nombres (int, float), des booléens, des chaînes, des tuples
+valide = {1, "texte", (1, 2), 3.14, True}
 
 # Mais pas de listes ou de dictionnaires
 # invalide = {[1, 2, 3]}  # TypeError
 ```
+
+> 💡 Subtilité : `True` et `1` partagent la même valeur et le même hachage ; dans un ensemble, ils comptent donc comme **un seul** élément. L'ensemble `valide` ci-dessus contient ainsi 4 éléments distincts (`True` se confond avec `1`).
 
 ### Ajouter et supprimer des éléments
 

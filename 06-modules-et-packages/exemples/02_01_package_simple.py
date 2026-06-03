@@ -22,15 +22,19 @@ pkg.mkdir(parents=True, exist_ok=True)
 """Module contenant des opérations mathématiques de base."""
 
 def addition(a, b):
+    """Additionne deux nombres."""
     return a + b
 
 def soustraction(a, b):
+    """Soustrait b de a."""
     return a - b
 
 def multiplication(a, b):
+    """Multiplie deux nombres."""
     return a * b
 
 def division(a, b):
+    """Divise a par b."""
     if b == 0:
         raise ValueError("Division par zéro impossible")
     return a / b
@@ -43,12 +47,15 @@ def division(a, b):
 PI = 3.14159
 
 def aire_cercle(rayon):
+    """Calcule l'aire d'un cercle."""
     return PI * rayon ** 2
 
 def aire_rectangle(largeur, hauteur):
+    """Calcule l'aire d'un rectangle."""
     return largeur * hauteur
 
 def perimetre_rectangle(largeur, hauteur):
+    """Calcule le périmètre d'un rectangle."""
     return 2 * (largeur + hauteur)
 ''', encoding='utf-8')
 

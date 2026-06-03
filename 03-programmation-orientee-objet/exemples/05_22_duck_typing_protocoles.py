@@ -44,16 +44,16 @@ class Drawable(Protocol):
 
 class Circle:
     def draw(self) -> str:
-        return "O"
+        return "○"
 
 class Square:
     def draw(self) -> str:
-        return "[]"
+        return "□"
 
 def render(shape: Drawable) -> None:
     """Accepte n'importe quel objet qui a une méthode draw()"""
     print(shape.draw())
 
 # Fonctionne sans que Circle ou Square héritent de Drawable
-render(Circle())  # O
-render(Square())  # []
+render(Circle())  # ○
+render(Square())  # □

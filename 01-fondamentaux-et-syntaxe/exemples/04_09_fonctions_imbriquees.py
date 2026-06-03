@@ -33,3 +33,20 @@ hello = creer_salutation("Hello")
 print(bonjour("Alice"))   # Affiche : Bonjour Alice !
 print(bonsoir("Bob"))     # Affiche : Bonsoir Bob !
 print(hello("Charlie"))   # Affiche : Hello Charlie !
+
+# --- nonlocal : modifier une variable de la fonction englobante ---
+print()
+
+def compteur():
+    total = 0  # variable de la fonction englobante
+
+    def incrementer():
+        nonlocal total  # modifie le total de compteur(), pas une nouvelle variable
+        total += 1
+        return total
+
+    print(incrementer())  # 1
+    print(incrementer())  # 2
+    print(incrementer())  # 3
+
+compteur()

@@ -89,6 +89,25 @@ print(compte.solde)      # 1500
 
 **Magie** : On utilise la syntaxe simple `compte.solde`, mais Python appelle automatiquement les bonnes méthodes en arrière-plan !
 
+### Encapsulation : les conventions `_` et `__`
+
+Vous avez remarqué le `_` devant `self._solde`. Contrairement à Java ou C++, **Python n'a pas de mot-clé `private`** : tout attribut reste techniquement accessible de l'extérieur. L'encapsulation repose donc sur deux conventions :
+
+- **Un underscore `_attribut`** : signale « usage interne, ne pas toucher de l'extérieur ». C'est une simple **convention**, non imposée — `compte._solde` fonctionne quand même. C'est ce niveau qu'on utilise avec les propriétés (`_solde` est la zone de stockage, `solde` l'accès public contrôlé).
+- **Deux underscores `__attribut`** : déclenche le *name mangling*. Python renomme en coulisses `__attribut` en `_NomDeClasse__attribut` :
+
+```python
+class CompteBancaire:
+    def __init__(self, solde):
+        self.__solde = solde          # devient _CompteBancaire__solde
+
+compte = CompteBancaire(1000)
+# print(compte.__solde)              # ❌ AttributeError
+print(compte._CompteBancaire__solde) # 1000 — accessible via le nom transformé
+```
+
+Le but du *mangling* n'est **pas** la sécurité (on l'a contourné ci-dessus), mais d'**éviter les collisions de noms en héritage** : un attribut `__x` défini dans une classe parente et un autre `__x` défini dans une sous-classe ne s'écrasent pas, car ils sont renommés différemment. En pratique, **préférez le simple `_`** (plus lisible et pythonique) ; réservez `__` aux rares cas où vous devez protéger un attribut contre une redéfinition accidentelle dans les sous-classes.
+
 ## Le Décorateur `@property`
 
 ### Qu'est-ce qu'un Décorateur ?
@@ -137,6 +156,35 @@ print(f"Surface : {cercle.surface}")          # 78.53975
 - Syntaxe simple et naturelle
 - Les valeurs sont calculées à la demande (pas stockées inutilement)
 - Impossible de modifier `diametre`, `circonference` ou `surface` directement
+
+### `@cached_property` : Calculer une Seule Fois
+
+Un `@property` **recalcule** sa valeur à *chaque* accès. C'est parfait quand le résultat peut changer, mais inutilement coûteux quand le calcul est lourd et que les données ne bougent pas. Le décorateur `functools.cached_property` (disponible depuis Python 3.8) calcule la valeur **au premier accès**, puis la **mémorise** sur l'instance :
+
+```python
+from functools import cached_property
+
+class AnalyseTexte:
+    def __init__(self, texte):
+        self.texte = texte
+
+    @cached_property
+    def nb_mots_uniques(self):
+        print("Calcul coûteux en cours...")   # pour voir QUAND le calcul a lieu
+        return len(set(self.texte.lower().split()))
+
+analyse = AnalyseTexte("le chat et le chien et le chat")
+print(analyse.nb_mots_uniques)   # Calcul coûteux en cours...  puis  4
+print(analyse.nb_mots_uniques)   # 4  → AUCUN recalcul, valeur en cache
+```
+
+La valeur est stockée dans `instance.__dict__` sous le nom de la propriété. Points à connaître :
+
+- **C'est un cache, pas un calcul à la demande** : si les données sources changent (`analyse.texte = ...`), la valeur en cache **ne se met pas à jour** automatiquement. Réservez `cached_property` aux objets dont l'état pertinent ne change plus.
+- **Invalider le cache** : `del analyse.nb_mots_uniques` force un nouveau calcul au prochain accès.
+- **Pas de setter** : contrairement à `@property`, `cached_property` ne se combine pas avec `.setter`/`.deleter`.
+- **Incompatible avec `__slots__`** (sans `__dict__`) : la mise en cache a besoin du `__dict__` de l'instance, sinon Python lève un `TypeError`.
+- **Non thread-safe** par défaut (le verrou interne a été retiré en Python 3.12) : dans un contexte multi-thread, le calcul peut s'exécuter plusieurs fois.
 
 ## Le Trio : `@property`, `@setter`, `@deleter`
 
@@ -915,7 +963,7 @@ class Utilisateur:
 
 # Utilisation
 user1 = Utilisateur("Alice Dupont", "alice@example.com", datetime(1995, 5, 15))  
-print(user1)                      # Alice Dupont (29/30 ans) - alice@example.com  
+print(user1)                      # Alice Dupont (âge calculé selon l'année courante) - alice@example.com  
 print(f"Majeur : {user1.est_majeur}")  # True  
 
 # Factory method
