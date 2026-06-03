@@ -1,16 +1,16 @@
 [tool.poetry]
-name = "formation-python-complete"
+name = "formation-python"
 version = "1.0.0"
 description = "Formation Python complète et moderne - Du débutant à l'avancé"
 authors = ["Nicolas DEOUX <NDXDev@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/NDXDeveloper/formation-python-complete"
-repository = "https://github.com/NDXDeveloper/formation-python-complete"
+homepage = "https://github.com/NDXDeveloper/formation-python"
+repository = "https://github.com/NDXDeveloper/formation-python"
 keywords = ["python", "formation", "tutorial", "fastapi", "data-science"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.12"
 
 # Web Frameworks
 fastapi = {version = "^0.109.0", optional = true}
@@ -52,13 +52,13 @@ all = ["fastapi", "uvicorn", "flask", "requests", "sqlalchemy", "pydantic", "htt
 
 [tool.ruff]
 line-length = 88
-target-version = "py310"
+target-version = "py312"
 
 [tool.ruff.format]
 quote-style = "double"
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true

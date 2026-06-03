@@ -109,6 +109,14 @@
 
 ---
 
+### 📎 [Annexes](annexes/README.md)
+- A. [Glossaire](annexes/01-glossaire.md)
+- B. [Récapitulatif des PEP et standards](annexes/02-pep-et-standards.md)
+- C. [Aide-mémoire (cheat-sheets)](annexes/03-aide-memoire.md)
+- D. [Pour aller plus loin](annexes/04-pour-aller-plus-loin.md)
+
+---
+
 ## 📋 Légende
 
 | Symbole | Signification |
@@ -116,5 +124,6 @@
 | 🆕 | Contenu nouveau / modernisé pour 2026 |
 | ⚠️ | Niveau expert / optionnel |
 | 📊 | Module spécialisé Data Science |
+| 📎 | Annexe / référence transversale |
 
 ---

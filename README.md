@@ -1,9 +1,9 @@
 # 🐍 Formation Python - Du Débutant à l'Avancé
 
-![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Modules](https://img.shields.io/badge/Modules-13-brightgreen.svg)
-![Language](https://img.shields.io/badge/Langue-Français-blue.svg)
+![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)  
+![License](https://img.shields.io/badge/License-MIT-green.svg)  
+![Modules](https://img.shields.io/badge/Modules-13-brightgreen.svg)  
+![Language](https://img.shields.io/badge/Langue-Français-blue.svg)  
 ![Status](https://img.shields.io/badge/Status-Actif-success.svg)
 
 **Formation complète Python 3, des fondamentaux jusqu'aux concepts avancés (FastAPI, Data Science, Type Hints).**
@@ -37,7 +37,7 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 - 🔥 **Édition 2025-2026** avec les dernières pratiques Python
 - 🇫🇷 **100% en français** et gratuit (MIT License)
 
-**Durée estimée :** 40-60 heures • **Niveau :** Tous niveaux • **Prérequis :** Aucun
+**Durée estimée :** 50-70 heures • **Niveau :** Tous niveaux • **Prérequis :** Aucun
 
 ---
 
@@ -57,13 +57,20 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 **Module 7 : Bibliothèques standard** - os/sys, datetime, math/random, itertools, logging, **typing avancé** 🆕  
 **Module 8 : Concurrence** - Threading, multiprocessing, asyncio, patterns  
 
-### 🎯 Modules Avancés (9-13)
+### 🎯 Modules Avancés (9-12)
 
 **Module 9 : Débogage** - Exceptions, debugging, profiling, optimisation  
 **Module 10 : Tests** - unittest, pytest, mocking, couverture de code, documentation, PEP 8, **mypy** 🆕  
 **Module 11 : Web/APIs** - **FastAPI** 🆕, Flask, REST, **SQLAlchemy** 🆕  
 **Module 12 : Bonnes pratiques** - Architecture, Git, design patterns, optimisation, déploiement  
+
+### 📊 Module de Spécialisation (13)
+
 **Module 13 : Data Science** 📊 - **NumPy, Pandas, Matplotlib/Plotly** 🆕 *(optionnel)*  
+
+### 📎 Annexes (référence)
+
+**Annexes** 📎 - [Glossaire](annexes/01-glossaire.md), [récapitulatif des PEP](annexes/02-pep-et-standards.md), [aide-mémoire](annexes/03-aide-memoire.md), [pour aller plus loin](annexes/04-pour-aller-plus-loin.md)
 
 > 📋 Consultez [SOMMAIRE.md](SOMMAIRE.md) pour la table des matières complète
 
@@ -138,7 +145,7 @@ python hello.py
 ## 📁 Structure du projet
 
 ```
-formation-python-complete/
+formation-python/
 ├── 📄 README.md
 ├── 📋 SOMMAIRE.md (table des matières détaillée)
 ├── 🛠️ VSCODE-SETUP.md (configuration VS Code)
@@ -160,7 +167,8 @@ formation-python-complete/
 ├── 📂 10-tests-et-qualite/
 ├── 📂 11-developpement-web-et-apis/
 ├── 📂 12-projets-et-bonnes-pratiques/
-└── 📂 13-introduction-data-science/ (optionnel)
+├── 📂 13-introduction-data-science/ (optionnel)
+└── 📎 annexes/ (glossaire, PEP, aide-mémoire, pour aller plus loin)
 ```
 
 ---
@@ -204,25 +212,25 @@ source venv/bin/activate
 ## 🛠️ Technologies couvertes
 
 ### Langage & Outils
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![Type Hints](https://img.shields.io/badge/Type_Hints-mypy-blue)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)  
+![Type Hints](https://img.shields.io/badge/Type_Hints-mypy-blue)  
 ![Poetry](https://img.shields.io/badge/Poetry-Package_Manager-60A5FA)
 
 ### Frameworks Web
-![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-3.0+-000000?logo=flask&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)  
+![Flask](https://img.shields.io/badge/Flask-3.0+-000000?logo=flask&logoColor=white)  
 
 ### Données & ORM
-![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red)
-![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red)  
+![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white)  
 ![NumPy](https://img.shields.io/badge/NumPy-1.24+-013243?logo=numpy&logoColor=white)
 
 ### Tests & Qualité
-![pytest](https://img.shields.io/badge/pytest-7.0+-0A9EDC?logo=pytest&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-7.0+-0A9EDC?logo=pytest&logoColor=white)  
 ![mypy](https://img.shields.io/badge/mypy-Type_Checker-blue)
 
 ### Visualisation
-![Matplotlib](https://img.shields.io/badge/Matplotlib-3.7+-11557c)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-3.7+-11557c)  
 ![Plotly](https://img.shields.io/badge/Plotly-5.0+-3F4F75?logo=plotly&logoColor=white)
 
 ---
@@ -276,19 +284,19 @@ async def creer_utilisateur(user: Utilisateur, db: Session = Depends(get_db)):
 
 ## ❓ FAQ
 
-**Q : Dois-je avoir des connaissances préalables en programmation ?**
+**Q : Dois-je avoir des connaissances préalables en programmation ?**  
 R : Non ! Le Module 1 commence vraiment à zéro. Si vous avez déjà programmé dans un autre langage, vous progresserez plus vite.
 
-**Q : Combien de temps faut-il pour terminer la formation ?**
-R : Entre 40 et 60 heures selon votre rythme. Comptez 4-8 semaines à raison de 1-2h par jour.
+**Q : Combien de temps faut-il pour terminer la formation ?**  
+R : Entre 50 et 70 heures selon votre rythme. Comptez 5-9 semaines à raison de 1-2h par jour.
 
-**Q : Le Module 13 (Data Science) est-il obligatoire ?**
+**Q : Le Module 13 (Data Science) est-il obligatoire ?**  
 R : Non, c'est un module optionnel pour ceux qui s'intéressent à l'analyse de données.
 
-**Q : Puis-je utiliser cette formation pour enseigner ?**
+**Q : Puis-je utiliser cette formation pour enseigner ?**  
 R : Oui ! La licence MIT vous permet d'utiliser, modifier et partager ce contenu librement.
 
-**Q : Quelle version de Python dois-je utiliser ?**
+**Q : Quelle version de Python dois-je utiliser ?**  
 R : Python 3.10 ou supérieur est recommandé. Les exemples utilisent la syntaxe moderne (type hints natifs comme `list[str]`, `dict[str, int]`, match/case, etc.). Python 3.13+ est idéal pour bénéficier des dernières améliorations.
 
 ---
@@ -345,11 +353,11 @@ Merci à la communauté Python, aux créateurs de frameworks open source (FastAP
 
 **🐍 Bon apprentissage avec Python ! 🐍**
 
-[![Python](https://img.shields.io/badge/Made_with-Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Made_with-Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)  
 [![Love](https://img.shields.io/badge/Made_with-❤️-red)](https://github.com/NDXDeveloper)
 
 **[⬆ Retour en haut](#-formation-python---du-débutant-à-lavancé)**
 
-*Dernière mise à jour : Mars 2026*
+*Dernière mise à jour : Juin 2026*
 
 </div>

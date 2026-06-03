@@ -42,11 +42,9 @@ Créer ce fichier à la racine du projet pour une configuration optimale :
     "**/*.pyc": true,
     "**/.pytest_cache": true,
     "**/.mypy_cache": true,
-    "**/venv": true
-  },
-
-  "files.associations": {
-    "*.md": "markdown"
+    "**/.ruff_cache": true,
+    "**/venv": true,
+    "**/.venv": true
   },
 
   "editor.minimap.enabled": true,
@@ -56,6 +54,10 @@ Créer ce fichier à la racine du projet pour une configuration optimale :
 ```
 
 > **Note :** Depuis 2023, les paramètres `python.formatting.provider` et `python.linting.*` sont dépréciés. Le formatage et le linting utilisent désormais des extensions dédiées (Ruff, Black, mypy) avec leurs propres paramètres.
+
+> **Interpréteur Python — adaptez le chemin à votre environnement.** Avec **uv** (recommandé aux chapitres 6 et 12), l'environnement s'appelle `.venv` : utilisez alors `"${workspaceFolder}/.venv/bin/python"` (l'exclusion de `.venv` est déjà prévue dans `files.exclude`). Sous **Windows**, le chemin devient `"${workspaceFolder}\\venv\\Scripts\\python.exe"`.
+
+> **Une seule source de vérité pour les outils.** Définissez de préférence la longueur de ligne, les règles **Ruff** et les options **mypy** dans `pyproject.toml` (voir chapitre 12.1) : la ligne de commande (`ruff`, `mypy`) **et** l'éditeur appliquent ainsi exactement les mêmes règles, et le `ruff.lineLength` ci-dessus devient redondant.
 
 ---
 
@@ -68,6 +70,7 @@ Créer le fichier `.vscode/extensions.json` :
   "recommendations": [
     "ms-python.python",
     "ms-python.vscode-pylance",
+    "ms-python.debugpy",
     "ms-python.mypy-type-checker",
     "charliermarsh.ruff",
     "kevinrose.vsc-python-indent",
@@ -84,6 +87,7 @@ Créer le fichier `.vscode/extensions.json` :
 |-----------|------|
 | **Python** (`ms-python.python`) | Support Python de base (IntelliSense, débogage, notebooks) |
 | **Pylance** (`ms-python.vscode-pylance`) | Serveur de langage rapide (auto-complétion, navigation, types) |
+| **Python Debugger** (`ms-python.debugpy`) | Débogueur Python utilisé par `launch.json` (installé automatiquement avec l'extension Python) |
 | **Mypy Type Checker** (`ms-python.mypy-type-checker`) | Vérification statique des types en temps réel |
 | **Ruff** (`charliermarsh.ruff`) | Linter et formateur ultra-rapide (remplace Black, Flake8, isort) |
 | **Python Indent** (`kevinrose.vsc-python-indent`) | Indentation intelligente après `def`, `if`, `for`, etc. |
@@ -91,9 +95,13 @@ Créer le fichier `.vscode/extensions.json` :
 | **Markdown All in One** (`yzhang.markdown-all-in-one`) | Édition Markdown avancée (aperçu, raccourcis, table des matières) |
 | **Even Better TOML** (`tamasfe.even-better-toml`) | Support des fichiers `pyproject.toml` |
 
+> **Pylance et mypy.** Pylance fournit aussi une vérification de types (moteur Pyright), **désactivée par défaut** (`python.analysis.typeCheckingMode` vaut `"off"`) : aucun doublon avec mypy tant qu'on ne l'active pas. Si vous passez à `"basic"` ou `"standard"`, attendez-vous à des diagnostics en partie redondants avec ceux de mypy.
+
 ---
 
 ## Raccourcis utiles VS Code
+
+> **macOS :** remplacez `Ctrl` par `Cmd` (⌘) dans la majorité des raccourcis ci-dessous.
 
 ### Raccourcis généraux
 
@@ -271,6 +279,7 @@ Créer le fichier `.vscode/python.code-snippets` :
 # Extensions essentielles
 code --install-extension ms-python.python  
 code --install-extension ms-python.vscode-pylance  
+code --install-extension ms-python.debugpy  
 code --install-extension ms-python.mypy-type-checker  
 code --install-extension charliermarsh.ruff  
 
@@ -327,11 +336,11 @@ Si vous utilisez PyCharm, voici les configurations recommandées :
 ## 🎯 Résumé
 
 Ces configurations vous permettent de :
-- ✅ Formater et corriger automatiquement avec **Ruff** à la sauvegarde  
-- ✅ Vérifier les types en temps réel avec **mypy**  
-- ✅ Exécuter les tests avec **pytest** depuis VS Code  
-- ✅ Bénéficier d'une auto-complétion intelligente avec **Pylance**  
-- ✅ Naviguer facilement dans le code (définitions, références)  
+- ✅ Formater et corriger automatiquement avec **Ruff** à la sauvegarde
+- ✅ Vérifier les types en temps réel avec **mypy**
+- ✅ Exécuter les tests avec **pytest** depuis VS Code
+- ✅ Bénéficier d'une auto-complétion intelligente avec **Pylance**
+- ✅ Naviguer facilement dans le code (définitions, références)
 - ✅ Gagner du temps avec les **snippets** personnalisés
 
 **Conseil :** Copiez ces fichiers dans votre projet pour une expérience de développement optimale !
