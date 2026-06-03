@@ -36,15 +36,15 @@ Cela signifie qu'il faut :
 
 ## 1. Mesurer le temps d'exécution - Les bases
 
-### 1.1 La méthode time.time()
+### 1.1 La méthode time.perf_counter()
 
-La façon la plus simple de mesurer le temps d'exécution :
+La façon la plus simple de mesurer le temps d'exécution est d'encadrer le code par deux relevés d'horloge. Utilisez `time.perf_counter()` : c'est l'horloge **monotone** de plus haute résolution, conçue précisément pour mesurer des **durées** (contrairement à `time.time()`, qui donne l'heure « murale » et peut même reculer lors d'un ajustement de l'horloge système).
 
 ```python
 import time
 
 # Enregistrer le temps de début
-debut = time.time()
+debut = time.perf_counter()
 
 # Code à mesurer
 total = 0  
@@ -52,7 +52,7 @@ for i in range(1000000):
     total += i
 
 # Enregistrer le temps de fin
-fin = time.time()
+fin = time.perf_counter()
 
 # Calculer la durée
 duree = fin - debut  
@@ -83,9 +83,9 @@ def chronometrer(fonction, *args, **kwargs):
     Returns:
         tuple : (résultat, temps_execution)
     """
-    debut = time.time()
+    debut = time.perf_counter()
     resultat = fonction(*args, **kwargs)
-    fin = time.time()
+    fin = time.perf_counter()
     duree = fin - debut
     return resultat, duree
 
@@ -110,9 +110,9 @@ from contextlib import contextmanager
 def chronometre(nom="Code"):
     """Gestionnaire de contexte pour chronométrer un bloc de code."""
     print(f"⏱️  Début du chronométrage : {nom}")
-    debut = time.time()
+    debut = time.perf_counter()
     yield
-    fin = time.time()
+    fin = time.perf_counter()
     duree = fin - debut
     print(f"✅ {nom} terminé en {duree:.4f} secondes")
 
@@ -138,7 +138,7 @@ with chronometre("Création d'une liste"):
 
 ### 2.1 Pourquoi utiliser timeit ?
 
-Le module `timeit` est plus précis que `time.time()` car il :
+Le module `timeit` est encore plus précis qu'un chronométrage manuel car il :
 - Exécute le code plusieurs fois pour obtenir une moyenne
 - Désactive temporairement le garbage collector
 - Fournit des résultats plus fiables
@@ -281,7 +281,7 @@ cProfile.run('programme_principal()')
 ```
 Démarrage du programme...  
 Résultats calculés : 5 valeurs  
-         15 function calls in 0.245 seconds
+         18 function calls in 0.245 seconds
 
    Ordered by: standard name
 
@@ -291,6 +291,8 @@ Résultats calculés : 5 valeurs
         5    0.245    0.049    0.245    0.049 script.py:3(fonction_lente)
         1    0.000    0.000    0.245    0.245 script.py:19(programme_principal)
 ```
+
+*(Tableau réduit aux fonctions principales pour la lisibilité ; les appels aux fonctions intégrées comme `print` et `len`, comptés dans le total de 18, ont été retirés. Les temps varient d'une machine à l'autre.)*
 
 **Explication des colonnes :**
 - **ncalls** : Nombre d'appels de la fonction
@@ -412,10 +414,10 @@ mesurer_taille(texte, "Texte")
 
 **Sortie :**
 ```
-Petite liste: 104 octets  
-Grande liste: 8.00 Mo  
-Dictionnaire: 36.66 Ko  
-Texte: 58.59 Ko  
+Petite liste: 104.00 octets  
+Grande liste: 7.63 Mo  
+Dictionnaire: 36.09 Ko  
+Texte: 58.63 Ko  
 ```
 
 ### 4.2 Comparer l'utilisation mémoire de différentes structures
@@ -447,7 +449,45 @@ def comparer_structures(n=1000):
 comparer_structures(10000)
 ```
 
-### 4.3 Le module memory_profiler (installation requise)
+### 4.3 Le module tracemalloc (inclus dans Python)
+
+`tracemalloc` est le profileur mémoire **de la bibliothèque standard** (aucune installation). Il trace les allocations et indique d'où vient la mémoire consommée, ligne par ligne.
+
+```python
+import tracemalloc
+
+tracemalloc.start()  # Démarrer le suivi des allocations
+
+# Code à analyser
+donnees = [i ** 2 for i in range(100000)]
+mapping = {i: str(i) for i in range(100000)}
+
+# Photographier l'état de la mémoire
+snapshot = tracemalloc.take_snapshot()
+top = snapshot.statistics('lineno')
+
+print("Top 3 des allocations mémoire :")
+for stat in top[:3]:
+    print(f"  {stat}")
+
+# Mémoire actuelle et pic atteint depuis le start()
+actuel, pic = tracemalloc.get_traced_memory()
+print(f"\nMémoire actuelle : {actuel / 1024:.1f} Ko ; pic : {pic / 1024:.1f} Ko")
+tracemalloc.stop()
+```
+
+**Sortie (exemple) :**
+```
+Top 3 des allocations mémoire :
+  script.py:6: size=12.4 MiB, count=199744, average=65 B
+  script.py:5: size=3907 KiB, count=99985, average=40 B
+  ...
+Mémoire actuelle : 16626.6 Ko ; pic : 18224.3 Ko
+```
+
+Contrairement à `sys.getsizeof` (qui ne mesure qu'un seul objet, sans ses contenus), `tracemalloc` suit **toutes** les allocations du programme et les attribue à la ligne de code responsable — idéal pour traquer une fuite ou un pic de mémoire.
+
+### 4.4 Le module memory_profiler (installation requise)
 
 Pour une analyse mémoire ligne par ligne, vous pouvez installer `memory_profiler` :
 
@@ -673,6 +713,8 @@ print(f"  Amélioration : {temps_sans/temps_avec:.0f}x plus rapide ! 🚀🚀�
 
 # Résultat typique : 100,000x plus rapide !
 ```
+
+> **Python 3.9+** : `@functools.cache` est un raccourci pour `@lru_cache(maxsize=None)` — un cache non borné, au code plus court. Pour l'exemple ci-dessus : `from functools import cache` puis `@cache` au lieu de `@lru_cache(maxsize=None)`.
 
 ### 5.6 Utiliser des générateurs pour économiser la mémoire
 
@@ -1222,7 +1264,7 @@ comparer_versions()
 ## Conclusion
 
 L'optimisation est un art qui nécessite :
-- **Mesure** : Utilisez des outils comme timeit, cProfile et memory_profiler
+- **Mesure** : Utilisez les outils de la bibliothèque standard — `time.perf_counter()`, `timeit`, `cProfile`, `tracemalloc` — avant tout outil tiers
 - **Analyse** : Identifiez les vraies causes de lenteur
 - **Action** : Appliquez les bonnes techniques d'optimisation
 - **Vérification** : Assurez-vous que le code fonctionne toujours

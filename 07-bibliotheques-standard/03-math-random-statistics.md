@@ -176,7 +176,7 @@ print(math.exp(1))       # 2.718281828459045 (e¹)
 print(math.exp(2))       # 7.38905609893065 (e²)  
 
 # Exponentielle - 1 (plus précise pour les petites valeurs)
-print(math.expm1(0.001)) # 0.0010005001667083846
+print(math.expm1(0.001)) # 0.0010005001667083417
 ```
 
 ### Exemple pratique : Calcul d'intérêts composés
@@ -229,7 +229,7 @@ print(math.log(8, 2))        # 3.0 (log base 2 de 8)
 print(math.log(81, 3))       # 4.0 (log base 3 de 81)  
 
 # Logarithme de (1 + x) - plus précis pour les petites valeurs
-print(math.log1p(0.001))     # 0.0009995003330835332
+print(math.log1p(0.001))     # 0.0009995003330835331
 ```
 
 ---
@@ -253,7 +253,7 @@ print(f"{angle_radians} radians = {angle_degres}°")  # 90.0
 # Fonctions trigonométriques de base
 print(f"sin(π/2) = {math.sin(math.pi / 2)}")  # 1.0  
 print(f"cos(π) = {math.cos(math.pi)}")        # -1.0  
-print(f"tan(π/4) = {math.tan(math.pi / 4)}")  # 1.0  
+print(f"tan(π/4) = {math.tan(math.pi / 4)}")  # 0.9999999999999999 (et non 1.0 : précision flottante)  
 
 # Fonctions trigonométriques inverses
 print(f"asin(1) = {math.asin(1)}")    # 1.5707... (π/2 radians)  
@@ -336,6 +336,30 @@ print(math.hypot(3, 4))      # 5.0
 print(math.hypot(5, 12))     # 13.0  
 ```
 
+### Comparer des flottants : `math.isclose()`
+
+À cause de la représentation binaire des nombres à virgule flottante, **ne comparez jamais deux flottants avec `==`**. Utilisez `math.isclose()` :
+
+```python
+import math
+
+# Le piège classique
+print(0.1 + 0.2 == 0.3)              # False !
+print(0.1 + 0.2)                     # 0.30000000000000004
+
+# La bonne façon
+print(math.isclose(0.1 + 0.2, 0.3))  # True
+
+# Idem pour le tan(π/4) vu plus haut (qui vaut 0.9999999999999999)
+print(math.isclose(math.tan(math.pi / 4), 1.0))  # True
+
+# Détecter les valeurs spéciales
+print(math.isnan(float('nan')))   # True
+print(math.isinf(float('inf')))   # True
+```
+
+> 📝 `math.isclose(a, b)` utilise par défaut une tolérance **relative** de `1e-09`. On peut l'ajuster : `math.isclose(a, b, rel_tol=1e-6)`, ou ajouter une tolérance **absolue** `abs_tol` (indispensable pour comparer à zéro, où la tolérance relative ne suffit pas).
+
 ### Exemple pratique : Calculateur de probabilités
 
 ```python
@@ -368,6 +392,17 @@ print(f"Soit : {(1/total_combinaisons)*100:.10f}%")
 ## Le module `random` - Génération de nombres aléatoires
 
 Le module `random` permet de générer des nombres pseudo-aléatoires, utiles pour les simulations, les jeux, l'échantillonnage, etc.
+
+> ⚠️ **`random` n'est PAS cryptographiquement sûr.** Ses valeurs sont *prédictibles* (générateur Mersenne Twister initialisé par une graine). Ne l'utilisez **jamais** pour des usages sensibles à la sécurité : mots de passe, jetons, clés, identifiants de session… Pour cela, utilisez le module **`secrets`** :
+>
+> ```python
+> import secrets
+> secrets.token_hex(16)         # jeton hexadécimal aléatoire sûr
+> secrets.choice(['a', 'b', 'c'])  # choix sûr dans une séquence
+> secrets.randbelow(100)        # entier sûr dans [0, 100[
+> ```
+>
+> `random` reste parfait pour les simulations, les jeux et les statistiques.
 
 ### Import du module
 
@@ -606,7 +641,7 @@ import random
 
 # Définir une graine
 random.seed(42)  
-print(random.random())  # Toujours le même résultat avec seed=42  
+print(random.random())  # 0.6394267984578837 (toujours le même avec seed=42)  
 print(random.randint(1, 100))  
 
 # Réinitialiser avec la même graine
@@ -614,7 +649,7 @@ random.seed(42)
 print(random.random())  # Même résultat qu'avant  
 print(random.randint(1, 100))  # Même résultat qu'avant  
 
-# Graine aléatoire (par défaut, basée sur l'horloge système)
+# Graine « aléatoire » : tirée de l'entropie de l'OS (os.urandom) si disponible, sinon de l'horloge
 random.seed()  
 print(random.random())  # Résultat différent à chaque exécution  
 ```
@@ -644,7 +679,7 @@ donnees = [2, 4, 6, 8, 10]
 
 # Moyenne arithmétique
 moyenne = statistics.mean(donnees)  
-print(f"Moyenne : {moyenne}")  # 6.0  
+print(f"Moyenne : {moyenne}")  # 6  
 
 # Données avec différents types
 donnees_mixtes = [1, 2.5, 3, 4.5, 5]  
@@ -751,11 +786,11 @@ donnees = [2, 4, 6, 8, 10]
 
 # Variance de population
 variance_pop = statistics.pvariance(donnees)  
-print(f"Variance de population : {variance_pop}")  # 8.0  
+print(f"Variance de population : {variance_pop}")  # 8  
 
 # Variance d'échantillon (estimation)
 variance_ech = statistics.variance(donnees)  
-print(f"Variance d'échantillon : {variance_ech}")  # 10.0  
+print(f"Variance d'échantillon : {variance_ech}")  # 10  
 
 # Écart-type de population
 ecart_type_pop = statistics.pstdev(donnees)  

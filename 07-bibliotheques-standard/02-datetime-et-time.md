@@ -42,6 +42,8 @@ maintenant_utc = datetime.now(timezone.utc)
 print(maintenant_utc)  
 ```
 
+> 📝 Dans tout ce chapitre, les exemples prennent **2025-10-27** (un lundi) comme date « actuelle » illustrative. Quand vous exécuterez `datetime.now()` ou `date.today()`, vous obtiendrez bien sûr **la date du jour** : les sorties commentées montrent le *format* attendu, pas une valeur figée.
+
 ### Créer une date/heure spécifique
 
 ```python
@@ -142,6 +144,29 @@ print(date1)  # 2025-10-27 00:00:00
 print(date2)  # 2025-10-27 00:00:00  
 print(date3)  # 2025-10-27 00:00:00  
 ```
+
+### Format ISO 8601 : `isoformat()` et `fromisoformat()`
+
+Le format **ISO 8601** (`AAAA-MM-JJTHH:MM:SS`) est le standard pour échanger des dates (JSON, API, bases de données, fichiers). `datetime` offre un aller-retour direct, sans avoir à écrire de chaîne de format :
+
+```python
+from datetime import datetime, date
+
+# Objet -> chaîne ISO
+dt = datetime(2025, 10, 27, 14, 30, 45)
+print(dt.isoformat())          # 2025-10-27T14:30:45
+
+# Chaîne ISO -> objet (l'opération inverse exacte)
+dt2 = datetime.fromisoformat("2025-10-27T14:30:45")
+print(dt2)                     # 2025-10-27 14:30:45
+
+# Fonctionne aussi avec une date seule
+print(date.fromisoformat("2025-10-27"))    # 2025-10-27
+```
+
+C'est la méthode à privilégier pour **stocker puis relire** des dates de façon fiable (plus sûr que d'inventer son propre format).
+
+> 📝 Depuis Python 3.11, `fromisoformat()` accepte la plupart des variantes ISO 8601 (y compris le suffixe `Z` pour l'UTC et les décalages de fuseau, ex. `+02:00`). Sur Python 3.10, il ne reconnaît que le format exact produit par `isoformat()`.
 
 ### Exemple pratique : Calculer l'âge d'une personne
 
@@ -486,6 +511,8 @@ duree = fin - debut
 print(f"Temps d'exécution : {duree:.6f} secondes")  
 ```
 
+> 📝 Pour **mesurer une durée**, préférez `time.perf_counter()` : ce n'est pas seulement le compteur de plus haute résolution, il est surtout **monotone** (il ne « recule » jamais). `time.time()` suit l'horloge système, qui peut être ajustée pendant la mesure (synchronisation réseau NTP, passage heure d'été/hiver…) et fausser le résultat — voire produire une durée négative.
+
 ### Exemple pratique : Chronomètre
 
 ```python
@@ -543,6 +570,17 @@ with Chronometre():
 
 Pour travailler avec des fuseaux horaires, utilisez le module `zoneinfo` de la bibliothèque standard.
 
+> 📝 **Datetime « naïf » vs « aware » :** un datetime créé sans fuseau (ex. `datetime.now()`) est dit **naïf** (son attribut `tzinfo` vaut `None`) — il ne sait pas à quel fuseau il se rapporte. Un datetime créé **avec** un fuseau (ex. `datetime.now(timezone.utc)` ou via `zoneinfo`) est dit **aware**. On ne peut **ni comparer ni soustraire** un naïf et un aware :
+>
+> ```python
+> from datetime import datetime, timezone
+> naif = datetime.now()
+> aware = datetime.now(timezone.utc)
+> aware - naif   # TypeError: can't subtract offset-naive and offset-aware datetimes
+> ```
+>
+> Règle pratique : restez **cohérent** (tout naïf, ou tout aware) ; pour une vraie application, préférez les datetimes *aware* en UTC.
+
 ### Avec zoneinfo
 
 ```python
@@ -578,6 +616,8 @@ print(f"UTC : {maintenant_utc}")
 date_utc = datetime(2025, 10, 27, 12, 0, 0, tzinfo=timezone.utc)  
 print(date_utc)  
 ```
+
+> ⚠️ **À éviter : `datetime.utcnow()`** — vous le croiserez dans beaucoup d'anciens tutoriels, mais il est **déprécié depuis Python 3.12** (et voué à être supprimé). Le piège : il renvoie un `datetime` *naïf* (sans fuseau), alors qu'il représente en réalité de l'UTC — une source classique de bugs. Utilisez toujours `datetime.now(timezone.utc)`, qui renvoie un `datetime` *aware* correctement marqué UTC.
 
 ---
 

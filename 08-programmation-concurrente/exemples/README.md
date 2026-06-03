@@ -1,5 +1,15 @@
 # Chapitre 08 - Programmation Concurrente : Exemples
 
+Ce dossier contient les exemples exécutables du chapitre 8, un fichier `.py` par thème, numérotés selon la section du cours (`01_*` → 8.1, `02_*` → 8.2, `03_*` → 8.3, `04_*` → 8.4).
+
+**Exécution** : chaque fichier est autonome.
+
+```bash
+python3 01_01_threading_base.py
+```
+
+> Les exemples qui mesurent des durées ou utilisent du hasard (`random`) produisent des valeurs **variables** selon la machine et l'exécution ; seules les valeurs **déterministes** (compteurs, sommes, décomptes) sont indiquées ci-dessous comme « Sortie attendue ».
+
 ## Section 8.1 : Threading et Multiprocessing
 
 ### 01_01_threading_base.py
@@ -43,6 +53,23 @@
 - **Sortie attendue** :
   - 5 fichiers telecharges en parallele (max 3 threads), ~0.60s
   - Resultats affiches avec taille et duree
+
+### 01_06_concurrent_futures.py
+- **Section** : 8.1 - Threading et Multiprocessing
+- **Description** : concurrent.futures - ThreadPoolExecutor (map, submit/Future, as_completed) et ProcessPoolExecutor, l'API unifiee threads/processus
+- **Fichier source** : `01-threading-et-multiprocessing.md`
+- **Sortie attendue** :
+  - map(traiter, 1..5) = [1, 4, 9, 16, 25]
+  - as_completed : resultats dans l'ordre d'arrivee (0.1s, 0.2s, 0.3s)
+  - ProcessPoolExecutor : 4 sommes de carres calculees en parallele
+
+### 01_07_subinterpreteurs.py
+- **Section** : 8.1 - Threading et Multiprocessing
+- **Description** : Sous-interpreteurs (PEP 734) - InterpreterPoolExecutor, vrai parallelisme CPU plus leger que le multiprocessing
+- **Fichier source** : `README.md`
+- **Sortie attendue** :
+  - Sur Python 3.14+ : 4 sommes de carres calculees en parallele (chaque sous-interpreteur a son propre GIL)
+  - Sur Python < 3.14 : message indiquant que l'exemple necessite 3.14+
 
 ## Section 8.2 : Programmation Asynchrone (asyncio)
 
@@ -105,6 +132,22 @@
   - 8 fichiers telecharges avec semaphore(3)
   - Statistiques : succes, echecs, duree totale, vitesse
 
+### 02_08_taskgroup_timeout.py
+- **Section** : 8.2 - Programmation asynchrone avec asyncio
+- **Description** : Concurrence structuree avec asyncio.TaskGroup et delai global avec asyncio.timeout (Python 3.11+)
+- **Fichier source** : `02-programmation-asynchrone-asyncio.md`
+- **Sortie attendue** :
+  - Sur Python 3.11+ : TaskGroup execute 3 taches (video, image, document) ; timeout interrompt un bloc apres 0.5s
+  - Sur Python 3.10 : message renvoyant aux equivalents (gather, wait_for)
+
+### 02_09_annulation_to_thread.py
+- **Section** : 8.2 - Programmation asynchrone avec asyncio
+- **Description** : Annulation de taches (cancel / CancelledError avec nettoyage puis relance) et delegation de code bloquant a un thread (asyncio.to_thread)
+- **Fichier source** : `02-programmation-asynchrone-asyncio.md`
+- **Sortie attendue** :
+  - Annulation : tache demarree puis annulee proprement (nettoyage + confirmation cote main)
+  - to_thread : resultat calcule dans un thread separe sans bloquer l'event loop
+
 ## Section 8.3 : Gestion des Verrous et Synchronisation
 
 ### 03_01_lock_rlock.py
@@ -150,6 +193,15 @@
   - Cache : ~77.8% taux de hit (35 hits, 10 misses)
   - Singleton : s1 is s2 = True
   - ReadWriteLock : lectures paralleles, ecriture exclusive
+
+### 03_06_queue.py
+- **Section** : 8.3 - Gestion des Verrous et Synchronisation
+- **Description** : queue.Queue (file thread-safe prete a l'emploi, sans verrou manuel) et variantes LifoQueue (pile) et PriorityQueue (par priorite)
+- **Fichier source** : `03-verrous-et-synchronisation.md`
+- **Sortie attendue** :
+  - queue.Queue : 5 items produits et consommes
+  - LifoQueue : 3, 2, 1 (ordre LIFO)
+  - PriorityQueue : haute, moyenne, basse (par priorite)
 
 ## Section 8.4 : Patterns de Concurrence
 
@@ -236,3 +288,10 @@
   - 20 URLs scrapees avec semaphore(5) et rate limit 10/s
   - 20 succes, 0 echecs
   - Analyse Map-Reduce : 80 mots, top 5 affiches
+
+## Notes
+
+- **Style des fichiers** : les accents français sont conservés (é, è, à…), mais les émojis, le symbole € et les flèches sont rendus en ASCII (`->`, `EUR`…) pour une portabilité maximale des sorties terminal. Les `.md` du cours, eux, utilisent des émojis : c'est une différence de présentation voulue, pas une incohérence.
+- **Multiprocessing** : les fonctions exécutées dans un `ProcessPoolExecutor` / `multiprocessing.Pool` sont définies **au niveau du module** (jamais à l'intérieur du bloc `if __name__ == '__main__'`). C'est indispensable avec les méthodes de démarrage `spawn` / `forkserver` (défaut sous Windows/macOS, et sous **Linux à partir de Python 3.14**), où le processus enfant réimporte le module : une fonction définie sous le garde y serait invisible (`BrokenProcessPool`).
+- **Mesure du temps** : les durées utilisent `time.perf_counter()` (horloge monotone, adaptée aux mesures d'intervalle), comme dans le cours. `time.time()` n'est conservé que pour les *timestamps* horodatés (expiration de cache, rate-limiting).
+- **Compatibilité** : les 32 exemples s'exécutent sur **Python 3.10 à 3.14** (vérifié). La plupart utilisent le style compatible 3.10 (`asyncio.wait_for`, `asyncio.gather`). Les exemples reposant sur des nouveautés récentes sont protégés par un test `sys.version_info` qui affiche un message de repli sur les versions antérieures : `02_08` (`asyncio.TaskGroup` / `asyncio.timeout`, Python 3.11+) et `01_07` (`InterpreterPoolExecutor`, Python 3.14+).

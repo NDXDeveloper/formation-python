@@ -122,9 +122,9 @@ config.local.py
 Liste toutes les dépendances (bibliothèques externes) de votre projet avec leurs versions :
 
 ```
-requests==2.31.0  
-pandas>=2.0.0  
-numpy==1.24.3  
+requests==2.32.5  
+pandas>=2.2.0  
+numpy==2.4.6  
 ```
 
 Installation des dépendances :
@@ -261,18 +261,20 @@ description = "Description de mon projet"
 authors = ["Votre Nom <email@example.com>"]  
 
 [tool.poetry.dependencies]
-python = "^3.10"  
-requests = "^2.31.0"  
-pandas = "^2.0.0"  
+python = "^3.12"  
+requests = "^2.32.0"  
+pandas = "^2.2.0"  
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"  
-black = "^23.0.0"  
+pytest = "^9.0.0"  
+black = "^26.0.0"  
 
 [build-system]
 requires = ["poetry-core"]  
 build-backend = "poetry.core.masonry.api"  
 ```
+
+> **Poetry 2.0+** : vous pouvez déclarer les métadonnées dans le tableau standard `[project]` (PEP 621), partagé avec pip/uv/hatch, plutôt que dans `[tool.poetry]`. L'ancienne syntaxe reste prise en charge.
 
 #### Commandes Poetry essentielles
 
@@ -290,16 +292,109 @@ poetry install
 poetry run python mon_script.py
 
 # Activer l'environnement virtuel
-poetry shell
+# (Poetry 2.0+ : la commande `poetry shell` a été retirée du cœur.
+#  `poetry env activate` affiche la commande d'activation ; exécutez-la,
+#  ou installez le plugin `poetry-plugin-shell` pour retrouver `poetry shell`.)
+poetry env activate
 
 # Mettre à jour les dépendances
 poetry update
 
-# Générer requirements.txt (pour compatibilité)
+# Générer requirements.txt (depuis Poetry 2.0, fourni par le plugin
+# poetry-plugin-export)
 poetry export -f requirements.txt --output requirements.txt
 ```
 
-### 2. Black - Formateur de code automatique
+### 2. uv - le gestionnaire de projet tout-en-un (le plus rapide)
+
+**uv**, développé par Astral (les créateurs de Ruff), est un gestionnaire de paquets et de projets écrit en Rust. Apparu en 2024, il s'est imposé comme **l'outil le plus moderne** : il réunit en un seul binaire ce que faisaient `pip`, `virtualenv`, `pyenv` et `pip-tools`, ainsi qu'une grande partie de Poetry — le tout 10 à 100 fois plus vite.
+
+#### Installation
+
+```bash
+# Script officiel (Linux / macOS)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Ou via pip / pipx
+pip install uv
+```
+
+#### Créer et gérer un projet
+
+```bash
+# Initialiser un nouveau projet (crée pyproject.toml + structure de base)
+uv init mon_projet
+cd mon_projet
+
+# Ajouter une dépendance (résout, installe et verrouille en une seule étape)
+uv add requests
+
+# Ajouter des dépendances de développement
+uv add --dev pytest ruff mypy
+
+# Lancer un script ou un outil dans l'environnement du projet
+# (inutile d'activer le venv : uv run s'en charge)
+uv run python mon_script.py
+uv run pytest
+
+# Synchroniser l'environnement avec le fichier de verrouillage
+uv sync
+
+# Mettre à jour le fichier de verrouillage
+uv lock
+```
+
+uv crée et gère automatiquement l'environnement virtuel (`.venv/`) et un fichier de verrouillage **`uv.lock`** qui garantit des installations reproductibles d'une machine à l'autre.
+
+#### Gérer les versions de Python
+
+Contrairement à Poetry, uv sait aussi **installer et sélectionner les versions de Python** :
+
+```bash
+uv python install 3.12      # Installer Python 3.12
+uv python pin 3.12          # Fixer la version utilisée par le projet
+```
+
+#### Le fichier `pyproject.toml` avec uv
+
+uv s'appuie sur le tableau **`[project]`** standard (PEP 621), partagé par tout l'écosystème (pip, build, hatch...), et sur les groupes de dépendances standards (PEP 735) :
+
+```toml
+[project]
+name = "mon_projet"
+version = "0.1.0"
+description = "Description de mon projet"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.32.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.0",
+    "ruff>=0.15.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+```
+
+#### Exécuter un outil ponctuellement (uvx)
+
+```bash
+# Lancer un outil sans l'installer durablement (équivalent de "pipx run")
+uvx ruff check .
+uvx ruff format .
+```
+
+> **Poetry ou uv ?** Les deux sont d'excellents choix. Poetry est mature et très répandu ; uv est plus récent, nettement plus rapide, et gère en plus les versions de Python. Tous deux reposent sur `pyproject.toml` : Poetry 2.0+ comme uv lisent le tableau standard `[project]`, ce qui facilite le passage de l'un à l'autre.
+
+### 3. Black - Formateur de code automatique
 
 **Black** formate automatiquement votre code selon les standards Python (PEP 8). Plus besoin de débats sur le style de code !
 
@@ -332,7 +427,7 @@ black --diff src/
 ```toml
 [tool.black]
 line-length = 88  
-target-version = ['py310']  
+target-version = ['py312']  
 include = '\.pyi?$'  
 extend-exclude = '''  
 /(
@@ -362,9 +457,9 @@ def ma_fonction(x, y, z):
     return resultat
 ```
 
-### 3. Ruff - Linter ultra-rapide
+### 4. Ruff - Linter et formateur ultra-rapide
 
-**Ruff** est un linter Python moderne, écrit en Rust, qui remplace plusieurs outils (Flake8, isort, etc.) et est 10-100 fois plus rapide !
+**Ruff** est un linter **et formateur** Python moderne, écrit en Rust, 10 à 100 fois plus rapide que les outils traditionnels. Il remplace à lui seul Flake8, isort, pyupgrade et bien d'autres ; et, avec la commande `ruff format`, il remplace aussi **Black** (formatage compatible à plus de 99 %).
 
 #### Installation
 
@@ -377,13 +472,16 @@ poetry add --group dev ruff
 #### Utilisation
 
 ```bash
-# Analyser votre code
+# Analyser votre code (linting)
 ruff check .
 
-# Corriger automatiquement les erreurs possibles
+# Corriger automatiquement ce qui peut l'être
 ruff check --fix .
 
-# Formater les imports
+# Formater le code (remplace Black, compatible à plus de 99 %)
+ruff format .
+
+# Trier les imports (règle isort intégrée)
 ruff check --select I --fix .
 ```
 
@@ -392,7 +490,7 @@ ruff check --select I --fix .
 ```toml
 [tool.ruff]
 line-length = 88  
-target-version = "py310"  
+target-version = "py312"  
 
 # Fichiers à exclure
 exclude = [
@@ -416,11 +514,11 @@ select = [
 
 # Règles à ignorer
 ignore = [
-    "E501",  # line too long (géré par Black)
+    "E501",  # longueur de ligne (gérée par le formateur)
 ]
 ```
 
-### 4. mypy - Vérificateur de types
+### 5. mypy - Vérificateur de types
 
 **mypy** vérifie les annotations de types dans votre code Python pour détecter les erreurs avant l'exécution.
 
@@ -456,13 +554,13 @@ resultat: str = additionner(5, 10)  # Erreur : int assigné à str
 
 ```toml
 [tool.mypy]
-python_version = "3.10"  
+python_version = "3.12"  
 warn_return_any = true  
 warn_unused_configs = true  
 disallow_untyped_defs = true  
 ```
 
-### 5. pre-commit - Hooks Git automatiques
+### 6. pre-commit - Hooks Git automatiques
 
 **pre-commit** exécute automatiquement des vérifications avant chaque commit Git.
 
@@ -479,26 +577,23 @@ poetry add --group dev pre-commit
 ```yaml
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace  # Supprime espaces en fin de ligne
       - id: end-of-file-fixer    # Ajoute ligne vide en fin de fichier
       - id: check-yaml           # Vérifie syntaxe YAML
       - id: check-added-large-files  # Empêche gros fichiers
 
-  - repo: https://github.com/psf/black
-    rev: 23.11.0
-    hooks:
-      - id: black
-
+  # Ruff : linting + formatage (ruff-format remplace Black)
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.6
+    rev: v0.15.11
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix]
+      - id: ruff-format
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.7.1
+    rev: v2.1.0
     hooks:
       - id: mypy
 ```
@@ -511,7 +606,9 @@ pre-commit install
 
 Maintenant, à chaque `git commit`, les outils s'exécutent automatiquement !
 
-### 6. pytest - Framework de tests moderne
+> **Astuce** : gardez les versions des hooks à jour avec `pre-commit autoupdate`, qui réécrit automatiquement les numéros `rev:` vers les dernières versions disponibles.
+
+### 7. pytest - Framework de tests moderne
 
 **pytest** est l'outil de référence pour écrire et exécuter des tests en Python.
 
@@ -575,17 +672,17 @@ readme = "README.md"
 packages = [{include = "mon_projet", from = "src"}]  
 
 [tool.poetry.dependencies]
-python = "^3.10"  
-requests = "^2.31.0"  
+python = "^3.12"  
+requests = "^2.32.0"  
 pydantic = "^2.5.0"  
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"  
-pytest-cov = "^4.1.0"  
-black = "^23.11.0"  
-ruff = "^0.1.6"  
-mypy = "^1.7.0"  
-pre-commit = "^3.5.0"  
+pytest = "^9.0.0"  
+pytest-cov = "^6.0.0"  
+black = "^26.1.0"  
+ruff = "^0.15.0"  
+mypy = "^2.1.0"  
+pre-commit = "^4.0.0"  
 
 [build-system]
 requires = ["poetry-core"]  
@@ -593,7 +690,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88  
-target-version = ['py310']  
+target-version = ['py312']  
 
 [tool.ruff]
 line-length = 88
@@ -603,7 +700,7 @@ select = ["E", "F", "I", "B", "C4", "UP"]
 ignore = ["E501"]  
 
 [tool.mypy]
-python_version = "3.10"  
+python_version = "3.12"  
 warn_return_any = true  
 warn_unused_configs = true  
 
@@ -627,7 +724,7 @@ Description courte et claire de votre projet.
 
 ### Prérequis
 
-- Python 3.10 ou supérieur
+- Python 3.12 ou supérieur
 - Poetry (recommandé) ou pip
 
 ### Avec Poetry (recommandé)
@@ -640,8 +737,8 @@ cd mon-projet
 # Installer les dépendances
 poetry install
 
-# Activer l'environnement
-poetry shell
+# Activer l'environnement (Poetry 2.0+)
+poetry env activate
 ```
 
 ### Avec pip
@@ -804,12 +901,13 @@ poetry run mypy src/
 
 | Tâche | Outil traditionnel | Outil moderne | Avantage |
 |-------|-------------------|---------------|----------|
-| Gestion des dépendances | pip + requirements.txt | Poetry | Résolution de dépendances, fichier lock |
-| Formatage du code | Manual (PEP 8) | Black | Automatique, pas de débat |
-| Linting | Flake8, Pylint | Ruff | 10-100x plus rapide |
+| Gestion des dépendances | pip + requirements.txt | Poetry ou uv | Résolution de dépendances, fichier de verrouillage |
+| Formatage du code | Manuel (PEP 8) | `ruff format` ou Black | Automatique, pas de débat |
+| Linting | Flake8, Pylint, isort | Ruff | 10 à 100x plus rapide, tout-en-un |
 | Vérification de types | Annotations manuelles | mypy | Détection d'erreurs automatique |
 | Tests | unittest | pytest | Syntaxe plus simple, plus de fonctionnalités |
-| Environnement virtuel | venv + pip | Poetry | Géré automatiquement |
+| Environnement virtuel | venv + pip | Poetry ou uv | Géré automatiquement |
+| Versions de Python | pyenv (séparé) | uv | Installe et sélectionne Python |
 
 ---
 
@@ -825,12 +923,12 @@ Ne vous sentez pas obligé d'utiliser tous ces outils dès le début ! Voici une
 - .gitignore
 
 **Niveau 2 - Intermédiaire :**
-- Poetry pour la gestion des dépendances
-- Black pour le formatage
+- uv ou Poetry pour la gestion des dépendances
+- Ruff (`ruff format`) ou Black pour le formatage
 - pytest pour les tests
 
 **Niveau 3 - Avancé :**
-- Ruff pour le linting
+- Ruff pour le linting (et le formatage)
 - mypy pour les types
 - pre-commit pour les hooks
 - Configuration complète dans pyproject.toml
@@ -844,6 +942,7 @@ Ne vous sentez pas obligé d'utiliser tous ces outils dès le début ! Voici une
 
 ### Ressources pour aller plus loin
 
+- **Documentation uv** : https://docs.astral.sh/uv/
 - **Documentation officielle Poetry** : https://python-poetry.org/docs/
 - **Guide Black** : https://black.readthedocs.io/
 - **Documentation Ruff** : https://docs.astral.sh/ruff/
@@ -858,9 +957,9 @@ Une bonne architecture de projet Python moderne comprend :
 
 ✅ **Structure claire** : séparation du code source, des tests et de la documentation
 
-✅ **Gestion des dépendances** : Poetry ou requirements.txt
+✅ **Gestion des dépendances** : uv ou Poetry (ou requirements.txt pour les petits projets)
 
-✅ **Qualité du code** : Black (formatage), Ruff (linting), mypy (types)
+✅ **Qualité du code** : Ruff (linting + formatage, ou Black), mypy (types)
 
 ✅ **Tests automatisés** : pytest avec couverture de code
 

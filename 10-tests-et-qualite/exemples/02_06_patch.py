@@ -5,7 +5,8 @@
 #   Fichier source : 02-mocking-et-fixtures.md
 # ============================================================================
 
-from unittest.mock import patch, Mock
+import os
+from unittest.mock import patch
 
 
 # --- Classe de demonstration ---
@@ -34,7 +35,6 @@ assert resultat_apres == "original"
 print("\n=== patch comme context manager ===")
 
 # Patcher os.path.exists
-import os
 with patch('os.path.exists', return_value=True) as mock_exists:
     resultat = os.path.exists("/fichier/inexistant")
     print(f"os.path.exists mocke : {resultat}")  # True

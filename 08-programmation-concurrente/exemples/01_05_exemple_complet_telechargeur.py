@@ -39,7 +39,7 @@ class TelechargeParallele:
         threads = []
 
         print(f"Démarrage de {len(urls)} téléchargements...")
-        debut = time.time()
+        debut = time.perf_counter()
 
         # Créer et démarrer les threads
         for url in urls:
@@ -56,7 +56,7 @@ class TelechargeParallele:
         for thread in threads:
             thread.join()
 
-        duree_totale = time.time() - debut
+        duree_totale = time.perf_counter() - debut
         print(f"\nTous les téléchargements terminés en {duree_totale:.2f}s")
         return self.resultats
 

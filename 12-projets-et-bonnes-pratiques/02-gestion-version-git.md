@@ -93,7 +93,7 @@ Ouvrez un terminal et tapez :
 git --version
 ```
 
-Si Git est installé, vous verrez la version (ex : `git version 2.42.0`).
+Si Git est installé, vous verrez la version (ex : `git version 2.50.0`).
 
 ### Installation
 
@@ -475,6 +475,12 @@ git push -u origin main
 
 **Note** : `-u` (ou `--set-upstream`) crée une liaison entre votre branche locale et la branche distante. Vous n'aurez à le faire qu'une seule fois.
 
+> **Authentification GitHub/GitLab** : depuis 2021, le mot de passe du compte n'est plus accepté pour `git push` en HTTPS. Trois options modernes :
+>
+> - **HTTPS + token** : générez un *Personal Access Token* (GitHub : Settings → Developer settings → Personal access tokens) et utilisez-le comme mot de passe lors du push ;  
+> - **SSH** : générez une clé avec `ssh-keygen -t ed25519 -C "votre.email@example.com"`, ajoutez la clé publique à votre compte, puis utilisez l'URL SSH (`git@github.com:votre-nom/projet.git`) ;  
+> - **GitHub CLI** (le plus simple) : `gh auth login` configure l'authentification automatiquement.
+
 ### Commandes pour synchroniser avec le distant
 
 ```bash
@@ -579,6 +585,10 @@ ENV/
 htmlcov/
 .tox/
 
+# Caches des outils (Ruff, mypy)
+.ruff_cache/
+.mypy_cache/
+
 # Variables d'environnement
 .env
 .env.local
@@ -639,13 +649,18 @@ Un bon message de commit est essentiel pour maintenir un historique clair.
 
 ### Types de commits courants
 
+Ces préfixes suivent la convention **[Conventional Commits](https://www.conventionalcommits.org/)**, largement adoptée et exploitée par des outils d'automatisation (génération de changelog, calcul automatique de la version) :
+
 - `feat`: nouvelle fonctionnalité
 - `fix`: correction de bug
 - `docs`: modification de documentation
 - `style`: formatage, point-virgules manquants, etc. (pas de changement de code)
 - `refactor`: refactorisation du code (ni feat ni fix)
 - `test`: ajout ou modification de tests
-- `chore`: modifications build, dépendances, etc.
+- `chore`: modifications diverses (config, outillage, etc.)
+- `perf`: amélioration des performances
+- `build`: changements du système de build ou des dépendances
+- `ci`: changements de la configuration d'intégration continue (CI)
 
 ### Exemples de bons messages
 
@@ -685,7 +700,7 @@ git commit -m "fix login, ajout feature export, update readme"
 2. **Soyez concis** : 50 caractères maximum pour la première ligne
 3. **Expliquez le "pourquoi"**, pas le "quoi" (le code montre le "quoi")
 4. **Un commit = une modification logique** : ne mélangez pas plusieurs changements
-5. **Écrivez au présent** : "Corrige le bug" plutôt que "Corrigé le bug"
+5. **Référencez les tickets** : mentionnez le numéro d'issue concerné, par exemple `fix: corrige le calcul de la TVA (#42)`
 
 ---
 

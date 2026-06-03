@@ -123,7 +123,7 @@ except PermissionError:
 print("\n=== ImportError ===")
 
 try:
-    import module_inexistant
+    import module_inexistant  # noqa: F401 - import volontaire : declenche ModuleNotFoundError
 except ModuleNotFoundError:
     print("  Ce module n'est pas installe !")
 

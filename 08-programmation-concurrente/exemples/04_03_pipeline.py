@@ -85,12 +85,12 @@ threads = [
 
 # Demarrer le pipeline
 print("Demarrage du pipeline\n")
-debut = time.time()
+debut = time.perf_counter()
 
 for t in threads:
     t.start()
 for t in threads:
     t.join()
 
-duree = time.time() - debut
+duree = time.perf_counter() - debut
 print(f"\nPipeline complet en {duree:.2f}s")

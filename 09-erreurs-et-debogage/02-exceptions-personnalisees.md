@@ -352,6 +352,53 @@ except ErreurTransfert as e:
     # On peut aussi logger les détails
 ```
 
+## Chaîner les exceptions : `raise ... from ...`
+
+Très souvent, une exception personnalisée naît d'une exception de plus bas niveau (un fichier absent, une erreur réseau, un parsing raté). La bonne pratique est de **traduire** l'erreur technique en erreur métier **tout en conservant la cause d'origine**, grâce à `raise ... from ...`.
+
+```python
+class ConfigError(Exception):
+    """Erreur de configuration de l'application"""
+    pass
+
+def charger_config(chemin):
+    try:
+        with open(chemin, encoding="utf-8") as f:
+            return int(f.read())
+    except FileNotFoundError as e:
+        raise ConfigError(f"Configuration introuvable : {chemin}") from e
+```
+
+Si le fichier est absent, la trace montre **les deux** exceptions, reliées :
+
+```
+FileNotFoundError: [Errno 2] No such file or directory: 'absent.txt'
+
+The above exception was the direct cause of the following exception:
+
+ConfigError: Configuration introuvable : absent.txt
+```
+
+C'est précieux pour le débogage : l'utilisateur voit l'erreur métier claire (`ConfigError`), et le développeur garde la cause technique exacte (`FileNotFoundError`).
+
+### Trois cas à connaître
+
+| Écriture | Effet |
+|----------|-------|
+| `raise NouvelleErreur(...) from cause` | Lie explicitement la cause (`__cause__`) — « *direct cause of* » |
+| `raise NouvelleErreur(...)` dans un `except` | Chaînage **implicite** (`__context__`) — « *During handling...* » |
+| `raise NouvelleErreur(...) from None` | **Supprime** la chaîne (masque la cause de bas niveau) |
+
+> **Astuce (Python 3.11+)** : pour ajouter du contexte sans changer le type de l'exception, utilisez `add_note()`. Les notes apparaissent dans la trace, sous le message d'erreur.
+
+```python
+try:
+    traiter_ligne(ligne)
+except ValueError as e:
+    e.add_note(f"Erreur à la ligne {numero} du fichier {chemin}")
+    raise
+```
+
 ## Bonnes pratiques
 
 ### ✅ À FAIRE
@@ -542,6 +589,7 @@ except ErreurBibliotheque as e:
 - Ajoutez des attributs pour stocker des informations contextuelles
 - Documentez vos exceptions avec des docstrings
 - Utilisez `super().__init__(message)` pour initialiser correctement l'exception parente
+- Chaînez les exceptions avec `raise ... from ...` pour traduire une erreur de bas niveau en erreur métier sans perdre la cause d'origine
 
 ---
 

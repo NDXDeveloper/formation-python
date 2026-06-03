@@ -74,6 +74,8 @@ BaseException
         └── FutureWarning
 ```
 
+> **Depuis Python 3.11**, deux branches complètent cet arbre : `BaseExceptionGroup` (sous `BaseException`) et `ExceptionGroup` (sous `Exception`). Elles permettent de regrouper *plusieurs* exceptions levées en même temps — voir la section « Les groupes d'exceptions » plus bas.
+
 ## Les exceptions les plus courantes
 
 ### 1. **BaseException** - La racine de tout
@@ -349,6 +351,40 @@ except IndexError:
 except LookupError:
     print("Erreur de recherche")  # Plus général ensuite
 ```
+
+## Les groupes d'exceptions : `ExceptionGroup` et `except*` (Python 3.11+)
+
+Parfois, plusieurs erreurs surviennent **en même temps** : par exemple plusieurs tâches asynchrones qui échouent (`asyncio.TaskGroup`, voir la section 8.2), ou plusieurs validations qui échouent ensemble. Depuis Python 3.11, on peut les regrouper dans un **`ExceptionGroup`**.
+
+```python
+def valider_formulaire():
+    raise ExceptionGroup("Le formulaire contient des erreurs", [
+        ValueError("L'âge doit être positif"),
+        TypeError("Le nom doit être une chaîne"),
+        ValueError("L'email est invalide"),
+    ])
+```
+
+Pour les traiter, on utilise la nouvelle syntaxe **`except*`** (avec un astérisque), qui capture *toutes* les exceptions d'un type donné dans le groupe :
+
+```python
+try:
+    valider_formulaire()
+except* ValueError as eg:
+    print(f"{len(eg.exceptions)} erreur(s) de valeur")
+except* TypeError as eg:
+    print(f"{len(eg.exceptions)} erreur(s) de type")
+```
+
+**Sortie** :
+```
+2 erreur(s) de valeur
+1 erreur(s) de type
+```
+
+Différence clé avec `except` classique : un `except` normal ne traite qu'**une seule** exception, tandis que `except*` peut déclencher **plusieurs** branches pour un même groupe — ici, la branche `ValueError` *et* la branche `TypeError` s'exécutent toutes les deux.
+
+> **À noter** : `except*` ne se mélange pas avec `except` classique dans un même `try`. Réservez les groupes d'exceptions aux cas où plusieurs erreurs indépendantes peuvent réellement survenir ensemble (concurrence, validations groupées) ; pour une erreur unique, l'`except` classique reste la norme.
 
 ## Résumé
 

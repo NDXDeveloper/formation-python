@@ -237,6 +237,30 @@ def test_utilisateur_existe(utilisateur_dans_db, base_de_donnees):
     assert base_de_donnees["users"][0]["nom"] == "Alice"
 ```
 
+### Partager des fixtures entre fichiers : conftest.py
+
+Une fixture définie dans un fichier de test n'est visible que dans ce fichier. Pour **partager des fixtures entre plusieurs fichiers**, placez-les dans un fichier spécial nommé **`conftest.py`** : pytest le découvre automatiquement et rend ses fixtures disponibles à tous les tests du même dossier (et de ses sous-dossiers), **sans aucun import**.
+
+```python
+# fichier: conftest.py
+import pytest
+from compte import Compte
+
+@pytest.fixture
+def compte():
+    """Fixture partagée par tous les tests du dossier."""
+    return Compte("Alice", solde=1000)
+```
+
+```python
+# fichier: test_depot.py - la fixture 'compte' est disponible sans l'importer
+def test_deposer(compte):
+    compte.deposer(500)
+    assert compte.solde == 1500
+```
+
+`conftest.py` est l'emplacement standard de la configuration des tests : on y place aussi les fixtures de portée `session`, les fixtures partagées par tout le projet et les hooks pytest.
+
 ### Fixtures avec unittest
 
 Avec unittest, on utilise les méthodes `setUp()` et `tearDown()` :
@@ -906,6 +930,30 @@ print(len(db))  # 10
 
 `patch` est le moyen le plus courant de mocker en Python. Il remplace temporairement un objet dans votre code.
 
+### Où patcher : la règle d'or
+
+C'est le piège le plus courant du mocking : **on patche un objet là où il est *utilisé*, pas là où il est *défini***. Quand un module fait `from X import fonction`, il crée sa propre référence locale à `fonction` ; patcher `X.fonction` n'a alors plus aucun effet sur cette référence.
+
+```python
+# fichier: service.py
+from temps import maintenant   # référence locale : service.maintenant
+
+def horodater():
+    return maintenant()
+```
+
+```python
+# ✅ Correct : on patche la référence dans le module qui l'utilise
+with patch('service.maintenant', return_value="2024-01-01"):
+    assert service.horodater() == "2024-01-01"
+
+# ❌ Sans effet : service.py possède déjà sa propre référence 'maintenant'
+with patch('temps.maintenant', return_value="2024-01-01"):
+    service.horodater()   # appelle toujours la vraie fonction
+```
+
+**Règle** : la cible de `patch` est le chemin de l'objet *dans le module testé*. C'est pourquoi l'exemple météo plus haut patche `meteo.requests.get` (la référence utilisée par `meteo.py`), et non `requests.get`.
+
 ### patch comme décorateur
 
 ```python
@@ -988,6 +1036,29 @@ def test_patch_object():
     # Après le contexte, la méthode est restaurée
     assert obj.methode_originale() == "original"
 ```
+
+### monkeypatch : le patch natif de pytest
+
+pytest fournit sa propre fixture **`monkeypatch`** pour remplacer des attributs, des variables d'environnement ou des entrées de dictionnaire — avec **restauration automatique** à la fin du test (ni `with`, ni décorateur) :
+
+```python
+import os
+
+def lire_cle_api():
+    return os.environ["API_KEY"]
+
+def test_lire_cle_api(monkeypatch):
+    monkeypatch.setenv("API_KEY", "cle_de_test")
+    assert lire_cle_api() == "cle_de_test"
+    # API_KEY est restauree automatiquement apres le test
+
+def test_patch_attribut(monkeypatch):
+    import meteo
+    monkeypatch.setattr(meteo, "obtenir_temperature", lambda ville: 5)
+    assert meteo.recommander_vetements("Oslo") == "Manteau et écharpe"
+```
+
+Principales méthodes : `setattr`, `delattr`, `setenv`, `delenv`, `setitem`, `delitem`, `chdir`. En pratique : `monkeypatch` est plus concis pour les **variables d'environnement** et les **attributs** ; `unittest.mock.patch` reste préférable pour les mocks avec `return_value`/`side_effect` et les **assertions d'appel** (`assert_called_once`, etc.).
 
 ---
 
@@ -1289,6 +1360,7 @@ def test_appel_api_avec_bons_parametres(service_paiement, mock_db):
 | Simuler une base de données | Mock |
 | Contrôler le temps | patch sur datetime |
 | Simuler des fichiers | mock_open |
+| Patcher un attribut / variable d'environnement | monkeypatch (pytest) |
 | Vérifier qu'une fonction a été appelée | Assertions sur mock |
 
 ### Commandes pytest utiles

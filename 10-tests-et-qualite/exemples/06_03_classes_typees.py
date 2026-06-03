@@ -1,7 +1,7 @@
 # ============================================================================
 #   Section 10.6 : Validation de types avec mypy
 #   Description : Classes typees - annotations de classe, TypeAlias,
-#                 Generic[T], classe comme type de parametre
+#                 Generic[T], et syntaxe PEP 695 (type, class C[T])
 #   Fichier source : 06-validation-types-mypy.md
 # ============================================================================
 
@@ -115,3 +115,34 @@ print(f"boite_str.obtenir() = {boite_str.obtenir()}")
 
 boite_liste: Boite[list[int]] = Boite([1, 2, 3])
 print(f"boite_liste.obtenir() = {boite_liste.obtenir()}")
+
+
+# --- PEP 695 : syntaxe moderne (Python 3.12+) ---
+print("\n=== PEP 695 (Python 3.12+) ===")
+
+# Le mot-cle 'type' remplace TypeAlias (deprecie depuis 3.12)
+type Identifiant = int
+
+
+# Generiques sans declarer de TypeVar explicite
+class BoiteMod[T]:
+    """Boite generique en syntaxe PEP 695."""
+
+    def __init__(self, contenu: T) -> None:
+        self.contenu = contenu
+
+    def obtenir(self) -> T:
+        """Retourne le contenu."""
+        return self.contenu
+
+
+def premier[T](elements: list[T]) -> T:
+    """Retourne le premier element (fonction generique PEP 695)."""
+    return elements[0]
+
+
+identifiant: Identifiant = 1
+boite_mod: BoiteMod[str] = BoiteMod("PEP 695")
+print(f"identifiant (type Identifiant = int) = {identifiant}")
+print(f"BoiteMod('PEP 695').obtenir() = {boite_mod.obtenir()}")
+print(f"premier([10, 20, 30]) = {premier([10, 20, 30])}")

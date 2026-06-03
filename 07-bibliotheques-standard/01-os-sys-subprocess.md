@@ -150,6 +150,8 @@ for cle, valeur in os.environ.items():
 os.environ["MA_VARIABLE"] = "ma_valeur"
 ```
 
+> 📝 **Portabilité :** la variable `HOME` n'existe que sur Linux/macOS (sur Windows, c'est `USERPROFILE`). Pour obtenir le dossier personnel de l'utilisateur de façon portable, utilisez plutôt `os.path.expanduser("~")` ou, plus moderne, `pathlib.Path.home()`.
+
 ### Exemple pratique : Parcourir une arborescence
 
 ```python
@@ -380,7 +382,7 @@ import sys
 def obtenir_info_python():
     """Obtient la version de Python via subprocess"""
     resultat = subprocess.run(
-        ["python", "--version"],
+        [sys.executable, "--version"],  # sys.executable = le Python courant (plus portable que "python")
         capture_output=True,
         text=True
     )
@@ -620,7 +622,7 @@ chemin = os.path.join("dossier", "fichier.txt")
 
 ### 2. Préférer `subprocess.run()` aux anciennes fonctions
 
-Les fonctions `os.system()`, `os.popen()` et `subprocess.call()` sont obsolètes. Utilisez toujours `subprocess.run()`.
+Les fonctions plus anciennes comme `os.system()`, `os.popen()` ou `subprocess.call()` restent disponibles, mais sont déconseillées pour le nouveau code : `subprocess.run()` (introduit en Python 3.5) est l'interface moderne et recommandée — plus sûre, plus complète et plus simple à utiliser correctement.
 
 ### 3. Gérer les erreurs
 

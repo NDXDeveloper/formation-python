@@ -395,14 +395,14 @@ threads = [
 
 # Démarrer le pipeline
 print("🚀 Démarrage du pipeline\n")  
-debut = time.time()  
+debut = time.perf_counter()  
 
 for t in threads:
     t.start()
 for t in threads:
     t.join()
 
-duree = time.time() - debut  
+duree = time.perf_counter() - debut  
 print(f"\n✅ Pipeline complet en {duree:.2f}s")  
 ```
 
@@ -507,7 +507,7 @@ thread_collecteur = threading.Thread(
 
 # Démarrer
 print("🚀 Démarrage Fan-Out/Fan-In\n")  
-debut = time.time()  
+debut = time.perf_counter()  
 
 thread_dispatcher.start()  
 for t in threads_workers:  
@@ -520,7 +520,7 @@ for t in threads_workers:
     t.join()
 thread_collecteur.join()
 
-duree = time.time() - debut  
+duree = time.perf_counter() - debut  
 print(f"\n✅ Fan-Out/Fan-In complet en {duree:.2f}s")  
 ```
 
@@ -679,14 +679,14 @@ nombres = list(range(1, 101))
 
 # Phase Map (parallèle)
 with ProcessPoolExecutor() as executor:
-    debut = time.time()
+    debut = time.perf_counter()
     carres = list(executor.map(map_function, nombres))
-    duree_map = time.time() - debut
+    duree_map = time.perf_counter() - debut
 
 # Phase Reduce
-debut = time.time()  
+debut = time.perf_counter()  
 total = reduce_function(carres)  
-duree_reduce = time.time() - debut  
+duree_reduce = time.perf_counter() - debut  
 
 print(f"📊 Map-Reduce:")  
 print(f"  • Nombres: 1-100")  
@@ -1160,7 +1160,7 @@ class WebScraperSystem:
         print(f"🚀 Démarrage du scraping de {len(urls)} URLs")
         print(f"📊 Config: max {self.semaphore._value} concurrent, rate limit {self.rate_limiter.max_calls}/s\n")
 
-        debut = time.time()
+        debut = time.perf_counter()
 
         # Simuler une session HTTP
         session = None  # En vrai: aiohttp.ClientSession()
@@ -1171,7 +1171,7 @@ class WebScraperSystem:
         # Fan-In: Collecter tous les résultats
         resultats = await asyncio.gather(*taches, return_exceptions=True)
 
-        duree = time.time() - debut
+        duree = time.perf_counter() - debut
 
         # Statistiques
         succes = sum(1 for r in resultats if isinstance(r, dict) and r.get('status') != 'error')
@@ -1269,9 +1269,9 @@ import time
 
 def mesurer_performance(fonction, *args):
     """Mesure le temps d'exécution"""
-    debut = time.time()
+    debut = time.perf_counter()
     resultat = fonction(*args)
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"⏱️  {fonction.__name__}: {duree:.2f}s")
     return resultat
 
@@ -1321,6 +1321,20 @@ async def tache_limitee():
 # Peut créer des milliers de connexions
 for i in range(10000):
     asyncio.create_task(traiter())
+```
+
+### 6. Préférez la concurrence structurée (Python 3.11+)
+
+Plusieurs patterns ci-dessus reposent sur `asyncio.gather()`. Depuis Python 3.11, `asyncio.TaskGroup` offre une alternative plus sûre : si une tâche échoue, les autres sont **automatiquement annulées** (voir la section 8.2). C'est particulièrement utile pour **Fan-Out/Fan-In** et **Scatter-Gather**, où l'on lance plusieurs tâches d'un coup.
+
+```python
+import asyncio
+
+async def fan_out_fan_in(items):
+    async with asyncio.TaskGroup() as tg:
+        taches = [tg.create_task(traiter(item)) for item in items]
+    # Toutes les tâches sont terminées ici ; une erreur en annule proprement les autres
+    return [t.result() for t in taches]
 ```
 
 ---

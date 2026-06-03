@@ -149,12 +149,12 @@ def rechercher(
 @app.put("/utilisateurs/{utilisateur_id}")
 def modifier_utilisateur(
     utilisateur_id: int,
-    notifier: bool = False,
-    utilisateur: ModificationUtilisateur = None
+    utilisateur: ModificationUtilisateur,
+    notifier: bool = False
 ):
     return {
         "utilisateur_id": utilisateur_id,
-        "modifications": utilisateur.model_dump() if utilisateur else {},
+        "modifications": utilisateur.model_dump(),
         "notification_envoyee": notifier
     }
 

@@ -116,6 +116,6 @@ print(f"Utilisateur créé: {user}")
 pos = obtenir_position()
 print(f"Position: {pos}")
 
-print(f"Liste d'utilisateurs:")
+print("Liste d'utilisateurs:")
 for u in users:
     print(f"  {u}")

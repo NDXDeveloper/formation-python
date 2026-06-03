@@ -55,7 +55,7 @@ Nous vivons dans une époque où les données sont partout :
 
 - **90% des données mondiales** ont été créées ces deux dernières années
 - Chaque jour, nous générons **2.5 quintillions d'octets** de données
-- D'ici 2025, on estime que **463 exaoctets** de données seront créés chaque jour
+- On estime à environ **463 exaoctets** le volume de données créé chaque jour
 
 ### Impact dans le monde réel
 

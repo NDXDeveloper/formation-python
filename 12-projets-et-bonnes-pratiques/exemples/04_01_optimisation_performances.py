@@ -64,9 +64,9 @@ print(f"  Comprehension est {temps1 / temps2:.2f}x plus rapide")
 def measure_time(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        start = time.time()
+        start = time.perf_counter()
         result = func(*args, **kwargs)
-        end = time.time()
+        end = time.perf_counter()
         print(f"  {func.__name__} a pris {end - start:.4f} secondes")
         return result
     return wrapper
@@ -261,6 +261,30 @@ t_fast = time.time() - start
 
 print(f"\n  Deduplication O(n2) : {t_slow:.4f}s ({len(r1)} doublons)")
 print(f"  Deduplication O(n) : {t_fast:.6f}s ({len(r2)} doublons)")
+
+
+# --- Optimisation des boucles : invariant hors boucle + enumerate ---
+
+import math
+
+
+def boucle_invariant_dans():
+    result = []
+    for i in range(1000):
+        result.append(i * math.sqrt(2))  # sqrt(2) recalcule a chaque tour
+    return result
+
+
+def boucle_invariant_hors():
+    sqrt_2 = math.sqrt(2)  # calcule une seule fois, hors de la boucle
+    return [i * sqrt_2 for i in range(1000)]
+
+
+tb_in = timeit.timeit(boucle_invariant_dans, number=5000)
+tb_out = timeit.timeit(boucle_invariant_hors, number=5000)
+print(f"\n  Invariant DANS la boucle : {tb_in:.4f}s")
+print(f"  Invariant HORS boucle    : {tb_out:.4f}s")
+print(f"  enumerate : {[f'{i}:{v}' for i, v in enumerate(['a', 'b', 'c'])]}")
 
 
 # ============================================================

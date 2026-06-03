@@ -101,7 +101,7 @@ class WebScraperSystem:
         print(f"Demarrage du scraping de {len(urls)} URLs")
         print(f"Config: max {self.semaphore._value} concurrent, rate limit {self.rate_limiter.max_calls}/s\n")
 
-        debut = time.time()
+        debut = time.perf_counter()
 
         session = None  # En vrai: aiohttp.ClientSession()
 
@@ -111,7 +111,7 @@ class WebScraperSystem:
         # Fan-In: Collecter tous les resultats
         resultats = await asyncio.gather(*taches, return_exceptions=True)
 
-        duree = time.time() - debut
+        duree = time.perf_counter() - debut
 
         # Statistiques
         succes = sum(1 for r in resultats if isinstance(r, dict) and r.get('status') != 'error')

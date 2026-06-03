@@ -319,7 +319,7 @@ def test_exemple():
 
     # 3. ASSERT (Vérifier)
     # Vérifier que le résultat est correct
-    assert resultat == True
+    assert resultat is True
 ```
 
 ### Qu'est-ce qu'une assertion ?
@@ -410,13 +410,13 @@ def test_utilisateur_nom():
 
 def test_utilisateur_actif_par_defaut():
     user = Utilisateur("Alice")
-    assert user.actif == True
+    assert user.actif is True
 
 # ❌ Mauvais - teste trop de choses
 def test_utilisateur():
     user = Utilisateur("Alice")
     assert user.nom == "Alice"
-    assert user.actif == True
+    assert user.actif is True
     assert user.email is None
     assert user.age is None
     # ... trop de vérifications
@@ -480,17 +480,17 @@ Un test doit être facile à comprendre, même sans connaître le code testé.
 def test_utilisateur_peut_se_connecter_avec_bon_mot_de_passe():
     user = Utilisateur("alice@test.com", "motdepasse123")
     resultat = user.se_connecter("motdepasse123")
-    assert resultat == True
+    assert resultat is True
 
 def test_utilisateur_ne_peut_pas_se_connecter_avec_mauvais_mot_de_passe():
     user = Utilisateur("alice@test.com", "motdepasse123")
     resultat = user.se_connecter("mauvais")
-    assert resultat == False
+    assert resultat is False
 
 # ❌ Mauvais - test cryptique
 def test_login():
     u = User("a@t.c", "p")
-    assert u.l("p") == True
+    assert u.l("p") is True
 ```
 
 #### 5. Testez les cas limites
@@ -599,12 +599,15 @@ Pour un projet Python professionnel :
 | **unittest** | Tests unitaires (standard) | 10.1 |
 | **pytest-cov** | Couverture de code | 10.3 |
 | **coverage.py** | Couverture de code | 10.3 |
+| **ruff** | Linter + formateur ultra-rapide (remplace flake8, isort, et `black`) | 10.5 |
 | **flake8** | Linting (style) | 10.5 |
 | **black** | Formatage automatique | 10.5 |
 | **isort** | Organisation des imports | 10.5 |
 | **mypy** | Vérification de types | 10.6 |
 | **pylint** | Analyse approfondie | 10.5 |
 | **pre-commit** | Automatisation | Toutes |
+
+> **Note (2024+)** : `ruff` (écrit en Rust) est devenu l'outil de référence pour le style. Il fait à lui seul le travail de **flake8 + isort** et une grande partie de **pylint**, et embarque un formateur compatible Black (`ruff format`) — le tout des dizaines de fois plus vite. Les outils classiques ci-dessus restent valables (et largement utilisés) ; ils sont détaillés en 10.5, où `ruff` est présenté comme l'option moderne recommandée.
 
 ### Pipeline de qualité
 
@@ -637,6 +640,8 @@ Pour un projet Python professionnel :
 │  7. Commit                           │
 └──────────────────────────────────────┘
 ```
+
+> Avec `ruff`, les étapes 2 et 3 fusionnent : `ruff format` (formatage, étape 2) puis `ruff check` (linting, étape 3) — un seul outil au lieu de trois.
 
 ---
 
@@ -722,7 +727,8 @@ Avant de commencer les sections suivantes, installez les outils essentiels :
 pip install pytest pytest-cov
 
 # Linting et formatage
-pip install flake8 black isort
+pip install ruff            # moderne, tout-en-un (recommandé)
+pip install flake8 black isort   # approche classique (alternative)
 
 # Vérification de types
 pip install mypy

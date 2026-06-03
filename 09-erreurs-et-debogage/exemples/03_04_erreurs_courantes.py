@@ -61,7 +61,7 @@ print("\n=== NameError ===\n")
 
 def afficher_nom():
     if 'prenom' in dir():
-        print(prenom)
+        print(prenom)  # noqa: F821 - demo : variable volontairement non definie
     else:
         print("  La variable 'prenom' n'existe pas")
         variables = [v for v in dir() if not v.startswith('_')]

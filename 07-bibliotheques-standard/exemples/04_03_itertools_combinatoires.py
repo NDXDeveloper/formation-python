@@ -116,3 +116,19 @@ villes = ['Paris', 'Lyon', 'Marseille', 'Nice']
 personnes = itertools.zip_longest(noms, ages, villes, fillvalue='N/A')
 for nom, age, ville in personnes:
     print(f"  {nom} - {age} ans - {ville}")
+
+# --- pairwise (3.10+) et batched (3.12+) ---
+print("\n=== pairwise et batched ===")
+
+temperatures = [12, 15, 18, 14, 20]
+print("pairwise (paires consécutives) :")
+for hier, aujourdhui in itertools.pairwise(temperatures):
+    print(f"  {hier} -> {aujourdhui} (variation : {aujourdhui - hier:+d})")
+
+# batched n'existe que depuis Python 3.12
+if hasattr(itertools, "batched"):
+    print("batched (lots de 3) :")
+    for lot in itertools.batched("ABCDEFG", 3):
+        print(f"  {lot}")
+else:
+    print("batched : nécessite Python 3.12+")

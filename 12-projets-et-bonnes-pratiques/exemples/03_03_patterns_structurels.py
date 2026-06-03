@@ -2,8 +2,8 @@
 #   Section 12.3 : Patterns de conception courants
 #   Description : Patterns structurels et pythoniques - Decorator (classe cafe,
 #                 decorateurs fonctions, permissions), Adapter (media, meteo),
-#                 Repository (InMemory, Database), Context Manager (timer,
-#                 transaction, fichier temporaire)
+#                 Repository (InMemory, Database), Context Manager (classe
+#                 __enter__/__exit__, timer, transaction, fichier temporaire)
 #   Fichier source : 03-patterns-de-conception.md
 # ============================================================================
 
@@ -296,8 +296,8 @@ print("=" * 50)
 
 
 class User:
-    def __init__(self, id: int, name: str, email: str):
-        self.id = id
+    def __init__(self, id: int | None, name: str, email: str):
+        self.id = id  # None tant que l'utilisateur n'est pas encore enregistre
         self.name = name
         self.email = email
 
@@ -348,6 +348,35 @@ class InMemoryUserRepository(UserRepository):
         return False
 
 
+class DatabaseUserRepository(UserRepository):
+    """Implementation simulee avec base de donnees (affiche le SQL genere)."""
+
+    def __init__(self, connection):
+        self.connection = connection
+
+    def find_by_id(self, user_id: int) -> User | None:
+        print(f"  SQL: SELECT * FROM users WHERE id = {user_id}")
+        return None
+
+    def find_all(self) -> list[User]:
+        print("  SQL: SELECT * FROM users")
+        return []
+
+    def save(self, user: User) -> User:
+        if user.id:
+            query = (f"UPDATE users SET name='{user.name}', "
+                     f"email='{user.email}' WHERE id={user.id}")
+        else:
+            query = (f"INSERT INTO users (name, email) "
+                     f"VALUES ('{user.name}', '{user.email}')")
+        print(f"  SQL: {query}")
+        return user
+
+    def delete(self, user_id: int) -> bool:
+        print(f"  SQL: DELETE FROM users WHERE id = {user_id}")
+        return True
+
+
 class UserService:
     def __init__(self, repository: UserRepository):
         self.repository = repository
@@ -378,6 +407,12 @@ print(f"\n  Recherche id=1 : {service.get_user(1)}")
 repository.delete(2)
 print(f"  Apres suppression id=2 : {len(service.list_users())} utilisateur(s)")
 
+# Meme service, autre implementation (depot SQL simule) : interface identique
+print("\n  --- Meme UserService avec un depot SQL (simule) ---")
+service_sql = UserService(DatabaseUserRepository("postgresql://localhost/db"))
+service_sql.register_user("Charlie", "charlie@example.com")
+service_sql.get_user(1)
+
 
 # ============================================================
 # PATTERN 10 : CONTEXT MANAGER
@@ -385,6 +420,33 @@ print(f"  Apres suppression id=2 : {len(service.list_users())} utilisateur(s)")
 print(f"\n{'=' * 50}")
 print("PATTERN 10 : CONTEXT MANAGER")
 print("=" * 50)
+
+
+# --- Context manager a base de classe (__enter__ / __exit__) ---
+
+class FileHandler:
+    """Context manager explicite via __enter__ / __exit__."""
+
+    def __init__(self, filename: str, mode: str = "r"):
+        self.filename = filename
+        self.mode = mode
+        self.file = None
+
+    def __enter__(self):
+        print(f"\n  Ouverture de {self.filename}")
+        self.file = open(self.filename, self.mode, encoding="utf-8")
+        return self.file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.file:
+            print(f"  Fermeture de {self.filename}")
+            self.file.close()
+        return False  # False = propage les exceptions eventuelles
+
+
+with FileHandler("/tmp/temp_filehandler_test.txt", "w") as fh:
+    fh.write("Hello World!")
+os.remove("/tmp/temp_filehandler_test.txt")
 
 
 # --- Timer context manager ---

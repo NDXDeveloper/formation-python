@@ -7,7 +7,6 @@
 
 import logging
 import logging.config
-from datetime import datetime
 import tempfile
 import os
 import shutil
@@ -180,6 +179,6 @@ with open(errors_file) as f:
         print("  (vide)")
 
 # Nettoyage
-print(f"\nNettoyage des logs temporaires...")
+print("\nNettoyage des logs temporaires...")
 shutil.rmtree(tmpdir)
 print("Nettoyage terminé.")

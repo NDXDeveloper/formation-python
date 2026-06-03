@@ -35,6 +35,13 @@ age = 25
 ville = "Paris"
 print(f"  Nom: {nom}, Age: {age}, Ville: {ville}")
 
+# f-string auto-documentee (Python 3.8+) : affiche le nom ET la valeur
+print("\n--- f-string auto-documentee {x=} ---")
+x = 42
+print(f"  {x=}")            # x=42
+print(f"  {nom=}")          # nom='Alice'
+print(f"  {age * 2=}")      # age * 2=50 (marche aussi avec une expression)
+
 # Separateurs visuels
 print("\n--- Separateurs visuels ---")
 print("=" * 50)

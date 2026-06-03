@@ -6,7 +6,6 @@
 #   Fichier source : 02-mocking-et-fixtures.md
 # ============================================================================
 
-import pytest
 from unittest.mock import mock_open, patch
 import json
 from config import Configuration

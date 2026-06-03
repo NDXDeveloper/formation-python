@@ -6,7 +6,7 @@
 # ============================================================================
 
 import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import patch, MagicMock
 from notification import ServiceNotification
 
 

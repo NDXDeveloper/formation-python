@@ -50,7 +50,7 @@ async def faire_cafe(nom):
     return f"Café pour {nom}"
 
 async def main_cafe():
-    debut = time.time()
+    debut = time.perf_counter()
 
     tache1 = asyncio.create_task(faire_cafe("Alice"))
     tache2 = asyncio.create_task(faire_cafe("Bob"))
@@ -60,7 +60,7 @@ async def main_cafe():
     resultat2 = await tache2
     resultat3 = await tache3
 
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"\n  Tous les cafés prêts en {duree:.2f}s")
     print(f"  Résultats: {resultat1}, {resultat2}, {resultat3}")
     print(f"  (séquentiel aurait pris ~{0.3 * 3:.2f}s)")

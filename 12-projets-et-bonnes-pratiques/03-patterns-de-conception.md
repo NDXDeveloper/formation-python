@@ -722,19 +722,19 @@ class WhippedCreamDecorator(CoffeeDecorator):
 
 # Utilisation - on peut empiler les décorateurs !
 coffee = SimpleCoffee()  
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
+print(f"{coffee.get_description()}: {coffee.get_cost():.1f}€")  
 # Café simple: 2.0€
 
 coffee = MilkDecorator(coffee)  
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
+print(f"{coffee.get_description()}: {coffee.get_cost():.1f}€")  
 # Café simple, lait: 2.5€
 
 coffee = SugarDecorator(coffee)  
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
+print(f"{coffee.get_description()}: {coffee.get_cost():.1f}€")  
 # Café simple, lait, sucre: 2.7€
 
 coffee = WhippedCreamDecorator(coffee)  
-print(f"{coffee.get_description()}: {coffee.get_cost()}€")  
+print(f"{coffee.get_description()}: {coffee.get_cost():.1f}€")  
 # Café simple, lait, sucre, chantilly: 3.4€
 
 # Ou en une seule ligne
@@ -1135,8 +1135,8 @@ from abc import ABC, abstractmethod
 
 # Modèle de données
 class User:
-    def __init__(self, id: int, name: str, email: str):
-        self.id = id
+    def __init__(self, id: int | None, name: str, email: str):
+        self.id = id  # None tant que l'utilisateur n'est pas encore enregistré
         self.name = name
         self.email = email
 
@@ -1636,6 +1636,22 @@ Python offre des fonctionnalités natives qui remplacent certains patterns class
 - **Context managers** : pattern Resource Management
 - **Générateurs** : pattern Iterator simplifié
 - **Duck typing** : moins besoin d'interfaces formelles
+- **`typing.Protocol`** : interfaces structurelles (duck typing *typé*), alternative légère à `ABC` sans héritage explicite
+- **`dataclasses`** : génèrent `__init__`, `__repr__`, `__eq__`... pour les classes de données
+
+Par exemple, `typing.Protocol` permet de définir une interface sans imposer d'héritage — l'équivalent typé du duck typing :
+
+```python
+from typing import Protocol
+
+class Payeur(Protocol):
+    def payer(self, montant: float) -> str: ...
+
+# Toute classe possédant une méthode payer(montant) -> str est compatible,
+# sans hériter de Payeur (compatibilité vérifiée statiquement par mypy).
+def encaisser(moyen: Payeur, montant: float) -> str:
+    return moyen.payer(montant)
+```
 
 ---
 

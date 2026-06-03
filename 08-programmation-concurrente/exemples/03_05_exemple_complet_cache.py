@@ -83,12 +83,12 @@ threads = [
     for i in range(3)
 ]
 
-debut = time.time()
+debut = time.perf_counter()
 for t in threads:
     t.start()
 for t in threads:
     t.join()
-duree = time.time() - debut
+duree = time.perf_counter() - debut
 
 stats = cache.get_stats()
 total_ops = stats['hits'] + stats['misses']

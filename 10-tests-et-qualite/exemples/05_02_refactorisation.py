@@ -22,10 +22,6 @@ Avant (ne suit pas PEP 8) :
       else:return False
 """
 
-import os
-import sys
-from datetime import datetime
-
 
 def calculer_resultat(valeur_x, valeur_y, seuil):
     """Calcule un resultat base sur un seuil.
@@ -42,8 +38,7 @@ def calculer_resultat(valeur_x, valeur_y, seuil):
 
     if resultat > seuil:
         return resultat
-    else:
-        return 0
+    return 0
 
 
 class Utilisateur:
@@ -86,8 +81,3 @@ bob = Utilisateur("Bob", 16)
 
 print(f"\n{alice.nom} (age: {alice.age}) est majeur : {alice.est_majeur()}")
 print(f"{bob.nom} (age: {bob.age}) est majeur : {bob.est_majeur()}")
-
-# Utilisation correcte de datetime (au lieu de from datetime import *)
-print(f"\nDate actuelle : {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-print(f"Python path : {sys.executable}")
-print(f"Repertoire courant : {os.getcwd()}")

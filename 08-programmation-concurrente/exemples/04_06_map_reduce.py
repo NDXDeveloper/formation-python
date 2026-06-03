@@ -13,7 +13,11 @@ import time
 # ==========================================
 # 1. Map-Reduce simple (somme des carres)
 # ==========================================
-print("=== Map-Reduce (somme des carres) ===\n")
+# Note : les fonctions passees a un ProcessPoolExecutor doivent etre definies
+# au niveau du module (et non dans le bloc if __name__). Sinon, avec les
+# methodes de demarrage 'spawn'/'forkserver' (defaut sous Windows/macOS, et
+# sous Linux a partir de Python 3.14), le processus enfant reimporte le module
+# sans les voir -> BrokenProcessPool.
 
 def map_function(nombre):
     """Phase Map: Calcule le carre"""
@@ -23,19 +27,37 @@ def reduce_function(resultats):
     """Phase Reduce: Somme tous les carres"""
     return sum(resultats)
 
+# ==========================================
+# 2. Map-Reduce : Analyse de texte
+# ==========================================
+
+def compter_mots(texte):
+    """Phase Map: Compte les mots dans un texte"""
+    mots = re.findall(r'\w+', texte.lower())
+    return Counter(mots)
+
+def fusionner_compteurs(compteurs):
+    """Phase Reduce: Fusionne tous les compteurs"""
+    resultat = Counter()
+    for compteur in compteurs:
+        resultat.update(compteur)
+    return resultat
+
 if __name__ == '__main__':
+    print("=== Map-Reduce (somme des carres) ===\n")
+
     nombres = list(range(1, 101))
 
     # Phase Map (parallele)
     with ProcessPoolExecutor() as executor:
-        debut = time.time()
+        debut = time.perf_counter()
         carres = list(executor.map(map_function, nombres))
-        duree_map = time.time() - debut
+        duree_map = time.perf_counter() - debut
 
     # Phase Reduce
-    debut = time.time()
+    debut = time.perf_counter()
     total = reduce_function(carres)
-    duree_reduce = time.time() - debut
+    duree_reduce = time.perf_counter() - debut
 
     print(f"Map-Reduce:")
     print(f"  Nombres: 1-100")
@@ -48,7 +70,7 @@ if __name__ == '__main__':
     print(f"  Verification: {total == attendu} (attendu: {attendu})")
 
     # ==========================================
-    # 2. Map-Reduce : Analyse de texte
+    # Analyse de texte
     # ==========================================
     print("\n=== Map-Reduce (analyse de texte) ===\n")
 
@@ -58,18 +80,6 @@ if __name__ == '__main__':
         "Le langage Python est utilise en science des donnees.",
         "Python est un excellent langage pour debuter.",
     ]
-
-    def compter_mots(texte):
-        """Phase Map: Compte les mots dans un texte"""
-        mots = re.findall(r'\w+', texte.lower())
-        return Counter(mots)
-
-    def fusionner_compteurs(compteurs):
-        """Phase Reduce: Fusionne tous les compteurs"""
-        resultat = Counter()
-        for compteur in compteurs:
-            resultat.update(compteur)
-        return resultat
 
     # Phase Map
     with ProcessPoolExecutor() as executor:

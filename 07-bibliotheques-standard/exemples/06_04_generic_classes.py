@@ -132,3 +132,39 @@ print(f"\nAprès suppression, utilisateur 2: {cache_users.obtenir(2)}")
 # Nettoyer les expirés (rien à nettoyer, tout est frais)
 nb_expires = cache_users.nettoyer_expires()
 print(f"Entrées expirées nettoyées: {nb_expires}")
+
+# ==========================================
+# 3. Self : méthodes qui renvoient l'instance (Python 3.11+)
+# ==========================================
+print("\n=== Self (interface fluide, 3.11+) ===")
+
+import sys
+
+if sys.version_info >= (3, 11):
+    from typing import Self
+
+    class RequeteSQL:
+        """Construit une requête par chaînage (chaque méthode renvoie Self)."""
+
+        def __init__(self) -> None:
+            self.parties: list[str] = []
+
+        def select(self, colonnes: str) -> Self:
+            self.parties.append(f"SELECT {colonnes}")
+            return self
+
+        def depuis(self, table: str) -> Self:
+            self.parties.append(f"FROM {table}")
+            return self
+
+        def ou(self, condition: str) -> Self:
+            self.parties.append(f"WHERE {condition}")
+            return self
+
+        def construire(self) -> str:
+            return " ".join(self.parties)
+
+    requete = RequeteSQL().select("*").depuis("utilisateurs").ou("id = 1").construire()
+    print(f"Requête : {requete}")
+else:
+    print("Self : nécessite Python 3.11+")

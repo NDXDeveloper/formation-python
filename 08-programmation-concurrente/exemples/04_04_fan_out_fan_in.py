@@ -78,7 +78,7 @@ thread_collecteur = threading.Thread(
 
 # Demarrer
 print("Demarrage Fan-Out/Fan-In\n")
-debut = time.time()
+debut = time.perf_counter()
 
 thread_dispatcher.start()
 for t in threads_workers:
@@ -91,5 +91,5 @@ for t in threads_workers:
     t.join()
 thread_collecteur.join()
 
-duree = time.time() - debut
+duree = time.perf_counter() - debut
 print(f"\nFan-Out/Fan-In complet en {duree:.2f}s")

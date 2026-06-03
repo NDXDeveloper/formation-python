@@ -679,7 +679,7 @@ Black a très peu d'options (c'est volontaire !). Fichier `pyproject.toml` :
 ```toml
 [tool.black]
 line-length = 88  
-target-version = ['py310']  
+target-version = ['py312']  
 include = '\.pyi?$'  
 exclude = '''  
 /(
@@ -792,7 +792,7 @@ def additionner(a: int, b: int) -> int:
 resultat = additionner(5, 3)
 
 # ❌ Erreur détectée par mypy
-resultat = additionner("5", "3")  # error: Argument 1 has incompatible type "str"; expected "int"
+resultat = additionner("5", "3")  # error: Argument 1 to "additionner" has incompatible type "str"; expected "int"
 ```
 
 ### 6. bandit : Sécurité
@@ -862,7 +862,7 @@ Dans `pyproject.toml` :
 ```toml
 [tool.ruff]
 line-length = 88  
-target-version = "py310"  
+target-version = "py312"  
 
 [tool.ruff.lint]
 select = [
@@ -921,7 +921,7 @@ mon_projet/
 
 [tool.black]
 line-length = 88  
-target-version = ['py310']  
+target-version = ['py312']  
 include = '\.pyi?$'  
 
 [tool.isort]
@@ -929,7 +929,7 @@ profile = "black"
 line_length = 88  
 
 [tool.mypy]
-python_version = "3.10"  
+python_version = "3.12"  
 warn_return_any = true  
 warn_unused_configs = true  
 disallow_untyped_defs = true  
@@ -1035,7 +1035,7 @@ repos:
     rev: 23.3.0
     hooks:
       - id: black
-        language_version: python3.10
+        language_version: python3.12
 
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
@@ -1060,6 +1060,26 @@ repos:
     hooks:
       - id: bandit
         args: ['-ll']
+```
+
+> Les versions (`rev`) ci-dessus sont indicatives : lancez `pre-commit autoupdate` pour les mettre à jour. Notez aussi que `types-all` est déprécié — installez plutôt les stubs précis nécessaires (`types-requests`, etc.).
+
+**Variante moderne avec ruff** — un seul dépôt remplace Black, isort, flake8 et bandit, ce qui réduit la configuration à deux hooks :
+
+```yaml
+# fichier: .pre-commit-config.yaml (version ruff)
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.0   # mettez la dernière version (pre-commit autoupdate)
+    hooks:
+      - id: ruff          # linting (avec corrections automatiques)
+        args: [--fix]
+      - id: ruff-format   # formatage (remplace Black)
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
 ```
 
 #### Activation
@@ -1100,7 +1120,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -1127,7 +1147,7 @@ Créez `.gitlab-ci.yml` :
 ```yaml
 lint:
   stage: test
-  image: python:3.10
+  image: python:3.12
   script:
     - pip install flake8 black isort
     - black --check .
@@ -1241,26 +1261,24 @@ class user:
 
 ```bash
 $ flake8 exemple.py
-exemple.py:1:10: E401 multiple imports on one line  
-exemple.py:2:1: F403 'from datetime import *' used; unable to detect undefined names  
-exemple.py:3:1: E302 expected 2 blank lines, found 0  
-exemple.py:3:15: E231 missing whitespace after ','  
-exemple.py:4:1: E111 indentation is not a multiple of 4  
-exemple.py:5:2: E225 missing whitespace around operator  
-exemple.py:5:11: E701 multiple statements on one line (colon)  
-exemple.py:6:2: E701 multiple statements on one line (colon)  
-exemple.py:7:1: E302 expected 2 blank lines, found 0  
-exemple.py:7:7: E999 SyntaxError: invalid syntax  
-exemple.py:8:1: E111 indentation is not a multiple of 4  
-exemple.py:8:25: E702 multiple statements on one line (semicolon)  
-exemple.py:9:1: E111 indentation is not a multiple of 4  
-exemple.py:9:6: N802 function name should be lowercase  
-exemple.py:10:2: E111 indentation is not a multiple of 4  
-exemple.py:10:18: E701 multiple statements on one line (colon)  
-exemple.py:11:2: E701 multiple statements on one line (colon)  
+exemple.py:1:1: F401 'sys' imported but unused
+exemple.py:1:1: F401 'os' imported but unused
+exemple.py:1:11: E401 multiple imports on one line
+exemple.py:1:11: E231 missing whitespace after ','
+exemple.py:2:1: F403 'from datetime import *' used; unable to detect undefined names
+exemple.py:3:1: E302 expected 2 blank lines, found 0
+exemple.py:3:11: E231 missing whitespace after ','
+exemple.py:4:2: E111 indentation is not a multiple of 4
+exemple.py:4:8: E225 missing whitespace around operator
+exemple.py:5:13: E701 multiple statements on one line (colon)
+exemple.py:6:6: E701 multiple statements on one line (colon)
+exemple.py:8:36: E702 multiple statements on one line (semicolon)
+exemple.py:9:2: E301 expected 1 blank line, found 0
+exemple.py:10:14: E225 missing whitespace around operator
+...
 ```
 
-**25 erreurs détectées !**
+**36 violations détectées !** (extrait ci-dessus — la liste complète est plus longue).
 
 ### Étape 2 : Appliquer Black
 
@@ -1280,12 +1298,10 @@ Les imports sont organisés.
 
 ### Étape 4 : Corrections manuelles
 
+On finalise à la main ce que les outils ne font pas : ajout des docstrings, noms explicites, et **suppression des imports inutilisés** (`os`, `sys` et `datetime` n'étaient jamais utilisés — un linter les signale en `F401`).
+
 ```python
 """Module de gestion d'utilisateurs."""
-
-import os  
-import sys  
-from datetime import datetime  
 
 
 def calculer_resultat(valeur_x, valeur_y, seuil):
@@ -1303,8 +1319,7 @@ def calculer_resultat(valeur_x, valeur_y, seuil):
 
     if resultat > seuil:
         return resultat
-    else:
-        return 0
+    return 0
 
 
 class Utilisateur:
@@ -1340,8 +1355,12 @@ class Utilisateur:
 $ flake8 exemple.py
 # Aucune erreur !
 
+$ ruff check exemple.py
+# All checks passed!
+
 $ pylint exemple.py
-# Note: 10.00/10
+# Note: 9.09/10 (la seule remarque restante, "too-few-public-methods",
+# se désactive dans .pylintrc comme vu plus haut, d'où 10.00/10)
 ```
 
 ---

@@ -136,6 +136,17 @@ print(f"  Amelioration : {temps_sans/temps_avec:.0f}x plus rapide !")
 assert fibonacci_sans_cache(30) == fibonacci_avec_cache(30) == 832040
 print(f"  Fibonacci(30) = {fibonacci_avec_cache(30)}")
 
+# Depuis Python 3.9, @functools.cache est un raccourci pour @lru_cache(maxsize=None)
+from functools import cache
+
+@cache
+def fibonacci_cache_court(n):
+    if n <= 1:
+        return n
+    return fibonacci_cache_court(n-1) + fibonacci_cache_court(n-2)
+
+print(f"  @cache (3.9+, equivalent) : Fibonacci(30) = {fibonacci_cache_court(30)}")
+
 # ==========================================
 # 6. join() vs + pour concatenation
 # ==========================================

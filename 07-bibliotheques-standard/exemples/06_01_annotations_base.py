@@ -22,7 +22,7 @@ print(f"actif: {actif} (type: {type(actif).__name__})")
 
 # Python n'applique PAS ces types à l'exécution
 age_test: int = 25
-age_test = "vingt-cinq"  # Pas d'erreur à l'exécution !
+age_test = "vingt-cinq"  # Pas d'erreur à l'exécution, mais mypy signale : Incompatible types
 print(f"\nage_test: {age_test} (type: {type(age_test).__name__}) - Python n'empêche pas ça")
 
 # ==========================================

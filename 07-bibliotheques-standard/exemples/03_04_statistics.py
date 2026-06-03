@@ -131,7 +131,7 @@ temperatures = [15, 18, 22, 25, 28, 30, 32, 35, 38, 40]
 ventes_glaces = [50, 65, 85, 110, 140, 160, 180, 210, 250, 280]
 
 correlation = statistics.correlation(temperatures, ventes_glaces)
-print(f"\nTempérature vs ventes de glaces :")
+print("\nTempérature vs ventes de glaces :")
 print(f"Corrélation : {correlation:.3f}")
 if correlation > 0.7:
     print("-> Forte corrélation positive")

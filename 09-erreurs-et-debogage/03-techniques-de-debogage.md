@@ -35,6 +35,22 @@ resultat = calculer_moyenne(notes)
 
 ### Techniques avancées avec print()
 
+**La f-string auto-documentée `f"{x=}"` (Python 3.8+) — le raccourci de débogage :**
+
+Le suffixe `=` dans une f-string affiche **à la fois le nom et la valeur** de l'expression. C'est l'idiome moderne du débogage par `print` : il évite de répéter le nom et le risque de le désynchroniser de la variable.
+
+```python
+x = 42
+nom = "Alice"
+
+print(f"{x=}")              # x=42
+print(f"{nom=}")            # nom='Alice'
+print(f"{x * 2=}")          # x * 2=84   (fonctionne aussi avec une expression)
+print(f"{x=:.2f}")          # x=42.00    (avec un format)
+```
+
+Plus besoin d'écrire `print(f"x = {x}")` : `print(f"{x=}")` fait la même chose, en plus court et sans risque d'erreur de recopie du nom.
+
 **Afficher le type d'une variable :**
 ```python
 valeur = "123"  
@@ -233,6 +249,28 @@ def traiter_donnees(donnees):
 
 traiter_donnees([10, 20, 30, 40])
 ```
+
+### Logger une exception avec sa trace complète
+
+Dans un bloc `except`, préférez **`logging.exception()`** à `logging.error()` : appelé depuis un gestionnaire d'exception, il enregistre le message **et** la trace complète (traceback), bien plus utile pour déboguer.
+
+```python
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+def traiter(donnees):
+    try:
+        return sum(donnees) / len(donnees)
+    except ZeroDivisionError:
+        # À appeler uniquement dans un except : ajoute automatiquement la trace
+        logging.exception("Échec du traitement (liste vide ?)")
+        return None
+
+traiter([])
+```
+
+`logging.error(f"...{e}")` n'affiche que le message ; `logging.exception("...")` y ajoute le traceback complet, sans avoir à le formater soi-même (c'est un raccourci pour `logging.error(..., exc_info=True)`).
 
 ---
 
@@ -538,6 +576,49 @@ def fonction_principale():
 
 fonction_principale()
 ```
+
+### 6.5 Le module warnings - Signaler sans planter
+
+Parfois, vous voulez **avertir** sans interrompre le programme : une fonction obsolète, un paramètre douteux, une situation à surveiller. C'est le rôle du module `warnings` (à ne pas confondre avec le niveau `WARNING` de `logging` : ici on signale un problème de *code*, pas un simple événement d'exécution).
+
+```python
+import warnings
+
+def diviser(a, b):
+    if b == 0:
+        warnings.warn("Division par zéro évitée, retour de None", UserWarning)
+        return None
+    return a / b
+
+diviser(10, 0)
+# script.py:5: UserWarning: Division par zéro évitée, retour de None
+```
+
+**Déprécier une fonction** (l'usage le plus courant) :
+
+```python
+def ancienne_api():
+    warnings.warn(
+        "ancienne_api() est obsolète, utilisez nouvelle_api()",
+        DeprecationWarning,
+        stacklevel=2,  # pointe vers l'appelant, pas vers cette ligne
+    )
+    return 42
+```
+
+**Contrôler les avertissements** — pratique en débogage et dans les tests :
+
+```python
+import warnings
+
+# Transformer TOUS les avertissements en exceptions (pour les traquer)
+warnings.simplefilter("error")
+
+# Ou, sans modifier le code, en ligne de commande :
+#   python -W error mon_script.py
+```
+
+> **Bon à savoir** : par défaut, `DeprecationWarning` est **masqué** (sauf lorsqu'il provient du module `__main__`). C'est voulu : les utilisateurs finaux ne sont pas pollués par ces messages, mais les développeurs et les tests (lancés avec `-W error` ou `-W default`) les détectent.
 
 ---
 

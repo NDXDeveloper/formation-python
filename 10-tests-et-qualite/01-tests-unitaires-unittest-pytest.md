@@ -395,7 +395,8 @@ def test_assertions_basiques():
 
     # None
     assert None is None
-    assert "something" is not None
+    valeur = "quelque chose"
+    assert valeur is not None
 
 def test_approximation():
     """Teste l'égalité approximative."""
@@ -462,6 +463,15 @@ def test_lecture_fichier(fichier_temporaire):
     assert contenu == "contenu de test"
 ```
 
+> **Astuce (fixture intégrée)** : pour les fichiers et dossiers temporaires, pytest fournit déjà la fixture **`tmp_path`** — un `pathlib.Path` vers un dossier temporaire **unique par test**, supprimé automatiquement. Plus besoin de créer le fichier dans le répertoire courant ni de nettoyer à la main :
+
+```python
+def test_lecture_fichier(tmp_path):
+    fichier = tmp_path / "test.txt"
+    fichier.write_text("contenu de test", encoding="utf-8")
+    assert fichier.read_text(encoding="utf-8") == "contenu de test"
+```
+
 ### Paramétrer vos tests
 
 pytest permet de tester facilement plusieurs cas avec le même code :
@@ -483,6 +493,33 @@ def test_additionner_plusieurs_cas(a, b, attendu):
 ```
 
 Ce test sera exécuté 5 fois avec des valeurs différentes !
+
+### Ignorer ou marquer des tests : skip, skipif, xfail
+
+En plus du paramétrage, pytest fournit des **marqueurs** pour contrôler l'exécution d'un test selon le contexte :
+
+```python
+import sys
+import pytest
+
+@pytest.mark.skip(reason="fonctionnalité pas encore implémentée")
+def test_a_venir():
+    ...
+
+@pytest.mark.skipif(sys.version_info < (3, 10), reason="nécessite Python 3.10+")
+def test_syntaxe_recente():
+    ...
+
+@pytest.mark.xfail(reason="bug connu, correctif en cours")
+def test_comportement_bugue():
+    assert fonction_buguee() == 42
+```
+
+- **`skip`** : ignore toujours le test (marqué `s` dans le rapport).
+- **`skipif(condition, reason=...)`** : ignore le test si la condition est vraie — pratique pour les différences de version de Python ou de système d'exploitation.
+- **`xfail`** : on *s'attend* à ce que le test échoue (marqué `x`). S'il échoue, c'est un `xfail` attendu (pas une erreur) ; s'il réussit quand même, c'est un `xpass` — le signal que le bug est peut-être corrigé et que le marqueur peut être retiré.
+
+On peut aussi ignorer un test *pendant* son exécution avec `pytest.skip("raison")`, par exemple après avoir détecté qu'une dépendance optionnelle est absente.
 
 ### Exemple complet avec pytest
 

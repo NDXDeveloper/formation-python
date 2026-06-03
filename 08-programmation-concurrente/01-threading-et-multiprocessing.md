@@ -49,6 +49,8 @@ Le GIL est un verrou dans CPython (l'implémentation standard de Python) qui emp
 
 **Exception** : Les opérations I/O libèrent le GIL, donc les threads sont efficaces pour ces tâches.
 
+> **Note (Python 3.13+)** : un build *free-threaded* (sans GIL) existe depuis Python 3.13 — expérimental en 3.13, officiellement supporté en 3.14, mais toujours optionnel (voir le [README du chapitre](/08-programmation-concurrente/README.md)). Sauf si vous avez explicitement installé ce build particulier, le GIL décrit ici s'applique, et tout ce qui suit reste valable.
+
 ---
 
 ## Threading - Exécution avec des Threads
@@ -221,7 +223,7 @@ if __name__ == '__main__':
     print("Le processus est terminé")
 ```
 
-**Note importante** : Le `if __name__ == '__main__':` est nécessaire sous Windows pour éviter des erreurs.
+**Note importante** : Le `if __name__ == '__main__':` est **indispensable** dès qu'on crée des processus. Selon la *méthode de démarrage*, l'interpréteur **réimporte le module principal** dans chaque processus enfant ; sans ce garde-fou, le code de création des processus se réexécuterait dans l'enfant, provoquant une cascade infinie de processus (ou une erreur). C'est le cas sous **Windows** et **macOS** (méthode `spawn`), et désormais sous **Linux** à partir de **Python 3.14** (la méthode par défaut passe de `fork` à `forkserver`). En pratique : placez toujours votre code multiprocessing sous ce garde.
 
 ### Exemple 2 : Calculs parallèles avec Pool
 
@@ -265,18 +267,18 @@ def calcul_intensif(n):
 
 def execution_sequentielle(nombres):
     """Exécution séquentielle"""
-    debut = time.time()
+    debut = time.perf_counter()  # perf_counter : horloge monotone pour mesurer une durée
     resultats = [calcul_intensif(n) for n in nombres]
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"Séquentiel: {duree:.2f} secondes")
     return resultats
 
 def execution_parallele(nombres):
     """Exécution parallèle"""
-    debut = time.time()
+    debut = time.perf_counter()
     with multiprocessing.Pool() as pool:
         resultats = pool.map(calcul_intensif, nombres)
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"Parallèle: {duree:.2f} secondes")
     return resultats
 
@@ -337,6 +339,92 @@ if __name__ == '__main__':
 
 ---
 
+## `concurrent.futures` - L'API moderne unifiée
+
+Gérer manuellement des threads ou des processus (création, `start()`, `join()`, collecte des résultats) devient vite fastidieux. Le module **`concurrent.futures`** offre une **interface de haut niveau** qui fonctionne **à l'identique** pour les threads et les processus : il suffit de changer une seule classe.
+
+- `ThreadPoolExecutor` : un pool de **threads** (pour les tâches I/O-bound)
+- `ProcessPoolExecutor` : un pool de **processus** (pour les tâches CPU-bound)
+
+Les deux exposent exactement la même API. C'est aujourd'hui la **façon recommandée** d'écrire du code concurrent en Python pour la plupart des besoins courants.
+
+### Exemple 1 : `map()` pour traiter une liste
+
+```python
+from concurrent.futures import ThreadPoolExecutor
+
+def traiter(n):
+    return n * n
+
+with ThreadPoolExecutor(max_workers=4) as executor:
+    resultats = list(executor.map(traiter, [1, 2, 3, 4, 5]))
+
+print(resultats)  # [1, 4, 9, 16, 25]
+```
+
+Pour passer aux processus (tâche CPU-bound), il suffit de remplacer `ThreadPoolExecutor` par `ProcessPoolExecutor` — le reste du code est identique :
+
+```python
+from concurrent.futures import ProcessPoolExecutor
+
+def traiter(n):
+    return n * n
+
+if __name__ == '__main__':       # requis : voir la note sur multiprocessing
+    with ProcessPoolExecutor() as executor:
+        resultats = list(executor.map(traiter, [1, 2, 3, 4, 5]))
+    print(resultats)
+```
+
+### Exemple 2 : `submit()` et objets `Future`
+
+`submit()` lance une tâche et renvoie **immédiatement** un objet **`Future`** : une promesse de résultat que l'on récupère plus tard avec `.result()`.
+
+```python
+from concurrent.futures import ThreadPoolExecutor
+
+def telecharger(url):
+    # ... travail I/O (requête réseau) ...
+    return f"contenu de {url}"
+
+urls = ["a.com", "b.com", "c.com"]
+
+with ThreadPoolExecutor(max_workers=3) as executor:
+    # Soumettre les tâches : un Future par tâche, associé à son URL
+    futures = {executor.submit(telecharger, url): url for url in urls}
+
+    # .result() attend la fin de la tâche et renvoie sa valeur
+    for future, url in futures.items():
+        print(f"{url} -> {future.result()}")
+```
+
+### Exemple 3 : `as_completed()` - traiter les résultats au fil de l'eau
+
+`as_completed()` renvoie les `Future` **dès qu'ils se terminent**, sans attendre les plus lents. Idéal pour afficher une progression.
+
+```python
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+
+def tache(n):
+    time.sleep(n)        # les tâches courtes finissent en premier
+    return f"tâche {n} terminée"
+
+with ThreadPoolExecutor(max_workers=3) as executor:
+    futures = [executor.submit(tache, duree) for duree in (3, 1, 2)]
+
+    for future in as_completed(futures):
+        print(future.result())   # ordre d'arrivée : 1, puis 2, puis 3
+```
+
+> **Gestion des erreurs** : une exception levée dans une tâche n'est pas perdue. Elle est **re-levée** au moment de l'appel à `future.result()`, ce qui permet de l'entourer d'un `try/except`. C'est un avantage majeur sur la gestion manuelle des threads, où les exceptions passent souvent inaperçues.
+
+> **Choisir le bon pool** : `ThreadPoolExecutor` pour l'I/O-bound (le GIL est libéré pendant l'attente), `ProcessPoolExecutor` pour le CPU-bound (vrai parallélisme sur plusieurs cœurs). C'est la même distinction que Threading vs Multiprocessing, mais avec une API bien plus simple.
+
+> **Et en Python 3.14** : un troisième exécuteur, `InterpreterPoolExecutor`, rejoint la famille. Il répartit le travail sur des **sous-interpréteurs** (chacun avec son propre GIL), pour un vrai parallélisme CPU plus léger que le multiprocessing — avec la même API. Voir le [README du chapitre](/08-programmation-concurrente/README.md).
+
+---
+
 ## Quand utiliser Threading ou Multiprocessing ?
 
 ### Utilisez **Threading** pour :
@@ -387,7 +475,7 @@ if __name__ == '__main__':
 
 ### 1. Toujours utiliser `if __name__ == '__main__':`
 
-Avec multiprocessing, c'est essentiel pour éviter des erreurs, surtout sous Windows :
+Avec multiprocessing, c'est essentiel pour éviter des erreurs avec les méthodes de démarrage `spawn` et `forkserver` (Windows, macOS, et Linux à partir de Python 3.14) :
 
 ```python
 if __name__ == '__main__':
@@ -498,7 +586,7 @@ class TelechargeParallele:
         threads = []
 
         print(f"Démarrage de {len(urls)} téléchargements...")
-        debut = time.time()
+        debut = time.perf_counter()
 
         # Créer et démarrer les threads
         for url in urls:
@@ -515,7 +603,7 @@ class TelechargeParallele:
         for thread in threads:
             thread.join()
 
-        duree_totale = time.time() - debut
+        duree_totale = time.perf_counter() - debut
         print(f"\n✓ Tous les téléchargements terminés en {duree_totale:.2f}s")
         return self.resultats
 
@@ -545,7 +633,8 @@ if __name__ == '__main__':
 4. Utilisez **Lock** pour protéger les données partagées en threading
 5. Utilisez **Queue** pour la communication entre processus
 6. **Pool** simplifie la parallélisation de listes de tâches
-7. Toujours mesurer les performances avant/après parallélisation
+7. **`concurrent.futures`** (`ThreadPoolExecutor` / `ProcessPoolExecutor`) est l'API de haut niveau recommandée : le même code fonctionne pour les threads et les processus
+8. Toujours mesurer les performances avant/après parallélisation
 
 ---
 
@@ -555,7 +644,7 @@ Dans la section suivante (8.2), nous explorerons la **programmation asynchrone a
 
 **Pour aller plus loin** :
 - Documentation officielle : `threading` et `multiprocessing`
-- Explorez `concurrent.futures` pour une API unifiée
+- Approfondissez `concurrent.futures` : passage de `ThreadPoolExecutor` à `ProcessPoolExecutor`, paramètre `chunksize` de `map()`, annulation de `Future`
 - Apprenez `asyncio` pour une approche asynchrone moderne
 
 ⏭️ [Programmation asynchrone avec asyncio](/08-programmation-concurrente/02-programmation-asynchrone-asyncio.md)

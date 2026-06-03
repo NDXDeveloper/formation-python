@@ -21,7 +21,7 @@ Ce dossier contient les fichiers d'exemples executables pour le chapitre 13.
 - **Fichier source** : `01.2-indexation-slicing-avances.md`
 - **Description** : Indexation 1D/2D, slicing, indexation par liste d'indices, indexation booleenne (conditions simples et multiples), modification avec indexation, indexation fancy (np.ix_, diagonale), fonctions utiles (where, argmax, argmin, nonzero), vues vs copies, exemples pratiques (normalisation min-max, remplacement outliers, scores etudiants, grille meshgrid)
 - **Sortie attendue** :
-  - Indexation: premier element=10, dernier=-1, matrice[0,2]=3
+  - Indexation: premier element=10, dernier element=50, matrice[0,2]=3
   - Slicing: arr[2:5]=[20 30 40], arr inverse=[90 80 ... 0]
   - Indexation booleenne: valeurs > 20 correctement filtrees
   - Vues: modification de la vue modifie l'original
@@ -34,8 +34,8 @@ Ce dossier contient les fichiers d'exemples executables pour le chapitre 13.
 - **Fichier source** : `02-manipulation-donnees-pandas.md`, `02.1-dataframes-et-series.md`
 - **Description** : Series (creation depuis liste/dict/NumPy, acces iloc/label/slice, proprietes, operations arithmetiques, statistiques describe(), filtrage), DataFrames (creation depuis dict/liste/NumPy/Series, proprietes, head/tail, acces colonnes/lignes, loc/iloc, modification, filtrage avec conditions/isin/str.contains, tri), valeurs manquantes (isnull, dropna, fillna), groupby basique, exemples pratiques (analyse ventes, notes etudiants, tracker activite)
 - **Sortie attendue** :
-  - Series: 5 elements, dtype float64
-  - DataFrame: shape (5,3), colonnes [Nom, Age, Ville]
+  - Series: 5 elements, dtype int64
+  - DataFrame: shape (4,4), colonnes [Nom, Age, Ville, Salaire]
   - Filtrage: ages > 30 correctement selectionnes
   - Valeurs manquantes: NaN detectes et remplaces par moyenne
   - GroupBy ventes: somme par produit calculee
@@ -45,7 +45,7 @@ Ce dossier contient les fichiers d'exemples executables pour le chapitre 13.
 - **Fichier source** : `02.2-nettoyage-transformation.md`
 - **Description** : Valeurs manquantes (detection, dropna, fillna avec constantes/stats/ffill/bfill/interpolation), doublons (duplicated, drop_duplicates), conversion de types (astype, to_numeric avec coerce, categories), methodes string (upper/lower/strip/contains/replace/split), dates (to_datetime, extraction composants, timedelta), renommage/reorganisation, apply/map/replace, pivot/melt/stack, concat/merge (inner/left/outer), exemples pratiques (nettoyage ventes, combinaison multi-sources)
 - **Sortie attendue** :
-  - Valeurs manquantes: 2 NaN detectes, remplaces par moyenne ~25
+  - Valeurs manquantes: 2 NaN detectes dans 'Age', remplissage par constante/moyenne/mediane, ffill/bfill, interpolation
   - Doublons: 2 doublons supprimes
   - Conversion categories: reduction memoire significative
   - Methodes string: upper/lower/strip fonctionnent correctement

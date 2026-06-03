@@ -241,7 +241,7 @@ def main():
             print(f"  {ligne.strip()}")
 
     # Nettoyage
-    print(f"\nNettoyage des logs temporaires...")
+    print("\nNettoyage des logs temporaires...")
     shutil.rmtree(tmpdir)
     print("Nettoyage terminé.")
 

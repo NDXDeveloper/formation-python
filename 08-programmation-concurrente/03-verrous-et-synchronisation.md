@@ -54,11 +54,12 @@ for t in threads:
 for t in threads:
     t.join()
 
-print(f"Compteur: {compteur}")  # Résultat imprévisible!
-# Devrait être 500000, mais sera probablement moins
+print(f"Compteur: {compteur}")  # Pas garanti d'afficher 500000 !
 ```
 
-**Résultat typique** : `Compteur: 347823` (au lieu de 500000)
+**Pourquoi c'est un bug** : `compteur += 1` n'est **pas atomique** — c'est en réalité trois étapes (lire `compteur`, ajouter 1, réécrire le résultat). Si un autre thread s'intercale entre la lecture et l'écriture, sa propre mise à jour est écrasée, donc perdue.
+
+> ⚠️ **Le piège du GIL** : sur CPython récent, cette boucle est si rapide que le GIL bascule rarement en plein milieu de l'opération. Vous obtiendrez donc **souvent 500000 quand même** (voire systématiquement sur les versions récentes), comme si tout allait bien. **Ne vous y fiez surtout pas** : le code reste incorrect. Le bug réapparaît dès que la section critique s'allonge (du vrai travail entre la lecture et l'écriture), sous forte charge, sur une autre implémentation de Python, ou sur un build *free-threaded* sans GIL (Python 3.13+). La seule garantie est un **verrou** — voir la section suivante.
 
 ### Deadlock (Interblocage)
 
@@ -104,6 +105,7 @@ Python propose plusieurs outils pour synchroniser les threads et les coroutines 
 | **Event** | Signaler un événement | ✅ | ✅ |
 | **Condition** | Attendre une condition | ✅ | ✅ |
 | **Barrier** | Synchroniser plusieurs threads | ✅ | ❌ |
+| **Queue** | Échanger des données entre threads (thread-safe) | ✅ | ✅ |
 
 ---
 
@@ -626,6 +628,53 @@ print("✅ Production/consommation terminée")
 | `notify()` | Réveille un thread en attente |
 | `notify_all()` | Réveille tous les threads en attente |
 
+> **`notify()` ou `notify_all()` ?** `notify()` ne réveille **qu'un seul** thread en attente, choisi arbitrairement. C'est suffisant **uniquement** si n'importe quel thread réveillé peut effectivement progresser. Dans l'exemple ci-dessus, c'est le cas : un producteur n'attend que si le buffer est **plein**, un consommateur que s'il est **vide** — ces deux situations s'excluent, donc le thread réveillé est toujours du bon type. Dès que cette garantie n'est plus évidente (plusieurs conditions d'attente différentes sur le même verrou), préférez `notify_all()` : on réveille parfois des threads qui se rendormiront, mais on évite à coup sûr l'interblocage par « réveil perdu ».
+
+---
+
+## `queue.Queue` : la file thread-safe prête à l'emploi
+
+Vous venez de construire un buffer producteur-consommateur **à la main** avec une `Condition`. En pratique, la bibliothèque standard fournit déjà cet outil : **`queue.Queue`** est une file **thread-safe** (elle gère ses verrous en interne). C'est souvent la façon la **plus simple et la plus sûre** de faire communiquer des threads — sans manipuler de `Lock` ni de `Condition` soi-même.
+
+```python
+import queue
+import threading
+
+file = queue.Queue(maxsize=10)   # maxsize=0 => taille illimitée
+
+def producteur():
+    for i in range(5):
+        file.put(f"tâche-{i}")    # bloque si la file est pleine
+    file.put(None)                # sentinelle de fin
+
+def consommateur():
+    while True:
+        item = file.get()         # bloque si la file est vide
+        if item is None:
+            break
+        print(f"Traité : {item}")
+        file.task_done()          # signale que cet item est terminé
+
+t_prod = threading.Thread(target=producteur)
+t_cons = threading.Thread(target=consommateur)
+t_prod.start(); t_cons.start()
+t_prod.join(); t_cons.join()
+```
+
+### Méthodes essentielles
+
+| Méthode | Rôle |
+|---------|------|
+| `put(item)` | Ajoute un élément (bloque si la file est pleine) |
+| `get()` | Retire un élément (bloque si la file est vide) |
+| `get(timeout=2)` | Comme `get()`, mais lève `queue.Empty` après 2 secondes |
+| `task_done()` | Signale qu'un élément récupéré a été traité |
+| `join()` | Attend que **tous** les éléments aient été traités |
+
+> **À retenir** : dès que des threads s'échangent des données, pensez à `queue.Queue` **avant** de sortir les verrous. Elle élimine une grande partie des risques de race condition et de deadlock, et c'est l'outil utilisé dans la plupart des patterns du chapitre 8.4 (Producer-Consumer, Worker Pool, Pipeline…).
+
+> **Variantes** : `queue.LifoQueue` (pile, LIFO) et `queue.PriorityQueue` (par priorité) partagent la même interface. L'équivalent asynchrone est `asyncio.Queue` (section 8.2), et pour les processus `multiprocessing.Queue` (section 8.1).
+
 ---
 
 ## Barrier (Barrière)
@@ -735,20 +784,21 @@ def incrementer_threading():
             compteur += 1
 
 threads = [threading.Thread(target=incrementer_threading) for _ in range(5)]  
-debut = time.time()  
+debut = time.perf_counter()  
 
 for t in threads:
     t.start()
 for t in threads:
     t.join()
 
-print(f"Threading: {compteur} en {time.time() - debut:.2f}s")
+print(f"Threading: {compteur} en {time.perf_counter() - debut:.2f}s")
 ```
 
 ### Synchronisation en Asyncio
 
 ```python
 import asyncio
+import time
 
 verrou_async = asyncio.Lock()  
 compteur_async = 0  
@@ -760,12 +810,12 @@ async def incrementer_asyncio():
             compteur_async += 1
 
 async def main():
-    debut = time.time()
+    debut = time.perf_counter()
 
     taches = [incrementer_asyncio() for _ in range(5)]
     await asyncio.gather(*taches)
 
-    print(f"Asyncio: {compteur_async} en {time.time() - debut:.2f}s")
+    print(f"Asyncio: {compteur_async} en {time.perf_counter() - debut:.2f}s")
 
 asyncio.run(main())
 ```
@@ -1076,14 +1126,14 @@ threads = [
 ]
 
 print("🚀 Démarrage des workers")  
-debut = time.time()  
+debut = time.perf_counter()  
 
 for t in threads:
     t.start()
 for t in threads:
     t.join()
 
-duree = time.time() - debut
+duree = time.perf_counter() - debut
 
 # Afficher les statistiques
 stats = cache.get_stats()  
@@ -1124,6 +1174,7 @@ class Singleton:
 
 ```python
 import threading
+import time
 
 class ReadWriteLock:
     """Lock optimisé pour lectures multiples, écriture exclusive"""
@@ -1191,6 +1242,7 @@ def ecrivain(donnees, writer_id, nouvelle_valeur):
 | **Event** | Signaler un événement | Notification de fin de tâche |
 | **Condition** | Attendre une condition spécifique | Producer/Consumer avec buffer |
 | **Barrier** | Synchroniser plusieurs threads | Simulation en phases |
+| **Queue** | Échanger des données sans verrou manuel | Producer/Consumer, Worker Pool |
 
 ---
 
@@ -1202,10 +1254,11 @@ def ecrivain(donnees, writer_id, nouvelle_valeur):
 4. **Event** = Notification simple entre threads
 5. **Condition** = Attente d'une condition avec notification
 6. **Barrier** = Synchronisation de groupe
-7. **Toujours utiliser `with`** pour garantir la libération
-8. **Minimiser les sections critiques** pour les performances
-9. **Ordre cohérent** d'acquisition pour éviter les deadlocks
-10. **Documenter** les invariants et les contraintes de synchronisation
+7. **`queue.Queue`** = file thread-safe ; le moyen le plus simple d'échanger des données entre threads, sans verrou manuel
+8. **Toujours utiliser `with`** pour garantir la libération
+9. **Minimiser les sections critiques** pour les performances
+10. **Ordre cohérent** d'acquisition pour éviter les deadlocks
+11. **Documenter** les invariants et les contraintes de synchronisation
 
 ---
 
@@ -1215,7 +1268,7 @@ def ecrivain(donnees, writer_id, nouvelle_valeur):
 - Documentation officielle : `threading` et `asyncio.locks`
 - Explorez `concurrent.futures` pour une abstraction plus haute
 - Étudiez les patterns de concurrence avancés
-- Apprenez les structures de données thread-safe : `queue.Queue`
+- Approfondissez les variantes de files : `queue.LifoQueue`, `queue.PriorityQueue`, `queue.SimpleQueue`
 
 **Dans la prochaine section** (8.4), nous explorerons les **patterns de concurrence** pour construire des systèmes robustes et scalables.
 

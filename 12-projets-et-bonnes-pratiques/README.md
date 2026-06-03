@@ -40,7 +40,7 @@ Ce chapitre couvre cinq aspects essentiels du développement professionnel en Py
 
 **Ce que vous allez découvrir :**
 - Comment structurer un projet Python de manière professionnelle
-- Les outils modernes qui facilitent le développement (Poetry, Black, Ruff, mypy)
+- Les outils modernes qui facilitent le développement (uv, Poetry, Ruff, Black, mypy)
 - Comment automatiser les tâches répétitives
 - Les standards et conventions de l'industrie
 

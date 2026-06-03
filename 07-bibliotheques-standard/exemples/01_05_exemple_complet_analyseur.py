@@ -82,7 +82,7 @@ def analyser_projet(repertoire):
         print("Pas de depot Git")
 
     # Informations système
-    print(f"\nEnvironnement :")
+    print("\nEnvironnement :")
     print(f"  Python : {sys.version.split()[0]}")
     print(f"  Plateforme : {sys.platform}")
     print(f"  Répertoire de travail : {os.getcwd()}")

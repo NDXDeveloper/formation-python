@@ -481,7 +481,7 @@ Tout ce dont vous avez besoin sera expliqué au fur et à mesure !
 Pour aller plus loin, voici les ressources officielles de FastAPI :
 
 - **Documentation officielle :** https://fastapi.tiangolo.com/
-- **Code source (GitHub) :** https://github.com/tiangolo/fastapi
+- **Code source (GitHub) :** https://github.com/fastapi/fastapi
 - **Tutoriel officiel :** https://fastapi.tiangolo.com/tutorial/
 - **Guide utilisateur :** https://fastapi.tiangolo.com/tutorial/
 - **Référence API :** https://fastapi.tiangolo.com/reference/

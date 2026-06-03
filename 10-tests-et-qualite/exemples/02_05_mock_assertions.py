@@ -60,4 +60,4 @@ print("Avec spec : methode_existante() OK")
 try:
     mock_avec_spec.methode_qui_nexiste_pas()
 except AttributeError as e:
-    print(f"Avec spec : methode_qui_nexiste_pas() -> AttributeError")
+    print(f"Avec spec : methode_qui_nexiste_pas() -> AttributeError: {e}")

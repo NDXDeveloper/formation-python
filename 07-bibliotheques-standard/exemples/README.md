@@ -16,7 +16,7 @@ Ce dossier contient **35 fichiers** d'exemples exécutables couvrant les 6 secti
 
 | Fichier | Description | Fichier source |
 |---------|-------------|----------------|
-| `02_01_datetime_base.py` | datetime.now, timezone, création, composants, strftime, strptime, calcul d'âge, parsing sécurisé | `02-datetime-et-time.md` |
+| `02_01_datetime_base.py` | datetime.now, timezone, création, composants, strftime, strptime, isoformat/fromisoformat, calcul d'âge, parsing sécurisé | `02-datetime-et-time.md` |
 | `02_02_date_time_timedelta.py` | date.today, classe time, timedelta (création, arithmétique), différences de dates, comparaisons, min/max | `02-datetime-et-time.md` |
 | `02_03_module_time.py` | timestamp, localtime, conversion datetime/timestamp, sleep, perf_counter, classe Chronometre (context manager) | `02-datetime-et-time.md` |
 | `02_04_fuseaux_horaires.py` | ZoneInfo (Paris, Tokyo, New York), conversions de fuseaux, UTC, bonnes pratiques | `02-datetime-et-time.md` |
@@ -27,8 +27,8 @@ Ce dossier contient **35 fichiers** d'exemples exécutables couvrant les 6 secti
 | Fichier | Description | Fichier source |
 |---------|-------------|----------------|
 | `03_01_math_base.py` | Constantes (pi, e, tau, inf, nan), calculs cercle, fabs/copysign, ceil/floor/trunc/round, facture avec TVA | `03-math-random-statistics.md` |
-| `03_02_math_avance.py` | sqrt/pow/cbrt/exp, intérêts composés, logarithmes, trigonométrie, distance euclidienne, gcd/lcm/factorial/comb/perm, probabilités loto | `03-math-random-statistics.md` |
-| `03_03_random.py` | random/uniform/randint, choice/choices/sample, shuffle, PaquetDeCartes, distributions (seed=42) | `03-math-random-statistics.md` |
+| `03_02_math_avance.py` | sqrt/pow/cbrt/exp, intérêts composés, logarithmes, trigonométrie, isclose/isnan/isinf, distance euclidienne, gcd/lcm/factorial/comb/perm, probabilités loto | `03-math-random-statistics.md` |
+| `03_03_random.py` | random/uniform/randint, choice/choices/sample, shuffle, PaquetDeCartes, distributions (seed=42), secrets (aléatoire sécurisé) | `03-math-random-statistics.md` |
 | `03_04_statistics.py` | mean/geometric_mean/harmonic_mean, median, mode/multimode, analyse salaires, variance/stdev, quantiles, correlation | `03-math-random-statistics.md` |
 | `03_05_casino_monte_carlo.py` | Simulation casino (roulette+blackjack), estimation de Pi par Monte Carlo, simulation de notes (seed=42) | `03-math-random-statistics.md` |
 
@@ -38,7 +38,7 @@ Ce dossier contient **35 fichiers** d'exemples exécutables couvrant les 6 secti
 |---------|-------------|----------------|
 | `04_01_itertools_infinis.py` | count, cycle, repeat, GestionnaireID | `04-itertools-et-functools.md` |
 | `04_02_itertools_filtrage.py` | chain, compress, dropwhile/takewhile, filterfalse, islice, groupby, analyse de logs | `04-itertools-et-functools.md` |
-| `04_03_itertools_combinatoires.py` | product, permutations, combinations, combinations_with_replacement, grilles loto, accumulate, tee, zip_longest | `04-itertools-et-functools.md` |
+| `04_03_itertools_combinatoires.py` | product, permutations, combinations, combinations_with_replacement, grilles loto, accumulate, tee, zip_longest, pairwise/batched | `04-itertools-et-functools.md` |
 | `04_04_functools_reduce_partial.py` | reduce (somme, produit, max), fusion de dictionnaires, partial (puissance, multiplier, print, conversion d'unités) | `04-itertools-et-functools.md` |
 | `04_05_functools_cache_et_classes.py` | lru_cache (fibonacci), triangle de Pascal, wraps (décorateur chronomètre), total_ordering, singledispatch | `04-itertools-et-functools.md` |
 | `04_06_exemple_complet_transactions.py` | AnalyseurTransactions (groupby catégorie, top clients, CA cumulé) + pipeline de traitement de texte avec Counter | `04-itertools-et-functools.md` |
@@ -63,7 +63,7 @@ Ce dossier contient **35 fichiers** d'exemples exécutables couvrant les 6 secti
 | `06_01_annotations_base.py` | Annotations de variables et fonctions, types de collections (list, dict, tuple, set) | `06-typing-annotations-avancees.md` |
 | `06_02_union_optional_any.py` | Union (|), X \| None, Any, TypeAlias | `06-typing-annotations-avancees.md` |
 | `06_03_callable_typevar.py` | Callable (types de fonctions), TypeVar (génériques, contraintes, bornes) | `06-typing-annotations-avancees.md` |
-| `06_04_generic_classes.py` | Classes génériques avec Generic (Pile[T], Cache[K, V] avec expiration) | `06-typing-annotations-avancees.md` |
+| `06_04_generic_classes.py` | Classes génériques avec Generic (Pile[T], Cache[K, V] avec expiration), Self (interface fluide, 3.11+) | `06-typing-annotations-avancees.md` |
 | `06_05_literal_final_protocol.py` | Literal, Final, Protocol (duck typing structurel), NewType, @overload | `06-typing-annotations-avancees.md` |
 | `06_06_exemple_complet_taches.py` | Système de gestion de tâches (dataclass, Literal, Protocol, TypeAlias, notifications) | `06-typing-annotations-avancees.md` |
 
@@ -158,8 +158,8 @@ Date du jour : YYYY-MM-DD
 === Journal (avec fichier temporaire) ===
 ...
 === Calculateur de temps de travail ===
-Durée travaillée : 8:00:00
-Salaire : 120.00 EUR
+Temps de travail total : 8.00 heures
+Salaire estimé (15.0 EUR/h) : 120.00 EUR
 ...
 ```
 
@@ -177,7 +177,8 @@ Pi = 3.141592653589793
 === Racines et puissances ===
 ...
 === Intérêts composés ===
-Capital après 10 ans : 13,439.16 EUR
+Capital final : 13439.16 EUR
+Intérêts gagnés : 3439.16 EUR
 ...
 ```
 
@@ -441,5 +442,7 @@ Tâches en retard: 1
 - Les exemples `05_*` (logging) utilisent des dossiers temporaires pour les fichiers de log, nettoyés automatiquement à la fin de l'exécution.
 - Les exemples `05_01` utilisent des sous-processus pour contourner la limitation de `basicConfig()` (un seul appel effectif par processus).
 - Les exemples `03_03` et `03_05` (random) utilisent `seed(42)` pour des résultats reproductibles.
-- Les exemples `06_*` (typing) sont des annotations qui n'affectent pas l'exécution mais rendent le code plus clair pour les outils d'analyse (mypy).
+- Les exemples `06_*` (typing) sont des annotations qui n'affectent pas l'exécution mais aident les outils d'analyse (mypy). `06_01` contient **volontairement** une affectation incompatible (`age_test = "vingt-cinq"`) pour illustrer que mypy la détecte alors que Python l'accepte à l'exécution — c'est la seule « erreur » mypy attendue des exemples typing.
+- La syntaxe **PEP 695** (Python 3.12+ : `type Alias = …`, `def f[T](...)`, `class C[T]`) est présentée dans le cours (`06-typing-annotations-avancees.md`) mais **pas** reprise dans ces exemples exécutables : c'est une syntaxe vérifiée *au parsing*, donc un fichier qui la contient échoue avec `SyntaxError` sur Python 3.10/3.11 — même placée derrière un test de version. Les exemples utilisent donc l'équivalent classique `TypeVar`/`Generic`, exécutable sur toutes les versions visées.
 - Tous les exemples créant des fichiers/dossiers temporaires nettoient leurs résidus à la fin.
+- Pour rester compatibles avec **Python 3.10** (version minimale du cours), quelques exemples gardent les fonctions récentes derrière un test de version : `math.cbrt` et `typing.Self` (Python 3.11+), `itertools.batched` (3.12+). Sur une version antérieure, ces blocs affichent un message de repli au lieu de planter. *(Vérifié : les 35 exemples s'exécutent sur Python 3.10, 3.12 et 3.13.)*

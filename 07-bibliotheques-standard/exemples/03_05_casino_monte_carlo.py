@@ -68,7 +68,7 @@ class Casino:
                 'resultat': resultat, 'gain': gain, 'capital': self.capital}
 
     def statistiques(self):
-        print(f"\nStatistiques de jeu")
+        print("\nStatistiques de jeu")
         print("=" * 50)
         print(f"Capital initial : {self.historique[0]:.2f} EUR")
         print(f"Capital actuel : {self.capital:.2f} EUR")

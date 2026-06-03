@@ -26,7 +26,7 @@ date_paris = datetime(2025, 10, 27, 14, 30, tzinfo=ZoneInfo("Europe/Paris"))
 date_tokyo = date_paris.astimezone(ZoneInfo("Asia/Tokyo"))
 date_ny = date_paris.astimezone(ZoneInfo("America/New_York"))
 
-print(f"14h30 à Paris :")
+print("14h30 à Paris :")
 print(f"  -> Tokyo    : {date_tokyo.strftime('%H:%M %Z')}")
 print(f"  -> New York : {date_ny.strftime('%H:%M %Z')}")
 

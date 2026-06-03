@@ -491,13 +491,15 @@ print(list(iter1))  # [1, 2, 3, 4, 5]
 print(list(iter2))  # [1, 2, 3, 4, 5]  
 print(list(iter3))  # [1, 2, 3, 4, 5]  
 
-# Utile pour parcourir plusieurs fois sans stocker en mémoire
+# Utile pour re-parcourir une source à passage unique (ex. un générateur)
 data = range(1000000)  
 iter_pairs, iter_impairs = itertools.tee(data, 2)  
 
 pairs = (x for x in iter_pairs if x % 2 == 0)  
 impairs = (x for x in iter_impairs if x % 2 == 1)  
 ```
+
+> ⚠️ `tee()` **met en tampon** les éléments déjà produits tant que tous les itérateurs ne les ont pas consommés. Si vous épuisez un itérateur **avant** l'autre (au lieu de les faire avancer en parallèle), `tee` finit par stocker **toute** la séquence en mémoire — dans ce cas, convertir la source en `list()` une fois est préférable.
 
 ### zip_longest() - Zip avec remplissage
 
@@ -525,11 +527,30 @@ for nom, age, ville in personnes:
     print(f"{nom} - {age} ans - {ville}")
 ```
 
+### pairwise() et batched()
+
+```python
+import itertools
+
+# pairwise() (Python 3.10+) : paires d'éléments consécutifs (fenêtre glissante de 2)
+temperatures = [12, 15, 18, 14, 20]
+for hier, aujourdhui in itertools.pairwise(temperatures):
+    print(f"{hier}° -> {aujourdhui}° (variation : {aujourdhui - hier:+d})")
+# 12° -> 15° (+3), 15° -> 18° (+3), 18° -> 14° (-4), 14° -> 20° (+6)
+
+# batched() (Python 3.12+) : découpe un itérable en lots de taille fixe
+for lot in itertools.batched("ABCDEFG", 3):
+    print(lot)
+# ('A', 'B', 'C'), ('D', 'E', 'F'), ('G',)   <- le dernier lot peut être plus court
+```
+
 ---
 
 ## Le module `functools` - Outils de programmation fonctionnelle
 
 Le module `functools` fournit des outils pour travailler avec des fonctions d'ordre supérieur (fonctions qui prennent ou retournent d'autres fonctions).
+
+> 📝 Certaines de ces fonctions — `reduce`, `partial`, `wraps`, `lru_cache`/`cache` — ont déjà été rencontrées au chapitre [5 sur la programmation fonctionnelle](/05-programmation-fonctionnelle/README.md). Ce chapitre les regroupe comme **référence du module `functools`** et y ajoute des outils nouveaux : `total_ordering` et `singledispatch`.
 
 ### Import du module
 
@@ -971,6 +992,8 @@ analyseur.statistiques_globales()
 # Afficher les informations de cache
 print(f"\n🔍 Cache info : {analyseur.total_par_client.cache_info()}")
 ```
+
+> 📝 **Attention — `@lru_cache` sur une méthode :** ici `total_par_client` est une *méthode* décorée par `lru_cache`. Cela fonctionne, mais le cache conserve une référence à l'instance (`self`) tant qu'il existe : sur des objets à longue durée de vie, cela peut empêcher leur libération par le ramasse-miettes (fuite mémoire). Pour des cas réels, préférez mettre en cache une **fonction** indépendante, ou recalculez le total une fois et stockez-le dans l'instance.
 
 ---
 

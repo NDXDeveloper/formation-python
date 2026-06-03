@@ -13,7 +13,6 @@ avec des fonctionnalites de creation, lecture, mise a jour et
 suppression (CRUD).
 
 Example:
-    >>> from api_taches import GestionnaireTaches, Tache
     >>> gestionnaire = GestionnaireTaches()
     >>> tache = gestionnaire.creer_tache("Acheter du pain")
     >>> gestionnaire.lister_taches()

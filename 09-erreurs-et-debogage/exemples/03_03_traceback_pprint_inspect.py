@@ -21,11 +21,11 @@ def fonction_b():
     fonction_c()
 
 def fonction_c():
-    x = 1 / 0  # Erreur
+    return 1 / 0  # Erreur (ZeroDivisionError)
 
 try:
     fonction_a()
-except Exception as e:
+except Exception:
     print("Une erreur s'est produite !")
     traceback.print_exc()
 

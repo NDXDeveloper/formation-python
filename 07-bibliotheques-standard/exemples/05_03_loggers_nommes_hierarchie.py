@@ -93,12 +93,12 @@ logger_filtre.error("Error - dans errors.log")
 logger_filtre.critical("Critical - dans errors.log")
 
 # Vérifier les fichiers
-print(f"\nContenu de errors.log :")
+print("\nContenu de errors.log :")
 with open(errors_log) as f:
     for ligne in f:
         print(f"  {ligne.strip()}")
 
-print(f"\nContenu de info.log :")
+print("\nContenu de info.log :")
 with open(info_log) as f:
     for ligne in f:
         print(f"  {ligne.strip()}")
@@ -111,4 +111,4 @@ error_handler.close()
 info_handler.close()
 
 shutil.rmtree(tmpdir)
-print(f"\nNettoyage terminé.")
+print("\nNettoyage terminé.")

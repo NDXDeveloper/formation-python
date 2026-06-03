@@ -27,18 +27,18 @@ def calcul_intensif(n):
 
 def execution_sequentielle(nombres):
     """Exécution séquentielle"""
-    debut = time.time()
+    debut = time.perf_counter()
     resultats = [calcul_intensif(n) for n in nombres]
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"  Séquentiel: {duree:.2f} secondes")
     return resultats
 
 def execution_parallele(nombres):
     """Exécution parallèle"""
-    debut = time.time()
+    debut = time.perf_counter()
     with multiprocessing.Pool() as pool:
         resultats = pool.map(calcul_intensif, nombres)
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"  Parallèle:  {duree:.2f} secondes")
     return resultats
 

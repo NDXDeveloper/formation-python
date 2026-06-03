@@ -7,6 +7,7 @@
 # ============================================================================
 
 import sys
+import tracemalloc
 
 # ==========================================
 # 1. Mesurer la taille d'objets en memoire
@@ -81,3 +82,46 @@ taille_gen = sys.getsizeof(mon_gen)
 print(f"  Liste      : {taille_liste:,} octets")
 print(f"  Generateur : {taille_gen:,} octets")
 print(f"  Le generateur utilise {taille_liste/taille_gen:.0f}x moins de memoire !")
+
+# ==========================================
+# 4. tracemalloc - profiler les allocations (bibliotheque standard)
+# ==========================================
+print("\n=== tracemalloc (allocations memoire) ===\n")
+
+tracemalloc.start()  # Demarrer le suivi des allocations
+
+donnees = [i ** 2 for i in range(100000)]
+mapping = {i: str(i) for i in range(100000)}
+
+# Photographier l'etat de la memoire et trier par ligne de code
+snapshot = tracemalloc.take_snapshot()
+top = snapshot.statistics('lineno')
+print("Top 2 des allocations :")
+for stat in top[:2]:
+    print(f"  {stat}")
+
+actuel, pic = tracemalloc.get_traced_memory()
+print(f"Memoire actuelle : {actuel / 1024:.1f} Ko ; pic : {pic / 1024:.1f} Ko")
+tracemalloc.stop()
+
+# ==========================================
+# 5. memory_profiler - profiling ligne par ligne (outil tiers)
+# ==========================================
+print("\n=== memory_profiler (optionnel, tiers) ===\n")
+
+# memory_profiler (pip install memory_profiler) mesure la memoire LIGNE PAR
+# LIGNE. C'est un outil tiers ; la bibliotheque standard offre tracemalloc
+# (section 4 ci-dessus). On le charge donc de maniere optionnelle.
+try:
+    from memory_profiler import profile
+
+    @profile
+    def fonction_gourmande():
+        liste1 = [i for i in range(1000000)]
+        liste2 = [i ** 2 for i in range(1000000)]
+        return sum(liste1) + sum(liste2)
+
+    fonction_gourmande()  # @profile imprime un rapport memoire ligne par ligne
+except ImportError:
+    print("  memory_profiler n'est pas installe (pip install memory_profiler).")
+    print("  La bibliotheque standard fournit tracemalloc, montre ci-dessus.")

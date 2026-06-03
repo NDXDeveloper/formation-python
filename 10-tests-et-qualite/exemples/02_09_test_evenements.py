@@ -5,9 +5,8 @@
 #   Fichier source : 02-mocking-et-fixtures.md
 # ============================================================================
 
-import pytest
 from unittest.mock import patch
-from datetime import datetime, timedelta
+from datetime import datetime
 from evenements import Evenement
 
 

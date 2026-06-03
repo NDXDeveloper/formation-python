@@ -64,6 +64,6 @@ print(f"  Amelioration        : {temps_boucle/temps_vect:.2f}x plus rapide")
 # Verification que les resultats sont identiques
 res_boucle = calcul_avec_boucle(10)
 res_numpy = calcul_vectorise(10)
-print(f"\n  Verification (10 premiers):")
+print("\n  Verification (10 premiers):")
 print(f"  Boucle : {[round(x, 2) for x in res_boucle[:5]]}")
 print(f"  NumPy  : {[round(x, 2) for x in res_numpy[:5].tolist()]}")

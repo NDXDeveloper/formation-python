@@ -14,8 +14,11 @@ print(f"sqrt(2) = {math.sqrt(2)}")
 print(f"pow(2, 3) = {math.pow(2, 3)}")
 print(f"pow(5, 2) = {math.pow(5, 2)}")
 print(f"2 ** 3 = {2 ** 3}")
-print(f"cbrt(27) = {math.cbrt(27)}")
-print(f"27 ** (1/3) = {27 ** (1/3)}")
+if hasattr(math, "cbrt"):  # math.cbrt : Python 3.11+
+    print(f"cbrt(27) = {math.cbrt(27)}")
+else:
+    print("cbrt : nécessite Python 3.11+")
+print(f"27 ** (1/3) = {27 ** (1/3)}")  # alternative universelle
 print(f"exp(1) = {math.exp(1)}")
 print(f"exp(2) = {math.exp(2)}")
 print(f"expm1(0.001) = {math.expm1(0.001)}")
@@ -125,3 +128,11 @@ except ValueError as e:
     print(f"log(0) -> ValueError : {e}")
 
 print(f"type(sqrt(4)) = {type(math.sqrt(4))}")
+
+# --- Comparer des flottants : isclose ---
+print("\n=== Comparer des flottants (isclose) ===")
+print(f"0.1 + 0.2 == 0.3 : {0.1 + 0.2 == 0.3}")
+print(f"isclose(0.1+0.2, 0.3) : {math.isclose(0.1 + 0.2, 0.3)}")
+print(f"isclose(tan(pi/4), 1.0) : {math.isclose(math.tan(math.pi / 4), 1.0)}")
+print(f"isnan(nan) : {math.isnan(float('nan'))}")
+print(f"isinf(inf) : {math.isinf(float('inf'))}")

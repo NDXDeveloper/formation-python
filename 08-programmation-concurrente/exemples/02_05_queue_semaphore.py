@@ -78,9 +78,9 @@ async def main_semaphore():
     taches = [tache_longue(i, semaphore) for i in range(1, 9)]
 
     import time
-    debut = time.time()
+    debut = time.perf_counter()
     resultats = await asyncio.gather(*taches)
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
 
     print(f"\n  Toutes les tâches terminées: {resultats}")
     print(f"  Durée: {duree:.2f}s (8 tâches, max 3 en parallèle)")

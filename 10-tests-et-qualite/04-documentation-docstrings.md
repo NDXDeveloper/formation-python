@@ -1265,8 +1265,8 @@ class GestionnaireTaches:
 
         Example:
             >>> gestionnaire = GestionnaireTaches()
-            >>> gestionnaire.creer_tache("Tâche 1")
-            >>> gestionnaire.creer_tache("Tâche 2")
+            >>> _ = gestionnaire.creer_tache("Tâche 1")
+            >>> _ = gestionnaire.creer_tache("Tâche 2")
             >>> gestionnaire.compter_taches()
             2
         """
@@ -1421,6 +1421,45 @@ interrogate --generate-badge docs/
 
 ---
 
+## Tester les exemples avec doctest
+
+Les exemples `>>>` de vos docstrings ne sont pas que de la documentation : le module **`doctest`** (inclus dans Python) peut les **exécuter comme des tests** et vérifier que la sortie correspond. Vos exemples deviennent ainsi une documentation *vérifiée*, qui ne peut pas se désynchroniser du code.
+
+```python
+# fichier: math_simple.py
+def est_pair(nombre):
+    """Vérifie si un nombre est pair.
+
+    Example:
+        >>> est_pair(4)
+        True
+        >>> est_pair(7)
+        False
+    """
+    return nombre % 2 == 0
+```
+
+Pour lancer les doctests :
+
+```bash
+# Directement avec le module doctest (-v pour le détail)
+python -m doctest math_simple.py -v
+
+# Ou via pytest, qui découvre les doctests des modules
+pytest --doctest-modules
+```
+
+Si un exemple ne correspond plus à la sortie réelle, le test **échoue** — ce qui vous oblige à garder la documentation exacte. Vous pouvez activer `--doctest-modules` en permanence via `pyproject.toml` :
+
+```toml
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+```
+
+> **Limite** : doctest compare la sortie **caractère par caractère**. Il est donc fragile pour les flottants (`0.1 + 0.2`), les `dict`/`set` dont l'ordre d'affichage peut varier, ou les adresses mémoire. Réservez-le aux exemples à sortie simple et déterministe ; pour le reste, écrivez de vrais tests pytest.
+
+---
+
 ## Résumé
 
 ### Points clés à retenir
@@ -1432,6 +1471,7 @@ interrogate --generate-badge docs/
 5. **Sphinx génère** de la documentation HTML automatiquement
 6. **help()** accède aux docstrings dans le REPL
 7. **Bonnes pratiques** : Être clair, donner des exemples, documenter les cas limites
+8. **doctest** : les exemples `>>>` des docstrings peuvent être exécutés comme des tests (`pytest --doctest-modules`)
 
 ### Template de docstring Google Style
 
@@ -1501,6 +1541,10 @@ interrogate mon_package/
 
 # Voir la documentation dans le terminal
 python -m pydoc mon_module
+
+# Tester les exemples des docstrings (doctest)
+python -m doctest mon_module.py -v
+pytest --doctest-modules
 ```
 
 ### Ressources complémentaires

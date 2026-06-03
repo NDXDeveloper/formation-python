@@ -24,12 +24,12 @@ def acceder_ressource(thread_id):
 
 threads = [threading.Thread(target=acceder_ressource, args=(i,)) for i in range(8)]
 
-debut = time.time()
+debut = time.perf_counter()
 for t in threads:
     t.start()
 for t in threads:
     t.join()
-duree = time.time() - debut
+duree = time.perf_counter() - debut
 
 print(f"Tous les threads ont terminé en {duree:.2f}s")
 print(f"  (8 threads, max 3 en parallèle, ~{0.2 * (8/3):.2f}s minimum)")

@@ -120,7 +120,7 @@ for i in range(100):
 
 # Vérifier les fichiers créés
 fichiers_log = sorted([f for f in os.listdir(tmpdir) if f.startswith('app_rotating')])
-print(f"Fichiers créés par rotation :")
+print("Fichiers créés par rotation :")
 for f in fichiers_log:
     taille = os.path.getsize(os.path.join(tmpdir, f))
     print(f"  {f} ({taille} octets)")

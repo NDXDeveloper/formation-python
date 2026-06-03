@@ -104,7 +104,7 @@ Exécutons mypy :
 
 ```bash
 $ mypy exemple.py
-exemple.py:10: error: Argument 1 to "saluer" has incompatible type "int"; expected "str"  
+exemple.py:11: error: Argument 1 to "saluer" has incompatible type "int"; expected "str"  
 Found 1 error in 1 file (checked 1 source file)  
 ```
 
@@ -233,7 +233,7 @@ personne: Tuple[str, int, bool] = ("Alice", 25, True)
 coordonnees: Tuple[int, ...] = (10, 20, 30, 40)
 ```
 
-**Note importante** : En Python 3.9+, vous pouvez utiliser la syntaxe simplifiée :
+**Note importante** : Depuis Python 3.9 (PEP 585), ces types s'écrivent directement avec les types natifs. Les alias `typing.List`, `typing.Dict`, `typing.Set`, `typing.Tuple` sont **dépréciés** depuis la 3.9 — ils restent utilisables sans avertissement à l'exécution, mais les outils modernes comme `ruff` les signalent (règle `UP035`). Préférez la forme native :
 
 ```python
 # Python 3.9+
@@ -523,6 +523,15 @@ def obtenir_utilisateur(
     return utilisateurs.get(user_id)
 ```
 
+**Note (Python 3.12+)** : depuis Python 3.12, le mot-clé `type` (PEP 695) crée des alias de manière plus concise, et `typing.TypeAlias` est **déprécié** :
+
+```python
+# Python 3.12+ (PEP 695)
+type UserId = int
+type Email = str
+type Utilisateurs = dict[UserId, Utilisateur]
+```
+
 ### Générics : types paramétrés
 
 ```python
@@ -567,6 +576,22 @@ texte = boite_str.obtenir()  # Type: str
 # mypy détecte les erreurs de type
 boite_int.remplacer(100)      # ✅ OK  
 boite_int.remplacer("texte")  # ❌ Erreur: expected int, got str  
+```
+
+**Note (Python 3.12+)** : la PEP 695 introduit une syntaxe allégée pour les génériques, sans déclaration explicite de `TypeVar` :
+
+```python
+# Python 3.12+ (PEP 695)
+class Boite[T]:
+    def __init__(self, contenu: T) -> None:
+        self.contenu = contenu
+
+    def obtenir(self) -> T:
+        return self.contenu
+
+# Fonction générique
+def premier[T](elements: list[T]) -> T:
+    return elements[0]
 ```
 
 ---
@@ -734,7 +759,7 @@ Créez un fichier `mypy.ini` à la racine du projet :
 # fichier: mypy.ini
 [mypy]
 # Version Python ciblée
-python_version = 3.10
+python_version = 3.12
 
 # Fichiers à vérifier
 files = src/
@@ -774,7 +799,7 @@ Alternative moderne avec `pyproject.toml` :
 ```toml
 # fichier: pyproject.toml
 [tool.mypy]
-python_version = "3.10"  
+python_version = "3.12"  
 files = ["src"]  
 exclude = ["tests", "docs", "build"]  
 
@@ -875,6 +900,23 @@ def obtenir_donnees() -> Any:
 # Forcer le type (à utiliser avec précaution)
 donnees = cast(dict[str, Any], obtenir_donnees())
 ```
+
+### reveal_type : inspecter ce que mypy infère
+
+Pour comprendre quel type mypy attribue à une expression, insérez un appel **`reveal_type(...)`** : lors de la vérification, mypy affiche le type inféré. Cette fonction n'existe pas à l'exécution — c'est un outil purement statique, à retirer une fois le diagnostic terminé.
+
+```python
+def trouver(valeurs: list[int]) -> int | None:
+    for v in valeurs:
+        if v > 0:
+            return v
+    return None
+
+resultat = trouver([1, 2, 3])
+reveal_type(resultat)   # note: Revealed type is "int | None"
+```
+
+C'est l'outil idéal pour déboguer un type trop large ou inattendu. (`reveal_locals()` affiche de même le type de toutes les variables locales à cet endroit.)
 
 ---
 
@@ -1103,8 +1145,8 @@ def exemple_utilisation() -> None:
 
     # Créer des tâches
     tache1 = gestionnaire.creer_tache("Faire les courses", Priorite.HAUTE)
-    tache2 = gestionnaire.creer_tache("Lire un livre")
-    tache3 = gestionnaire.creer_tache("Faire du sport", Priorite.BASSE)
+    gestionnaire.creer_tache("Lire un livre")
+    gestionnaire.creer_tache("Faire du sport", Priorite.BASSE)
 
     # Marquer une tâche comme terminée
     tache1.marquer_terminee()
@@ -1176,7 +1218,9 @@ repos:
     rev: v1.5.0
     hooks:
       - id: mypy
-        additional_dependencies: [types-all]
+        # Listez ici les stubs nécessaires à votre projet (le méta-paquet
+        # types-all n'est plus maintenu : ajoutez les stubs un par un).
+        additional_dependencies: [types-requests, types-PyYAML]
         args: [--ignore-missing-imports]
 ```
 
@@ -1200,7 +1244,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -1476,7 +1520,7 @@ mypy --config-file mypy.ini src/
 
 - [ ] Installer mypy : `pip install mypy`
 - [ ] Annoter les fonctions publiques
-- [ ] Utiliser Optional pour les valeurs nullables
+- [ ] Utiliser `X | None` (ou `Optional[X]`) pour les valeurs nullables
 - [ ] Configurer mypy.ini ou pyproject.toml
 - [ ] Intégrer dans l'IDE (VS Code, PyCharm)
 - [ ] Ajouter à pre-commit hooks
@@ -1517,11 +1561,26 @@ def ma_fonction(
 
 ---
 
+## Au-delà de mypy : le paysage des vérificateurs de types (2026)
+
+mypy reste la **référence** pour la vérification de types en Python : c'est l'implémentation la plus mature, dotée d'un riche écosystème de plugins (Django, Pydantic, SQLAlchemy…). C'est l'outil à apprendre en premier.
+
+Mais l'écosystème évolue vite — comme `ruff` l'a fait pour le linting (voir 10.5), des vérificateurs écrits en **Rust**, bien plus rapides, ont émergé :
+
+- **ty** — par Astral (les auteurs de `ruff` et `uv`). 10 à 60× plus rapide que mypy ; en **bêta** en 2026 (version 1.0 visée courant 2026).
+- **pyrefly** — par Meta (issu de leur outil Pyre). Passé en **1.0 stable** en 2026 ; utilisé par défaut sur la base de code Python d'Instagram.
+
+Ils comprennent les mêmes annotations de types standard (PEP 484 et suivantes), mais n'ont **pas encore** le système de plugins de mypy ; beaucoup d'équipes les exécutent donc *en complément* de mypy plutôt qu'en remplacement. Un mouvement à surveiller de près.
+
+---
+
 ## Ressources complémentaires
 
 - **Documentation officielle mypy** : https://mypy.readthedocs.io/
 - **PEP 484** (Type Hints) : https://peps.python.org/pep-0484/
-- **PEP 585** (Syntaxe moderne) : https://peps.python.org/pep-0585/
+- **PEP 585** (génériques natifs `list[int]`) : https://peps.python.org/pep-0585/
+- **PEP 604** (syntaxe `X | Y`) : https://peps.python.org/pep-0604/
+- **PEP 695** (mot-clé `type` et génériques, 3.12+) : https://peps.python.org/pep-0695/
 - **typing module** : https://docs.python.org/3/library/typing.html
 - **Real Python - Type Checking** : https://realpython.com/python-type-checking/
 - **mypy cheat sheet** : https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html

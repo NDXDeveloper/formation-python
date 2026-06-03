@@ -61,7 +61,7 @@ print(f"Dernière modification : {stats.st_mtime:.0f} (timestamp)")
 print("\n=== Renommer un fichier ===")
 
 os.rename("_test_fichier.txt", "_test_renomme.txt")
-print(f"Fichier renommé : '_test_fichier.txt' -> '_test_renomme.txt'")
+print("Fichier renommé : '_test_fichier.txt' -> '_test_renomme.txt'")
 print(f"'_test_renomme.txt' existe ? {os.path.exists('_test_renomme.txt')}")
 print(f"'_test_fichier.txt' existe ? {os.path.exists('_test_fichier.txt')}")
 

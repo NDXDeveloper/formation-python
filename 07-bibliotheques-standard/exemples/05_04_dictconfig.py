@@ -88,12 +88,12 @@ logger.warning("Message d'avertissement")
 logger.error("Message d'erreur")
 
 # Vérifier les fichiers
-print(f"\nContenu de app.log :")
+print("\nContenu de app.log :")
 with open(app_log) as f:
     for ligne in f:
         print(f"  {ligne.strip()}")
 
-print(f"\nContenu de errors.log :")
+print("\nContenu de errors.log :")
 with open(errors_log) as f:
     for ligne in f:
         print(f"  {ligne.strip()}")
@@ -159,7 +159,7 @@ logger_ini.debug("Message de débogage via config INI")
 logger_ini.warning("Avertissement via config INI")
 
 # Vérifier le fichier
-print(f"\nContenu de ini_app.log :")
+print("\nContenu de ini_app.log :")
 with open(ini_log) as f:
     for ligne in f:
         print(f"  {ligne.strip()}")
@@ -167,6 +167,6 @@ with open(ini_log) as f:
 # ==========================================
 # Nettoyage
 # ==========================================
-print(f"\nNettoyage du dossier temporaire...")
+print("\nNettoyage du dossier temporaire...")
 shutil.rmtree(tmpdir)
 print("Nettoyage terminé.")

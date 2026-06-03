@@ -1248,7 +1248,7 @@ gunicorn -w 4 -b 0.0.0.0:8000 app:app
 ### Avec Docker
 
 ```dockerfile
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
@@ -1268,8 +1268,10 @@ Créez un fichier `.env` :
 ```
 SECRET_KEY=votre-clé-secrète  
 DATABASE_URL=postgresql://user:pass@localhost/db  
-FLASK_ENV=production  
+FLASK_DEBUG=0  
 ```
+
+> **Note** : la variable `FLASK_ENV` (ex. `FLASK_ENV=production`) a été **supprimée dans Flask 2.3**. Le mode debug se contrôle désormais via `FLASK_DEBUG` (`1` pour activer, `0` ou absent en production) ou l'option `--debug` de la commande `flask run`.
 
 Chargez-le avec `python-dotenv` :
 ```python

@@ -39,7 +39,7 @@ def telecharger_fichier(nom_fichier):
 fichiers = ["image1.jpg", "image2.jpg", "image3.jpg"]
 threads = []
 
-debut = time.time()
+debut = time.perf_counter()
 for fichier in fichiers:
     thread = threading.Thread(target=telecharger_fichier, args=(fichier,))
     threads.append(thread)
@@ -48,7 +48,7 @@ for fichier in fichiers:
 for thread in threads:
     thread.join()
 
-duree = time.time() - debut
+duree = time.perf_counter() - debut
 print(f"Tous les téléchargements sont terminés en {duree:.2f}s")
 print(f"  (séquentiel aurait pris ~{0.3 * len(fichiers):.2f}s)")
 

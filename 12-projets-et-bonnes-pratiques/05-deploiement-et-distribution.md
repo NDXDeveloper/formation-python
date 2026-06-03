@@ -269,9 +269,8 @@ setup(
     },
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Development Status :: 4 - Beta",
@@ -279,13 +278,13 @@ setup(
     ],
     package_dir={"": "src"},
     packages=find_packages(where="src"),
-    python_requires=">=3.10",
+    python_requires=">=3.12",
     install_requires=requirements,
     extras_require={
         "dev": [
             "pytest>=7.0",
             "black>=23.0",
-            "flake8>=6.0",
+            "ruff>=0.15",
             "mypy>=1.0",
         ],
     },
@@ -298,6 +297,8 @@ setup(
 ```
 
 ### Le fichier `pyproject.toml` (moderne)
+
+> **Note** : `setup.py` est aujourd'hui considéré comme *historique*. Pour un nouveau projet, un simple `pyproject.toml` (ci-dessous) suffit — il remplace à la fois `setup.py` et `setup.cfg`.
 
 Le format moderne et recommandé est `pyproject.toml` (PEP 621) :
 
@@ -322,7 +323,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 keywords = ["exemple", "tutorial", "python"]  
-requires-python = ">=3.10"  
+requires-python = ">=3.12"  
 dependencies = [  
     "requests>=2.28.0",
     "pydantic>=2.0.0",
@@ -391,6 +392,8 @@ python -m build
 # - dist/mon_package-0.1.0-py3-none-any.whl (wheel)
 ```
 
+> **Avec uv** : `uv build` produit les mêmes artefacts (sdist + wheel), sans avoir à installer `build` séparément.
+
 ### Tester localement
 
 ```bash
@@ -447,6 +450,17 @@ python -m twine upload dist/*
 
 # Maintenant tout le monde peut installer votre package !
 pip install mon_package
+```
+
+### Méthode moderne : Trusted Publishing (recommandé en CI)
+
+Plutôt que de stocker un token, PyPI propose le **Trusted Publishing** (OIDC) : vous déclarez sur PyPI quel dépôt GitHub/GitLab est autorisé à publier, et le pipeline d'intégration continue publie **sans aucun secret à gérer**. C'est la méthode recommandée aujourd'hui pour les pipelines automatisés (action `pypa/gh-action-pypi-publish`).
+
+Avec **uv**, construction et publication se font sans `build` ni `twine` :
+
+```bash
+uv build              # crée dist/*.tar.gz et dist/*.whl
+uv publish            # publie sur PyPI (token via UV_PUBLISH_TOKEN, ou Trusted Publishing en CI)
 ```
 
 ### Automatiser avec `.pypirc`
@@ -558,7 +572,7 @@ Créez un fichier `runtime.txt` :
 
 ```txt
 # runtime.txt
-python-3.11.0
+python-3.12.0
 ```
 
 #### Déploiement
@@ -677,7 +691,7 @@ vercel
 
 ```dockerfile
 # Dockerfile
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -702,7 +716,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ```dockerfile
 # Dockerfile
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Variables d'environnement
 ENV PYTHONUNBUFFERED=1 \
@@ -799,7 +813,7 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   db:
-    image: postgres:15
+    image: postgres:17
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
@@ -862,7 +876,7 @@ docker run -p 8000:8000 votre-nom/mon-app:latest
 pip install awsebcli
 
 # Initialiser
-eb init -p python-3.11 mon-app
+eb init -p python-3.12 mon-app
 
 # Créer un environnement et déployer
 eb create mon-app-env
@@ -935,7 +949,7 @@ gcloud run deploy mon-app \
 
 ```yaml
 # app.yaml
-runtime: python311
+runtime: python312
 
 entrypoint: gunicorn -b :$PORT main:app
 
@@ -966,7 +980,7 @@ az group create --name mon-groupe --location westeurope
 az appservice plan create --name mon-plan --resource-group mon-groupe --sku B1 --is-linux
 
 # Créer l'application web
-az webapp create --resource-group mon-groupe --plan mon-plan --name mon-app --runtime "PYTHON|3.11"
+az webapp create --resource-group mon-groupe --plan mon-plan --name mon-app --runtime "PYTHON|3.12"
 
 # Configurer pour déploiement Git
 az webapp deployment source config-local-git --name mon-app --resource-group mon-groupe
@@ -1006,7 +1020,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -1018,10 +1032,10 @@ jobs:
       run: |
         pytest --cov=src tests/
 
-    - name: Lint with flake8
+    - name: Lint with Ruff
       run: |
-        pip install flake8
-        flake8 src/ --max-line-length=88
+        pip install ruff
+        ruff check src/
 
   deploy:
     needs: test
@@ -1059,7 +1073,7 @@ cache:
 
 test:
   stage: test
-  image: python:3.11
+  image: python:3.12
   script:
     - python -m venv venv
     - source venv/bin/activate
@@ -1072,7 +1086,7 @@ test:
 
 deploy:
   stage: deploy
-  image: python:3.11
+  image: python:3.12
   script:
     - pip install build twine
     - python -m build
@@ -1189,7 +1203,7 @@ Un bon README est **essentiel** pour que les autres utilisent votre projet.
 # Mon Projet Python
 
 ![CI/CD](https://github.com/votre-nom/mon-projet/workflows/CI/badge.svg)
-![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
+![Python Version](https://img.shields.io/badge/python-3.12%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 Description courte et accrocheuse de votre projet.
@@ -1202,7 +1216,7 @@ Description courte et accrocheuse de votre projet.
 
 ## 📋 Prérequis
 
-- Python 3.10 ou supérieur
+- Python 3.12 ou supérieur
 - pip
 - (Autres prérequis)
 
@@ -1481,9 +1495,9 @@ class User(BaseModel):
 ### 5. Mise à jour régulière des dépendances
 
 ```bash
-# Vérifier les vulnérabilités
-pip install safety  
-safety check  
+# Vérifier les vulnérabilités (pip-audit, outil recommandé par la PyPA)
+pip install pip-audit  
+pip-audit  
 
 # Mettre à jour les dépendances
 pip install --upgrade -r requirements.txt

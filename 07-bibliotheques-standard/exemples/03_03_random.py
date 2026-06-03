@@ -132,3 +132,12 @@ print(f"gauss(0, 1) = {random.gauss(0, 1):.4f}")
 print(f"normalvariate(100, 15) = {random.normalvariate(100, 15):.2f}")
 print(f"triangular(0, 10, 5) = {random.triangular(0, 10, 5):.4f}")
 print(f"expovariate(1.5) = {random.expovariate(1.5):.4f}")
+
+# --- secrets : aléatoire cryptographiquement sûr ---
+# random n'est PAS sûr pour la sécurité (mots de passe, jetons...) : utiliser secrets
+print("\n=== secrets (aléatoire sécurisé) ===")
+import secrets
+
+print(f"token_hex(16) : {secrets.token_hex(16)}")
+print(f"choice : {secrets.choice(['rouge', 'bleu', 'vert'])}")
+print(f"randbelow(100) : {secrets.randbelow(100)}")

@@ -6,9 +6,6 @@
 # ============================================================================
 
 from typing import Literal, Final, Protocol, NewType, overload
-import tempfile
-import os
-import shutil
 
 # ==========================================
 # 1. Literal - Valeurs spécifiques autorisées

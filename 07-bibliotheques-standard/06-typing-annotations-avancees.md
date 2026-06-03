@@ -14,6 +14,8 @@ Les annotations de type offrent plusieurs avantages :
 
 **Important** : Les annotations de type ne changent pas le comportement de Python à l'exécution. Ce sont des "indices" pour les développeurs et les outils d'analyse.
 
+> 📝 **Vous avez déjà vu les bases.** Les annotations simples (variables, fonctions, collections `list[...]`/`dict[...]`, `X | None`) ont été introduites au chapitre [1.6 — Type Hints et annotations](/01-fondamentaux-et-syntaxe/06-type-hints-et-annotations.md). Les premières sections ci-dessous en font un **rappel rapide** ; ce chapitre se concentre ensuite sur les types **avancés** (`TypeVar`, `Generic`, `Protocol`, `Literal`, `@overload`…).
+
 ---
 
 ## Annotations de type basiques
@@ -84,7 +86,7 @@ resultat: str | None = None  # remplace Optional[str]
 from typing import Any, Callable, TypeVar, Generic, Protocol, Literal, Final
 ```
 
-> **Note historique :** Avant Python 3.9, il fallait importer `List`, `Dict`, `Tuple`, `Set` depuis `typing`. Avant Python 3.10, il fallait utiliser `Union` et `Optional`. Ces formes fonctionnent encore mais sont considérées comme **obsolètes**.
+> **Note historique :** Avant Python 3.9, il fallait importer `List`, `Dict`, `Tuple`, `Set` depuis `typing` ; ces alias sont maintenant **dépréciés** au profit des types natifs (`list`, `dict`…). Avant Python 3.10, on utilisait `Union[X, Y]` et `Optional[X]` ; ceux-ci ne sont **pas** dépréciés et restent parfaitement valides, mais la syntaxe `X | Y` leur est aujourd'hui préférée.
 
 ---
 
@@ -287,6 +289,16 @@ users: ListeUtilisateurs = [
 
 > **Note :** `TypeAlias` rend l'intention explicite — sans lui, `UserId = int` pourrait être confondu avec une simple variable.
 
+> 🆕 **Python 3.12+ — l'instruction `type` (PEP 695) :** depuis Python 3.12, la façon recommandée de définir un alias est l'instruction `type`, plus concise et qui gère nativement les références anticipées :
+>
+> ```python
+> type UserId = int
+> type Coordonnees = tuple[float, float]
+> type ListeUtilisateurs = list[dict[str, str]]
+> ```
+>
+> `typing.TypeAlias` (montré ci-dessus) reste nécessaire si vous ciblez Python 3.10/3.11 ; sur 3.12+, il est déprécié au profit de l'instruction `type`.
+
 ---
 
 ## Callable - Types de fonctions
@@ -429,6 +441,19 @@ pile_strings.empiler("a")
 pile_strings.empiler("b")  
 print(pile_strings.depiler())  # "b"  
 ```
+
+> 🆕 **Python 3.12+ — syntaxe générique native (PEP 695) :** depuis Python 3.12, on paramètre fonctions et classes **sans** importer `TypeVar` ni hériter de `Generic`, grâce à la syntaxe `[T]` :
+>
+> ```python
+> def premier_element[T](liste: list[T]) -> T:
+>     return liste[0]
+>
+> class Pile[T]:
+>     def __init__(self) -> None:
+>         self.items: list[T] = []
+> ```
+>
+> Les formes avec `TypeVar` / `Generic[T]` ci-dessus restent valables (et nécessaires pour Python 3.10/3.11).
 
 ### Exemple pratique : Cache générique
 
@@ -713,6 +738,43 @@ stockage_memoire = StockageMemoire()
 traiter_donnees(stockage_fichier, "test", "valeur")  
 traiter_donnees(stockage_memoire, "test", "valeur")  
 ```
+
+---
+
+## `Self` - Le type de l'instance courante (Python 3.11+)
+
+`Self` (depuis Python 3.11) annote une méthode qui **renvoie l'instance elle-même**. C'est idéal pour les interfaces « fluides » (chaînage de méthodes) et toute méthode qui retourne `self`.
+
+```python
+from typing import Self
+
+class RequeteSQL:
+    """Construit une requête par chaînage de méthodes (interface fluide)."""
+
+    def __init__(self) -> None:
+        self.parties: list[str] = []
+
+    def select(self, colonnes: str) -> Self:   # Self = « le type de cette classe »
+        self.parties.append(f"SELECT {colonnes}")
+        return self
+
+    def depuis(self, table: str) -> Self:
+        self.parties.append(f"FROM {table}")
+        return self
+
+    def ou(self, condition: str) -> Self:
+        self.parties.append(f"WHERE {condition}")
+        return self
+
+    def construire(self) -> str:
+        return " ".join(self.parties)
+
+# Chaînage : chaque méthode renvoie l'instance
+requete = RequeteSQL().select("*").depuis("utilisateurs").ou("id = 1").construire()
+print(requete)  # SELECT * FROM utilisateurs WHERE id = 1
+```
+
+> 📝 Avant Python 3.11, il fallait simuler ce comportement avec un `TypeVar` lié (`TypeVar("T", bound="RequeteSQL")`), plus verbeux. Bonus : si une **sous-classe** hérite d'une méthode annotée `-> Self`, le type désigné est automatiquement celui de la sous-classe.
 
 ---
 
@@ -1068,7 +1130,7 @@ resultat_erreur: str = additionner(5, 3)  # Erreur de type!
 mypy exemple.py
 
 # Sortie:
-# exemple.py:5: error: Incompatible types in assignment (expression has type "int", variable has type "str")
+# exemple.py:6: error: Incompatible types in assignment (expression has type "int", variable has type "str")  [assignment]
 ```
 
 ### Configuration mypy

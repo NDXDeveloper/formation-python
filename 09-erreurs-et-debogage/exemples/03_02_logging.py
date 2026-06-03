@@ -46,7 +46,22 @@ print(f"diviser(10, 2) = {diviser(10, 2)}")
 print(f"diviser(10, 0) = {diviser(10, 0)}")
 
 # ==========================================
-# 3. Enregistrer les logs dans un fichier
+# 3. Logger une exception avec sa trace (logging.exception)
+# ==========================================
+print("\n=== Logging - logging.exception() ===\n")
+
+def traiter(donnees):
+    try:
+        return sum(donnees) / len(donnees)
+    except ZeroDivisionError:
+        # A appeler dans un except : ajoute automatiquement le traceback complet
+        logging.exception("Echec du traitement (liste vide ?)")
+        return None
+
+print(f"traiter([]) = {traiter([])}")
+
+# ==========================================
+# 4. Enregistrer les logs dans un fichier
 # ==========================================
 print("\n=== Logging - Ecriture dans un fichier ===\n")
 

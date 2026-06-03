@@ -67,7 +67,7 @@ class AnalyseurTransactions:
         print(f"Montant moyen : {sum(montants) / len(montants):.2f} EUR")
         print(f"Montant min : {min(montants):.2f} EUR")
         print(f"Montant max : {max(montants):.2f} EUR")
-        print(f"\nEvolution CA cumulé :")
+        print("\nEvolution CA cumulé :")
         for i, total in enumerate(cumul, 1):
             barre = "#" * int(total / 20)
             print(f"  Transaction {i}: {total:7.2f} EUR {barre}")
@@ -113,7 +113,7 @@ print("\nMots les plus fréquents :")
 for mot, freq in itertools.islice(compteur.most_common(), 5):
     print(f"  {mot:15s} : {freq} fois")
 
-print(f"\nStatistiques :")
+print("\nStatistiques :")
 print(f"  Nombre total de mots : {len(tous_les_mots)}")
 print(f"  Mots uniques : {len(compteur)}")
 print(f"  Hapax (1 seule fois) : {sum(1 for f in compteur.values() if f == 1)}")

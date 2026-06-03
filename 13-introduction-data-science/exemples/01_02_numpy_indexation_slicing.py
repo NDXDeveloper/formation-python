@@ -351,7 +351,7 @@ print(f"\n  Vue partage la base: {vue.base is arr}")
 copie = arr[1:4].copy()
 print(f"  Copie partage la base: {copie.base is arr}")
 
-print(f"  Original a une base: {arr.base is None}")
+print(f"  L'original n'a pas de base: {arr.base is None}")
 
 
 # ============================================================

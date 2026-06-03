@@ -17,7 +17,7 @@ def operation_io_thread(numero):
 
 def executer_avec_threads(nombre):
     """Exécute avec threads"""
-    debut = time.time()
+    debut = time.perf_counter()
     threads = []
     resultats = [None] * nombre
 
@@ -32,7 +32,7 @@ def executer_avec_threads(nombre):
     for thread in threads:
         thread.join()
 
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"  Threading: {duree:.2f}s pour {nombre} opérations")
     return resultats
 
@@ -44,12 +44,12 @@ async def operation_io_async(numero):
 
 async def executer_avec_asyncio(nombre):
     """Exécute avec asyncio"""
-    debut = time.time()
+    debut = time.perf_counter()
 
     taches = [operation_io_async(i) for i in range(nombre)]
     resultats = await asyncio.gather(*taches)
 
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"  Asyncio:   {duree:.2f}s pour {nombre} opérations")
     return resultats
 

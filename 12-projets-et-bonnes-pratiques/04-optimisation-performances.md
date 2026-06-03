@@ -58,6 +58,8 @@ print(f"Temps d'exécution : {end - start:.4f} secondes")
 # Temps d'exécution : 1.0001 secondes
 ```
 
+> **Bon réflexe** : pour mesurer une *durée*, préférez `time.perf_counter()` à `time.time()` — résolution plus fine et insensible aux changements d'horloge système (`time.time()` sert plutôt à obtenir la date/heure courante).
+
 ### Mesure avec `timeit` (plus précis)
 
 ```python
@@ -96,9 +98,9 @@ def measure_time(func):
     """Décorateur qui mesure le temps d'exécution"""
     @wraps(func)
     def wrapper(*args, **kwargs):
-        start = time.time()
+        start = time.perf_counter()
         result = func(*args, **kwargs)
-        end = time.time()
+        end = time.perf_counter()
         print(f"{func.__name__} a pris {end - start:.4f} secondes")
         return result
     return wrapper
@@ -193,6 +195,11 @@ def fonction_gourmande():
 # Exécuter avec :
 # python -m memory_profiler script.py
 ```
+
+### Profilers modernes : Scalene et py-spy
+
+- **[Scalene](https://github.com/plasma-umass/scalene)** : profileur CPU + mémoire + GPU précis et à faible surcoût (`pip install scalene`, puis `scalene script.py`).
+- **[py-spy](https://github.com/benfred/py-spy)** : profileur par échantillonnage qui s'attache à un programme *déjà en cours d'exécution*, sans modifier ni redémarrer le code (`py-spy top --pid <PID>`).
 
 ---
 
@@ -754,6 +761,8 @@ print(result_np)  # [12 14 16 18 20]
 
 Python a le **GIL** (Global Interpreter Lock) qui empêche le vrai parallélisme avec des threads pour le code Python pur. Solutions :
 
+> **Évolution (Python 3.13+)** : une version *expérimentale sans GIL* (« free-threading », PEP 703) permet désormais le vrai parallélisme multi-thread, et un compilateur JIT expérimental (PEP 744) a été introduit. Ces fonctionnalités restent optionnelles et expérimentales — le GIL demeure actif par défaut — donc les solutions ci-dessous restent la référence.
+
 ### Threading pour les opérations I/O
 
 Bon pour : requêtes réseau, lecture/écriture fichiers
@@ -974,7 +983,7 @@ def calcul_lourd(int n):
 # Compiler
 cython calcul.pyx  
 gcc -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing \  
-    -I/usr/include/python3.10 -o calcul.so calcul.c
+    -I/usr/include/python3.12 -o calcul.so calcul.c
 ```
 
 ### Numba : JIT compilation

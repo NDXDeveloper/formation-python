@@ -142,12 +142,12 @@ coverage html
 Sortie typique de `coverage report` :
 
 ```
-Name                  Stmts   Miss  Cover
------------------------------------------
-calculatrice.py          15      6    60%  
-test_calculatrice.py      6      0   100%  
------------------------------------------
-TOTAL                    21      6    71%
+Name                   Stmts   Miss  Cover
+------------------------------------------
+calculatrice.py           14      5    64%
+test_calculatrice.py       7      0   100%
+------------------------------------------
+TOTAL                     21      5    76%
 ```
 
 **Explication** :
@@ -155,7 +155,7 @@ TOTAL                    21      6    71%
 - **Miss** : Nombre de lignes non exécutées
 - **Cover** : Pourcentage de couverture
 
-Dans notre exemple : 6 lignes de `calculatrice.py` n'ont jamais été exécutées (les fonctions `multiplier()` et `calculer_moyenne()` et leurs branches).
+Dans notre exemple : 5 lignes de `calculatrice.py` n'ont jamais été exécutées — le corps de `multiplier()`, celui de `calculer_moyenne()`, et le `raise` de `diviser()` (jamais déclenché par ces tests).
 
 ### Rapport HTML détaillé
 
@@ -223,12 +223,12 @@ pytest --cov=module --cov-report=term --cov-config=.coveragerc
 Avec `--cov-report=term-missing`, vous voyez les lignes manquantes :
 
 ```
-Name                  Stmts   Miss  Cover   Missing
----------------------------------------------------
-calculatrice.py          15      6    60%   12-13, 16-19  
-test_calculatrice.py      6      0   100%  
----------------------------------------------------
-TOTAL                    21      6    71%
+Name                   Stmts   Miss  Cover   Missing
+----------------------------------------------------
+calculatrice.py           14      5    64%   12, 17, 22-24
+test_calculatrice.py       7      0   100%
+----------------------------------------------------
+TOTAL                     21      5    76%
 ```
 
 Les numéros dans "Missing" indiquent les lignes non couvertes.
@@ -294,12 +294,12 @@ pytest --cov=calculatrice --cov-report=term-missing
 ```
 
 ```
-Name                  Stmts   Miss  Cover   Missing
----------------------------------------------------
-calculatrice.py          15      0   100%  
-test_calculatrice.py     20      0   100%  
----------------------------------------------------
-TOTAL                    35      0   100%
+Name                   Stmts   Miss  Cover   Missing
+----------------------------------------------------
+calculatrice.py           14      0   100%
+test_calculatrice.py      22      0   100%
+----------------------------------------------------
+TOTAL                     36      0   100%
 ```
 
 **Nous avons atteint 100% de couverture ! 🎉**
@@ -388,17 +388,17 @@ pytest --cov=validation --cov-branch --cov-report=term-missing
 ```
 
 ```
-Name               Stmts   Miss Branch BrPart  Cover   Missing
---------------------------------------------------------------
-validation.py         13      0      8      2    88%   3->5, 10->12  
-test_validation.py     6      0      0      0   100%  
---------------------------------------------------------------
-TOTAL                 19      0      8      2    90%
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+test_validation.py       7      0      0      0   100%
+validation.py           16      4     12      4    71%   5, 17, 19, 21
+----------------------------------------------------------------
+TOTAL                   23      4     12      4    77%
 ```
 
-**BrPart** (Branches Partielles) : 2 branches n'ont pas été testées
-- `3->5` : La branche "note invalide" (note < 0 ou note > 20)
-- `10->12` : Certaines mentions n'ont pas été testées
+Ici, **Miss = 4** : quatre `return` ne sont jamais exécutés, et **BrPart = 4** (Branches Partielles) : quatre conditions `if`/`elif` ne sont empruntées que dans un seul sens.
+- Ligne `5` : le cas "Note invalide" (`note < 0 or note > 20`) n'est jamais déclenché
+- Lignes `17`, `19`, `21` : les mentions "Passable", "Assez bien" et "Bien" ne sont jamais testées
 
 Tests complets avec toutes les branches :
 
@@ -689,15 +689,15 @@ pytest --cov=utilisateur --cov-report=term-missing --cov-branch
 ```
 
 ```
-Name                   Stmts   Miss Branch BrPart  Cover   Missing
-------------------------------------------------------------------
-test_utilisateur.py        9      0      0      0   100%  
-utilisateur.py            42     29     12      0    25%   12-15, 18-21, 24-29, 32-35, 38-48, 55-60  
-------------------------------------------------------------------
-TOTAL                     51     29     12      0    37%
+Name                  Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------
+test_utilisateur.py      14      0      0      0   100%
+utilisateur.py           45     16      6      0    57%   14, 18, 22, 26-27, 31-32, 36, 40, 58, 62-65, 69, 73
+-----------------------------------------------------------------
+TOTAL                    59     16      6      0    66%
 ```
 
-**Seulement 25% de couverture !** Beaucoup de fonctionnalités ne sont pas testées.
+**Seulement 57% de couverture !** Beaucoup de méthodes (gestion des rôles, `obtenir`, `supprimer`, `lister_actifs`, `lister_admins`, etc.) ne sont pas testées.
 
 ### Tests complets
 
@@ -894,12 +894,12 @@ pytest --cov=utilisateur --cov-report=term-missing --cov-branch
 ```
 
 ```
-Name                   Stmts   Miss Branch BrPart  Cover
---------------------------------------------------------
-test_utilisateur.py       90      0      0      0   100%  
-utilisateur.py            42      0     12      0   100%  
---------------------------------------------------------
-TOTAL                    132      0     12      0   100%
+Name                  Stmts   Miss Branch BrPart  Cover
+-------------------------------------------------------
+test_utilisateur.py     114      0      0      0   100%
+utilisateur.py           45      0      6      0   100%
+-------------------------------------------------------
+TOTAL                   159      0      6      0   100%
 ```
 
 **100% de couverture atteinte ! 🎉**
@@ -976,12 +976,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -993,7 +993,7 @@ jobs:
         pytest --cov=src --cov-report=term --cov-fail-under=80
 
     - name: Upload coverage report
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v4
 ```
 
 ### 5. Suivre l'évolution de la couverture
@@ -1118,7 +1118,7 @@ Pour tester sur plusieurs versions de Python :
 ```ini
 # fichier: tox.ini
 [tox]
-envlist = py310,py311,py312,py313
+envlist = py312,py313
 
 [testenv]
 deps =

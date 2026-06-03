@@ -30,8 +30,8 @@ Ce sont des erreurs dans la structure même du code. Python ne peut pas comprend
 if x > 5
     print("x est grand")
 
-# Message d'erreur :
-# SyntaxError: invalid syntax
+# Message d'erreur (Python 3.10+) :
+# SyntaxError: expected ':'
 ```
 
 **Caractéristiques :**
@@ -359,6 +359,37 @@ def niveau_1():
 niveau_1()  # ← Le programme démarre ici
 ```
 
+### Les messages d'erreur modernes (Python 3.10+)
+
+Bonne nouvelle : depuis Python 3.10, les messages d'erreur sont devenus beaucoup plus précis et utiles. C'est une raison de plus de travailler sur une version récente (3.13+ recommandé).
+
+**Erreurs de syntaxe explicites** (3.10+) — Python indique ce qui manque :
+```python
+if x > 5
+    print("x")
+# Avant : SyntaxError: invalid syntax
+# Maintenant : SyntaxError: expected ':'
+```
+
+**Suggestions en cas de faute de frappe** (3.10+) :
+```python
+variable_inexistant = 5
+print(variable_inexistante)
+# NameError: name 'variable_inexistante' is not defined. Did you mean: 'variable_inexistant'?
+```
+
+**Localisation précise dans la trace** (3.11+, PEP 657) — des `^` soulignent l'expression exacte qui a échoué :
+```
+  File "script.py", line 2, in calculer
+    return x / y
+           ~~^~~
+ZeroDivisionError: division by zero
+```
+
+**Tracebacks en couleur** (3.13+) — dans le terminal, les traces sont désormais colorisées, ce qui les rend plus faciles à lire.
+
+> Ces améliorations font de la simple lecture du message d'erreur l'outil de débogage le plus rapide. Ne le survolez pas : il vous dit souvent exactement quoi corriger, et même où.
+
 ---
 
 ## Les blocs try/except - Introduction
@@ -420,6 +451,7 @@ else:
 ### Le bloc finally (toujours exécuté)
 
 ```python
+fichier = None
 try:
     fichier = open("donnees.txt", 'r', encoding='utf-8')
     contenu = fichier.read()
@@ -429,11 +461,11 @@ except FileNotFoundError:
 finally:
     # Ce bloc s'exécute TOUJOURS, qu'il y ait eu une erreur ou non
     print("🔒 Fermeture des ressources...")
-    try:
+    if fichier is not None:   # fichier n'est défini que si open() a réussi
         fichier.close()
-    except:
-        pass  # Le fichier n'était pas ouvert
 ```
+
+> En pratique, pour un fichier on préfère le gestionnaire de contexte `with open(...) as f:` (vu plus haut), qui ferme automatiquement le fichier — même en cas d'erreur — et rend ce `finally` inutile. Le `finally` reste précieux pour les ressources qui n'ont pas de gestionnaire de contexte.
 
 ### Structure complète
 
@@ -586,6 +618,8 @@ except KeyError:
 # ✅ Bon : utiliser des conditions
 valeur = dictionnaire.get(cle)
 ```
+
+> **Nuance** : Python recourt pourtant volontiers aux exceptions de façon idiomatique (style *EAFP*, « *easier to ask forgiveness than permission* ») quand le cas d'erreur est **rare et inattendu** (par exemple `try: int(x) except ValueError`). La règle est surtout d'éviter les exceptions pour des cas **fréquents et prévisibles** — comme une clé absente, mieux gérée par `.get()`.
 
 2. **Masquer les bugs**
 ```python

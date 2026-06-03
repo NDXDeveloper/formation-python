@@ -127,7 +127,7 @@ PATTERN 7 : ITERATOR
 ### 03_03_patterns_structurels.py
 
 - **Section** : 12.3 - Patterns de conception courants
-- **Description** : Patterns structurels et pythoniques - Decorator (classe cafe avec MilkDecorator/SugarDecorator/WhippedCreamDecorator, decorateurs de fonctions timer/logger/validator, decorateurs de permissions), Adapter (media player et APIs meteo), Repository (InMemoryUserRepository avec UserService), Context Manager (timer, transaction base de donnees, fichier temporaire)
+- **Description** : Patterns structurels et pythoniques - Decorator (classe cafe avec MilkDecorator/SugarDecorator/WhippedCreamDecorator, decorateurs de fonctions timer/logger/validator, decorateurs de permissions), Adapter (media player et APIs meteo), Repository (`InMemoryUserRepository` et `DatabaseUserRepository` simulé, `UserService` interchangeable), Context Manager (classe `__enter__`/`__exit__` avec `FileHandler`, timer, transaction base de donnees, fichier temporaire)
 - **Fichier source** : `03-patterns-de-conception.md`
 - **Sortie attendue** :
 ```
@@ -175,9 +175,16 @@ PATTERN 9 : REPOSITORY
   Recherche id=1 : User(id=1, name='Alice', email='alice@example.com')
   Apres suppression id=2 : 1 utilisateur(s)
 
+  --- Meme UserService avec un depot SQL (simule) ---
+  SQL: INSERT INTO users (name, email) VALUES ('Charlie', 'charlie@example.com')
+  SQL: SELECT * FROM users WHERE id = 1
+
 ==================================================
 PATTERN 10 : CONTEXT MANAGER
 ==================================================
+
+  Ouverture de /tmp/temp_filehandler_test.txt
+  Fermeture de /tmp/temp_filehandler_test.txt
 
   Debut de operation
   Traitement en cours...
@@ -203,7 +210,7 @@ PATTERN 10 : CONTEXT MANAGER
 ### 04_01_optimisation_performances.py
 
 - **Section** : 12.4 - Optimisation des performances
-- **Description** : Mesure du temps (time, timeit, decorateur), profiling (cProfile avec pstats), structures de donnees (list vs set, defaultdict, Counter, deque), optimisations de code (comprehensions vs boucles vs map, concatenation strings join vs +=, deduplication O(n^2) vs O(n)), generateurs vs listes (comparaison memoire), caching (cache dict, lru_cache, @cache pour fibonacci), optimisation memoire avec __slots__, asyncio.gather, resume des optimisations
+- **Description** : Mesure du temps (time, timeit, decorateur), profiling (cProfile avec pstats), structures de donnees (list vs set, defaultdict, Counter, deque), optimisations de code (comprehensions vs boucles vs map, concatenation strings join vs +=, deduplication O(n^2) vs O(n), optimisation des boucles avec invariant hors boucle et enumerate), generateurs vs listes (comparaison memoire), caching (cache dict, lru_cache, @cache pour fibonacci), optimisation memoire avec __slots__, asyncio.gather, resume des optimisations
 - **Fichier source** : `04-optimisation-performances.md`
 - **Sortie attendue** :
 ```
@@ -259,6 +266,10 @@ OPTIMISATIONS CODE
 
   Deduplication O(n2) : X.XXXXs (250 doublons)
   Deduplication O(n) : X.XXXXXXs (250 doublons)
+
+  Invariant DANS la boucle : X.XXXXs
+  Invariant HORS boucle    : X.XXXXs
+  enumerate : ['0:a', '1:b', '2:c']
 
 ==================================================
 GENERATEURS vs LISTES

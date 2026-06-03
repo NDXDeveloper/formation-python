@@ -1,6 +1,6 @@
 # ============================================================================
 #   Section 9.4 : Profiling et optimisation
-#   Description : Mesurer le temps d'execution avec time.time(), fonction
+#   Description : Mesurer le temps d'execution avec time.perf_counter(), fonction
 #                 de chronometrage, gestionnaire de contexte
 #   Fichier source : 04-profiling-et-optimisation.md
 # ============================================================================
@@ -9,15 +9,15 @@ import time
 from contextlib import contextmanager
 
 # ==========================================
-# 1. time.time() basique
+# 1. time.perf_counter() basique
 # ==========================================
-print("=== time.time() ===\n")
+print("=== time.perf_counter() ===\n")
 
-debut = time.time()
+debut = time.perf_counter()
 total = 0
 for i in range(1000000):
     total += i
-fin = time.time()
+fin = time.perf_counter()
 duree = fin - debut
 print(f"  Temps d'execution : {duree:.4f} secondes")
 
@@ -28,9 +28,9 @@ print("\n=== Fonction chronometrer() ===\n")
 
 def chronometrer(fonction, *args, **kwargs):
     """Chronometre l'execution d'une fonction."""
-    debut = time.time()
+    debut = time.perf_counter()
     resultat = fonction(*args, **kwargs)
-    fin = time.time()
+    fin = time.perf_counter()
     duree = fin - debut
     return resultat, duree
 
@@ -50,9 +50,9 @@ print("\n=== Gestionnaire de contexte ===\n")
 def chronometre(nom="Code"):
     """Gestionnaire de contexte pour chronometrer un bloc de code."""
     print(f"  Debut du chronometrage : {nom}")
-    debut = time.time()
+    debut = time.perf_counter()
     yield
-    fin = time.time()
+    fin = time.perf_counter()
     duree = fin - debut
     print(f"  {nom} termine en {duree:.4f} secondes")
 

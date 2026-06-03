@@ -311,8 +311,10 @@ class Commentaire(CommentaireBase):
 ### Configuration base de données (database.py)
 
 ```python
-from sqlalchemy import create_engine  
-from sqlalchemy.orm import declarative_base, sessionmaker  
+from sqlalchemy import (
+    create_engine, Column, Integer, String, Text, DateTime, ForeignKey, JSON
+)
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 # URL de la base de données SQLite
 SQLALCHEMY_DATABASE_URL = "sqlite:///./blog.db"
@@ -329,6 +331,41 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Base pour les modèles
 Base = declarative_base()
 
+
+# Modèles SQLAlchemy (les tables de la base de données)
+class User(Base):
+    __tablename__ = "utilisateurs"
+    id = Column(Integer, primary_key=True)
+    nom = Column(String(100), nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+    bio = Column(Text, nullable=True)
+    mot_de_passe = Column(String(255), nullable=False)
+    date_inscription = Column(DateTime, nullable=False)
+
+
+class Article(Base):
+    __tablename__ = "articles"
+    id = Column(Integer, primary_key=True)
+    titre = Column(String(200), nullable=False)
+    contenu = Column(Text, nullable=False)
+    categorie = Column(String(100), nullable=False)
+    tags = Column(JSON, default=list)  # liste de chaînes stockée en JSON
+    auteur_id = Column(Integer, ForeignKey("utilisateurs.id"), nullable=False)
+    date_publication = Column(DateTime, nullable=False)
+    nombre_vues = Column(Integer, default=0)
+
+    auteur = relationship("User")
+
+
+class Commentaire(Base):
+    __tablename__ = "commentaires"
+    id = Column(Integer, primary_key=True)
+    contenu = Column(String(500), nullable=False)
+    article_id = Column(Integer, ForeignKey("articles.id"), nullable=False)
+    auteur_id = Column(Integer, ForeignKey("utilisateurs.id"), nullable=False)
+    date_creation = Column(DateTime, nullable=False)
+
+
 # Dépendance pour obtenir la session de base de données
 def get_db():
     db = SessionLocal()
@@ -338,6 +375,10 @@ def get_db():
         db.close()
 ```
 
+> **Où est créé le fichier `blog.db` ?** L'appel `create_engine(...)` ne crée **aucun fichier** : la connexion SQLite est *paresseuse*. Le fichier `blog.db` n'apparaît qu'à la **première connexion**, déclenchée par `Base.metadata.create_all(...)` au démarrage de `main.py` (voir plus bas). Son chemin `./blog.db` est **relatif au répertoire de travail** d'où vous lancez l'application (par exemple `uvicorn main:app`), et non au dossier des fichiers sources.
+
+> **Important** : ne confondez pas les **modèles SQLAlchemy** (`User`, `Article`, `Commentaire` ci-dessus — les *tables* de la base) et les **modèles Pydantic** (`Utilisateur`, `Article`… définis dans `models.py` — la *validation* et la *sérialisation* des requêtes/réponses). Ils portent des noms voisins mais vivent dans des modules différents. FastAPI fait le pont entre les deux grâce à `from_attributes=True` (côté Pydantic), qui permet de renvoyer directement un objet SQLAlchemy comme `response_model`.
+
 ### Application principale (main.py)
 
 ```python
@@ -346,6 +387,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime  
 import models  
 import database  
+from database import User, Article, Commentaire  
 
 app = FastAPI(
     title="Blog API",
@@ -353,7 +395,9 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Créer les tables
+# Créer les tables au démarrage de l'application. C'est précisément ici,
+# à la première connexion, que SQLite crée le fichier blog.db, dans le
+# répertoire courant (celui d'où l'application est lancée).
 database.Base.metadata.create_all(bind=database.engine)
 
 # ==================== UTILISATEURS ====================
@@ -492,7 +536,7 @@ def creer_article(
         titre=article.titre,
         contenu=article.contenu,
         categorie=article.categorie,
-        tags=",".join(article.tags),  # Stocker comme chaîne
+        tags=article.tags,
         auteur_id=auteur_id,
         date_publication=datetime.now(),
         nombre_vues=0
@@ -1227,7 +1271,7 @@ def verifier_token(credentials: HTTPAuthorizationCredentials = Depends(security)
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token expiré"
         )
-    except jwt.JWTError:
+    except jwt.InvalidTokenError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token invalide"

@@ -497,6 +497,7 @@ titanic['survived'].value_counts().plot(kind='bar', ax=axes[0])
 axes[0].set_title('Distribution de la survie')
 axes[0].set_xlabel('Survie (0 = Non, 1 = Oui)')
 axes[0].set_ylabel('Nombre de passagers')
+axes[0].set_xticks([0, 1])
 axes[0].set_xticklabels(['Decede', 'Survecu'], rotation=0)
 
 titanic['survived'].value_counts().plot(kind='pie', ax=axes[1],
@@ -555,6 +556,7 @@ axes[0].set_ylabel('Frequence')
 
 sns.boxplot(x='survived', y='age', data=titanic, ax=axes[1])
 axes[1].set_title("Distribution de l'age par survie")
+axes[1].set_xticks([0, 1])
 axes[1].set_xticklabels(['Decede', 'Survecu'])
 
 plt.tight_layout()

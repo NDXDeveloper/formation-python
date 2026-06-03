@@ -158,7 +158,7 @@ async def faire_cafe(nom):
 
 async def main():
     """Exécute plusieurs préparations en parallèle"""
-    debut = time.time()
+    debut = time.perf_counter()
 
     # Créer plusieurs tâches
     tache1 = asyncio.create_task(faire_cafe("Alice"))
@@ -170,7 +170,7 @@ async def main():
     resultat2 = await tache2
     resultat3 = await tache3
 
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"\n✅ Tous les cafés prêts en {duree:.2f}s")
     print(f"Résultats: {resultat1}, {resultat2}, {resultat3}")
 
@@ -239,6 +239,48 @@ asyncio.run(main())
 
 ---
 
+## asyncio.TaskGroup() - Concurrence structurée (Python 3.11+)
+
+Depuis **Python 3.11**, `asyncio.TaskGroup` est la façon **recommandée** de lancer plusieurs tâches concurrentes. C'est ce qu'on appelle la *concurrence structurée* : toutes les tâches créées dans le bloc `async with` sont garanties terminées (ou annulées) à la sortie du bloc.
+
+### Exemple : TaskGroup en action
+
+```python
+import asyncio
+
+async def telecharger(nom, duree):
+    await asyncio.sleep(duree)
+    print(f"✅ {nom} téléchargé")
+    return nom
+
+async def main():
+    # Toutes les tâches sont créées dans le bloc ; on en sort quand tout est fini
+    async with asyncio.TaskGroup() as tg:
+        t1 = tg.create_task(telecharger("video", 2))
+        t2 = tg.create_task(telecharger("image", 1))
+        t3 = tg.create_task(telecharger("document", 1.5))
+    # Ici, les 3 tâches sont forcément terminées : on peut lire leurs résultats
+    print(f"Résultats : {t1.result()}, {t2.result()}, {t3.result()}")
+
+asyncio.run(main())
+```
+
+### Pourquoi TaskGroup plutôt que gather() ?
+
+| Aspect | `gather()` | `TaskGroup` (3.11+) |
+|--------|------------|---------------------|
+| **Si une tâche échoue** | les autres continuent en arrière-plan | les autres sont **annulées** automatiquement |
+| **Propagation d'erreurs** | la 1re exception remonte (ou liste avec `return_exceptions`) | **toutes** les erreurs, regroupées dans un `ExceptionGroup` |
+| **Portée** | manuelle | structurée (`async with`) : impossible d'« oublier » une tâche |
+
+L'annulation automatique évite un piège classique : avec `gather()`, si une requête échoue, les autres continuent inutilement à tourner. `TaskGroup` les arrête proprement.
+
+> **Quand garder `gather()` ?** Quand vous voulez justement que **toutes** les tâches aillent au bout malgré les erreurs (avec `return_exceptions=True`), ou pour rester compatible avec Python 3.10. Sinon, préférez `TaskGroup`.
+
+> **ExceptionGroup** : quand plusieurs tâches d'un `TaskGroup` échouent, les erreurs sont regroupées dans un `ExceptionGroup` (Python 3.11+), que l'on capture avec la nouvelle syntaxe `except* ValueError:` (notez l'astérisque).
+
+---
+
 ## asyncio.wait_for() - Timeout
 
 Parfois, on veut limiter le temps d'attente d'une opération.
@@ -272,6 +314,32 @@ Début de l'opération longue...
 ❌ Timeout! L'opération a pris trop de temps
 ```
 
+### Alternative moderne : `asyncio.timeout()` (Python 3.11+)
+
+Depuis Python 3.11, on peut utiliser le gestionnaire de contexte `asyncio.timeout()`, souvent plus lisible — surtout pour imposer un même délai global à **plusieurs** `await` :
+
+```python
+import asyncio
+
+async def operation_longue():
+    await asyncio.sleep(10)
+    return "Opération terminée"
+
+async def main():
+    try:
+        async with asyncio.timeout(3.0):
+            resultat = await operation_longue()
+            print(f"Résultat: {resultat}")
+    except TimeoutError:
+        print("❌ Timeout! L'opération a pris trop de temps")
+
+asyncio.run(main())
+```
+
+Différence clé : `wait_for()` enveloppe **une seule** coroutine, tandis que `asyncio.timeout()` impose un délai à **tout un bloc** de code (qui peut contenir plusieurs `await`).
+
+> **Note** : depuis Python 3.11, `asyncio.TimeoutError` est devenu un simple **alias** de l'exception intégrée `TimeoutError`. Les deux sont interchangeables, et `asyncio.timeout()` lève `TimeoutError`.
+
 ---
 
 ## Exemple pratique : Scraper web asynchrone
@@ -295,27 +363,27 @@ async def fetch_page(url, duree):
 async def scraper_synchrone(urls):
     """Version synchrone (une page après l'autre)"""
     print("=== VERSION SYNCHRONE ===")
-    debut = time.time()
+    debut = time.perf_counter()
 
     resultats = []
     for url, duree in urls:
         resultat = await fetch_page(url, duree)
         resultats.append(resultat)
 
-    duree_totale = time.time() - debut
+    duree_totale = time.perf_counter() - debut
     print(f"⏱️  Temps total: {duree_totale:.2f}s\n")
     return resultats
 
 async def scraper_asynchrone(urls):
     """Version asynchrone (toutes les pages en parallèle)"""
     print("=== VERSION ASYNCHRONE ===")
-    debut = time.time()
+    debut = time.perf_counter()
 
     # Lancer toutes les requêtes en parallèle
     taches = [fetch_page(url, duree) for url, duree in urls]
     resultats = await asyncio.gather(*taches)
 
-    duree_totale = time.time() - debut
+    duree_totale = time.perf_counter() - debut
     print(f"⏱️  Temps total: {duree_totale:.2f}s\n")
     return resultats
 
@@ -484,6 +552,62 @@ asyncio.run(main())
 
 ---
 
+## Annuler une tâche : `cancel()` et `CancelledError`
+
+Une tâche lancée avec `create_task()` peut être **annulée** avant la fin. C'est le mécanisme qui se cache derrière `asyncio.timeout()` / `wait_for()` (qui annulent la tâche à l'expiration du délai) et derrière `TaskGroup` (qui annule les tâches sœurs quand l'une échoue).
+
+### Comment ça marche
+
+`tache.cancel()` ne stoppe pas la tâche immédiatement : il programme l'injection d'une exception `asyncio.CancelledError` à l'intérieur de la coroutine, au prochain `await`. La tâche peut donc l'intercepter pour faire un peu de nettoyage avant de s'arrêter.
+
+```python
+import asyncio
+
+async def tache_longue():
+    try:
+        print("Tâche : démarrage")
+        await asyncio.sleep(10)
+        print("Tâche : terminée")  # jamais atteint si annulée
+    except asyncio.CancelledError:
+        print("Tâche : annulation reçue, nettoyage...")
+        raise  # IMPORTANT : on relance pour confirmer l'annulation
+
+async def main():
+    tache = asyncio.create_task(tache_longue())
+    await asyncio.sleep(1)          # on la laisse démarrer
+    tache.cancel()                  # on demande l'annulation
+    try:
+        await tache
+    except asyncio.CancelledError:
+        print("Main : la tâche a bien été annulée")
+
+asyncio.run(main())
+```
+
+**Sortie** :
+```
+Tâche : démarrage
+Tâche : annulation reçue, nettoyage...
+Main : la tâche a bien été annulée
+```
+
+### Deux règles importantes
+
+1. **Ne « mangez » pas l'annulation.** Si vous interceptez `CancelledError`, faites votre nettoyage puis **relancez-la** avec `raise`. Une tâche qui avale son annulation refuse en réalité de s'arrêter — source de bugs difficiles à diagnostiquer.
+
+2. **`except Exception` n'attrape pas `CancelledError`.** Depuis Python 3.8, `asyncio.CancelledError` hérite de `BaseException` (et non de `Exception`). Un `try/except Exception` autour de votre logique métier laisse donc passer l'annulation — ce qui est exactement le comportement souhaité :
+
+```python
+async def traiter():
+    try:
+        await operation()
+    except Exception as e:        # n'intercepte PAS l'annulation
+        print(f"Erreur métier : {e}")
+    # Une CancelledError, elle, continue de se propager normalement
+```
+
+---
+
 ## Patterns courants avec asyncio
 
 ### Pattern 1 : Queue asynchrone (Producer-Consumer)
@@ -589,7 +713,7 @@ def operation_io_thread(numero):
 
 def executer_avec_threads(nombre):
     """Exécute avec threads"""
-    debut = time.time()
+    debut = time.perf_counter()
     threads = []
     resultats = [None] * nombre
 
@@ -604,7 +728,7 @@ def executer_avec_threads(nombre):
     for thread in threads:
         thread.join()
 
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"🧵 Threading: {duree:.2f}s pour {nombre} opérations")
     return resultats
 
@@ -616,12 +740,12 @@ async def operation_io_async(numero):
 
 async def executer_avec_asyncio(nombre):
     """Exécute avec asyncio"""
-    debut = time.time()
+    debut = time.perf_counter()
 
     taches = [operation_io_async(i) for i in range(nombre)]
     resultats = await asyncio.gather(*taches)
 
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"⚡ Asyncio: {duree:.2f}s pour {nombre} opérations")
     return resultats
 
@@ -648,7 +772,7 @@ asyncio.run(main())
 ```
 
 **Avantages d'asyncio** :
-- Moins de mémoire (pas de stack par tâche)
+- Bien moins de mémoire : un thread réserve sa propre pile d'exécution (souvent plusieurs Mo), alors qu'une tâche asyncio n'est qu'un objet léger sur le tas
 - Plus scalable (peut gérer des milliers de connexions)
 - Code plus lisible avec async/await
 
@@ -689,6 +813,25 @@ async def bonne_pratique():
 ```
 
 **Règle** : N'utilisez jamais `time.sleep()` dans du code asynchrone, utilisez `await asyncio.sleep()`.
+
+**Et si une fonction bloquante est inévitable ?** (par exemple une bibliothèque sans version asynchrone, ou un calcul lourd). Déléguez-la à un thread avec `asyncio.to_thread()` (Python 3.9+), pour ne pas geler l'event loop :
+
+```python
+import asyncio
+import time
+
+def fonction_bloquante():
+    """Code synchrone qui prend du temps (lib sans équivalent async, etc.)"""
+    time.sleep(2)
+    return "résultat"
+
+async def main():
+    # Exécutée dans un thread séparé : l'event loop reste libre pendant ce temps
+    resultat = await asyncio.to_thread(fonction_bloquante)
+    print(resultat)
+
+asyncio.run(main())
+```
 
 ### 3. Utiliser des bibliothèques asynchrones
 
@@ -856,7 +999,7 @@ class GestionnaireTelechargement:
         """Télécharge un fichier avec gestion d'erreurs et timeout"""
         async with self.semaphore:
             self.statistiques['total'] += 1
-            debut = time.time()
+            debut = time.perf_counter()
 
             try:
                 print(f"⬇️  Début: {url}")
@@ -867,7 +1010,7 @@ class GestionnaireTelechargement:
                     timeout=timeout
                 )
 
-                duree = time.time() - debut
+                duree = time.perf_counter() - debut
                 self.statistiques['reussis'] += 1
 
                 print(f"✅ Succès: {url} ({duree:.2f}s)")
@@ -907,7 +1050,7 @@ class GestionnaireTelechargement:
         print(f"📊 Concurrence max: {self.max_concurrent}")
         print("-" * 50)
 
-        debut_total = time.time()
+        debut_total = time.perf_counter()
 
         # Créer toutes les tâches
         taches = [self.telecharger_fichier(url) for url in urls]
@@ -915,7 +1058,7 @@ class GestionnaireTelechargement:
         # Exécuter avec progression
         resultats = await asyncio.gather(*taches, return_exceptions=True)
 
-        duree_totale = time.time() - debut_total
+        duree_totale = time.perf_counter() - debut_total
 
         # Afficher les statistiques
         print("-" * 50)
@@ -982,10 +1125,14 @@ Asyncio n'est pas toujours la meilleure solution. **Évitez asyncio** dans ces c
 | **await** | Attend sans bloquer | `await ma_coroutine()` |
 | **Task** | Coroutine planifiée | `asyncio.create_task(coro)` |
 | **gather** | Exécute plusieurs coroutines | `await asyncio.gather(*coros)` |
+| **TaskGroup** | Concurrence structurée (3.11+) | `async with asyncio.TaskGroup() as tg:` |
 | **sleep** | Pause non-bloquante | `await asyncio.sleep(1)` |
 | **run** | Lance l'event loop | `asyncio.run(main())` |
 | **Queue** | File asynchrone | `asyncio.Queue()` |
 | **Semaphore** | Limite la concurrence | `asyncio.Semaphore(n)` |
+| **timeout** | Délai sur tout un bloc (3.11+) | `async with asyncio.timeout(5):` |
+| **to_thread** | Délègue du code bloquant à un thread (3.9+) | `await asyncio.to_thread(fn)` |
+| **cancel** | Annule une tâche (lève `CancelledError`) | `tache.cancel()` |
 
 ---
 
@@ -996,9 +1143,11 @@ Asyncio n'est pas toujours la meilleure solution. **Évitez asyncio** dans ces c
 3. **Event loop** = Orchestre l'exécution des coroutines
 4. **create_task()** = Lance une coroutine en arrière-plan
 5. **gather()** = Attend plusieurs coroutines en parallèle
-6. **Ne jamais bloquer l'event loop** = Utilisez des versions asynchrones
-7. **Gérez les erreurs** = Utilisez try/except et return_exceptions
-8. **Semaphore** = Contrôle le nombre de tâches simultanées
+6. **TaskGroup (3.11+)** = la façon moderne et recommandée de lancer des tâches concurrentes (annule les autres en cas d'erreur)
+7. **Ne jamais bloquer l'event loop** = Utilisez des versions asynchrones (ou `asyncio.to_thread()` pour le code bloquant inévitable)
+8. **Gérez les erreurs** = Utilisez try/except et return_exceptions
+9. **Annulation** = `cancel()` injecte `CancelledError` ; nettoyez puis relancez-la (ne l'avalez pas)
+10. **Semaphore** = Contrôle le nombre de tâches simultanées
 
 ---
 

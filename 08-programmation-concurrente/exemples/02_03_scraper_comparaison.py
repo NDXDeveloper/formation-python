@@ -18,26 +18,26 @@ async def fetch_page(url, duree):
 async def scraper_synchrone(urls):
     """Version synchrone (une page après l'autre)"""
     print("=== VERSION SYNCHRONE ===")
-    debut = time.time()
+    debut = time.perf_counter()
 
     resultats = []
     for url, duree in urls:
         resultat = await fetch_page(url, duree)
         resultats.append(resultat)
 
-    duree_totale = time.time() - debut
+    duree_totale = time.perf_counter() - debut
     print(f"  Temps total: {duree_totale:.2f}s\n")
     return resultats
 
 async def scraper_asynchrone(urls):
     """Version asynchrone (toutes les pages en parallèle)"""
     print("=== VERSION ASYNCHRONE ===")
-    debut = time.time()
+    debut = time.perf_counter()
 
     taches = [fetch_page(url, duree) for url, duree in urls]
     resultats = await asyncio.gather(*taches)
 
-    duree_totale = time.time() - debut
+    duree_totale = time.perf_counter() - debut
     print(f"  Temps total: {duree_totale:.2f}s\n")
     return resultats
 

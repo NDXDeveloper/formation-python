@@ -243,6 +243,38 @@ processes = [multiprocessing.Process(target=calcul_intensif) for _ in range(4)]
 | **Création** | Rapide | Plus lent |
 | **Mémoire** | Partagée | Séparée |
 
+> Ce tableau décrit le build **standard** de CPython, celui que vous utilisez presque certainement. Il décrit donc la règle qui s'applique par défaut aujourd'hui.
+
+### Le GIL en évolution : le « free-threading » (Python 3.13+)
+
+Le GIL n'est plus une fatalité définitive. La **PEP 703** a introduit une variante de CPython **sans GIL**, dite *free-threaded* :
+
+- **Python 3.13** (octobre 2024) : première version *expérimentale*, à installer séparément (l'exécutable se nomme `python3.13t`). Le GIL peut être désactivé, mais le code mono-thread paie alors un surcoût notable (de l'ordre de 40 %).
+- **Python 3.14** (octobre 2025) : le mode free-threaded devient **officiellement supporté** (PEP 779) — il n'est plus qualifié d'« expérimental », même s'il reste **optionnel** (ce n'est pas le build par défaut). Le surcoût mono-thread tombe à environ 5-10 %.
+
+Dans ce build, plusieurs threads peuvent exécuter du code Python **vraiment en parallèle**, y compris pour des tâches CPU-bound — ce que le GIL interdit dans le build standard.
+
+> **À retenir** : tant que vous utilisez l'interpréteur **par défaut** (le cas de l'immense majorité des installations), le GIL s'applique et tout ce chapitre reste valable. Le free-threading est la direction prise par Python, mais l'écosystème (NumPy, etc.) s'y adapte encore. Sur Python 3.13+, vous pouvez vérifier l'état du GIL avec `python -c "import sys; print(sys._is_gil_enabled())"` (renvoie `True` sur un build standard, `False` si le GIL est désactivé).
+
+### L'autre voie : les sous-interpréteurs (Python 3.14)
+
+Le free-threading n'est pas la seule réponse au GIL. Depuis Python 3.12, chaque **sous-interpréteur** — plusieurs interpréteurs Python isolés au sein d'un même processus — possède **son propre GIL** (PEP 684). Ils peuvent donc s'exécuter **vraiment en parallèle**, y compris pour des calculs CPU-bound.
+
+La **PEP 734** rend cette possibilité accessible depuis du code Python pur en **Python 3.14**, via le module `concurrent.interpreters` et surtout un nouvel exécuteur `InterpreterPoolExecutor` — qui s'utilise exactement comme les `ThreadPoolExecutor` / `ProcessPoolExecutor` vus en 8.1 :
+
+```python
+# Python 3.14+
+from concurrent.futures import InterpreterPoolExecutor
+
+def calcul(n):
+    return sum(i * i for i in range(n))
+
+with InterpreterPoolExecutor(max_workers=4) as executor:
+    resultats = list(executor.map(calcul, [10_000_000] * 4))
+```
+
+C'est une voie **intermédiaire entre threads et processus** : plus légère qu'un processus (on reste dans le même processus système), mais plus isolée qu'un thread — les sous-interpréteurs ne partagent pas leurs objets, les données sont copiées (via `pickle`) ou échangées par une file dédiée. Comme le free-threading, c'est récent et l'écosystème commence tout juste à s'y adapter.
+
 ---
 
 ## Types de tâches : I/O-bound vs CPU-bound
@@ -534,9 +566,9 @@ Utilisez des outils pour mesurer les performances :
 import time
 
 def mesurer_temps(fonction):
-    debut = time.time()
+    debut = time.perf_counter()  # perf_counter : horloge monotone, idéale pour mesurer une durée
     resultat = fonction()
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"Temps: {duree:.2f}s")
     return resultat
 ```

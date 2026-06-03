@@ -64,6 +64,14 @@ date3 = datetime.strptime("10/27/25", "%m/%d/%y")
 print(f"'2025-10-27' -> {date1}")
 print(f"'10/27/25'   -> {date3}")
 
+# --- Format ISO 8601 (isoformat / fromisoformat) ---
+print("\n=== Format ISO 8601 ===")
+
+dt = datetime(2025, 10, 27, 14, 30, 45)
+iso = dt.isoformat()
+print(f"isoformat()     : {iso}")
+print(f"fromisoformat() : {datetime.fromisoformat(iso)}")  # l'opération inverse exacte
+
 # --- Calculer l'âge ---
 print("\n=== Calculer l'âge ===")
 

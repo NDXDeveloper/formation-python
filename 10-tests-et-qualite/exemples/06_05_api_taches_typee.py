@@ -144,7 +144,7 @@ def exemple_utilisation() -> None:
 
     # Creer des taches
     tache1 = gestionnaire.creer_tache("Faire les courses", Priorite.HAUTE)
-    tache2 = gestionnaire.creer_tache("Lire un livre")
+    gestionnaire.creer_tache("Lire un livre")
     tache3 = gestionnaire.creer_tache("Faire du sport", Priorite.BASSE)
 
     print("=== Toutes les taches ===")

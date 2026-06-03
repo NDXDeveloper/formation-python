@@ -920,7 +920,7 @@ if __name__ == "__main__":
 ```python
 # ❌ Dans une bibliothèque/module
 import logging  
-logging.basicConfig(...)  # NE JAMAIS FAIRE ÇA !  
+logging.basicConfig(level=logging.INFO)  # NE JAMAIS FAIRE ÇA !  
 
 # ✅ Dans une bibliothèque/module
 import logging  
@@ -961,8 +961,8 @@ logger.debug("Valeur: %s", variable)
 logger.debug("Utilisateur %s a effectué %d actions", username, count)  
 ```
 
-> **Note :** Le module `logging` utilise le formatage `%` par défaut (comme `"message %s" % args`).
-> La syntaxe `{}` (style `str.format()`) ne fonctionne **pas** avec les arguments positionnels du logger.
+> **Note :** Le module `logging` utilise le formatage `%` par défaut (comme `"message %s" % args`).  
+> La syntaxe `{}` (style `str.format()`) ne fonctionne **pas** avec les arguments positionnels du logger.  
 > Le lazy formatting diffère le coût de la **conversion en chaîne**, mais les expressions passées en arguments sont toujours évaluées.
 
 ### 6. Éviter les informations sensibles dans les logs
@@ -1090,6 +1090,10 @@ LOGGING_CONFIG = {
         }
     }
 }
+
+# Les FileHandler ne créent pas leur dossier parent : on crée 'logs/' d'abord
+import os
+os.makedirs('logs', exist_ok=True)
 
 logging.config.dictConfig(LOGGING_CONFIG)
 

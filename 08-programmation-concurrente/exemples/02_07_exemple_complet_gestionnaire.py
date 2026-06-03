@@ -24,7 +24,7 @@ class GestionnaireTelechargement:
         """Télécharge un fichier avec gestion d'erreurs et timeout"""
         async with self.semaphore:
             self.statistiques['total'] += 1
-            debut = time.time()
+            debut = time.perf_counter()
 
             try:
                 print(f"  Début: {url}")
@@ -34,7 +34,7 @@ class GestionnaireTelechargement:
                     timeout=timeout
                 )
 
-                duree = time.time() - debut
+                duree = time.perf_counter() - debut
                 self.statistiques['reussis'] += 1
 
                 print(f"  Succès: {url} ({duree:.2f}s)")
@@ -74,12 +74,12 @@ class GestionnaireTelechargement:
         print(f"Concurrence max: {self.max_concurrent}")
         print("-" * 50)
 
-        debut_total = time.time()
+        debut_total = time.perf_counter()
 
         taches = [self.telecharger_fichier(url) for url in urls]
         resultats = await asyncio.gather(*taches, return_exceptions=True)
 
-        duree_totale = time.time() - debut_total
+        duree_totale = time.perf_counter() - debut_total
 
         print("-" * 50)
         print(f"\nStatistiques:")

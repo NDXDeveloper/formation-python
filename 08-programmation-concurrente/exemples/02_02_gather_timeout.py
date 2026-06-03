@@ -29,13 +29,13 @@ async def main_gather():
         ("musique.mp3", 3)
     ]
 
-    debut = time.time()
+    debut = time.perf_counter()
 
     resultats = await asyncio.gather(
         *[telecharger_fichier(nom, taille) for nom, taille in fichiers]
     )
 
-    duree = time.time() - debut
+    duree = time.perf_counter() - debut
     print(f"\n  Tous les fichiers téléchargés: {len(resultats)} en {duree:.2f}s")
     for resultat in resultats:
         print(f"    - {resultat}")
