@@ -305,7 +305,7 @@ Le fichier sera fermé que l'opération réussisse ou non !
 try:
     print("1. Dans try")
     # Code risqué
-except:
+except Exception:
     print("2. Dans except (si erreur)")
 else:
     print("3. Dans else (si pas d'erreur)")
@@ -1112,18 +1112,28 @@ except FileNotFoundError:
 
 ## Erreurs Courantes à Éviter
 
-### 1. Capturer Exception ou BaseException
+### 1. Capturer `BaseException`, ou capturer large sans rien faire
 
-❌ **Mauvais**
+❌ **Mauvais** : capturer `BaseException`
 ```python
 try:
     # Code
     pass
-except Exception:  # Trop large
+except BaseException:  # Capture AUSSI KeyboardInterrupt (Ctrl+C) et SystemExit !
     pass
 ```
 
-Cela capture presque tout, y compris des erreurs que vous ne devriez pas ignorer.
+Capturer `BaseException` intercepte même `KeyboardInterrupt` et `SystemExit` : l'utilisateur ne peut plus interrompre le programme avec Ctrl+C. Et un `except ... : pass` qui **avale silencieusement** l'erreur masque les vrais problèmes.
+
+✅ **Acceptable** : capturer `Exception` (et non `BaseException`) **à condition de traiter, journaliser ou relancer** l'erreur — jamais de l'ignorer :
+```python
+try:
+    # Code
+    pass
+except Exception as e:
+    print(f"Erreur inattendue : {e}")  # au minimum, on informe
+    raise  # et on relance si on ne sait pas vraiment la gérer
+```
 
 ### 2. Bloc except vide
 
@@ -1176,7 +1186,7 @@ f = open("fichier.txt")
 try:  
     # Traitement
     pass
-except:
+except Exception:
     # Gestion d'erreur
     pass
 f.close()  # Ne sera pas exécuté si erreur dans except !
@@ -1188,7 +1198,7 @@ f = open("fichier.txt")
 try:  
     # Traitement
     pass
-except:
+except Exception:
     # Gestion d'erreur
     pass
 finally:

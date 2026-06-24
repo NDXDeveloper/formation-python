@@ -53,7 +53,7 @@ Python n'est pas cantonné à un seul domaine. Il excelle dans de nombreux domai
 
 Python possède l'une des communautés les plus actives et bienveillantes :
 
-- **Plus de 690 000 packages** disponibles sur PyPI (Python Package Index)
+- **Plus de 800 000 packages** disponibles sur PyPI (Python Package Index)
 - Des millions de développeurs dans le monde
 - Une documentation abondante et des tutoriels pour tous les niveaux
 - Des forums d'entraide actifs (Stack Overflow, Reddit, Discord)

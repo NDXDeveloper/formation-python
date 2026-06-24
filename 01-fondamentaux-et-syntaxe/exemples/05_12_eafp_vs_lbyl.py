@@ -4,6 +4,8 @@
 #   Fichier source : 05-gestion-des-erreurs.md
 # ============================================================================
 
+import os
+
 # --- LBYL : Look Before You Leap (vérifier avant d'agir) ---
 dictionnaire = {"nom": "Alice", "age": 25}
 
@@ -26,19 +28,18 @@ print(f"EAFP - valeur : {valeur}")
 print()
 
 # LBYL
-import os
 fichier = "test_inexistant.txt"
 if os.path.exists(fichier):
     with open(fichier) as f:
         contenu = f.read()
-    print(f"LBYL - contenu lu")
+    print("LBYL - contenu lu")
 else:
-    print(f"LBYL - fichier n'existe pas")
+    print("LBYL - fichier n'existe pas")
 
 # EAFP
 try:
     with open(fichier) as f:
         contenu = f.read()
-    print(f"EAFP - contenu lu")
+    print("EAFP - contenu lu")
 except FileNotFoundError:
-    print(f"EAFP - fichier n'existe pas")
+    print("EAFP - fichier n'existe pas")

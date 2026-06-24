@@ -5,6 +5,8 @@
 # ============================================================================
 
 # --- Erreur classique ---
+# Les valeurs par défaut sont évaluées UNE SEULE FOIS, à la définition de la
+# fonction (pas à chaque appel) : la liste [] est donc partagée entre les appels.
 def ajouter_a_liste_bug(element, liste=[]):
     liste.append(element)
     return liste

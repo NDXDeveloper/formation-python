@@ -141,9 +141,9 @@ Une fois l'installation terminée, il est important de vérifier que Python fonc
    ```bash
    python --version
    ```
-   ou
+   ou, avec le lanceur Python (Windows) :
    ```bash
-   python3 --version
+   py --version
    ```
 
 3. Vous devriez voir s'afficher quelque chose comme :
@@ -395,10 +395,25 @@ Nous reviendrons sur ce concept important plus tard dans la formation.
 
 ### Plusieurs versions de Python installées
 
-Si vous avez plusieurs versions de Python, utilisez des commandes plus spécifiques :
-- `python3.14` pour Python 3.14
-- `python3.13` pour Python 3.13
-- etc.
+Si vous avez plusieurs versions de Python installées, la commande pour en cibler une précise dépend de votre système.
+
+**Sur macOS / Linux** — ajoutez le numéro de version à la commande :
+
+```bash
+python3.14 --version   # cible Python 3.14
+python3.13 --version   # cible Python 3.13
+```
+
+**Sur Windows** — utilisez le *lanceur Python* `py`, installé automatiquement avec Python :
+
+```bash
+py --version       # la version par défaut (la plus récente installée)
+py -3.14           # cible précisément Python 3.14
+py -3.13           # cible précisément Python 3.13
+py -0p             # liste toutes les versions installées, avec leur chemin
+```
+
+> 🔍 **Approfondissement — gérer Python avec `uv`** : des outils modernes comme [`uv`](https://docs.astral.sh/uv/) (signé par l'éditeur de Ruff) savent installer et faire cohabiter plusieurs versions de Python automatiquement, sur tous les systèmes (`uv python install 3.14`). Nous y reviendrons au module 6 ; pour débuter, l'installateur officiel et le lanceur `py` suffisent amplement.
 
 ### Problèmes de permissions sur Linux/macOS
 

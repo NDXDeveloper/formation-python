@@ -1,6 +1,6 @@
 # Exemples - Chapitre 01 : Fondamentaux et syntaxe
 
-Ce dossier contient **85 fichiers** d'exemples exécutables correspondant aux 6 sections du chapitre 01.
+Ce dossier contient **96 fichiers** d'exemples exécutables correspondant aux 6 sections du chapitre 01.
 
 **Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 06) et `NN` l'ordre de l'exemple dans la section. Exemple : `03_07_boucle_while.py` = section 3, 7ᵉ exemple.
 
@@ -21,7 +21,7 @@ python3 03_17_exemples_pratiques.py --interactif
 
 - **Python 3.10+** (pour la syntaxe `match/case` et `type | None`)
 - **Aucune dépendance externe** : tous les exemples n'utilisent que la bibliothèque standard
-- Tous les exemples sont autonomes et ont été testés (exécution sans erreur sur Python 3.12)
+- Tous les exemples sont autonomes et ont été testés (exécution sans erreur, de Python 3.10 à 3.14)
 
 ---
 
@@ -69,6 +69,15 @@ En revanche, la **logique et les valeurs** des exemples restent identiques à ce
 | `02_17_commentaires.py` | Commentaires en ligne et multi-lignes | 02-variables-types-et-operateurs.md |
 | `02_18_conventions_pep8.py` | Conventions PEP 8 | 02-variables-types-et-operateurs.md |
 | `02_19_erreurs_courantes.py` | Erreurs fréquentes : = vs ==, conversions, etc. | 02-variables-types-et-operateurs.md |
+| `02_20_affectation_multiple.py` | Affectation multiple, chaînée et échange de variables | 02-variables-types-et-operateurs.md |
+| `02_21_operateurs_binaires.py` | Opérateurs binaires &, \|, ^, ~, <<, >> et bin() | 02-variables-types-et-operateurs.md |
+| `02_22_sequences_echappement.py` | Séquences d'échappement (\n, \t, \\) et chaînes brutes r"..." | 02-variables-types-et-operateurs.md |
+| `02_23_comparaisons_chainees.py` | Comparaisons enchaînées (18 <= age < 65) | 02-variables-types-et-operateurs.md |
+| `02_24_court_circuit_logique.py` | Court-circuit de and/or et idiome de valeur par défaut | 02-variables-types-et-operateurs.md |
+| `02_25_isinstance.py` | Tester un type avec isinstance() (vs type(), héritage) | 02-variables-types-et-operateurs.md |
+| `02_26_immuabilite_chaines.py` | Immuabilité des chaînes : méthodes renvoyant une nouvelle chaîne, mot[0]= interdit | 02-variables-types-et-operateurs.md |
+| `02_27_comparer_flottants.py` | Comparer des flottants : math.isclose() au lieu de ==, decimal.Decimal | 02-variables-types-et-operateurs.md |
+| `02_28_print_sep_end.py` | Paramètres de print() : sep (séparateur) et end (fin de ligne) | 02-variables-types-et-operateurs.md |
 
 ---
 
@@ -95,6 +104,7 @@ En revanche, la **logique et les valeurs** des exemples restent identiques à ce
 | `03_17_exemples_pratiques.py` | Exemples pratiques : nombres premiers, Pascal, PGCD (--interactif) | 03-structures-de-controle.md |
 | `03_18_piege_range.py` | Piège courant avec range() | 03-structures-de-controle.md |
 | `03_19_operateur_walrus.py` | Opérateur walrus `:=` : `if` (réutiliser une valeur), compréhension, `while` (lire et tester) — Python 3.8+ | 03-structures-de-controle.md |
+| `03_20_veracite_condition.py` | Tester directement une valeur (véracité) : `if nom:` au lieu de `== ""` / `len() > 0` | 03-structures-de-controle.md |
 
 ---
 
@@ -161,3 +171,4 @@ En revanche, la **logique et les valeurs** des exemples restent identiques à ce
 | `06_14_statistiques.py` | Exemple pratique : calculateur de statistiques | 06-type-hints-et-annotations.md |
 | `06_15_cache_generique.py` | Exemple pratique : cache générique avec expiration | 06-type-hints-et-annotations.md |
 | `06_16_bonnes_pratiques.py` | Bonnes pratiques des type hints | 06-type-hints-et-annotations.md |
+| `06_17_documentation_type_hints.py` | Type hints + docstring détaillée et doctests exécutables | 06-type-hints-et-annotations.md |

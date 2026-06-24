@@ -117,7 +117,7 @@ def afficher_message(texte: str) -> None:
 ### Types de Base
 
 ```python
-def exemples_types_base():
+def exemples_types_base() -> None:
     # Nombres entiers
     nombre: int = 42
 
@@ -675,8 +675,8 @@ resultat2 = additionner("5", "3")  # Erreur !
 **Exécution de mypy** :
 ```bash
 $ mypy calcul.py
-calcul.py:7: error: Argument 1 to "additionner" has incompatible type "str"; expected "int"  
-calcul.py:7: error: Argument 2 to "additionner" has incompatible type "str"; expected "int"  
+calcul.py:8: error: Argument 1 to "additionner" has incompatible type "str"; expected "int"  [arg-type]
+calcul.py:8: error: Argument 2 to "additionner" has incompatible type "str"; expected "int"  [arg-type]
 ```
 
 ### Configuration de mypy
@@ -1073,8 +1073,14 @@ def rechercher_utilisateur(
         >>> rechercher_utilisateur("Bob", age_min=20, age_max=30)
         [{'nom': 'Bob', 'age': 28}]
     """
-    # Implémentation
-    pass
+    # Données d'exemple (en pratique : une base de données)
+    base = [{"nom": "Alice", "age": 25}, {"nom": "Bob", "age": 28}]
+    resultats = [u for u in base if u["nom"].lower() == nom.lower()]
+    if age_min is not None:
+        resultats = [u for u in resultats if u["age"] >= age_min]
+    if age_max is not None:
+        resultats = [u for u in resultats if u["age"] <= age_max]
+    return resultats
 ```
 
 ---

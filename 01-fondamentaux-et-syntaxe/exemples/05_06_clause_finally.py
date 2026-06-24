@@ -8,7 +8,7 @@
 print("=== Sans erreur ===")
 try:
     print("1. Dans try")
-except:
+except Exception:
     print("2. Dans except (si erreur)")
 else:
     print("3. Dans else (si pas d'erreur)")
@@ -20,7 +20,7 @@ print("\n=== Avec erreur ===")
 try:
     print("1. Dans try")
     resultat = 10 / 0  # Erreur !
-except:
+except Exception:
     print("2. Dans except (si erreur)")
 else:
     print("3. Dans else (si pas d'erreur)")

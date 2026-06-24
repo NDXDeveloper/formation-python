@@ -413,7 +413,7 @@ option1: test
 kwargs: {'extra1': 'a', 'extra2': 'b'}  
 ```
 
-**Ordre obligatoire** : paramètres normaux, `*args`, paramètres avec défaut, `**kwargs`
+**Ordre dans la signature** : paramètres normaux, puis `*args`, puis d'éventuels paramètres supplémentaires, et enfin `**kwargs`. Un paramètre placé **après `*args`** (ici `option1`) doit obligatoirement être passé **par son nom** lors de l'appel (`option1="test"`) — on parle de paramètre *keyword-only*.
 
 ---
 
@@ -805,7 +805,7 @@ print(somme_recursive(nombres))  # Affiche : 15
 
 ### ⚠️ Attention : limite de récursion
 
-Python a une limite au nombre d'appels récursifs (par défaut environ 1000). Pour des valeurs élevées, préférez une approche itérative :
+Python limite le nombre d'appels récursifs imbriqués (**1000 par défaut** ; consultable avec `sys.getrecursionlimit()` et ajustable avec `sys.setrecursionlimit()`). Au-delà, il lève une `RecursionError`. Pour des valeurs élevées, préférez une approche itérative :
 
 ```python
 # Version récursive (limitée)
@@ -903,7 +903,7 @@ def calcul(x):
 
 ## Annotations de Type (Type Hints)
 
-Python permet d'ajouter des **annotations de type** pour indiquer le type attendu des paramètres et du retour. Ces annotations n'ont **aucun effet** sur l'exécution (Python reste dynamique), mais elles améliorent la lisibilité et permettent aux outils (comme mypy) de détecter des erreurs.
+Python permet d'ajouter des **annotations de type** pour indiquer le type attendu des paramètres et du retour. Ces annotations ne changent rien au **comportement** de la fonction à l'exécution — Python ne vérifie pas les types et reste dynamique —, mais elles améliorent la lisibilité et permettent aux outils (comme mypy) de détecter des erreurs.
 
 ### Syntaxe de base
 
@@ -1350,6 +1350,8 @@ def ajouter_a_liste(element, liste=[]):
 print(ajouter_a_liste(1))  # [1]  
 print(ajouter_a_liste(2))  # [1, 2] - la liste est partagée !  
 ```
+
+> 💡 **Pourquoi ?** Les valeurs par défaut sont évaluées **une seule fois**, au moment où Python **définit** la fonction (et non à chaque appel). La liste `[]` est donc créée une fois pour toutes, puis **partagée** entre tous les appels qui ne fournissent pas leur propre liste.
 
 ✅ **Correct**
 ```python

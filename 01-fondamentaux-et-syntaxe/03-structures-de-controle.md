@@ -181,6 +181,23 @@ else:
 
 ---
 
+## Tester directement une valeur : la « véracité »
+
+Une condition n'a pas besoin d'être une comparaison : **n'importe quelle valeur** peut servir de condition. Python l'évalue alors selon sa *véracité* (les valeurs « vraies » / « fausses » vues à la section 1.2). Pour rappel, sont considérées comme **fausses** : `0`, `0.0`, `""` (chaîne vide), `None` et les collections vides ; tout le reste est **vrai**.
+
+```python
+nom = input("Votre nom : ")
+
+if nom:                       # vrai si nom n'est PAS vide
+    print(f"Bonjour {nom} !")
+else:
+    print("Vous n'avez rien saisi.")
+```
+
+C'est l'écriture **idiomatique** : `if nom:` équivaut à `if nom != "":` ou `if len(nom) > 0:`, mais en plus court et plus lisible. De même, `if not nom:` teste « `nom` est vide ».
+
+---
+
 ## Conditions Multiples
 
 Vous pouvez combiner plusieurs conditions avec les opérateurs logiques `and`, `or` et `not`.
@@ -1074,7 +1091,7 @@ match code:
 - **Utilisez `match/case`** quand vous comparez une valeur à plusieurs cas distincts (menus, codes d'erreur, commandes, etc.)
 - **Préférez `if/elif`** pour des conditions avec des comparaisons complexes (`>=`, `<`, combinaisons avec `and`/`or`)
 
-> 💡 `match/case` est bien plus puissant que ces exemples simples. Il supporte le *pattern matching* structurel (décomposition de listes, objets, etc.), que nous verrons dans les chapitres avancés.
+> 💡 `match/case` est bien plus puissant que ces exemples simples. Il supporte le *pattern matching* structurel (décomposition de listes, objets, etc.) — un usage avancé que vous pourrez approfondir dans la [documentation officielle](https://docs.python.org/fr/3/tutorial/controlflow.html#match-statements).
 
 ---
 

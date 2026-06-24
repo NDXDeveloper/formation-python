@@ -61,6 +61,37 @@ compteur = compteur + 1
 print(compteur)  # Affiche : 6  
 ```
 
+### Affectation multiple
+
+Python permet d'affecter des valeurs à plusieurs variables en une seule instruction, ce qui rend le code plus concis.
+
+**Affecter plusieurs variables à la fois** :
+
+```python
+x, y, z = 1, 2, 3  
+print(x)  # Affiche : 1  
+print(y)  # Affiche : 2  
+print(z)  # Affiche : 3  
+```
+
+**Donner la même valeur à plusieurs variables** :
+
+```python
+a = b = c = 0  
+print(a, b, c)  # Affiche : 0 0 0  
+```
+
+**Échanger le contenu de deux variables** (sans variable temporaire) :
+
+```python
+x = 10  
+y = 20  
+x, y = y, x  
+print(x, y)  # Affiche : 20 10  
+```
+
+> 💡 L'échange `x, y = y, x` fonctionne parce que Python évalue **d'abord** tout le membre de droite (`y, x`), puis affecte le résultat au membre de gauche. Inutile de passer par une variable temporaire comme dans beaucoup d'autres langages.
+
 ### Règles de nommage des variables
 
 Python a quelques règles strictes et des conventions pour nommer les variables :
@@ -156,7 +187,19 @@ resultat = 0.1 + 0.2
 print(resultat)  # Affiche : 0.30000000000000004 (!)  
 ```
 
-Cette particularité est commune à tous les langages de programmation et est liée à la façon dont les ordinateurs représentent les nombres décimaux.
+Cette particularité est commune à la plupart des langages de programmation et est liée à la façon dont les ordinateurs représentent les nombres décimaux (la norme IEEE 754 du calcul en virgule flottante).
+
+**Comparer des nombres flottants** :
+
+À cause de ces imprécisions, **ne comparez pas deux flottants avec `==`**. Utilisez `math.isclose()` :
+
+```python
+import math  
+print(0.1 + 0.2 == 0.3)               # Affiche : False (le piège !)  
+print(math.isclose(0.1 + 0.2, 0.3))   # Affiche : True (la bonne façon de comparer)  
+```
+
+> 💡 Pour des calculs décimaux **exacts** (sommes d'argent, par exemple), utilisez le module `decimal` : `Decimal("0.1") + Decimal("0.2")` vaut exactement `Decimal("0.3")`.
 
 **Notation scientifique** :
 
@@ -184,6 +227,33 @@ Les deux fonctionnent de la même manière, mais les guillemets doubles sont pra
 ```python
 message1 = "J'aime Python"  # Plus lisible  
 message2 = 'J\'aime Python'  # Nécessite d'échapper l'apostrophe avec \  
+```
+
+**Séquences d'échappement (caractères spéciaux)** :
+
+Le caractère `\` (antislash) introduit des **séquences d'échappement**, qui représentent des caractères spéciaux :
+
+| Séquence | Signification |
+|----------|---------------|
+| `\n` | Saut de ligne (nouvelle ligne) |
+| `\t` | Tabulation |
+| `\\` | Un antislash littéral `\` |
+| `\"` | Un guillemet double dans une chaîne entre `"` |
+| `\'` | Une apostrophe dans une chaîne entre `'` |
+
+```python
+print("Ligne 1\nLigne 2")       # \n = saut de ligne (affiche sur deux lignes)  
+print("Nom :\tAlice")           # \t = tabulation  
+print("Un antislash : \\")      # \\ = un seul antislash  
+print("Il a dit \"Bonjour\"")   # \" = guillemet double dans la chaîne  
+```
+
+> 💡 **Chaînes brutes (`r"..."`)** : préfixez une chaîne par `r` pour que les `\` ne soient **pas interprétés**. Pratique pour les chemins Windows et les expressions régulières (chapitre 2.4).
+
+```python
+chemin = "dossier\nouveau"        # \n est interprété comme un saut de ligne !  
+chemin_brut = r"dossier\nouveau"  # chaîne brute : le \ reste littéral  
+print(chemin_brut)                # Affiche : dossier\nouveau  
 ```
 
 **Chaînes multi-lignes** :
@@ -264,6 +334,27 @@ print(texte.endswith("thon  "))   # Affiche : True
 print("Python" in texte)          # Affiche : True  
 ```
 
+**Immuabilité des chaînes** :
+
+Les chaînes sont **immuables** : une fois créée, une chaîne ne peut pas être modifiée. Les méthodes comme `.upper()` ou `.replace()` ne changent pas la chaîne d'origine — elles en renvoient une **nouvelle** :
+
+```python
+texte = "bonjour"  
+texte.upper()          # renvoie "BONJOUR"... mais ne modifie PAS texte  
+print(texte)           # Affiche : bonjour (inchangé !)  
+
+texte = texte.upper()  # pour « changer » la chaîne, il faut la réaffecter  
+print(texte)           # Affiche : BONJOUR  
+```
+
+On peut **lire** un caractère par son index, mais pas le **remplacer** :
+
+```python
+mot = "Python"  
+print(mot[0])  # Affiche : P (lecture : OK)  
+# mot[0] = "J"  # ❌ TypeError : 'str' object does not support item assignment  
+```
+
 ### 4. Les Booléens (bool)
 
 Les **booléens** ne peuvent prendre que deux valeurs : `True` (vrai) ou `False` (faux). Ils sont essentiels pour les conditions et la logique de votre programme.
@@ -341,6 +432,25 @@ print(type(est_majeur))  # Affiche : <class 'bool'>
 vide = None  
 print(type(vide))  # Affiche : <class 'NoneType'>  
 ```
+
+### `isinstance()` : la façon recommandée de tester un type
+
+`type()` affiche le type exact, mais pour **tester** si une variable est d'un type donné, on préfère `isinstance(valeur, type)`, qui renvoie un booléen :
+
+```python
+age = 25  
+print(isinstance(age, int))     # Affiche : True  
+print(isinstance(age, str))     # Affiche : False  
+
+nom = "Alice"  
+print(isinstance(nom, str))     # Affiche : True  
+
+# On peut tester plusieurs types à la fois (avec un tuple)
+valeur = 3.14  
+print(isinstance(valeur, (int, float)))  # Affiche : True  
+```
+
+> 💡 Préférez `isinstance(x, int)` à `type(x) == int` : `isinstance` tient compte de l'héritage (un objet d'une sous-classe est reconnu comme une instance de la classe parente), ce qui est presque toujours le comportement souhaité.
 
 ---
 
@@ -549,6 +659,26 @@ x = 5    # Affectation : x reçoit la valeur 5
 x == 5   # Comparaison : est-ce que x est égal à 5 ? (retourne True)  
 ```
 
+### Comparaisons enchaînées
+
+Python permet d'**enchaîner** plusieurs comparaisons sur une même ligne, comme en mathématiques. C'est plus lisible que de les combiner avec `and`.
+
+```python
+age = 25  
+
+# « age est-il entre 18 (inclus) et 65 (exclu) ? »
+print(18 <= age < 65)           # Affiche : True  
+
+# Équivaut à (mais plus court et plus lisible) :
+print(18 <= age and age < 65)   # Affiche : True  
+
+note = 14  
+if 10 <= note < 16:
+    print("Mention assez bien ou bien")  # s'affiche  
+```
+
+Dans `18 <= age < 65`, Python n'évalue `age` **qu'une seule fois**. L'enchaînement fonctionne avec tous les opérateurs de comparaison (`<`, `<=`, `>`, `>=`, `==`, `!=`).
+
 ### Comparaison de chaînes
 
 On peut aussi comparer des chaînes de caractères :
@@ -642,6 +772,24 @@ a_argent = False
 peut_sortir = est_weekend and (a_argent or not a_argent)  # (a_argent or not a_argent) vaut toujours True, donc ceci équivaut à est_weekend (ici True)  
 ```
 
+### Court-circuit : ce que renvoient `and` et `or`
+
+Avec des booléens, `and` et `or` renvoient `True` ou `False`. Mais en réalité, ils renvoient **l'une des deux valeurs évaluées** — pas forcément un booléen :
+
+```python
+print(5 and 3)        # Affiche : 3  (1er vrai → `and` renvoie le 2e)  
+print(0 and 3)        # Affiche : 0  (1er faux → `and` s'arrête dessus)  
+print(0 or "défaut")  # Affiche : défaut  (`or` renvoie la 1re valeur « vraie »)  
+```
+
+Python s'arrête dès qu'il connaît le résultat : c'est l'**évaluation en court-circuit**. D'où un idiome très courant, la **valeur par défaut** :
+
+```python
+nom = ""                       # une chaîne vide est « fausse »  
+affichage = nom or "Anonyme"   # si nom est vide/faux, on prend "Anonyme"  
+print(affichage)               # Affiche : Anonyme  
+```
+
 ### Priorité des opérateurs logiques
 
 1. `not` (priorité la plus élevée)
@@ -666,6 +814,39 @@ resultat = not False and True or False
 # Plus clair
 resultat = ((not False) and True) or False
 ```
+
+---
+
+## Les Opérateurs Binaires (bit à bit) 🔍
+
+> 🔍 **Section optionnelle (avancée)** : ces opérateurs manipulent les entiers **bit par bit** (sur leur représentation en base 2). Ils sont moins courants que les précédents — vous pouvez les survoler et y revenir lorsque vous en aurez besoin.
+
+Ne confondez pas les opérateurs **logiques** (`and`, `or`, `not`), qui raisonnent sur des booléens, avec les opérateurs **binaires** (`&`, `|`, `^`...), qui agissent directement sur les bits des entiers.
+
+| Opérateur | Nom | Exemple | Résultat |
+|-----------|-----|---------|----------|
+| `&` | ET binaire | `12 & 10` | `8` |
+| `\|` | OU binaire | `12 \| 10` | `14` |
+| `^` | OU exclusif (XOR) | `12 ^ 10` | `6` |
+| `~` | NON binaire (complément à deux) | `~5` | `-6` |
+| `<<` | Décalage à gauche | `1 << 4` | `16` |
+| `>>` | Décalage à droite | `16 >> 2` | `4` |
+
+```python
+# 12 s'écrit 0b1100 en binaire, 10 s'écrit 0b1010  
+print(12 & 10)   # Affiche : 8  (bits présents dans les deux)  
+print(12 | 10)   # Affiche : 14 (bits présents dans l'un ou l'autre)  
+print(12 ^ 10)   # Affiche : 6  (bits présents dans un seul des deux)  
+
+# Les décalages reviennent à multiplier / diviser par des puissances de 2  
+print(1 << 4)    # Affiche : 16  (1 * 2**4)  
+print(16 >> 2)   # Affiche : 4   (16 // 2**2)  
+
+# La fonction bin() montre la représentation binaire d'un entier  
+print(bin(12))   # Affiche : 0b1100  
+```
+
+Ces opérateurs servent surtout aux **drapeaux binaires** (combiner plusieurs options dans un seul entier), à la programmation bas niveau (réseau, formats de fichiers binaires) et à certaines optimisations.
 
 ---
 
@@ -836,6 +1017,20 @@ age = 25
 print(f"{nom=}")        # Affiche : nom='Alice'
 print(f"{age=}")        # Affiche : age=25
 print(f"{age * 2=}")    # Affiche : age * 2=50
+```
+
+### Les paramètres de `print()` : `sep` et `end`
+
+Par défaut, `print()` **sépare ses arguments par une espace** et **termine par un retour à la ligne**. Ces deux comportements se règlent avec `sep` et `end` :
+
+```python
+print("a", "b", "c")                # Affiche : a b c (séparés par une espace)  
+print("a", "b", "c", sep="-")       # Affiche : a-b-c  
+print("2024", "12", "25", sep="/")  # Affiche : 2024/12/25  
+
+# end : ce qui termine la ligne (par défaut un retour à la ligne)
+print("Chargement", end="...")  
+print("terminé")                    # Affiche sur une seule ligne : Chargement...terminé  
 ```
 
 ---
