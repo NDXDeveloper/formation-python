@@ -32,8 +32,8 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 **✨ Points clés :**
 - 📚 **13 modules progressifs** du niveau débutant à expert
 - 🎯 **75+ sujets** couverts avec exemples concrets
-- 🆕 **Technologies modernes** (FastAPI, Type Hints, Poetry, SQLAlchemy)
-- 📊 **Module Data Science** complet (NumPy, Pandas, Matplotlib)
+- 🆕 **Technologies modernes** (FastAPI, Type Hints, uv, Poetry, SQLAlchemy)
+- 📊 **Module Data Science** complet (NumPy, Pandas, Matplotlib, Plotly)
 - 🔥 **Édition 2025-2026** avec les dernières pratiques Python
 - 🇫🇷 **100% en français** et gratuit (MIT License)
 
@@ -84,7 +84,7 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 # Vérifier la version de Python
 python --version  # ou python3 --version
 
-# Télécharger Python 3.10+ (recommandé : 3.13+)
+# Télécharger Python 3.10+ (recommandé : 3.13 ou 3.14, la dernière version)
 # 🌐 https://www.python.org/downloads/
 ```
 
@@ -121,6 +121,17 @@ poetry install -E web
 
 # Ou seulement les dépendances data science
 poetry install -E data
+```
+
+### Alternative avec uv (ultra-rapide) 🆕
+
+```bash
+# Installer uv : https://docs.astral.sh/uv/  (gestionnaire signé par l'éditeur de Ruff)
+# Créer l'environnement et installer les dépendances (bien plus rapide que pip)
+uv venv
+source .venv/bin/activate    # 🐧 Linux/Mac  ·  .venv\Scripts\activate sous Windows
+uv pip install fastapi uvicorn flask requests sqlalchemy pydantic  # Modules web
+uv pip install numpy pandas matplotlib plotly                       # Modules data science
 ```
 
 ### Votre premier programme
@@ -214,6 +225,7 @@ source venv/bin/activate
 ### Langage & Outils
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)  
 ![Type Hints](https://img.shields.io/badge/Type_Hints-mypy-blue)  
+![uv](https://img.shields.io/badge/uv-Package_Manager-261230)  
 ![Poetry](https://img.shields.io/badge/Poetry-Package_Manager-60A5FA)
 
 ### Frameworks Web
@@ -223,10 +235,10 @@ source venv/bin/activate
 ### Données & ORM
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red)  
 ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white)  
-![NumPy](https://img.shields.io/badge/NumPy-1.24+-013243?logo=numpy&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-2.0+-013243?logo=numpy&logoColor=white)
 
 ### Tests & Qualité
-![pytest](https://img.shields.io/badge/pytest-7.0+-0A9EDC?logo=pytest&logoColor=white)  
+![pytest](https://img.shields.io/badge/pytest-8.0+-0A9EDC?logo=pytest&logoColor=white)  
 ![mypy](https://img.shields.io/badge/mypy-Type_Checker-blue)
 
 ### Visualisation
@@ -297,7 +309,7 @@ R : Non, c'est un module optionnel pour ceux qui s'intéressent à l'analyse de 
 R : Oui ! La licence MIT vous permet d'utiliser, modifier et partager ce contenu librement.
 
 **Q : Quelle version de Python dois-je utiliser ?**  
-R : Python 3.10 ou supérieur est recommandé. Les exemples utilisent la syntaxe moderne (type hints natifs comme `list[str]`, `dict[str, int]`, match/case, etc.). Python 3.13+ est idéal pour bénéficier des dernières améliorations.
+R : Python 3.10 ou supérieur est recommandé. Les exemples utilisent la syntaxe moderne (type hints natifs comme `list[str]`, `dict[str, int]`, match/case, etc.). Python 3.13 ou 3.14 (la dernière version) est idéal pour bénéficier des dernières améliorations.
 
 ---
 
