@@ -1,6 +1,6 @@
 # Chapitre 2 : Structures de données - Exemples
 
-Ce dossier contient **80 fichiers** d'exemples exécutables correspondant aux 4 sections du chapitre 2.
+Ce dossier contient **84 fichiers** d'exemples exécutables correspondant aux 4 sections du chapitre 2.
 
 **Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 04) et `NN` l'ordre de l'exemple. Exemple : `03_05_counter_base.py` = section 2.3, 5ᵉ exemple.
 
@@ -60,6 +60,9 @@ Source : `01-listes-tuples-dicts-sets.md`
 | `01_23_inventaire.py` | Exemple : inventaire | Stock: pommes=35, bananes=25, oranges=25 |
 | `01_24_analyse_texte.py` | Exemple : analyse texte | 9 mots uniques, python et est: 2 fois |
 | `01_25_gestion_etudiants.py` | Exemple : gestion étudiants | Étudiants par matière, multi-inscrits |
+| `01_26_enumerate_zip.py` | Itérer avec enumerate() et zip() | index+valeur (start=1), parcours parallèle, dict(zip), strict= (ValueError) |
+| `01_27_depaquetage_etoile.py` | Dépaqueter avec `*` et `**` | spread dans un appel (max, print), fusion `[*a,*b]` / `{**a,**b}` |
+| `01_28_immuabilite_surface.py` | Immuabilité « de surface » des tuples | la liste interne reste modifiable `(1, [2, 3, 4])` ; tuple+liste non hachable (TypeError) |
 
 ---
 
@@ -85,6 +88,7 @@ Source : `02-comprehensions.md`
 | `02_14_exemple_transformation_donnees.py` | Exemple : transformation | Salaires augmentés |
 | `02_15_exemple_filtrage_regroupement.py` | Exemple : filtrage | Fruits: 2.0€, Légumes: 1.9€ |
 | `02_16_exemple_operations_matricielles.py` | Exemple : matrices | Addition, transposition |
+| `02_17_any_all.py` | Tester avec any() et all() | tous / au moins un (+ génératrice), all([])=True, any([])=False |
 
 ---
 

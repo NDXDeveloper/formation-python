@@ -279,6 +279,8 @@ nom = personne_classe.nom
 - Vous n'avez pas besoin de méthodes personnalisées
 - Vous voulez économiser de la mémoire par rapport à une classe complète
 
+> 💡 **Formes plus modernes (pour plus tard)** : une fois les classes vues (module 3), vous croiserez deux alternatives typées — `class Point(NamedTuple)` (module `typing`, avec champs annotés ; immuable comme ici) et `@dataclass` (mutable, avec méthodes). La forme fonctionnelle `namedtuple(...)` présentée ici reste tout à fait valable et n'exige pas encore de connaître les classes.
+
 ---
 
 ## defaultdict - Dictionnaires avec Valeurs par Défaut
@@ -918,12 +920,14 @@ od['b'] = 2
 od['a'] = 1  
 od['c'] = 3  
 
-print(od)  # OrderedDict([('b', 2), ('a', 1), ('c', 3)])
+print(od)  # OrderedDict({'b': 2, 'a': 1, 'c': 3})
 
 # Méthode spéciale : move_to_end
 od.move_to_end('a')  
-print(od)  # OrderedDict([('b', 2), ('c', 3), ('a', 1)])  
+print(od)  # OrderedDict({'b': 2, 'c': 3, 'a': 1})  
 ```
+
+> 💡 Le format d'affichage d'`OrderedDict` a été **simplifié en Python 3.12**. Sur Python 3.10/3.11, le même objet s'affiche sous l'ancienne forme `OrderedDict([('b', 2), ('a', 1), ('c', 3)])` (liste de paires).
 
 ### ChainMap - Chaîner plusieurs dictionnaires
 

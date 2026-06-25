@@ -439,7 +439,7 @@ print(carres)  # {0, 1, 4, 9, 16}
 # Extraire les caractères uniques d'une chaîne
 texte = "hello world"  
 caracteres_uniques = {c for c in texte if c != ' '}  
-print(caracteres_uniques)  # {'h', 'e', 'l', 'o', 'w', 'r', 'd'}  
+print(caracteres_uniques)  # {'h', 'e', 'l', 'o', 'w', 'r', 'd'} (ordre variable)  
 
 # Obtenir les longueurs uniques des mots
 mots = ["chat", "chien", "oiseau", "chat", "lion"]  
@@ -559,6 +559,31 @@ longueurs = {
 print(longueurs)
 # {'fruits': {'pomme': 5, 'banane': 6}, 'legumes': {'carotte': 7, 'tomate': 6}}
 ```
+
+---
+
+## Tester une collection : `any()` et `all()`
+
+`any()` et `all()` répondent à deux questions courantes sur une collection :
+- `any(iterable)` : **au moins un** élément est-il vrai ? (comme un grand `or`)
+- `all(iterable)` : **tous** les éléments sont-ils vrais ? (comme un grand `and`)
+
+Combinés à une expression génératrice, ils testent une condition sur toute une collection en une seule ligne :
+
+```python
+nombres = [2, 4, 6, 8]
+
+print(all(n % 2 == 0 for n in nombres))   # True  — tous pairs ?
+print(any(n > 5 for n in nombres))         # True  — au moins un > 5 ?
+print(any(n < 0 for n in nombres))         # False — au moins un négatif ?
+
+# Valider toute une collection
+notes = [12, 15, 8, 18]
+print(all(0 <= note <= 20 for note in notes))  # True (toutes valides)
+print(any(note < 10 for note in notes))        # True (au moins un échec)
+```
+
+> 💡 Sur une collection **vide**, `all([])` vaut `True` (aucun élément ne contredit la condition) et `any([])` vaut `False`. Et grâce à l'**évaluation en court-circuit**, `any`/`all` s'arrêtent dès que la réponse est connue.
 
 ---
 
@@ -779,6 +804,8 @@ transposee = [[ligne[i] for ligne in matrice] for i in range(len(matrice[0]))]
 print(transposee)  
 # [[1, 4], [2, 5], [3, 6]]
 ```
+
+> 💡 **Astuce idiomatique** : en combinant `zip()` et le dépaquetage `*`, on transpose une matrice en une seule ligne — `list(zip(*matrice))` — qui renvoie des tuples : `[(1, 4), (2, 5), (3, 6)]`.
 
 ---
 

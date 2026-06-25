@@ -66,7 +66,15 @@ graphe['A'].append('C')
 graphe['B'].append('C')
 graphe['C'].append('D')
 print(f"Graphe : {dict(graphe)}")
-print(f"Depuis Z : {graphe['Z']}")  # [] (pas d'erreur !)
+
+
+# Parcourir le graphe : un sommet absent renvoie [] sans lever KeyError
+def parcourir(graphe, depart):
+    print(f"Depuis {depart}, on peut aller vers : {graphe[depart]}")
+
+
+parcourir(graphe, 'A')  # Depuis A, on peut aller vers : ['B', 'C']
+parcourir(graphe, 'Z')  # Depuis Z, on peut aller vers : [] (pas d'erreur !)
 
 # --- 7. Multi-niveaux ---
 print()

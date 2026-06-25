@@ -252,6 +252,56 @@ for etudiant in etudiants:
 
 ---
 
+## Itérer avec `enumerate()` et `zip()`
+
+Deux fonctions intégrées rendent l'itération sur les collections beaucoup plus pratique et lisible.
+
+### `enumerate()` : obtenir l'index **et** la valeur
+
+Plutôt que de gérer un compteur à la main, `enumerate()` fournit directement la position et l'élément :
+
+```python
+fruits = ["pomme", "banane", "orange"]
+
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+# 0: pomme
+# 1: banane
+# 2: orange
+
+# Démarrer la numérotation à 1 avec start=
+for numero, fruit in enumerate(fruits, start=1):
+    print(f"{numero}. {fruit}")
+# 1. pomme
+# 2. banane
+# 3. orange
+```
+
+C'est plus lisible et plus sûr que `for i in range(len(fruits)): ... fruits[i]`.
+
+### `zip()` : parcourir plusieurs collections en parallèle
+
+`zip()` associe les éléments de plusieurs collections, position par position :
+
+```python
+noms = ["Alice", "Bob", "Charlie"]
+ages = [30, 25, 35]
+
+for nom, age in zip(noms, ages):
+    print(f"{nom} a {age} ans")
+# Alice a 30 ans
+# Bob a 25 ans
+# Charlie a 35 ans
+
+# Construire un dictionnaire à partir de deux listes
+personnes = dict(zip(noms, ages))
+print(personnes)  # {'Alice': 30, 'Bob': 25, 'Charlie': 35}
+```
+
+> 💡 `zip()` s'arrête à la collection la plus **courte**. Pour imposer des longueurs égales (et obtenir une `ValueError` sinon), utilisez `zip(a, b, strict=True)` (Python 3.10+).
+
+---
+
 ## Les Tuples
 
 ### Qu'est-ce qu'un tuple ?
@@ -302,6 +352,30 @@ coordonnees = (10, 20)
 # On ne peut pas non plus ajouter ou supprimer des éléments
 # coordonnees.append(30)  # AttributeError
 ```
+
+Mais attention : cette immuabilité est **« de surface »**. Un tuple fige les *références* qu'il contient, pas le contenu des objets pointés. S'il contient un objet **mutable** (une liste, par exemple), cet objet-là reste modifiable :
+
+```python
+donnees = (1, [2, 3])
+
+# Remplacer l'élément est interdit (la référence est figée)...
+# donnees[1] = [9]  # TypeError: 'tuple' object does not support item assignment
+
+# ... mais modifier la liste pointée fonctionne, car elle est mutable
+donnees[1].append(4)
+print(donnees)  # (1, [2, 3, 4]) — le contenu du tuple « immuable » a changé !
+```
+
+Conséquence concrète : un tuple n'est **hachable** (utilisable comme clé de dictionnaire ou élément d'un set) que si **tous** ses éléments le sont aussi. Dès qu'il contient une liste, il perd cette propriété :
+
+```python
+print(hash((1, 2, 3)))  # OK : tous les éléments sont immuables
+
+# hash((1, [2, 3]))     # TypeError: unhashable type: 'list'
+# {(1, [2, 3])}         # même erreur : impossible comme élément d'un set
+```
+
+Pour garantir un tuple réellement immuable de bout en bout, n'y placez que des éléments eux-mêmes immuables (nombres, chaînes, autres tuples…).
 
 ### Unpacking (déballage)
 
@@ -653,7 +727,7 @@ print(nombres_uniques)  # {1, 2, 3, 4}
 
 # Créer un set à partir d'une chaîne
 lettres = set("hello")  
-print(lettres)  # {'h', 'e', 'l', 'o'}  
+print(lettres)  # ex. {'h', 'e', 'l', 'o'} (l'ordre d'affichage varie)  
 ```
 
 ### Caractéristiques importantes
@@ -674,6 +748,8 @@ valide = {1, "texte", (1, 2), 3.14, True}
 # Mais pas de listes ou de dictionnaires
 # invalide = {[1, 2, 3]}  # TypeError
 ```
+
+> 💡 **Ordre d'affichage** : un set n'ayant pas d'ordre, son affichage ne montre qu'**un** ordre possible parmi d'autres. Pour les ensembles de **chaînes**, cet ordre **change même d'une exécution à l'autre** (à cause de la randomisation du hachage des chaînes). Les commentaires `# {...}` qui suivent illustrent donc un résultat possible, jamais un ordre garanti.
 
 > 💡 Subtilité : `True` et `1` partagent la même valeur et le même hachage ; dans un ensemble, ils comptent donc comme **un seul** élément. L'ensemble `valide` ci-dessus contient ainsi 4 éléments distincts (`True` se confond avec `1`).
 
@@ -843,6 +919,51 @@ set_de_sets = {
     frozenset([4, 5, 6])
 }
 ```
+
+---
+
+## Dépaqueter avec `*` et `**` : passer et combiner des collections
+
+Les opérateurs `*` (pour les séquences : listes, tuples) et `**` (pour les dictionnaires) permettent de **dépaqueter** une collection — soit pour la passer à une fonction, soit pour la combiner avec d'autres.
+
+### Passer une collection à une fonction
+
+```python
+nombres = [3, 1, 4, 1, 5]
+
+# Sans * : la liste est UN seul argument
+print(max(nombres))      # 5
+
+# Avec * : chaque élément devient un argument séparé
+print(*nombres)          # 3 1 4 1 5
+
+def afficher(a, b, c):
+    print(f"{a}, {b}, {c}")
+
+afficher(*[10, 20, 30])  # 10, 20, 30  (* dépaquète la liste)
+
+# ** dépaquète un dictionnaire en arguments nommés (clé=valeur)
+infos = {"a": 1, "b": 2, "c": 3}
+afficher(**infos)        # 1, 2, 3
+```
+
+### Combiner des collections
+
+```python
+# Combiner des listes (ou tuples) avec *
+debut = [1, 2]
+fin = [4, 5]
+tout = [*debut, 3, *fin]
+print(tout)              # [1, 2, 3, 4, 5]
+
+# Combiner des dictionnaires avec ** (la valeur de droite l'emporte)
+defaut = {"couleur": "noir", "taille": "M"}
+choix = {"taille": "L"}
+fusion = {**defaut, **choix}
+print(fusion)            # {'couleur': 'noir', 'taille': 'L'}
+```
+
+> 💡 `{**a, **b}` produit le même résultat que l'opérateur `a | b` vu plus haut, mais fonctionne aussi sur les versions de Python **antérieures à 3.9**.
 
 ---
 

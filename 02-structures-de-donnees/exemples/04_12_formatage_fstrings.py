@@ -27,7 +27,7 @@ print(f"Pi avec 4 décimales : {pi:.4f}")  # Pi avec 4 décimales : 3.1416
 
 # Largeur et alignement
 print(f"{'Gauche':<10}|")   # Gauche    |
-print(f"{'Centre':^10}|")   # Centre    |
+print(f"{'Centre':^10}|")   #   Centre  |
 print(f"{'Droite':>10}|")   #     Droite|
 
 # Formatage avec séparateurs de milliers

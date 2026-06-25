@@ -17,7 +17,7 @@ compteur_mots = Counter(mots)
 
 print(f"Nombre total de mots : {sum(compteur_mots.values())}")
 print(f"Nombre de mots uniques : {len(compteur_mots)}")
-print(f"Top 5 :")
+print("Top 5 :")
 for mot, freq in compteur_mots.most_common(5):
     print(f"  {mot}: {freq}")
 
