@@ -398,7 +398,7 @@ service = UserService(repository)
 user1 = service.register_user("Alice", "alice@example.com")
 user2 = service.register_user("Bob", "bob@example.com")
 
-print(f"\n  Utilisateurs crees :")
+print("\n  Utilisateurs crees :")
 for user in service.list_users():
     print(f"    {user}")
 

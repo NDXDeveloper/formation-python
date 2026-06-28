@@ -56,7 +56,12 @@ mon_projet/
 Le dossier `src/` (source) contient tout votre code source. C'est là que vit votre application.
 
 **Pourquoi `src/mon_projet/` et pas juste `mon_projet/` ?**
-Cette structure en deux niveaux est une bonne pratique moderne car elle évite certains problèmes d'importation et force l'installation du package avant de l'utiliser.
+Cette structure en deux niveaux (appelée *src layout*) est la bonne pratique moderne recommandée par la documentation officielle d'empaquetage Python. La raison tient à un détail du fonctionnement des imports : **Python ajoute automatiquement le répertoire courant à son chemin de recherche** (`sys.path`).
+
+- **Sans `src/`** (le package `mon_projet/` est posé à la racine) : quand vous lancez `python` ou `pytest` depuis la racine du projet, ce dossier est dans `sys.path`, donc `import mon_projet` trouve le code **directement**, sans même que le package soit installé. Vous testez alors le code *du dossier de travail*, pas le package *tel qu'il sera distribué* — et un fichier oublié dans la configuration d'empaquetage passe inaperçu (il est là localement, mais absent une fois le package installé chez l'utilisateur).
+- **Avec `src/`** : le package est rangé sous `src/`, qui n'est **pas** dans `sys.path`. `import mon_projet` ne fonctionne donc qu'**après installation** du package. On l'installe une seule fois en mode « éditable » avec `pip install -e .` (ou `uv pip install -e .`) : vos tests s'exécutent alors contre le package réellement installé, dans les mêmes conditions que vos utilisateurs, et les erreurs d'empaquetage sont détectées immédiatement.
+
+En résumé, le *src layout* force une séparation nette entre « le code que j'écris » et « le package que j'installe », ce qui rend les tests bien plus fiables.
 
 #### Le fichier `__init__.py`
 
@@ -275,6 +280,14 @@ build-backend = "poetry.core.masonry.api"
 ```
 
 > **Poetry 2.0+** : vous pouvez déclarer les métadonnées dans le tableau standard `[project]` (PEP 621), partagé avec pip/uv/hatch, plutôt que dans `[tool.poetry]`. L'ancienne syntaxe reste prise en charge.
+
+> **Comprendre les contraintes de version (`^`, `>=`, `==`).** Les symboles placés devant les numéros précisent *quelles* versions d'une dépendance sont acceptées lors de l'installation :
+>
+> - `^2.32.0` (caret, syntaxe Poetry) autorise toutes les mises à jour qui **ne changent pas le premier chiffre non nul** — ici, tout ce qui va de `2.32.0` (inclus) à `3.0.0` (exclu). L'idée : en versionnage sémantique (détaillé en [12.5](/12-projets-et-bonnes-pratiques/05-deploiement-et-distribution.md)), un changement de numéro **majeur** (`2.x` → `3.0`) signale une rupture de compatibilité ; le caret s'en protège tout en laissant passer corrections de bugs et ajouts mineurs ;  
+> - `>=2.32.0` (syntaxe standard, utilisée par uv et pip) demande **au minimum** cette version, sans borne supérieure ;  
+> - `==2.32.0` fige une version **exacte**.
+>
+> Le caret est donc un compromis : profiter des correctifs sans risquer une montée de version majeure potentiellement cassante.
 
 #### Commandes Poetry essentielles
 

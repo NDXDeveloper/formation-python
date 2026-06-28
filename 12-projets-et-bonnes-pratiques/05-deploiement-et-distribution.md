@@ -349,6 +349,8 @@ mon_package = "mon_package.main:main"
 where = ["src"]
 ```
 
+> **À quoi sert `[project.scripts]` (l'équivalent moderne de `console_scripts`) ?** Cette section transforme votre package en **commande en ligne de commande**. La ligne `mon_package = "mon_package.main:main"` se lit `<nom_de_commande> = "<module>:<fonction>"` : une fois le package installé (`pip install mon_package`), une commande `mon_package` devient disponible dans le terminal et exécute la fonction `main()` du module `mon_package.main`. C'est exactement ainsi que des outils comme `ruff`, `black` ou `pytest` fournissent leur commande — l'utilisateur tape `pytest` plutôt que `python -m ...`.
+
 ### Le fichier `__init__.py`
 
 ```python
@@ -742,6 +744,8 @@ EXPOSE 8000
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
+
+> **Pourquoi copier `requirements.txt` *avant* le code ?** C'est l'astuce qui rend ce Dockerfile « optimisé ». Docker construit une image en **couches** (*layers*), une par instruction, et **met chaque couche en cache** : tant que ni l'instruction ni les fichiers qu'elle copie n'ont changé, Docker réutilise la couche déjà construite au lieu de la refaire. En copiant d'abord le seul `requirements.txt`, puis en lançant `pip install`, et *seulement ensuite* en copiant le code (`COPY . .`), on obtient ceci : tant que `requirements.txt` ne change pas, l'étape `pip install` (longue) est **reprise du cache**, même si vous avez modifié votre code entre-temps. Si l'on copiait tout d'un bloc *avant* `pip install`, la moindre modification d'une ligne de code invaliderait le cache et **réinstallerait toutes les dépendances** à chaque construction. Ordonner les instructions du « ce qui change le moins » vers le « ce qui change le plus » est donc la clé d'un build Docker rapide.
 
 ### Fichier `.dockerignore`
 

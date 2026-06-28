@@ -338,7 +338,7 @@ def avec_boucle():
 def avec_comprehension():
     return [i * 2 for i in range(1000)]
 
-# ✅ Encore plus rapide : map
+# ⚠️ map AVEC une lambda : souvent PLUS LENT ici (voir la note sous le bloc)
 def avec_map():
     return list(map(lambda x: x * 2, range(1000)))
 
@@ -346,6 +346,8 @@ print(f"Boucle : {timeit.timeit(avec_boucle, number=10000):.4f}s")
 print(f"Comprehension : {timeit.timeit(avec_comprehension, number=10000):.4f}s")  
 print(f"Map : {timeit.timeit(avec_map, number=10000):.4f}s")  
 ```
+
+> **Piège : `map` n'est pas toujours plus rapide.** Avec une **lambda** (comme ci-dessus), `map` est en réalité souvent **plus lent** que la list comprehension — la lambda ajoute un appel de fonction Python à chaque élément, ce qui annule le gain de `map`. `map` ne devient intéressant qu'avec une **fonction déjà existante** (built-in ou définie), par exemple `map(str, nombres)` ou `map(int, chaines)`. Pour une opération simple comme `x * 2`, **la list comprehension reste la plus rapide**.
 
 ### Éviter les recherches répétées
 
@@ -762,6 +764,10 @@ print(result_np)  # [12 14 16 18 20]
 Python a le **GIL** (Global Interpreter Lock) qui empêche le vrai parallélisme avec des threads pour le code Python pur. Solutions :
 
 > **Évolution (Python 3.13+)** : une version *expérimentale sans GIL* (« free-threading », PEP 703) permet désormais le vrai parallélisme multi-thread, et un compilateur JIT expérimental (PEP 744) a été introduit. Ces fonctionnalités restent optionnelles et expérimentales — le GIL demeure actif par défaut — donc les solutions ci-dessous restent la référence.
+
+> **Alors pourquoi le `threading` accélère-t-il quand même l'I/O ?** Parce que le GIL est **relâché pendant les opérations d'entrée/sortie bloquantes**. Quand un thread attend une réponse réseau, la lecture d'un fichier ou un `time.sleep()`, il *ne calcule rien* : il lâche le GIL, ce qui laisse un autre thread progresser pendant ce temps d'attente. Comme une tâche I/O passe l'essentiel de son temps à **attendre**, les threads se relaient efficacement et le temps total s'effondre (les 5 téléchargements de l'exemple ci-dessous se chevauchent : ~2 s au lieu de 10 s).
+>
+> À l'inverse, une tâche **CPU intensif** garde le GIL pour calculer : les threads ne peuvent plus se relayer, et `threading` n'apporte aucun gain (voire un léger surcoût). Il faut alors `multiprocessing`, qui lance de **vrais processus séparés**, chacun avec son propre interpréteur et donc son **propre GIL** — d'où un parallélisme réel sur plusieurs cœurs.
 
 ### Threading pour les opérations I/O
 

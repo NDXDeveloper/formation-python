@@ -218,7 +218,7 @@ class FileCompressor:
 
 data = "Beaucoup de donnees a compresser..." * 10
 
-print(f"\n  --- Compression ---")
+print("\n  --- Compression ---")
 compressor = FileCompressor(ZipCompression())
 compressor.compress_file("document.txt", data)
 
@@ -277,7 +277,7 @@ class CountDown:
         return self.current + 1
 
 
-print(f"\n  --- CountDown ---")
+print("\n  --- CountDown ---")
 countdown = CountDown(5)
 for num in countdown:
     print(f"  {num}")
@@ -308,7 +308,7 @@ class Paginator:
 data = list(range(1, 26))
 paginator = Paginator(data, page_size=10)
 
-print(f"\n  --- Pagination ---")
+print("\n  --- Pagination ---")
 for page_num, page in enumerate(paginator, 1):
     print(f"  Page {page_num}: {page}")
 
@@ -326,9 +326,9 @@ def paginate(items: list, page_size: int = 10):
         yield items[i:i + page_size]
 
 
-print(f"\n  --- Generateur countdown ---")
+print("\n  --- Generateur countdown ---")
 print(f"  {list(countdown_gen(5))}")
 
-print(f"\n  --- Generateur pagination ---")
+print("\n  --- Generateur pagination ---")
 for page in paginate(list(range(1, 16)), page_size=5):
     print(f"  {page}")

@@ -127,7 +127,7 @@ PATTERN 7 : ITERATOR
 ### 03_03_patterns_structurels.py
 
 - **Section** : 12.3 - Patterns de conception courants
-- **Description** : Patterns structurels et pythoniques - Decorator (classe cafe avec MilkDecorator/SugarDecorator/WhippedCreamDecorator, decorateurs de fonctions timer/logger/validator, decorateurs de permissions), Adapter (media player et APIs meteo), Repository (`InMemoryUserRepository` et `DatabaseUserRepository` simulé, `UserService` interchangeable), Context Manager (classe `__enter__`/`__exit__` avec `FileHandler`, timer, transaction base de donnees, fichier temporaire)
+- **Description** : Patterns structurels et pythoniques - Decorator (classe cafe avec MilkDecorator/SugarDecorator/WhippedCreamDecorator, decorateurs de fonctions timer/logger/validator, decorateurs de permissions), Adapter (media player et APIs meteo), Repository (`InMemoryUserRepository` et `DatabaseUserRepository` simule, `UserService` interchangeable), Context Manager (classe `__enter__`/`__exit__` avec `FileHandler`, timer, transaction base de donnees, fichier temporaire)
 - **Fichier source** : `03-patterns-de-conception.md`
 - **Sortie attendue** :
 ```
@@ -314,15 +314,15 @@ ASYNCIO
 RESUME DES OPTIMISATIONS
 ==================================================
 
-  Technique             Changement                Gain
+  Technique            Changement                Gain
   -----------------------------------------------------------------
-  Recherche             list -> set               O(n) -> O(1)
-  Comprehension         boucle -> [...]           ~1.5x plus rapide
-  Strings               += -> join()              ~10x plus rapide
-  Cache                 recalcul -> lru_cache     N fois plus rapide
-  Memoire               list -> generator         MB -> bytes
-  Classes               normal -> __slots__       ~40% moins memoire
-  Parallele             sequentiel -> asyncio     Nx plus rapide (I/O)
+  Recherche            list -> set               O(n) -> O(1)
+  Comprehension        boucle -> [...]           ~1.5x plus rapide
+  Strings              += -> join()              ~10x plus rapide
+  Cache                recalcul -> lru_cache     N fois plus rapide
+  Memoire              list -> generator         MB -> bytes
+  Classes              normal -> __slots__       ~40% moins memoire
+  Parallele            sequentiel -> asyncio     Nx plus rapide (I/O)
 ```
 
 ---

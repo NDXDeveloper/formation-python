@@ -115,7 +115,7 @@ stream = StringIO()
 stats = pstats.Stats(profiler, stream=stream)
 stats.sort_stats('cumulative')
 stats.print_stats(5)
-print(f"\n  Top 5 fonctions (profiling) :")
+print("\n  Top 5 fonctions (profiling) :")
 for line in stream.getvalue().split('\n')[5:12]:
     if line.strip():
         print(f"  {line}")
@@ -142,7 +142,7 @@ for i in range(1000):
     _ = 9999 in data_set
 temps_set = time.time() - start
 
-print(f"\n  Recherche 'in' (1000 fois) :")
+print("\n  Recherche 'in' (1000 fois) :")
 print(f"  Liste : {temps_liste:.4f}s")
 print(f"  Set : {temps_set:.6f}s")
 print(f"  Set est {temps_liste / temps_set:.0f}x plus rapide")
@@ -195,6 +195,10 @@ def avec_comprehension():
 
 
 def avec_map():
+    # map AVEC une lambda : souvent PLUS LENT que la comprehension ci-dessus.
+    # La lambda ajoute un appel de fonction Python par element, ce qui annule
+    # le gain de map ; map n'est interessant qu'avec une fonction deja existante
+    # (built-in ou definie), par exemple map(str, nombres).
     return list(map(lambda x: x * 2, range(1000)))
 
 
@@ -445,7 +449,7 @@ print(f"\n  5 fetches paralleles en {elapsed:.2f}s (au lieu de ~2.5s)")
 print(f"  Resultats : {len(results)} reponses")
 for r in results[:2]:
     print(f"    {r}")
-print(f"    ...")
+print("    ...")
 
 
 # ============================================================

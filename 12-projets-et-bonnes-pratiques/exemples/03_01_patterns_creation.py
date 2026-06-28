@@ -196,7 +196,7 @@ class ExporterFactory:
 
 data = {"nom": "Rapport", "date": "2024-01-15"}
 
-print(f"\n  --- Exporteurs ---")
+print("\n  --- Exporteurs ---")
 for fmt in ["pdf", "excel", "csv"]:
     exporter = ExporterFactory.get_exporter(fmt)
     print(f"  {exporter.export(data)}")

@@ -60,6 +60,8 @@ print(db1 is db2)  # True - c'est la même instance !
 print(id(db1) == id(db2))  # True - même adresse mémoire  
 ```
 
+> **Pourquoi `__new__` et pas `__init__` ?** `__new__` est la méthode qui **crée** réellement l'instance : elle s'exécute *avant* `__init__` et c'est elle qui renvoie l'objet. `__init__`, lui, ne fait qu'**initialiser** un objet déjà créé. Or, pour un Singleton, on veut agir sur la **création** elle-même afin de toujours renvoyer le même objet — c'est donc `__new__` qu'il faut redéfinir. Redéfinir `__init__` ne suffirait pas : l'objet serait déjà construit (une nouvelle instance à chaque appel), trop tard pour l'empêcher.
+
 ### Solution Pythonique (avec décorateur)
 
 ```python
@@ -1245,6 +1247,8 @@ user2 = service.register_user("Bob", "bob@example.com")
 for user in service.list_users():
     print(user)
 ```
+
+> ⚠️ **Note de sécurité (SQL).** Le `DatabaseUserRepository` ci-dessus construit ses requêtes par **f-string** (`f"...WHERE id = {user_id}"`, `f"...VALUES ('{user.name}', ...)"`) uniquement pour rester lisible et se concentrer sur le *pattern* — ces requêtes sont d'ailleurs simplement affichées, jamais exécutées. **En conditions réelles, ne faites jamais cela** : insérer une valeur directement dans une chaîne SQL ouvre la porte aux **injections SQL** (voir le chapitre 11). Utilisez systématiquement des **requêtes paramétrées** — `cursor.execute("...WHERE id = ?", (user_id,))` avec `sqlite3`, ou un ORM comme SQLAlchemy qui les génère pour vous.
 
 ### Avantages du pattern Repository
 

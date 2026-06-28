@@ -81,6 +81,12 @@ feature :        F --- G --- H
 
 La branche principale s'appelle traditionnellement `main` (ou `master` dans les anciens projets).
 
+### HEAD (votre position actuelle)
+
+**HEAD** est un pointeur qui indique **où vous vous trouvez** dans l'historique. La plupart du temps, `HEAD` désigne le dernier commit de la branche courante — c'est ce que signale la mention `HEAD -> main` dans `git log`, et c'est à partir de ce point que votre prochain commit sera enchaîné.
+
+Vous rencontrerez aussi une **notation relative** bien pratique : `HEAD~1` désigne le commit juste **avant** HEAD, `HEAD~2` celui d'**encore avant**, et ainsi de suite. C'est elle qui donne tout leur sens à des commandes comme `git reset HEAD~1` (« reviens d'un commit en arrière ») ou `git revert HEAD` (« annule le commit courant »).
+
 ---
 
 ## Installation de Git
