@@ -86,16 +86,20 @@ deactivate
 
 ### Installation de Pipenv
 
-```bash
-# Installation globale
-pip install --user pipenv
+Pipenv étant un **outil en ligne de commande**, la méthode recommandée est `pipx` (vu en section 6.3), qui l'installe dans son propre environnement isolé :
 
-# Ou avec pip système
-pip install pipenv
+```bash
+# Méthode recommandée : pipx
+pipx install pipenv
+
+# Ou via le gestionnaire système (Debian/Ubuntu)
+sudo apt install pipenv
 
 # Vérification
 pipenv --version
 ```
+
+> ⚠️ Évitez `pip install pipenv` (et `pip install --user pipenv`) : sur les systèmes récents, ces commandes sont **bloquées par la PEP 668** (`externally-managed-environment`, cf. section 6.3). `pipx` est la bonne façon d'installer un outil global.
 
 Résultat attendu :
 ```
@@ -859,7 +863,7 @@ uv add -r requirements.txt
 
 | Fonctionnalité | pip + venv | Pipenv | Poetry | uv |
 |----------------|-----------|--------|--------|----|
-| **Installation** | Intégré à Python | `pip install pipenv` | Installation séparée | Installation séparée |
+| **Installation** | Intégré à Python | `pipx install pipenv` | Installation séparée | Installation séparée |
 | **Fichier de config** | requirements.txt | Pipfile | pyproject.toml | pyproject.toml |
 | **Lock file** | ❌ Non | ✅ Pipfile.lock | ✅ poetry.lock | ✅ uv.lock |
 | **Gestion venv** | Manuelle | ✅ Automatique | ✅ Automatique | ✅ Automatique |

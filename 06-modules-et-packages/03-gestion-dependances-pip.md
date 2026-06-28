@@ -39,6 +39,8 @@ Résultat attendu :
 pip 24.0 from /usr/lib/python3.11/site-packages/pip (python 3.11)
 ```
 
+> 💡 **`pip` ou `python -m pip` ?** Les deux installent des packages, mais `python -m pip` est **plus sûr** : il utilise le pip du Python que vous venez d'invoquer (`python`). Sur une machine où plusieurs versions de Python cohabitent, la commande `pip` seule peut pointer vers un *autre* interpréteur (selon le `PATH`) et installer le package au mauvais endroit. Plus généralement, la forme **`python -m <module>`** — qu'on retrouve dans `python -m venv`, `python -m ensurepip`, etc. — exécute un module installé **comme un script, avec cet interpréteur précis**. En cas de doute, préférez `python -m pip`.
+
 Si pip n'est pas installé, vous pouvez l'installer avec :
 ```bash
 python -m ensurepip --upgrade
@@ -92,6 +94,20 @@ Opérateurs de version disponibles :
 - `<` : Strictement inférieur
 - `!=` : Exclure une version
 - `~=` : Version compatible (par exemple : `~=2.28.0` autorise les correctifs `2.28.1`, `2.28.5`… mais **pas** `2.29.0`)
+
+### Installer un package avec ses « extras »
+
+Certains packages proposent des **dépendances optionnelles** regroupées sous un nom, appelées *extras*. On les active avec des crochets juste après le nom du package :
+
+```bash
+# Installe uvicorn AVEC son groupe optionnel "standard"
+pip install "uvicorn[standard]"
+
+# fastapi avec toutes ses dépendances optionnelles
+pip install "fastapi[all]"
+```
+
+> 💡 Entourez le nom de **guillemets** (`"uvicorn[standard]"`) : sans eux, certains shells (comme zsh) interprètent les crochets `[]` comme un motif de noms de fichiers et la commande échoue. Vous retrouverez cette même notion d'extras avec Poetry (`uvicorn = {extras = ["standard"], ...}`) en section 6.5.
 
 ### Utilisation après installation
 

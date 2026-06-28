@@ -150,6 +150,8 @@ print(dir())
 
 > 📝 `dir()` ne liste pas les fonctions intégrées comme `print()` ou `len()` : celles-ci sont définies dans le module standard `builtins` (essayez `import builtins; dir(builtins)`).
 
+> 📝 **Complément : `help()`** — là où `dir()` liste les *noms* d'un module, la fonction intégrée `help()` en affiche la **documentation** (issue des docstrings) : `help(math.sqrt)` montre la description et la signature d'une fonction, `help(math)` celle du module entier. Appelée sans argument, `help()` ouvre un mode interactif (tapez `q` pour quitter). C'est l'outil idéal pour explorer un module inconnu directement depuis l'interpréteur.
+
 ---
 
 ## Création de vos propres modules
@@ -510,7 +512,23 @@ def fonction_b():
     return fonction_a()
 ```
 
-Solution : Restructurer le code ou importer localement dans les fonctions.
+**Pourquoi cela échoue ?** En important `module_a`, Python commence à l'exécuter et l'enregistre aussitôt comme « en cours d'initialisation ». Dès sa première ligne, `module_a` importe `module_b`, qui fait à son tour `from module_a import fonction_a`. Mais `module_a` n'a pas fini de se charger — `fonction_a` n'existe pas encore. Python lève alors :
+
+```
+ImportError: cannot import name 'fonction_a' from partially initialized module 'module_a' (most likely due to a circular import)
+```
+
+**Deux solutions :**
+
+- **Restructurer** : extraire le code partagé dans un troisième module dont `module_a` et `module_b` dépendent tous les deux (sans se dépendre l'un l'autre).
+- **Importer localement** : placer l'import *à l'intérieur* de la fonction qui s'en sert. Il est alors **différé** jusqu'à l'appel, quand les deux modules sont entièrement chargés :
+
+```python
+# module_b.py
+def fonction_b():
+    from module_a import fonction_a   # importé à l'appel, plus au chargement
+    return fonction_a()
+```
 
 ### 4. Utiliser des imports absolus
 

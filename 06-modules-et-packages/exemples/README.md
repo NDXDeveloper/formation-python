@@ -1,6 +1,6 @@
 # Chapitre 06 - Modules et packages : Exemples testables
 
-Ce dossier contient **13 fichiers** Python exécutables extraits des cours du chapitre 06.
+Ce dossier contient **14 fichiers** Python exécutables extraits des cours du chapitre 06.
 
 ## Fichiers
 
@@ -11,6 +11,7 @@ Ce dossier contient **13 fichiers** Python exécutables extraits des cours du ch
 | `01_01_importation_modules.py` | Syntaxes d'import (import, alias, from, import *), modules standard (math, datetime, os, re) | 01-importation-et-creation-modules.md |
 | `01_02_creation_modules.py` | Créer ses propres modules (operations.py, geometrie.py), importer et utiliser | 01-importation-et-creation-modules.md |
 | `01_03_name_et_organisation.py` | `__name__ == "__main__"`, exécution directe vs import, sys.path, organisation | 01-importation-et-creation-modules.md |
+| `01_04_imports_circulaires.py` | Import circulaire (`ImportError` : partially initialized module) et résolution par import local | 01-importation-et-creation-modules.md |
 
 ### Section 6.2 : Structure des packages
 
@@ -107,6 +108,15 @@ Mots : 3
 
 === sys.path (premiers chemins) ===
   (chemins du sys.path)
+```
+
+### 01_04_imports_circulaires.py
+```
+=== Version cassée : import circulaire ===
+Échec à l'import : cannot import name 'fonction_a' from partially initialized module 'module_a'
+
+=== Version corrigée : import local dans module_b ===
+Import réussi, fonction_a() = A
 ```
 
 ### 02_01_package_simple.py
@@ -350,4 +360,4 @@ for f in *.py; do echo "=== $f ==="; python3 "$f"; echo; done
 
 - Tous les exemples de packages/modules créent des répertoires temporaires (`_temp_*`) et les suppriment après exécution.
 - Les fichiers 03, 04 et 05 concernent principalement des commandes shell (pip, venv, poetry, pipenv). Les fichiers Python démontrent les concepts programmatiquement.
-- Le fichier `05_01_pyproject_toml.py` utilise `tomllib` (Python 3.11+). Pour les versions antérieures, installer `tomli`.
+- Le fichier `05_01_pyproject_toml.py` parse le `pyproject.toml` avec `tomllib` (intégré depuis Python 3.11). Sur Python 3.10, il détecte l'absence de `tomllib` et affiche une **version simulée** (le parsing détaillé est ignoré) — aucune installation supplémentaire n'est requise.

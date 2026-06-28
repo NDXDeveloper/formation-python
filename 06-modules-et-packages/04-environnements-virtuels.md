@@ -171,6 +171,8 @@ Résultat attendu :
 /home/user/mon_projet/venv/bin/python
 ```
 
+> 📝 **Que fait l'activation ?** `source ... activate` ne « lance » aucun programme : il **modifie votre session shell**. Concrètement, il place `venv/bin` (ou `venv\Scripts` sous Windows) **au début de votre `PATH`** et définit la variable `VIRTUAL_ENV`. Comme le shell cherche les commandes dans l'ordre du `PATH`, taper `python` ou `pip` trouve désormais d'abord ceux du venv. `deactivate` se contente de restaurer l'ancien `PATH`. C'est aussi pourquoi l'activation ne vaut **que pour le terminal courant** : un autre terminal n'est pas affecté.
+
 ---
 
 ## Utiliser l'environnement virtuel
@@ -755,9 +757,9 @@ pip install -r requirements.txt
 
 ### Problème 7 : Prompt ne montre pas (venv)
 
-**Solution :**
+**Solution :** le préfixe `(venv)` est masqué dès que la variable `VIRTUAL_ENV_DISABLE_PROMPT` est **définie** — à *n'importe quelle* valeur, y compris `0`. Il faut donc la **supprimer** (et non la mettre à `0`), puis réactiver :
 ```bash
-export VIRTUAL_ENV_DISABLE_PROMPT=0  
+unset VIRTUAL_ENV_DISABLE_PROMPT  
 source venv/bin/activate  
 ```
 

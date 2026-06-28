@@ -46,7 +46,8 @@ print(resultat)  # 7.0
 # --- import * ---
 print("\n=== import * ===")
 
-from math import *
+# L'import * est déconseillé ; montré ici uniquement à titre de démonstration
+from math import *  # noqa: F403
 
 resultat = sqrt(64)
 print(resultat)  # 8.0
