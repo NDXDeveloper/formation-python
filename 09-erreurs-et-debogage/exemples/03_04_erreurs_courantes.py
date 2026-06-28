@@ -60,12 +60,10 @@ print(f"  Ville : {ville}")
 print("\n=== NameError ===\n")
 
 def afficher_nom():
-    if 'prenom' in dir():
+    try:
         print(prenom)  # noqa: F821 - demo : variable volontairement non definie
-    else:
+    except NameError:
         print("  La variable 'prenom' n'existe pas")
-        variables = [v for v in dir() if not v.startswith('_')]
-        print(f"  Variables disponibles : {variables}")
 
 afficher_nom()
 

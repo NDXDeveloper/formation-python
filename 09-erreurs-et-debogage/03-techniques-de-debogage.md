@@ -99,6 +99,8 @@ Une assertion est une vérification que vous placez dans votre code pour vous as
 assert condition, "Message d'erreur optionnel"
 ```
 
+> ⚠️ **Piège classique : pas de parenthèses autour de `condition, message` !** Écrire `assert (condition, message)` (avec des parenthèses) crée un **tuple** `(condition, message)`. Or un tuple non vide est **toujours vrai** : l'assertion réussit **systématiquement** et ne vérifie donc plus rien — un bug silencieux. La forme correcte est `assert condition, message`, **sans** parenthèses. Depuis Python 3.12, l'interpréteur émet d'ailleurs un `SyntaxWarning` pour signaler cette erreur.
+
 ### Exemples pratiques
 
 **Vérifier qu'une valeur est positive :**
@@ -307,6 +309,8 @@ def calculer_factorielle(n):
 
 calculer_factorielle(5)
 ```
+
+> 📝 **Pourquoi `breakpoint()` plutôt que `pdb.set_trace()` ?** `breakpoint()` (Python 3.7+) fait la même chose, mais en respectant la variable d'environnement **`PYTHONBREAKPOINT`**. On peut ainsi **désactiver tous les points d'arrêt sans toucher au code** (`PYTHONBREAKPOINT=0 python script.py`), ou **brancher un autre débogueur** (celui d'un IDE, par exemple) — sans avoir à chercher-remplacer les `pdb.set_trace()` dans tout le projet.
 
 ### Commandes essentielles de pdb
 
@@ -792,15 +796,12 @@ print(prenom)  # prenom n'a pas été défini
 
 **Débogage :**
 ```python
-# Vérifier si la variable existe
-import sys
-
+# Vérifier proprement si la variable existe, avec try/except
 def afficher_nom():
-    if 'prenom' in dir():
+    try:
         print(prenom)
-    else:
+    except NameError:
         print("La variable 'prenom' n'existe pas")
-        print("Variables disponibles :", [v for v in dir() if not v.startswith('_')])
 ```
 
 ### Erreur 3 : TypeError

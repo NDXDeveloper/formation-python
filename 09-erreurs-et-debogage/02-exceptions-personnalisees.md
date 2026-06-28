@@ -90,6 +90,8 @@ except AgeInvalideError as e:
     print(f"Âge problématique : {e.age}")  # Accès à l'attribut
 ```
 
+> 📝 **À quoi sert `super().__init__(message)` ?** En transmettant le message à la classe `Exception` parente, vous le stockez dans `e.args` et vous faites en sorte que **`str(e)` affiche ce message** (c'est le comportement par défaut d'`Exception`). Sans cet appel, `print(e)` n'afficherait rien d'utile. C'est pourquoi on le retrouve dans presque toutes les exceptions personnalisées — même lorsqu'on ajoute d'autres attributs.
+
 ## Exemples concrets d'exceptions personnalisées
 
 ### Exemple 1 : Application bancaire
@@ -398,6 +400,8 @@ except ValueError as e:
     e.add_note(f"Erreur à la ligne {numero} du fichier {chemin}")
     raise
 ```
+
+> 📝 **`raise` tout seul (sans argument) re-lève l'exception en cours.** Dans un bloc `except`, après un traitement partiel (ajouter une note, journaliser, libérer une ressource), `raise` **re-propage** l'exception d'origine **telle quelle**, avec sa trace complète intacte — pour qu'un appelant plus haut puisse la traiter. À ne pas confondre avec `raise UneException(...)`, qui lève une *nouvelle* exception.
 
 ## Bonnes pratiques
 

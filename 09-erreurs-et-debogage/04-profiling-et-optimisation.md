@@ -227,6 +227,8 @@ print(f"Méthode rapide : {temps_rapide:.4f} secondes")
 print(f"Amélioration   : {temps_lent/temps_rapide:.2f}x plus rapide ! 🚀")  
 ```
 
+> 📝 **`timeit.timeit()` : une chaîne *ou* une fonction.** On peut passer le code à mesurer sous deux formes : une **chaîne** (`'sum(range(1000))'`) — pratique pour un extrait court, mais qui s'exécute dans un espace de noms isolé — ou un **objet appelable** (une fonction, ou un `lambda: ma_fonction(args)` pour lui passer des arguments). La forme `lambda` est la plus commode dès qu'on veut mesurer une fonction existante avec ses paramètres.
+
 ### 2.5 timeit en ligne de commande
 
 Vous pouvez aussi utiliser timeit directement depuis le terminal :
@@ -569,6 +571,8 @@ Recherche d'un élément :
 
 **Leçon : Utilisez un set pour les tests d'appartenance !**
 
+> 📝 **Pourquoi un `set` est-il si rapide ?** Un `set` (comme un `dict`) est une **table de hachage** : tester `x in mon_set` calcule le *hash* de `x` et va directement à la bonne case — un temps quasi **constant** (`O(1)`), indépendant du nombre d'éléments. Une **liste**, elle, n'a pas d'index par valeur : `x in ma_liste` la parcourt **élément par élément** jusqu'à trouver (ou épuiser la liste), soit un temps **proportionnel** à sa taille (`O(n)`). D'où l'écart qui se creuse à mesure que les données grossissent.
+
 ### 5.2 Éviter les calculs répétitifs
 
 **❌ Version non optimisée (calcule plusieurs fois la même chose) :**
@@ -579,7 +583,7 @@ def calculer_distances_lente(points):
     distances = []
     for i in range(len(points)):
         for j in range(len(points)):
-            # Calcule len(points) à chaque itération !
+            # range(len(points)) ré-évalue len() à chaque tour de la boucle externe
             distance = abs(points[i] - points[j])
             distances.append(distance)
     return distances
@@ -752,6 +756,8 @@ Générateur : 200 octets
 Le générateur utilise 42,244x moins de mémoire !  
 ```
 
+> 📝 La taille exacte d'un générateur varie un peu selon la version de Python (≈ 100 à 200 octets), mais l'essentiel est qu'elle est **constante** — indépendante de `n` — là où la liste grossit proportionnellement à `n`. Le rapport exact importe donc moins que l'ordre de grandeur : un générateur reste minuscule, quelle que soit la quantité de données parcourues.
+
 ### 5.7 Utiliser join() pour concaténer des chaînes
 
 ```python
@@ -778,6 +784,8 @@ print(f"  Opérateur +  : {temps_plus:.4f} secondes")
 print(f"  Méthode join : {temps_join:.4f} secondes")  
 print(f"  Amélioration : {temps_plus/temps_join:.2f}x plus rapide")  
 ```
+
+> 📝 **Pourquoi `+` est-il lent pour concaténer en boucle ?** Les chaînes Python sont **immuables** : `resultat = resultat + str(i)` ne modifie pas `resultat`, il **crée une nouvelle chaîne** en recopiant tout le contenu déjà accumulé, à chaque tour. Sur `n` tours, on recopie une quantité croissante de caractères — un coût total en `O(n²)`. `"".join(...)` calcule d'abord la taille finale puis alloue le résultat **une seule fois** : un coût en `O(n)`.
 
 ---
 
@@ -824,6 +832,8 @@ Addition de deux séquences de 1,000,000 d'éléments :
   NumPy arrays  : 0.0123 secondes
   NumPy est 190.70x plus rapide ! 🚀
 ```
+
+> 📝 **D'où vient cette rapidité ?** Trois raisons : (1) un tableau NumPy range ses nombres de façon **contiguë** en mémoire, dans un type homogène (et non comme des objets Python individuels dispersés) ; (2) les opérations (`array1 + array2`, `np.sqrt(...)`) sont **vectorisées** : la boucle s'exécute en **C compilé**, pas dans l'interpréteur Python ; (3) elles peuvent exploiter les instructions **SIMD** du processeur (plusieurs additions en une seule instruction). Une boucle Python équivalente paie, elle, le coût de l'interpréteur à *chaque* itération.
 
 ### 6.2 Opérations vectorisées
 

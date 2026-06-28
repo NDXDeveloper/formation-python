@@ -400,7 +400,7 @@ ZeroDivisionError: division by zero
 try:
     # Code qui pourrait générer une erreur
     code_risque()
-except TypeException:
+except ExceptionSpecifique:
     # Code exécuté si une erreur de ce type se produit
     gerer_erreur()
 ```
