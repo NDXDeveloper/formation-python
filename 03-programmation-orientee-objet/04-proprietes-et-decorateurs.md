@@ -411,6 +411,8 @@ personne.age = 30  # OK
 # personne.email = "invalide"  # ValueError !
 ```
 
+> 💡 **Initialisez via la propriété, pas via l'attribut interne.** Dans `__init__`, on écrit `self.nom = nom` (et non `self._nom = nom`) : l'affectation passe alors par le **setter**, donc la validation et le formatage s'appliquent **dès la création** de l'objet. C'est pourquoi `Personne("  dupont  ", …)` produit directement `nom = "DUPONT"`. Écrire `self._nom = nom` court-circuiterait le setter (aucune validation) — à réserver aux rares cas où l'on veut délibérément éviter ce contrôle.
+
 ## Les Décorateurs : Concepts Fondamentaux
 
 ### Qu'est-ce qu'un Décorateur ?
@@ -552,6 +554,18 @@ print()
 # Deuxième appel : résultats en cache
 print(f"fibonacci(5) = {fibonacci(5)}")
 ```
+
+> 💡 **En pratique, ne réimplémentez pas ce cache.** La bibliothèque standard fournit `functools.lru_cache` (et son alias `functools.cache` sans limite de taille, depuis Python 3.9) qui fait exactement cela, de façon optimisée :
+>
+> ```python
+> from functools import cache
+>
+> @cache                       # = lru_cache(maxsize=None) : mémorise tous les appels
+> def fibonacci(n):
+>     return n if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
+> ```
+>
+> Préférez `@lru_cache(maxsize=128)` pour **borner** la mémoire (les entrées les moins récemment utilisées sont alors évincées). Le cache maison ci-dessus ne sert qu'à *comprendre le mécanisme* ; ces outils sont approfondis aux chapitres [5 (décorateurs avancés)](/05-programmation-fonctionnelle/03-decorateurs-avances.md) et [7 (module `functools`)](/07-bibliotheques-standard/04-itertools-et-functools.md).
 
 ### 2. Décorateur de Validation
 

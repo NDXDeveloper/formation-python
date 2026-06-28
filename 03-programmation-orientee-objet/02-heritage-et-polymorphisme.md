@@ -375,7 +375,7 @@ class Especes(MoyenPaiement):
         super().__init__(montant)
 
     def payer(self):
-        print(f"Paiement en espèces")
+        print("Paiement en espèces")
         self.afficher_recu()
 
 
@@ -609,7 +609,7 @@ class Dossier(ElementSysteme):
 
     def afficher_info(self):
         super().afficher_info()
-        print(f"Type : Dossier")
+        print("Type : Dossier")
         print(f"Contient {len(self.contenu)} éléments")
 
     def obtenir_type(self):
@@ -783,6 +783,9 @@ class Animal:
     def __init__(self, nom):
         self.nom = nom
 
+    def manger(self):
+        print(f"{self.nom} mange.")
+
 # Ajouter de nouveaux types d'animaux est facile
 class Oiseau(Animal):
     def voler(self):
@@ -801,8 +804,11 @@ def nourrir_animaux(liste_animaux):
     for animal in liste_animaux:
         animal.manger()  # Peu importe le type exact
 
-animaux = [Chien("Rex"), Chat("Felix"), Oiseau("Tweety")]  
-nourrir_animaux(animaux)  
+animaux = [Chien("Rex"), Chat("Felix"), Oiseau("Tweety")]
+nourrir_animaux(animaux)
+# Rex mange.
+# Felix mange.
+# Tweety mange.
 ```
 
 ## Bonnes Pratiques

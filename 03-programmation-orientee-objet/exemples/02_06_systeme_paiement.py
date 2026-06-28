@@ -40,7 +40,7 @@ class PayPal(MoyenPaiement):
 
 class Especes(MoyenPaiement):
     def payer(self):
-        print(f"Paiement en espèces")
+        print("Paiement en espèces")
         self.afficher_recu()
 
 

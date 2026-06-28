@@ -1,0 +1,3 @@
+Début du programme
+Traitement en cours...
+Fin du programme

@@ -76,7 +76,7 @@ print(mon_chien.nom)  # Affiche : Rex
 print(mon_chien.age)  # Affiche : 5  
 ```
 
-> 📝 **Précision** : on parle souvent de `__init__` comme du « constructeur », et c'est l'usage courant. En toute rigueur, `__init__` ne *construit* pas l'objet : il l'**initialise** (il remplit un objet déjà créé). La véritable création est assurée par une autre méthode spéciale, `__new__`, que l'on rencontre rarement et qui est présentée dans la section avancée [3.5 Métaclasses](/03-programmation-orientee-objet/05-metaclasses-et-prog-avancee.md). Pour débuter, retenez simplement que `__init__` est appelée automatiquement à chaque création d'objet.
+> 📝 **Précision** : on parle souvent de `__init__` comme du « constructeur », et c'est l'usage courant. En toute rigueur, `__init__` ne *construit* pas l'objet : il l'**initialise** (il remplit un objet déjà créé). La création proprement dite revient à une autre méthode spéciale, `__new__(cls, ...)`, qu'on **redéfinit rarement** — surtout pour sous-classer un type immuable (`int`, `str`, `tuple`…) ou implémenter un singleton. La section avancée [3.5 Métaclasses](/03-programmation-orientee-objet/05-metaclasses-et-prog-avancee.md) en montre une variante appliquée aux **métaclasses** (où `__new__` crée non pas un objet, mais une *classe*). Pour débuter, retenez simplement que `__init__` est appelée automatiquement à chaque création d'objet.
 
 ### Comprendre `self`
 
@@ -194,6 +194,31 @@ print(p2.articles)         # ['pomme'] — p2 est affecté lui aussi !
 ```
 
 La bonne pratique est d'initialiser ces collections **dans `__init__`** (`self.articles = []`), comme l'attribut `self.historique = []` de l'exemple `CompteBancaire` ci-dessous. Réservez les attributs de classe aux valeurs **partagées et constantes** (comme `taux_interet` ou `espece`).
+
+### Lire vs écrire un attribut de classe via une instance
+
+Une subtilité du même mécanisme : **lire** un attribut de classe via une instance fonctionne (`chien1.espece`), mais lui **affecter** une valeur via l'instance **ne modifie pas la classe** — cela crée un nouvel attribut *d'instance* qui **masque** celui de la classe pour ce seul objet :
+
+```python
+class Chien:
+    espece = "Canis familiaris"   # attribut de classe
+
+chien1 = Chien()
+chien2 = Chien()
+
+# Affecter via l'instance crée un attribut d'INSTANCE (la classe n'est pas touchée)
+chien1.espece = "Loup"
+print(chien1.espece)   # Loup              (attribut d'instance, masque la classe)
+print(chien2.espece)   # Canis familiaris  (inchangé)
+print(Chien.espece)    # Canis familiaris  (la classe est intacte)
+
+# Pour modifier la valeur partagée, il faut passer par la CLASSE :
+Chien.espece = "Canis lupus"
+print(chien2.espece)   # Canis lupus  (chien2 n'a pas d'attribut d'instance -> voit la classe)
+print(chien1.espece)   # Loup         (chien1 garde son attribut d'instance)
+```
+
+C'est aussi ce qui éclaire le piège précédent : `liste.append(...)` **modifie en place** l'objet partagé (toutes les instances le voient), alors que `self.liste = [...]` serait une **réaffectation** qui créerait un attribut d'instance distinct. Pour savoir d'où vient une valeur, inspectez `instance.__dict__` : il ne contient **que** les attributs d'instance.
 
 ## Exemple Complet : Classe Compte Bancaire
 
@@ -313,6 +338,44 @@ ma_voiture.kilometrage = 15000
 
 ma_voiture.afficher_info()      # Renault bleu, 15000 km
 ```
+
+## Accès Dynamique aux Attributs : `getattr`, `setattr`, `hasattr`
+
+Jusqu'ici, on accède aux attributs en écrivant leur nom directement : `objet.attribut`. Mais il arrive que le **nom de l'attribut ne soit connu qu'à l'exécution** (par exemple parce qu'il se trouve dans une variable). Python fournit trois fonctions intégrées pour manipuler les attributs **par leur nom donné sous forme de chaîne** :
+
+- `getattr(objet, "nom")` : lit l'attribut (équivaut à `objet.nom`)
+- `setattr(objet, "nom", valeur)` : écrit l'attribut (équivaut à `objet.nom = valeur`)
+- `hasattr(objet, "nom")` : indique si l'attribut existe (`True` / `False`)
+
+```python
+class Personne:
+    def __init__(self, nom, age):
+        self.nom = nom
+        self.age = age
+
+p = Personne("Alice", 30)
+
+# Accès classique et accès dynamique donnent le même résultat
+print(p.nom)              # Alice
+print(getattr(p, "nom"))  # Alice  (mais ici le nom est une chaîne)
+
+# Le nom de l'attribut peut venir d'une variable
+champ = "age"
+print(getattr(p, champ))  # 30
+
+# getattr accepte une valeur par défaut si l'attribut n'existe pas (pas d'erreur)
+print(getattr(p, "ville", "Inconnue"))  # Inconnue
+
+# setattr crée ou modifie un attribut dynamiquement
+setattr(p, "ville", "Paris")
+print(p.ville)            # Paris
+
+# hasattr teste l'existence d'un attribut
+print(hasattr(p, "email"))  # False
+print(hasattr(p, "nom"))    # True
+```
+
+> 💡 Ces fonctions sont précieuses pour écrire du code **générique** qui s'adapte à n'importe quelle classe — par exemple remplir un objet à partir d'un dictionnaire `{champ: valeur}`. On les retrouvera dans la section avancée [3.5](/03-programmation-orientee-objet/05-metaclasses-et-prog-avancee.md) (mini-ORM). Il existe aussi `delattr(objet, "nom")` pour supprimer un attribut.
 
 ## Plusieurs Instances Indépendantes
 

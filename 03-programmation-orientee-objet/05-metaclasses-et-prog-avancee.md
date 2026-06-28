@@ -1078,6 +1078,8 @@ print(f"Taille avec slots : {sys.getsizeof(obj2)} bytes")
 - Moins flexible (pas de __dict__)
 - Ne peut pas ajouter d'attributs dynamiquement
 
+> ⚠️ **`__slots__` et héritage** : le `__dict__` n'est éliminé que si **toute la hiérarchie** déclare `__slots__`. Si une sous-classe **omet** `__slots__`, ses instances retrouvent un `__dict__` et peuvent de nouveau recevoir n'importe quel attribut — le gain mémoire est alors perdu. Pour le conserver, **chaque** classe de la chaîne doit déclarer son propre `__slots__`, en n'y mettant que les **nouveaux** attributs (sans répéter ceux déjà déclarés dans les classes parentes).
+
 ## Protocoles et Duck Typing
 
 ### Duck Typing

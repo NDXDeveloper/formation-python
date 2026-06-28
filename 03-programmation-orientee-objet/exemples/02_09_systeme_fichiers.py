@@ -55,7 +55,7 @@ class Dossier(ElementSysteme):
 
     def afficher_info(self):
         super().afficher_info()
-        print(f"Type : Dossier")
+        print("Type : Dossier")
         print(f"Contient {len(self.contenu)} éléments")
 
     def obtenir_type(self):

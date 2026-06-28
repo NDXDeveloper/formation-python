@@ -263,6 +263,21 @@ print(double)  # 100.00 EUR
 
 Ces méthodes permettent de comparer vos objets avec les opérateurs de comparaison.
 
+**Pourquoi en a-t-on besoin ?** Par défaut, `==` entre deux objets compare leur **identité** (sont-ils le *même* objet en mémoire ?), pas leur contenu. Deux objets distincts ayant la même valeur sont donc considérés comme différents :
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+
+a = Point(1, 2)
+b = Point(1, 2)
+print(a == b)   # False ! (a et b ont la même valeur, mais ce sont deux objets distincts)
+print(a is b)   # False (`is` teste l'identité : « est-ce le même objet ? »)
+```
+
+Définir `__eq__` permet de comparer par **valeur** plutôt que par identité. Les autres méthodes (`__lt__`, `__le__`…) font de même pour `<`, `<=`, etc. :
+
 ```python
 class Personne:
     def __init__(self, nom, age):
@@ -323,6 +338,8 @@ Alice (30 ans)
 Charlie (30 ans)  
 ```
 
+> 💡 **`==` vs `is`** : `==` compare la **valeur** et se personnalise via `__eq__` (ci-dessus, `alice == charlie` est `True` car même âge) ; `is` compare l'**identité** (« est-ce exactement le même objet ? ») et ne se redéfinit **jamais**. Deux objets peuvent donc être `==` sans être `is` (`alice is charlie` reste `False` : ce sont deux objets distincts). C'est précisément ce que garantit le motif *singleton* de la [section 3.5](/03-programmation-orientee-objet/05-metaclasses-et-prog-avancee.md), où `config1 is config2` assure une instance **unique**.
+
 ### Tableau des Opérateurs de Comparaison
 
 | Opérateur | Méthode | Exemple |
@@ -334,7 +351,35 @@ Charlie (30 ans)
 | `>` | `__gt__(self, other)` | `a > b` |
 | `>=` | `__ge__(self, other)` | `a >= b` |
 
-**Astuce** : Python peut déduire certaines comparaisons. Si vous définissez `__eq__` et `__lt__`, Python peut souvent déduire les autres. Vous pouvez utiliser le décorateur `@functools.total_ordering` pour cela.
+**Astuce — générer les comparaisons avec `@functools.total_ordering`** : écrire les six méthodes à la main est fastidieux et source d'incohérences. Le décorateur `@functools.total_ordering` génère automatiquement `__le__`, `__gt__` et `__ge__` à partir des **deux seules** méthodes `__eq__` et `__lt__` :
+
+```python
+from functools import total_ordering
+
+@total_ordering
+class Temperature:
+    def __init__(self, degres):
+        self.degres = degres
+
+    def __eq__(self, autre):
+        return self.degres == autre.degres
+
+    def __lt__(self, autre):
+        return self.degres < autre.degres
+
+t1 = Temperature(20)
+t2 = Temperature(25)
+
+# Avec seulement __eq__ et __lt__, les six comparaisons fonctionnent :
+print(t1 < t2)   # True
+print(t1 <= t2)  # True  (généré par total_ordering)
+print(t1 > t2)   # False (généré)
+print(t1 >= t2)  # False (généré)
+print(t1 == t2)  # False
+print(t1 != t2)  # True  (déduit de __eq__)
+```
+
+(`__ne__` est, lui, toujours déduit automatiquement de `__eq__` depuis Python 3.) Ce décorateur est aussi présenté au chapitre [7 (module `functools`)](/07-bibliotheques-standard/04-itertools-et-functools.md).
 
 > ⚠️ **`__eq__` et `__hash__` vont de pair.** Dès que vous définissez `__eq__`, Python met `__hash__` à `None` : vos instances deviennent **non hashables** (impossible de les utiliser comme clés de dictionnaire ou de les mettre dans un `set`). Si vous en avez besoin, définissez aussi `__hash__` à partir des **mêmes** attributs que `__eq__` (deux objets égaux doivent avoir le même hash), par exemple `def __hash__(self): return hash((self.nom, self.age))`.
 

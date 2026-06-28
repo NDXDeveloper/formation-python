@@ -61,7 +61,7 @@ class Point:
 
 # Utile si vous créez des milliers de points
 points = [Point(i, i*2) for i in range(10000)]
-print(f"10000 points créés avec __slots__")
+print("10000 points créés avec __slots__")
 
 # --- Documenter les métaclasses ---
 class MyMeta(type):

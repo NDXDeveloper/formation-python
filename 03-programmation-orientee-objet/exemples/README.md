@@ -1,6 +1,6 @@
 # Exemples - Chapitre 03 : Programmation orientée objet
 
-69 fichiers d'exemples exécutables, répartis sur 5 fichiers source.
+74 fichiers d'exemples exécutables, répartis sur 5 fichiers source.
 
 **Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 05) et `NN` l'ordre de l'exemple. Exemple : `03_05_len_getitem_setitem.py` = section 3.3, 5ᵉ exemple.
 
@@ -19,7 +19,7 @@ Chaque exemple reprend le code de son fichier `.md` source (indiqué sous chaque
 
 La **logique et les valeurs** restent identiques à celles du cours.
 
-## Fichier 01 : Classes et objets (9 fichiers)
+## Fichier 01 : Classes et objets (11 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
@@ -32,6 +32,8 @@ La **logique et les valeurs** restent identiques à celles du cours.
 | `01_07_instances_independantes.py` | 3.1 | Instances indépendantes (Compteur) | compteur1=2, compteur2=11 (indépendants) |
 | `01_08_bonnes_pratiques.py` | 3.1 | Bonnes pratiques (Livre, Rectangle, Etudiant) | Surface 15/70, moyenne 15.0 |
 | `01_09_gestionnaire_taches.py` | 3.1 | Gestionnaire de tâches complet | 3 tâches, 1/3 terminées, filtrage des non-terminées |
+| `01_10_acces_dynamique.py` | 3.1 | Accès dynamique : `getattr`/`setattr`/`hasattr`/`delattr` | Alice, 30, Inconnue, AttributeError, Paris, dict→objet |
+| `01_11_shadowing_attribut_classe.py` | 3.1 | Écrire un attribut de classe via l'instance (shadowing) | c1=Loup (instance) ; c2/classe inchangés ; `__dict__` |
 
 **Fichier source** : `01-classes-et-objets.md`
 
@@ -52,7 +54,7 @@ La **logique et les valeurs** restent identiques à celles du cours.
 
 **Fichier source** : `02-heritage-et-polymorphisme.md`
 
-## Fichier 03 : Méthodes spéciales (10 fichiers)
+## Fichier 03 : Méthodes spéciales (12 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
@@ -66,10 +68,12 @@ La **logique et les valeurs** restent identiques à celles du cours.
 | `03_08_context_manager.py` | 3.3 | `__enter__`/`__exit__` (FichierLog, Chronomètre) | Log écrit, calcul chronométré |
 | `03_09_vecteur_complet.py` | 3.3 | Classe Vecteur complète | abs=5.0, toutes les opérations |
 | `03_10_fraction.py` | 3.3 | Classe Fraction avec arithmétique | 1/2+1/3=5/6, simplification 4/8=1/2 |
+| `03_11_total_ordering.py` | 3.3 | `@functools.total_ordering` (6 comparaisons depuis 2) | True/True/False/False/False/True, tri + min/max |
+| `03_12_egalite_vs_identite.py` | 3.3 | Égalité `==` (`__eq__`, valeur) vs identité `is` | sans `__eq__` : a==b False ; avec : d==e True mais d is e False |
 
 **Fichier source** : `03-methodes-speciales.md`
 
-## Fichier 04 : Propriétés et décorateurs (17 fichiers)
+## Fichier 04 : Propriétés et décorateurs (18 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
@@ -90,6 +94,7 @@ La **logique et les valeurs** restent identiques à celles du cours.
 | `04_15_functools_wraps.py` | 3.4 | functools.wraps pour métadonnées | __name__ et __doc__ préservés |
 | `04_16_encapsulation.py` | 3.4 | Conventions `_` (interne) et `__` (name mangling) | `_solde` accessible, `__solde` manglé, anti-collision en héritage |
 | `04_17_cached_property.py` | 3.4 | `@cached_property` : calcul mémorisé une fois | « Calcul… » une seule fois puis 4, invalidation par `del` |
+| `04_18_lru_cache.py` | 3.4 | Cache standard `functools.cache` / `lru_cache` | fibonacci(30)=832040, `cache_info` (hits/misses), `cache_clear` |
 
 **Fichier source** : `04-proprietes-et-decorateurs.md`
 
