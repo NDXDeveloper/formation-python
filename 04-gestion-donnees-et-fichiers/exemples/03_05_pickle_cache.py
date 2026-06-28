@@ -11,8 +11,6 @@ import os
 def calcul_long(n):
     """Simule un calcul long (sans sleep pour l'exécution rapide)"""
     print(f"Calcul en cours pour n={n}...")
-    # Calcul réel au lieu de sleep
-    resultat = sum(range(n * 100000))
     return n ** 2
 
 def calcul_avec_cache(n, fichier_cache='cache.pkl'):

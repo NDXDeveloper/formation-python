@@ -30,8 +30,8 @@ ma_fonction = lambda x: x * 2
 try:
     pickle.dumps(ma_fonction)
     print("Lambda sérialisée (succès inattendu)")
-except (AttributeError, pickle.PicklingError) as e:
-    print(f"Erreur : impossible de pickler une lambda")
+except (AttributeError, pickle.PicklingError):
+    print("Erreur : impossible de pickler une lambda")
 
 # --- Fonctions réutilisables ---
 print("\n=== Fonctions réutilisables ===")

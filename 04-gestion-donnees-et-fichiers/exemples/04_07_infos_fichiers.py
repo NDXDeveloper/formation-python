@@ -48,9 +48,9 @@ def infos_fichier(chemin_str):
     print(f"{'='*60}")
 
     if chemin.is_file():
-        print(f"Type : Fichier")
+        print("Type : Fichier")
     elif chemin.is_dir():
-        print(f"Type : Dossier")
+        print("Type : Dossier")
 
     print(f"Chemin complet : {chemin.absolute()}")
     print(f"Dossier parent : {chemin.parent}")

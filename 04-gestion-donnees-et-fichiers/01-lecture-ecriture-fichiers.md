@@ -125,6 +125,22 @@ fichier.write("Et encore une autre ligne\n")
 fichier.close()
 ```
 
+### Mode 'x' - Création exclusive (échoue si le fichier existe)
+
+Le mode `'x'` crée un fichier **uniquement s'il n'existe pas encore**. Si le fichier existe déjà, il lève une `FileExistsError` au lieu de l'écraser — pratique pour éviter de détruire accidentellement des données :
+
+```python
+# Créer un fichier seulement s'il n'existe pas
+try:
+    with open('rapport.txt', 'x', encoding='utf-8') as fichier:
+        fichier.write("Premier rapport\n")
+    print("Fichier créé")
+except FileExistsError:
+    print("Le fichier existe déjà : aucune donnée écrasée")
+```
+
+Contrairement au mode `'w'` (qui écrase sans prévenir), le mode `'x'` garantit que vous ne détruisez jamais un fichier existant.
+
 ### Écrire plusieurs lignes avec writelines()
 
 ```python
@@ -140,6 +156,8 @@ courses = [
 fichier.writelines(courses)  
 fichier.close()  
 ```
+
+> ⚠️ **`writelines()` n'ajoute aucun retour à la ligne**, contrairement à ce que son nom laisse penser. Il écrit les chaînes les unes à la suite des autres, sans séparateur : `writelines(["Pommes", "Pain"])` produit `PommesPain` sur une seule ligne. C'est pourquoi chaque élément de la liste se termine ici par `\n`. (Son symétrique `readlines()` **conserve** d'ailleurs les `\n` de chaque ligne lue : les deux méthodes sont cohérentes l'une avec l'autre.)
 
 ---
 
@@ -312,7 +330,7 @@ else:
     print("Le fichier n'existe pas")
 ```
 
-> 💡 Vous verrez parfois l'approche plus ancienne avec `os.path.exists()` et `os.path.isfile()`. Les deux fonctionnent, mais `pathlib` est l'approche moderne recommandée (voir section 4.4).
+> 💡 Vous verrez parfois l'approche plus ancienne avec `os.path.exists()` et `os.path.isfile()`. Les deux fonctionnent, mais `pathlib` est l'approche moderne recommandée (voir la [section 4.4](/04-gestion-donnees-et-fichiers/04-gestion-chemins-pathlib.md)).
 
 ---
 

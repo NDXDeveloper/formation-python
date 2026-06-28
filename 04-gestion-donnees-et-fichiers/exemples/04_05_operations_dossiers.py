@@ -56,4 +56,4 @@ nouveau_dossier.rmdir()  # Dossier vide
 print(f"Dossier vide supprimé : {nouveau_dossier}")
 
 shutil.rmtree('projets')  # Dossier non vide
-print(f"Dossier avec contenu supprimé : projets/")
+print("Dossier avec contenu supprimé : projets/")

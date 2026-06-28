@@ -25,7 +25,7 @@ def backup_fichiers(dossier_source, dossier_backup):
     # Créer le dossier de backup
     dossier_destination.mkdir(parents=True, exist_ok=True)
 
-    print(f"Backup en cours...")
+    print("Backup en cours...")
     print(f"Source : {source}")
     print(f"Destination : {dossier_destination}\n")
 

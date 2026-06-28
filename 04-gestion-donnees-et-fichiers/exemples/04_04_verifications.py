@@ -49,11 +49,11 @@ def analyser_chemin(chemin_str):
     print("Le chemin existe")
 
     if chemin.is_file():
-        print(f"Type : Fichier")
+        print("Type : Fichier")
         taille = chemin.stat().st_size
         print(f"Taille : {taille} octets")
     elif chemin.is_dir():
-        print(f"Type : Dossier")
+        print("Type : Dossier")
         nb_fichiers = len(list(chemin.iterdir()))
         print(f"Nombre d'éléments : {nb_fichiers}")
 

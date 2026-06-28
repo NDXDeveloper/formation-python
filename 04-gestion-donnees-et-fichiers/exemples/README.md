@@ -1,13 +1,13 @@
 # Exemples - Chapitre 04 : Gestion des données et fichiers
 
-37 fichiers d'exemples exécutables, répartis sur 4 fichiers source.
+41 fichiers d'exemples exécutables, répartis sur 4 fichiers source.
 
 **Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 04) et `NN` l'ordre de l'exemple. Exemple : `02_04_csv_lecture.py` = section 4.2, 4ᵉ exemple.
 
 ## Prérequis
 
 - **Python 3.10+** (le cours utilise la syntaxe moderne ; `ET.indent` requiert 3.9+).
-- **Aucune dépendance externe** : uniquement la bibliothèque standard (`json`, `csv`, `xml.etree.ElementTree`, `pickle`, `pathlib`, `datetime`, `shutil`, `os`).
+- **Aucune dépendance externe** : uniquement la bibliothèque standard (`json`, `csv`, `xml.etree.ElementTree`, `pickle`, `pathlib`, `datetime`, `shutil`, `os`, `time`).
 
 ## Correspondance avec le cours
 
@@ -15,11 +15,11 @@ Chaque exemple reprend le code de son fichier `.md` source (indiqué sous chaque
 
 - ils sont **auto-contenus** : chaque fichier crée ses propres fichiers de test, puis les **supprime** en fin d'exécution (`os.remove`, `shutil.rmtree`) — aucun résidu sur le disque ;
 - les **symboles décoratifs** du cours (émojis 📰/✅, `€`…) sont rendus en **ASCII** dans les sorties (`[F]`/`[D]`, `[ok]`, `>>`, `EUR`) pour un affichage portable sur tous les terminaux ;
-- les calculs volontairement longs (`time.sleep`) sont remplacés par un calcul rapide équivalent.
+- le délai simulé du cours (`time.sleep`) est retiré pour une exécution immédiate.
 
 La **logique et les valeurs** restent identiques à celles du cours.
 
-## Fichier 01 : Lecture et écriture de fichiers (8 fichiers)
+## Fichier 01 : Lecture et écriture de fichiers (9 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
@@ -31,6 +31,7 @@ La **logique et les valeurs** restent identiques à celles du cours.
 | `01_06_verifier_existence.py` | 4.1 | pathlib.Path exists(), is_file(), stat() | Existe, fichier, 16 octets |
 | `01_07_exemples_pratiques.py` | 4.1 | Compter mots, log, CSV simple, sauvegarder/relire liste | 11 mots, 3 logs, 3 lignes CSV, 4 noms |
 | `01_08_positionnement_seek_tell.py` | 4.1 | `tell()`, `seek()`, mode `'r+'` | Position 0→3, seek, `12345FGHIJ` |
+| `01_09_mode_x_creation_exclusive.py` | 4.1 | Mode `'x'` (création exclusive) | "Fichier créé", puis FileExistsError, contenu conservé |
 
 **Fichier source** : `01-lecture-ecriture-fichiers.md`
 
@@ -66,7 +67,7 @@ La **logique et les valeurs** restent identiques à celles du cours.
 
 **Fichier source** : `03-serialisation-pickle.md`
 
-## Fichier 04 : Gestion des chemins avec pathlib (11 fichiers)
+## Fichier 04 : Gestion des chemins avec pathlib (14 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
@@ -81,6 +82,9 @@ La **logique et les valeurs** restent identiques à celles du cours.
 | `04_09_organiser_fichiers.py` | 4.4 | Organiser des fichiers par extension | 6 fichiers classés en jpg/, pdf/, py/, etc. |
 | `04_10_backup_fichiers.py` | 4.4 | Backup horodaté d'un dossier complet | 3 fichiers copiés avec structure préservée |
 | `04_11_transformer_chemin.py` | 4.4 | `with_suffix()`, `with_name()`, `with_stem()` | donnees.json, resume.txt, donnees_2024.csv |
+| `04_12_shutil_copy_vs_copy2.py` | 4.4 | `shutil.copy` vs `copy2` (préservation des métadonnées) | copy ne préserve pas la date (False), copy2 si (True) |
+| `04_13_absolute_vs_resolve.py` | 4.4 | `absolute()` (garde `..`) vs `resolve()` (normalise) | absolute True, resolve False, même fichier final |
+| `04_14_chemin_relatif_au_script.py` | 4.4 | `Path(__file__).parent` : viser un fichier relatif au script (pas au cwd) | nom du script, `config.json` à côté (True) |
 
 **Fichier source** : `04-gestion-chemins-pathlib.md`
 

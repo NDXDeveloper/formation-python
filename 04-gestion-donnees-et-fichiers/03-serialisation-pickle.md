@@ -250,6 +250,8 @@ print(f"Type : {type(personne_chargee)}")
 
 **Important :** La définition de la classe doit être disponible lors du chargement !
 
+> 💡 **Pourquoi ?** Pickle ne sauvegarde **pas le code** de la classe, seulement les **données** de l'instance (ses attributs) et une **référence** à la classe sous la forme `module.NomDeClasse`. Au chargement, il **réimporte** la classe via cette référence pour reconstruire l'objet — d'où l'échec si la classe est introuvable (non définie, renommée ou déplacée). C'est la même raison qui rend une `lambda` non picklable (pas de nom réimportable, voir *Limitations*) et qui cantonne pickle à **Python**.
+
 ---
 
 ## Exemple Pratique : Système de Sauvegarde de Jeu
@@ -452,12 +454,14 @@ print(f"Protocole le plus récent : {pickle.HIGHEST_PROTOCOL}")
 |---------|--------|------|
 | **Format** | Binaire | Texte |
 | **Lisible** | ❌ Non | ✅ Oui |
-| **Types supportés** | ✅ Tous les types Python | ⚠️ Types limités |
+| **Types supportés** | ✅ La plupart des types Python | ⚠️ Types limités |
 | **Objets personnalisés** | ✅ Oui | ❌ Non (sans conversion) |
 | **Sécurité** | ⚠️ Risques | ✅ Sûr |
 | **Portabilité** | ⚠️ Python uniquement | ✅ Universel |
 | **Taille fichier** | ✅ Compact | ⚠️ Plus volumineux |
 | **Vitesse** | ✅ Rapide | ⚠️ Plus lent |
+
+> 💡 **« La plupart » et non « tous »** : `pickle` accepte les types natifs (`tuple`, `set`, `bytes`…) **et** vos propres classes — bien plus large que JSON. Il reste toutefois des exceptions : les objets liés à l'état d'exécution (fonctions `lambda`, fichiers ouverts, sockets réseau) ne peuvent **pas** être sérialisés, comme détaillé dans la section *Limitations de Pickle* ci-dessous.
 
 ### Exemple Comparatif
 
@@ -473,7 +477,7 @@ donnees = {
     'bytes': b'data'          # Bytes
 }
 
-# Pickle : fonctionne avec tous les types
+# Pickle : gère ces types complexes sans conversion
 with open('donnees.pkl', 'wb') as f:
     pickle.dump(donnees, f)
 print("✅ Pickle : sauvegarde réussie")
@@ -561,7 +565,7 @@ fichier_ouvert = open('test.txt', 'w')
 try:  
     pickle.dumps(fichier_ouvert)
 except TypeError as e:
-    print(f"Erreur : {e}")  # cannot pickle 'TextIOWrapper' instances
+    print(f"Erreur : {e}")  # TypeError : cannot pickle ... TextIOWrapper (le libellé exact varie selon la version)
 finally:
     fichier_ouvert.close()
 ```

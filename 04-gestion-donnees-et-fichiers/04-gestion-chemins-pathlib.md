@@ -105,6 +105,8 @@ print(fichier)
 # Résultat : mes_documents/projets/python/script.py
 ```
 
+> ⚠️ **Piège : un argument absolu efface ce qui précède.** Si l'opérande de droite de `/` est un chemin **absolu**, toute la partie de gauche est **ignorée** : `Path('mes_documents') / '/etc'` donne `/etc`, et non `mes_documents/etc`. Pour construire un chemin à partir d'une base, ne joignez que des fragments **relatifs**.
+
 ### Joindre avec `joinpath()`
 
 ```python
@@ -244,6 +246,17 @@ chemin_resolu = chemin.resolve()
 print(f"Répertoire courant : {chemin_resolu}")
 ```
 
+> 💡 **`absolute()` ou `resolve()` ?** Les deux renvoient un chemin absolu, mais `absolute()` se contente de **préfixer le répertoire courant** : un `..` présent dans le chemin est **conservé** tel quel. `resolve()` va plus loin — il **normalise** le chemin (supprime les `.` et `..`) **et** suit les liens symboliques, produisant le chemin **canonique** (en général préférable). Depuis Python 3.6, il n'exige pas que le chemin existe.
+
+```python
+from pathlib import Path
+
+chemin = Path('dossier/sousdossier/../fichier.txt')
+
+print(chemin.absolute())   # .../dossier/sousdossier/../fichier.txt  (le '..' reste)
+print(chemin.resolve())    # .../dossier/fichier.txt                 (normalisé)
+```
+
 ### Chemin Relatif Entre Deux Chemins
 
 ```python
@@ -319,11 +332,11 @@ def analyser_chemin(chemin_str):
     print("✅ Le chemin existe")
 
     if chemin.is_file():
-        print(f"📄 Type : Fichier")
+        print("📄 Type : Fichier")
         taille = chemin.stat().st_size
         print(f"📊 Taille : {taille} octets")
     elif chemin.is_dir():
-        print(f"📁 Type : Dossier")
+        print("📁 Type : Dossier")
         nb_fichiers = len(list(chemin.iterdir()))
         print(f"📊 Nombre d'éléments : {nb_fichiers}")
 
@@ -409,6 +422,8 @@ if fichier.exists():
     print(f"Déplacé vers : {destination}")
 ```
 
+> 💡 **`rename()` ou `shutil.move()` pour déplacer ?** `Path.rename()` est rapide mais a deux limites : il **écrase silencieusement** un fichier de destination existant, et il **échoue** (`OSError`) si la source et la destination sont sur deux systèmes de fichiers différents (par exemple un disque interne et une clé USB). `shutil.move()` (employé plus loin dans l'exemple « Organiser des fichiers ») est plus robuste : il gère ce cas en copiant puis supprimant. Pour un simple renommage au même endroit, `rename()` suffit ; pour déplacer ailleurs de façon sûre, préférez `shutil.move()`.
+
 ### Copier un Fichier
 
 ```python
@@ -422,6 +437,10 @@ if source.exists():
     shutil.copy(source, destination)
     print(f"Fichier copié : {source} → {destination}")
 ```
+
+> 💡 **Le module `shutil` complète `pathlib`** pour les opérations de **haut niveau** que `Path` ne propose pas : copier un fichier (`shutil.copy`, `shutil.copy2`), déplacer un fichier ou un dossier entier (`shutil.move`), et supprimer un dossier non vide (`shutil.rmtree`, vu plus haut).
+>
+> **`copy` vs `copy2`** : `shutil.copy` copie le **contenu** et les permissions, mais **pas** les dates ; `shutil.copy2` préserve **en plus les métadonnées** (notamment la date de dernière modification). Pour une **sauvegarde** fidèle, on préfère donc `copy2` — c'est exactement pourquoi l'exemple de backup plus bas l'utilise.
 
 ---
 
@@ -592,9 +611,9 @@ def infos_fichier(chemin_str):
 
     # Type
     if chemin.is_file():
-        print(f"Type : Fichier")
+        print("Type : Fichier")
     elif chemin.is_dir():
-        print(f"Type : Dossier")
+        print("Type : Dossier")
 
     # Chemin
     print(f"Chemin complet : {chemin.absolute()}")
@@ -757,7 +776,7 @@ def backup_fichiers(dossier_source, dossier_backup):
     # Créer le dossier de backup
     dossier_destination.mkdir(parents=True, exist_ok=True)
 
-    print(f"💾 Backup en cours...")
+    print("💾 Backup en cours...")
     print(f"Source : {source}")
     print(f"Destination : {dossier_destination}\n")
 
@@ -818,6 +837,27 @@ print(f"Home : {home}")
 cwd = Path.cwd()  
 print(f"Répertoire courant : {cwd}")  
 ```
+
+### Localiser un Fichier par Rapport au Script
+
+`Path.cwd()` renvoie le **répertoire de travail** — celui depuis lequel la commande `python` a été lancée, qui n'est **pas forcément** le dossier où se trouve votre script. Un simple `open('config.json')` cherche donc le fichier dans le répertoire courant, et lève une `FileNotFoundError` si le programme est lancé depuis ailleurs.
+
+Pour viser un fichier **toujours rangé au même endroit que le script**, partez de la variable spéciale `__file__` (le chemin du fichier `.py` en cours d'exécution) :
+
+```python
+from pathlib import Path
+
+# Dossier contenant CE script, quelle que soit la façon de le lancer
+dossier_script = Path(__file__).resolve().parent
+
+# Des fichiers livrés à côté du script
+config = dossier_script / 'config.json'
+donnees = dossier_script / 'data' / 'valeurs.csv'
+
+print(config)
+```
+
+> 💡 **Pourquoi `.resolve()` ?** Selon la manière dont le script est lancé, `__file__` peut être un chemin relatif. `Path(__file__).resolve().parent` donne un chemin **absolu et normalisé**, fiable où que vous soyez. C'est le réflexe à adopter pour toutes les **ressources** livrées avec un programme (configuration, données, gabarits), au lieu d'un chemin relatif au répertoire courant qui casse dès qu'on lance le script depuis un autre dossier.
 
 ---
 

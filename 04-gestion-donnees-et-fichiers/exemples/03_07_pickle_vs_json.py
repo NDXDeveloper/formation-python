@@ -1,6 +1,6 @@
 # ============================================================================
 #   Section 4.3 : Pickle vs JSON - Comparaison
-#   Description : Pickle gère tous les types Python (tuples, sets, bytes),
+#   Description : Pickle gère les types complexes (tuples, sets, bytes),
 #                 JSON ne supporte que les types de base
 #   Fichier source : 03-serialisation-pickle.md
 # ============================================================================
@@ -17,7 +17,7 @@ donnees = {
     'bytes': b'data'          # Bytes
 }
 
-# Pickle : fonctionne avec tous les types
+# Pickle : gère ces types complexes sans conversion
 with open('donnees.pkl', 'wb') as f:
     pickle.dump(donnees, f)
 print("Pickle : sauvegarde réussie")

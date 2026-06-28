@@ -363,6 +363,8 @@ with open('informaticiens.csv', 'w', encoding='utf-8', newline='') as fichier:
 print(f"{len(informaticiens)} informaticiens exportés")
 ```
 
+> 💡 **Pourquoi `extrasaction='ignore'` ?** Les dictionnaires `informaticiens` contiennent une clé `'service'` qui ne figure **pas** dans `colonnes`. Par défaut, `DictWriter` lèverait une `ValueError` (« dict contains fields not in fieldnames ») en rencontrant cette clé en trop. `extrasaction='ignore'` lui demande d'**ignorer** les clés absentes de `fieldnames` — pratique pour n'exporter qu'une sélection de colonnes.
+
 ---
 
 ## XML (eXtensible Markup Language)
