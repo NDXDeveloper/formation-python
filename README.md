@@ -1,6 +1,6 @@
 # 🐍 Formation Python - Du Débutant à l'Avancé
 
-![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)  
+![Python Version](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python&logoColor=white)  
 ![License](https://img.shields.io/badge/License-MIT-green.svg)  
 ![Modules](https://img.shields.io/badge/Modules-13-brightgreen.svg)  
 ![Language](https://img.shields.io/badge/Langue-Français-blue.svg)  
@@ -84,7 +84,7 @@ Formation progressive et complète sur **Python 3** couvrant l'intégralité du 
 # Vérifier la version de Python
 python --version  # ou python3 --version
 
-# Télécharger Python 3.10+ (recommandé : 3.13 ou 3.14, la dernière version)
+# Télécharger Python 3.12+ (recommandé : 3.13 ou 3.14, la dernière version)
 # 🌐 https://www.python.org/downloads/
 ```
 
@@ -223,7 +223,7 @@ source venv/bin/activate
 ## 🛠️ Technologies couvertes
 
 ### Langage & Outils
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)  
+![Python](https://img.shields.io/badge/Python-3.12+-3776AB?logo=python&logoColor=white)  
 ![Type Hints](https://img.shields.io/badge/Type_Hints-mypy-blue)  
 ![uv](https://img.shields.io/badge/uv-Package_Manager-261230)  
 ![Poetry](https://img.shields.io/badge/Poetry-Package_Manager-60A5FA)
@@ -234,7 +234,7 @@ source venv/bin/activate
 
 ### Données & ORM
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red)  
-![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white)  
+![Pandas](https://img.shields.io/badge/Pandas-3.0+-150458?logo=pandas&logoColor=white)  
 ![NumPy](https://img.shields.io/badge/NumPy-2.0+-013243?logo=numpy&logoColor=white)
 
 ### Tests & Qualité
@@ -309,7 +309,7 @@ R : Non, c'est un module optionnel pour ceux qui s'intéressent à l'analyse de 
 R : Oui ! La licence MIT vous permet d'utiliser, modifier et partager ce contenu librement.
 
 **Q : Quelle version de Python dois-je utiliser ?**  
-R : Python 3.10 ou supérieur est recommandé. Les exemples utilisent la syntaxe moderne (type hints natifs comme `list[str]`, `dict[str, int]`, match/case, etc.). Python 3.13 ou 3.14 (la dernière version) est idéal pour bénéficier des dernières améliorations.
+R : Python 3.12 ou supérieur est requis (le projet cible `python = "^3.12"`). Les exemples utilisent la syntaxe moderne (type hints natifs comme `list[str]`, `dict[str, int]`, match/case, ainsi que l'alias `type` de la PEP 695 introduit en 3.12). Python 3.13 ou 3.14 (la dernière version) est idéal pour bénéficier des dernières améliorations.
 
 ---
 
