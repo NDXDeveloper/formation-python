@@ -62,5 +62,5 @@ if __name__ == '__main__':
         totaux = list(executor.map(calcul_cpu, nombres))
     duree = time.perf_counter() - debut
     print(f"Sommes des carres : {len(totaux)} resultats calcules")
-    print(f"Pour passer des threads aux processus : ThreadPoolExecutor -> ProcessPoolExecutor")
+    print("Pour passer des threads aux processus : ThreadPoolExecutor -> ProcessPoolExecutor")
     print(f"Calcul parallele en {duree:.3f}s")

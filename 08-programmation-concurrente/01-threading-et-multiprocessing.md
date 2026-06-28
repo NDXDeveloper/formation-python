@@ -521,6 +521,7 @@ En threading, utilisez toujours des verrous pour les variables partagées :
 lock = threading.Lock()
 
 def modifier_variable_partagee():
+    global variable_globale
     with lock:
         # Modification sécurisée
         variable_globale += 1
@@ -536,7 +537,7 @@ import threading
 def fonction_avec_erreur():
     try:
         # Code qui peut échouer
-        resultat = 1 / 0
+        1 / 0
     except Exception as e:
         print(f"Erreur dans le thread: {e}")
 

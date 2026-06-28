@@ -36,6 +36,7 @@ class WebScraperSystem:
     """Systeme de scraping combinant plusieurs patterns"""
 
     def __init__(self, max_concurrent=5, rate_limit=10):
+        self.max_concurrent = max_concurrent
         self.semaphore = asyncio.Semaphore(max_concurrent)
         self.rate_limiter = RateLimiter(rate_limit, period=1.0)
         self.resultats = []
@@ -99,7 +100,7 @@ class WebScraperSystem:
         Pattern: Fan-Out/Fan-In + Worker Pool
         """
         print(f"Demarrage du scraping de {len(urls)} URLs")
-        print(f"Config: max {self.semaphore._value} concurrent, rate limit {self.rate_limiter.max_calls}/s\n")
+        print(f"Config: max {self.max_concurrent} concurrent, rate limit {self.rate_limiter.max_calls}/s\n")
 
         debut = time.perf_counter()
 
@@ -140,7 +141,7 @@ class WebScraperSystem:
 
         print(f"  Total de mots: {len(tous_les_mots)}")
         print(f"  Mots uniques: {len(compteur)}")
-        print(f"  Top 5 mots:")
+        print("  Top 5 mots:")
         for mot, count in compteur.most_common(5):
             print(f"    - {mot}: {count} fois")
 
@@ -152,7 +153,7 @@ async def main():
 
     scraper = WebScraperSystem(max_concurrent=5, rate_limit=10)
 
-    resultats = await scraper.scraper_urls(urls)
+    await scraper.scraper_urls(urls)
 
     scraper.analyser_resultats()
 

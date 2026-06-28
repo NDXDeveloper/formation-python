@@ -82,7 +82,7 @@ class GestionnaireTelechargement:
         duree_totale = time.perf_counter() - debut_total
 
         print("-" * 50)
-        print(f"\nStatistiques:")
+        print("\nStatistiques:")
         print(f"  Total: {self.statistiques['total']}")
         print(f"  Réussis: {self.statistiques['reussis']}")
         print(f"  Échoués: {self.statistiques['echoues']}")

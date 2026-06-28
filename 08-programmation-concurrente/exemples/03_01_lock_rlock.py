@@ -7,7 +7,6 @@
 
 import threading
 import asyncio
-import time
 
 # ==========================================
 # 1. Race condition (sans Lock)

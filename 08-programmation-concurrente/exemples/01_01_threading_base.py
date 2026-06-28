@@ -87,7 +87,7 @@ print("\n=== Gestion des exceptions ===")
 
 def fonction_avec_erreur():
     try:
-        resultat = 1 / 0
+        1 / 0  # déclenche une ZeroDivisionError
     except Exception as e:
         print(f"  Erreur dans le thread: {e}")
 

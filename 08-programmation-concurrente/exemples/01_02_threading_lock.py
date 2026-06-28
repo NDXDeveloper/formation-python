@@ -31,7 +31,7 @@ for thread in threads:
     thread.join()
 
 print(f"Valeur finale du compteur (avec lock): {compteur}")
-print(f"  Attendu: 500000")
+print("  Attendu: 500000")
 print(f"  Correct: {compteur == 500000}")
 
 # ==========================================
@@ -56,7 +56,7 @@ for thread in threads:
     thread.join()
 
 print(f"Valeur finale du compteur (sans lock): {compteur_sans_lock}")
-print(f"  Attendu: 500000")
+print("  Attendu: 500000")
 print(f"  Correct: {compteur_sans_lock == 500000}")
 if compteur_sans_lock != 500000:
     print(f"  Erreur de {500000 - compteur_sans_lock} incréments perdus (race condition)")

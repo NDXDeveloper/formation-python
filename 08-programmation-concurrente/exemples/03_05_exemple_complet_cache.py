@@ -92,7 +92,7 @@ duree = time.perf_counter() - debut
 
 stats = cache.get_stats()
 total_ops = stats['hits'] + stats['misses']
-print(f"\nStatistiques finales:")
+print("\nStatistiques finales:")
 print(f"  Hits: {stats['hits']}")
 print(f"  Misses: {stats['misses']}")
 print(f"  Expirations: {stats['expirations']}")

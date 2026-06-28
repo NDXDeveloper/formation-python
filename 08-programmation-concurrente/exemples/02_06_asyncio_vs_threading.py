@@ -68,9 +68,9 @@ async def main():
 
     # Vérifier que les résultats sont identiques
     print(f"\n  Résultats identiques: {r_thread == list(r_async)}")
-    print(f"\n  Avantages d'asyncio :")
-    print(f"  - Moins de mémoire (pas de stack par tâche)")
-    print(f"  - Plus scalable (milliers de connexions)")
-    print(f"  - Code plus lisible avec async/await")
+    print("\n  Avantages d'asyncio :")
+    print("  - Moins de mémoire (pas de stack par tâche)")
+    print("  - Plus scalable (milliers de connexions)")
+    print("  - Code plus lisible avec async/await")
 
 asyncio.run(main())

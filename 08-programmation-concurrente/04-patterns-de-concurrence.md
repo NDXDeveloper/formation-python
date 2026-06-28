@@ -674,25 +674,26 @@ def reduce_function(resultats):
     """Phase Reduce: Somme tous les carrés"""
     return sum(resultats)
 
-# Données
-nombres = list(range(1, 101))
+if __name__ == '__main__':       # requis pour ProcessPoolExecutor (voir 8.1)
+    # Données
+    nombres = list(range(1, 101))
 
-# Phase Map (parallèle)
-with ProcessPoolExecutor() as executor:
+    # Phase Map (parallèle)
+    with ProcessPoolExecutor() as executor:
+        debut = time.perf_counter()
+        carres = list(executor.map(map_function, nombres))
+        duree_map = time.perf_counter() - debut
+
+    # Phase Reduce
     debut = time.perf_counter()
-    carres = list(executor.map(map_function, nombres))
-    duree_map = time.perf_counter() - debut
+    total = reduce_function(carres)
+    duree_reduce = time.perf_counter() - debut
 
-# Phase Reduce
-debut = time.perf_counter()  
-total = reduce_function(carres)  
-duree_reduce = time.perf_counter() - debut  
-
-print(f"📊 Map-Reduce:")  
-print(f"  • Nombres: 1-100")  
-print(f"  • Somme des carrés: {total}")  
-print(f"  • Temps Map: {duree_map:.3f}s")  
-print(f"  • Temps Reduce: {duree_reduce:.3f}s")  
+    print("📊 Map-Reduce:")
+    print("  • Nombres: 1-100")
+    print(f"  • Somme des carrés: {total}")
+    print(f"  • Temps Map: {duree_map:.3f}s")
+    print(f"  • Temps Reduce: {duree_reduce:.3f}s")
 ```
 
 ### Exemple avancé : Analyse de texte
@@ -714,26 +715,27 @@ def fusionner_compteurs(compteurs):
         resultat.update(compteur)
     return resultat
 
-# Données: plusieurs documents
-documents = [
-    "Python est un langage de programmation. Python est facile.",
-    "La programmation est amusante. Python est populaire.",
-    "Le langage Python est utilisé en science des données.",
-    "Python est un excellent langage pour débuter.",
-]
+if __name__ == '__main__':       # requis pour ProcessPoolExecutor (voir 8.1)
+    # Données: plusieurs documents
+    documents = [
+        "Python est un langage de programmation. Python est facile.",
+        "La programmation est amusante. Python est populaire.",
+        "Le langage Python est utilisé en science des données.",
+        "Python est un excellent langage pour débuter.",
+    ]
 
-# Phase Map: Compter les mots de chaque document en parallèle
-with ProcessPoolExecutor() as executor:
-    compteurs = list(executor.map(compter_mots, documents))
+    # Phase Map: Compter les mots de chaque document en parallèle
+    with ProcessPoolExecutor() as executor:
+        compteurs = list(executor.map(compter_mots, documents))
 
-# Phase Reduce: Fusionner tous les compteurs
-compteur_total = fusionner_compteurs(compteurs)
+    # Phase Reduce: Fusionner tous les compteurs
+    compteur_total = fusionner_compteurs(compteurs)
 
-# Afficher les 5 mots les plus fréquents
-print("📊 Analyse Map-Reduce:")  
-print("\nTop 5 des mots les plus fréquents:")  
-for mot, compte in compteur_total.most_common(5):  
-    print(f"  • {mot}: {compte} fois")
+    # Afficher les 5 mots les plus fréquents
+    print("📊 Analyse Map-Reduce:")
+    print("\nTop 5 des mots les plus fréquents:")
+    for mot, compte in compteur_total.most_common(5):
+        print(f"  • {mot}: {compte} fois")
 ```
 
 ---
@@ -932,6 +934,8 @@ async def main():
 asyncio.run(main())
 ```
 
+> 📝 **`asyncio.wait()` vs `gather()`.** Là où `gather()` attend **toutes** les coroutines et renvoie leurs résultats, `asyncio.wait()` prend des **tâches** et rend la main selon `return_when` — ici **`FIRST_COMPLETED`**, donc dès que **la première** se termine. Il renvoie deux ensembles `(done, pending)` : les tâches finies et celles encore en cours (qu'on annule ensuite avec `.cancel()`). Autre différence : `asyncio.wait()` ne **propage pas** les exceptions (on les lit via `tache.result()`).
+
 ---
 
 ## Pattern 9 : Rate Limiting (Limitation de débit)
@@ -1093,6 +1097,7 @@ class WebScraperSystem:
     """Système de scraping combinant plusieurs patterns"""
 
     def __init__(self, max_concurrent=5, rate_limit=10):
+        self.max_concurrent = max_concurrent
         self.semaphore = asyncio.Semaphore(max_concurrent)
         self.rate_limiter = RateLimiter(rate_limit, period=1.0)
         self.resultats = []
@@ -1158,7 +1163,7 @@ class WebScraperSystem:
         Pattern: Fan-Out/Fan-In + Worker Pool
         """
         print(f"🚀 Démarrage du scraping de {len(urls)} URLs")
-        print(f"📊 Config: max {self.semaphore._value} concurrent, rate limit {self.rate_limiter.max_calls}/s\n")
+        print(f"📊 Config: max {self.max_concurrent} concurrent, rate limit {self.rate_limiter.max_calls}/s\n")
 
         debut = time.perf_counter()
 
@@ -1234,7 +1239,7 @@ async def main():
     scraper = WebScraperSystem(max_concurrent=5, rate_limit=10)
 
     # Lancer le scraping
-    resultats = await scraper.scraper_urls(urls)
+    await scraper.scraper_urls(urls)
 
     # Analyser les résultats
     scraper.analyser_resultats()

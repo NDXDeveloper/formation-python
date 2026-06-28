@@ -98,6 +98,6 @@ async def demo_token_bucket():
     bucket = TokenBucket(rate=5.0, capacity=5)
     taches = [tache_limitee(i, bucket) for i in range(12)]
     await asyncio.gather(*taches)
-    print(f"\n12 taches executees avec Token Bucket")
+    print("\n12 taches executees avec Token Bucket")
 
 asyncio.run(demo_token_bucket())

@@ -218,6 +218,8 @@ async def main():
 asyncio.run(main())
 ```
 
+> 📝 **Ce verrou est-il vraiment nécessaire ici ?** En réalité **non**, et c'est une différence fondamentale avec le threading. En asyncio, **une seule tâche s'exécute à la fois** : une coroutine ne peut être interrompue qu'à un point `await`. Comme `compteur += 1` ne contient **aucun** `await`, il s'exécute d'un seul tenant — pas de race condition, donc pas besoin de verrou ici. `asyncio.Lock` devient indispensable seulement quand la section critique contient un `await` (typiquement : lire une valeur, `await` une opération, puis réécrire — une autre tâche peut s'intercaler pendant l'`await`). L'exemple ci-dessus illustre donc surtout la *syntaxe* `async with`.
+
 ---
 
 ## RLock (Verrou Réentrant)
@@ -619,6 +621,8 @@ cons2.join()
 
 print("✅ Production/consommation terminée")
 ```
+
+> 📝 **Pourquoi `while` et non `if` avant `wait()` ?** Quand `wait()` rend la main, rien ne garantit que la condition attendue soit *encore* vraie : un autre thread réveillé en même temps a pu reprendre l'unique item disponible avant vous, ou un « réveil spurieux » a pu se produire. En re-testant la condition **en boucle** (`while`), on ne progresse que si elle est réellement satisfaite ; avec un simple `if`, on risquerait d'agir sur un buffer vide (ou plein). C'est la règle d'or des variables de condition : **toujours attendre dans une boucle**.
 
 ### Méthodes de Condition
 

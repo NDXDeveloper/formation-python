@@ -82,7 +82,7 @@ class BufferPartage:
     def produire(self, item):
         with self.condition:
             while len(self.buffer) >= self.taille_max:
-                print(f"  Buffer plein, producteur attend...")
+                print("  Buffer plein, producteur attend...")
                 self.condition.wait()
 
             self.buffer.append(item)
@@ -92,7 +92,7 @@ class BufferPartage:
     def consommer(self):
         with self.condition:
             while len(self.buffer) == 0:
-                print(f"  Buffer vide, consommateur attend...")
+                print("  Buffer vide, consommateur attend...")
                 self.condition.wait()
 
             item = self.buffer.pop(0)

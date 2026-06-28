@@ -59,8 +59,8 @@ if __name__ == '__main__':
     total = reduce_function(carres)
     duree_reduce = time.perf_counter() - debut
 
-    print(f"Map-Reduce:")
-    print(f"  Nombres: 1-100")
+    print("Map-Reduce:")
+    print("  Nombres: 1-100")
     print(f"  Somme des carres: {total}")
     print(f"  Temps Map: {duree_map:.3f}s")
     print(f"  Temps Reduce: {duree_reduce:.3f}s")

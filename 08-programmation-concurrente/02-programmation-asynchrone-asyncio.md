@@ -192,6 +192,8 @@ asyncio.run(main())
 
 **Magie** : Les 3 cafés sont préparés en 2 secondes au lieu de 6 ! Ils se préparent en parallèle.
 
+> 📝 **Pourquoi 2 secondes et non 6 ?** Au premier `await asyncio.sleep(2)` (celui d'Alice), la coroutine rend la main à l'event loop **sans bloquer** ; celui-ci en profite pour démarrer les tâches de Bob puis de Charlie, qui se mettent à leur tour en attente. Les trois `sleep(2)` s'écoulent donc **en même temps**, et au bout de 2 s les trois tâches reprennent. C'est tout l'intérêt d'`await` : pendant qu'une tâche attend, les autres avancent. (Avec `time.sleep(2)` à la place, l'event loop resterait bloqué et on retomberait à 6 s — voir « ne jamais bloquer l'event loop » plus bas.)
+
 ---
 
 ## asyncio.gather() - Attendre plusieurs coroutines
@@ -665,6 +667,8 @@ async def main():
 asyncio.run(main())
 ```
 
+> 📝 **`task_done()` et `queue.join()`.** Une `asyncio.Queue` (comme une `queue.Queue`) tient un **compteur** d'items non terminés : chaque `put()` l'incrémente, et chaque **`task_done()`** — appelé par le consommateur après avoir traité un item — le décrémente. **`await queue.join()`** bloque tant que ce compteur n'est pas revenu à zéro : c'est ainsi qu'on attend que **tout** ce qui a été produit ait réellement été traité, sans compter les items soi-même. (Ces méthodes sont détaillées en 8.3.)
+
 ### Pattern 2 : Limiter le nombre de tâches concurrentes
 
 ```python
@@ -874,7 +878,7 @@ async def utiliser_plusieurs_ressources():
 ### 5. Attention aux listes de compréhension
 
 ```python
-# ❌ Mauvais - crée les tâches mais ne les exécute pas en parallèle
+# ❌ Mauvais - exécute les coroutines une par une (séquentiel, pas en parallèle)
 async def mauvais():
     resultats = [await ma_coroutine(i) for i in range(10)]
 
