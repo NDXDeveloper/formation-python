@@ -44,7 +44,7 @@ Ce glossaire rassemble les **termes essentiels** rencontrés tout au long de la 
 
 **Conteneur (Docker)** — Unité logicielle isolée empaquetant une application et ses dépendances, exécutable à l'identique partout. *(ch. 12.5)*
 
-**Copy-on-Write (CoW)** — Stratégie (activée par défaut depuis pandas 3.0) où une copie n'est réellement effectuée qu'au moment d'une modification, ce qui rend l'assignation chaînée silencieusement inopérante. *(ch. 13.2)*
+**Copy-on-Write (CoW)** — Stratégie (activée par défaut depuis pandas 3.0) où une copie n'est réellement effectuée qu'au moment d'une modification, ce qui rend l'assignation chaînée inopérante (pandas émet alors un avertissement `ChainedAssignmentError`). *(ch. 13.2)*
 
 **Couverture de code (*coverage*)** — Pourcentage du code réellement exécuté par les tests, mesuré avec `pytest-cov`/`coverage`. *(ch. 10.3)*
 
@@ -72,6 +72,8 @@ Ce glossaire rassemble les **termes essentiels** rencontrés tout au long de la 
 
 **Exception** — Objet signalant une erreur ou un événement particulier, propagé jusqu'à un bloc `try/except` qui le gère. *(ch. 1.5, 9)*
 
+**Expression régulière (*regex*)** — Motif décrivant un ensemble de chaînes, utilisé pour rechercher, valider ou remplacer du texte via le module `re` (ex. `\d+` = une suite de chiffres). *(ch. 2.4)*
+
 ---
 
 ## F
@@ -88,7 +90,7 @@ Ce glossaire rassemble les **termes essentiels** rencontrés tout au long de la 
 
 **Générateur** — Fonction utilisant `yield` pour produire des valeurs à la demande (*lazy*), économisant la mémoire. *(ch. 5.4, 12.4)*
 
-**GIL (*Global Interpreter Lock*)** — Verrou de CPython n'autorisant qu'un seul thread à exécuter du bytecode Python à la fois ; il limite le parallélisme CPU des threads (contourné par `multiprocessing`, et par le mode *free-threading* expérimental depuis Python 3.13). *(ch. 8.1, 12.4)*
+**GIL (*Global Interpreter Lock*)** — Verrou de CPython n'autorisant qu'un seul thread à exécuter du bytecode Python à la fois. Il **simplifie la gestion mémoire interne** (le comptage de références, non *thread-safe*) mais limite en contrepartie le parallélisme CPU des threads (contourné par `multiprocessing`, et par le mode *free-threading* expérimental depuis Python 3.13). *(ch. 8.1, 12.4)*
 
 ---
 
@@ -120,6 +122,8 @@ Ce glossaire rassemble les **termes essentiels** rencontrés tout au long de la 
 
 **Méthode de classe / statique** — `@classmethod` reçoit la classe (`cls`) ; `@staticmethod` ne reçoit ni `self` ni `cls` (fonction rangée dans la classe). *(ch. 3.4)*
 
+**Méthode spéciale (*dunder*)** — Méthode au nom encadré de doubles tirets bas (`__init__`, `__str__`, `__eq__`, `__enter__`, `__iter__`…) appelée *automatiquement* par Python pour une opération donnée (création, affichage via `str()`, comparaison `==`, bloc `with`, boucle `for`…). Elles permettent à vos objets de se comporter comme des types natifs. *(ch. 3.3)*
+
 **Mocking** — Remplacement d'une dépendance par un objet simulé (`unittest.mock`) pour isoler le code testé. *(ch. 10.2)*
 
 **Module / Package** — Un *module* est un fichier `.py` ; un *package* est un dossier de modules (avec `__init__.py`). *(ch. 6)*
@@ -143,6 +147,8 @@ Ce glossaire rassemble les **termes essentiels** rencontrés tout au long de la 
 ## P
 
 **Paramètres variadiques (`*args` / `**kwargs`)** — `*args` collecte les arguments positionnels supplémentaires (en tuple), `**kwargs` les arguments nommés (en dict). *(ch. 1.4)*
+
+**Patron de conception (*design pattern*)** — Solution réutilisable et éprouvée à un problème de conception récurrent (Singleton, Factory, Observer, Strategy…). *(ch. 12.3)*
 
 **PEP (*Python Enhancement Proposal*)** — Document de proposition d'évolution de Python (voir [Annexe B](02-pep-et-standards.md)). *(transversal)*
 
@@ -177,6 +183,8 @@ Ce glossaire rassemble les **termes essentiels** rencontrés tout au long de la 
 ## T
 
 **Thread / Processus** — Un *thread* partage la mémoire de son processus (idéal pour l'E/S) ; un *processus* a sa propre mémoire (idéal pour le CPU). *(ch. 8.1)*
+
+**Traceback (*trace d'appels*)** — Rapport affiché lorsqu'une exception n'est pas interceptée : il liste la suite des appels de fonctions ayant mené à l'erreur (à lire de bas en haut, l'erreur réelle se trouvant en dernier). *(ch. 9.1, 9.3)*
 
 **Tuple nommé (*namedtuple*)** — Tuple dont les champs sont accessibles par nom. *(ch. 2.3)*
 

@@ -255,7 +255,7 @@ df.merge(autre, on="id")   # jointure type SQL
 df.sort_values("col", ascending=False)   # tri
 ```
 
-> ⚠️ **pandas 3.0+** : l'assignation chaînée avec `inplace=True` ne fonctionne plus (Copy-on-Write). Préférez **la réassignation** : `df["c"] = df["c"].fillna(0)`.
+> ⚠️ **pandas 3.0+ (Copy-on-Write)** : l'**assignation chaînée** (`df[cond]["c"] = ...` ou `df["c"].fillna(0, inplace=True)`) est désormais **sans effet** et déclenche un avertissement `ChainedAssignmentError`. Préférez la **réassignation** (`df["c"] = df["c"].fillna(0)`) ou `.loc` en une seule indexation (`df.loc[cond, "c"] = ...`). À noter : `inplace=True` reste valide sur un DataFrame entier (`df.fillna(0, inplace=True)`).
 
 ---
 
