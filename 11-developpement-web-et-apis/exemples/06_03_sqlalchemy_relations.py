@@ -457,7 +457,7 @@ print(f"  Sophie inscrite a {len(sophie.cours)} cours (apres retrait Physique)")
 
 # Verification d'appartenance
 if cours2 in etudiant2.cours:
-    print(f"  Lucas est inscrit au cours de Python")
+    print("  Lucas est inscrit au cours de Python")
 
 session.close()
 
@@ -578,7 +578,7 @@ insc = InscriptionNote(
 session.add_all([etudiant_v2, cours_v2, insc])
 session.commit()
 
-print(f"\n  Inscription creee:")
+print("\n  Inscription creee:")
 for i in etudiant_v2.inscriptions:
     print(f"    {etudiant_v2.prenom} a eu {i.note}/20 en {i.cours.intitule}")
     print(f"    Date: {i.date_inscription}, Statut: {i.statut}")
@@ -616,14 +616,14 @@ session.commit()
 
 print(f"\n  === {bibli.nom} ===")
 print(f"  Nombre de livres : {len(bibli.livres)}")
-print(f"\n  Livres de Victor Hugo :")
+print("\n  Livres de Victor Hugo :")
 for livre in hugo.livres:
     print(f"    - {livre.titre}")
 
 print(f"\n  Emprunts de {membre.nom} :")
 for emp in membre.emprunts:
     print(f"    Date : {emp.date_emprunt}")
-    print(f"    Livres empruntes :")
+    print("    Livres empruntes :")
     for livre in emp.livres:
         print(f"      - {livre.titre} par {livre.auteur.nom}")
 

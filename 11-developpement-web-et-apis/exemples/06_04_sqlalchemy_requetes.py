@@ -245,7 +245,7 @@ print("=" * 50)
 
 # Tri croissant par titre
 livres_tri = session.query(Livre).order_by(Livre.titre).all()
-print(f"\n  Tri par titre (croissant) :")
+print("\n  Tri par titre (croissant) :")
 for l in livres_tri[:3]:
     print(f"    {l.titre}")
 print(f"    ... ({len(livres_tri)} au total)")
@@ -255,7 +255,7 @@ livres_tri_desc = session.query(Livre)\
     .filter(Livre.prix.is_not(None))\
     .order_by(Livre.prix.desc())\
     .all()
-print(f"\n  Tri par prix (decroissant) :")
+print("\n  Tri par prix (decroissant) :")
 for l in livres_tri_desc[:3]:
     print(f"    {l.titre} - {l.prix} EUR")
 
@@ -263,7 +263,7 @@ for l in livres_tri_desc[:3]:
 auteurs_tri = session.query(Auteur)\
     .order_by(Auteur.nationalite, Auteur.nom)\
     .all()
-print(f"\n  Tri par nationalite puis nom :")
+print("\n  Tri par nationalite puis nom :")
 for a in auteurs_tri:
     print(f"    {a.nom} ({a.nationalite})")
 
@@ -311,7 +311,7 @@ resultats = session.query(Livre.titre, Livre.prix)\
     .order_by(Livre.prix)\
     .limit(4)\
     .all()
-print(f"\n  Titre et prix (top 4 moins chers) :")
+print("\n  Titre et prix (top 4 moins chers) :")
 for titre, prix in resultats:
     print(f"    {titre} : {prix} EUR")
 
@@ -320,7 +320,7 @@ resultats_join = session.query(Livre.titre, Auteur.nom)\
     .join(Auteur)\
     .limit(5)\
     .all()
-print(f"\n  Titre + Auteur (via JOIN) :")
+print("\n  Titre + Auteur (via JOIN) :")
 for titre_livre, nom_auteur in resultats_join:
     print(f"    {titre_livre} par {nom_auteur}")
 
@@ -329,7 +329,7 @@ resultats_label = session.query(
     Livre.titre.label('titre_livre'),
     Auteur.nom.label('nom_auteur')
 ).join(Auteur).limit(3).all()
-print(f"\n  Avec labels :")
+print("\n  Avec labels :")
 for row in resultats_label:
     print(f"    {row.titre_livre} par {row.nom_auteur}")
 
@@ -397,7 +397,7 @@ prix_max = session.query(func.max(Livre.prix)).scalar()
 print(f"  MIN(prix) : {prix_min} EUR, MAX(prix) : {prix_max} EUR")
 
 # GROUP BY
-print(f"\n  GROUP BY auteur :")
+print("\n  GROUP BY auteur :")
 resultats_group = session.query(
     Auteur.nom,
     func.count(Livre.id).label('nombre_livres')
@@ -409,7 +409,7 @@ for nom, nb in resultats_group:
     print(f"    {nom} a ecrit {nb} livre(s)")
 
 # HAVING
-print(f"\n  HAVING count > 2 :")
+print("\n  HAVING count > 2 :")
 auteurs_prolif = session.query(
     Auteur.nom,
     func.count(Livre.id).label('nombre_livres')
@@ -458,7 +458,7 @@ auteurs_avec_compte = session.query(
     Auteur.nom,
     livre_subq.label('nb_livres')
 ).all()
-print(f"\n  Sous-requete correlee (auteur + nb livres) :")
+print("\n  Sous-requete correlee (auteur + nb livres) :")
 for nom, nb in auteurs_avec_compte:
     print(f"    {nom} : {nb} livre(s)")
 
@@ -474,7 +474,7 @@ resultat = session.execute(
     text("SELECT titre, prix FROM livres WHERE prix > :prix ORDER BY prix DESC"),
     {"prix": 20}
 )
-print(f"\n  SQL brut (prix > 20) :")
+print("\n  SQL brut (prix > 20) :")
 for row in resultat:
     print(f"    {row[0]} - {row[1]} EUR")
 
@@ -482,7 +482,7 @@ resultat2 = session.execute(
     text("SELECT titre, annee_publication FROM livres WHERE annee_publication > :annee"),
     {"annee": 2000}
 )
-print(f"\n  SQL brut (annee > 2000) :")
+print("\n  SQL brut (annee > 2000) :")
 for row in resultat2:
     print(f"    {row[0]} ({row[1]})")
 
@@ -584,27 +584,27 @@ def rechercher_livres(
 
 
 # Recherche 1 : livres francais
-print(f"\n  Recherche : auteurs francais, tri par annee desc")
+print("\n  Recherche : auteurs francais, tri par annee desc")
 res = rechercher_livres(nationalite="Francaise", tri_par='annee', ordre='desc')
 print(f"  Trouve {res['total']} livre(s), page {res['page']}/{res['total_pages']}")
 for l in res['livres']:
     print(f"    {l.titre} ({l.annee_publication}) - {l.prix} EUR")
 
 # Recherche 2 : Python
-print(f"\n  Recherche : titre contient 'Python'")
+print("\n  Recherche : titre contient 'Python'")
 res2 = rechercher_livres(titre='Python', tri_par='annee', ordre='desc')
 print(f"  Trouve {res2['total']} livre(s)")
 for l in res2['livres']:
     print(f"    {l.titre} ({l.annee_publication}) - {l.prix} EUR")
 
 # Recherche 3 : prix max 12, pagination
-print(f"\n  Recherche : prix <= 12, page 1, 2 par page")
+print("\n  Recherche : prix <= 12, page 1, 2 par page")
 res3 = rechercher_livres(prix_max=12, par_page=2, page=1, tri_par='prix')
 print(f"  Trouve {res3['total']} livre(s), page {res3['page']}/{res3['total_pages']}")
 for l in res3['livres']:
     print(f"    {l.titre} - {l.prix} EUR")
 
-print(f"\n  Page 2 :")
+print("\n  Page 2 :")
 res4 = rechercher_livres(prix_max=12, par_page=2, page=2, tri_par='prix')
 print(f"  page {res4['page']}/{res4['total_pages']}")
 for l in res4['livres']:

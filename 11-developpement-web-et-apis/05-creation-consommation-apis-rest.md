@@ -379,6 +379,28 @@ def get_db():
 
 > **Important** : ne confondez pas les **modèles SQLAlchemy** (`User`, `Article`, `Commentaire` ci-dessus — les *tables* de la base) et les **modèles Pydantic** (`Utilisateur`, `Article`… définis dans `models.py` — la *validation* et la *sérialisation* des requêtes/réponses). Ils portent des noms voisins mais vivent dans des modules différents. FastAPI fait le pont entre les deux grâce à `from_attributes=True` (côté Pydantic), qui permet de renvoyer directement un objet SQLAlchemy comme `response_model`.
 
+### Le système de dépendances (`Depends`)
+
+Dans l'application ci-dessous, chaque endpoint reçoit un paramètre `db: Session = Depends(get_db)`. C'est le **système de dépendances** de FastAPI, l'un de ses mécanismes les plus puissants — il mérite qu'on s'y arrête avant d'aller plus loin.
+
+Une **dépendance** est une fonction dont FastAPI **exécute le résultat à votre place** avant d'appeler votre endpoint, puis **injecte** ce résultat dans le paramètre correspondant. Concrètement, à chaque requête sur un endpoint qui déclare `db: Session = Depends(get_db)` :
+
+1. FastAPI **appelle `get_db()`** ;
+2. il récupère la valeur **fournie par `yield`** (ici, la session SQLAlchemy) ;
+3. il la passe à votre fonction via le paramètre `db` ;
+4. une fois la réponse renvoyée, il **reprend `get_db()` après le `yield`** pour exécuter le nettoyage (`finally: db.close()`).
+
+Le `yield` (plutôt qu'un simple `return`) est la clé : ce qui le précède est du **code de préparation** (ouvrir la session), ce qui le suit est du **code de nettoyage** (fermer la session), garanti même si l'endpoint lève une exception — exactement comme un gestionnaire de contexte (`with`).
+
+**Pourquoi est-ce si utile ?**
+- **Pas de répétition** : la logique « ouvrir puis fermer une session » est écrite **une seule fois** dans `get_db`, et réutilisée par tous les endpoints.
+- **Testabilité** : on peut remplacer une dépendance dans les tests via `app.dependency_overrides[get_db] = ...` (par exemple pour brancher une base de test).
+- **Composable** : une dépendance peut elle-même dépendre d'autres dépendances (authentification, autorisations, pagination…). C'est ainsi qu'est construit `verifier_token`, plus loin dans ce chapitre, qui sert à protéger des endpoints.
+
+> **Au passage**, deux autres paramètres apparaissent dans le décorateur `@app.post(...)` :  
+> - `status_code=status.HTTP_201_CREATED` : fixe le code de statut renvoyé en cas de succès. L'objet `status` (importé de `fastapi`) n'est qu'un ensemble de **constantes lisibles** — `status.HTTP_201_CREATED` vaut simplement `201`.  
+> - `tags=["Utilisateurs"]` : **regroupe** les endpoints par thème dans la documentation interactive `/docs`, pour s'y retrouver plus facilement.
+
 ### Application principale (main.py)
 
 ```python
@@ -1211,12 +1233,14 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Ou ["*"] pour tout autoriser (développement uniquement)
+    allow_origins=origins,  # listez explicitement les origines — pas "*" (voir l'avertissement ci-dessous)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 ```
+
+> ⚠️ **Piège classique : `"*"` et identifiants ne font pas bon ménage.** La spécification CORS **interdit** de combiner `allow_origins=["*"]` (tout autoriser) avec `allow_credentials=True`. Si vous le faites, les navigateurs **rejettent** toute requête transportant des identifiants — cookies de session, ou en-tête `Authorization` (**donc votre token JWT !**). Votre frontend recevrait alors une erreur CORS dès qu'il tente de s'authentifier. Pour autoriser les requêtes authentifiées, vous **devez** lister les origines explicitement (comme `origins` ci-dessus) ; le joker `"*"` n'est acceptable que pour une API **publique, sans authentification**.
 
 ## Rate Limiting
 
@@ -1480,6 +1504,8 @@ class UtilisateurReponse(BaseModel):
 # Utilisez des tokens JWT sécurisés
 # Loggez les accès
 ```
+
+> 🔒 **Ne stockez jamais un mot de passe en clair.** Dans l'exemple `creer_utilisateur` plus haut, le mot de passe était enregistré tel quel (commentaire « À hasher ! ») — en production, c'est **dangereux** : une fuite de la base compromettrait immédiatement tous vos utilisateurs. On stocke donc un **hash** : une empreinte *irréversible* calculée avec un algorithme **lent et salé**, conçu pour les mots de passe — `bcrypt`, `argon2` ou `scrypt` (surtout pas un simple `md5`/`sha256`, bien trop rapides à forcer). En pratique, la bibliothèque `passlib` (`pip install "passlib[bcrypt]"`) fournit `CryptContext.hash(mot_de_passe)` à l'inscription et `CryptContext.verify(saisi, hash_stocké)` à la connexion. Le hash ainsi obtenu (60 caractères pour bcrypt) remplace `mot_de_passe` dans la table.
 
 ## Récapitulatif
 

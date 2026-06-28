@@ -2,7 +2,7 @@
 
 Ce dossier contient les exemples exécutables du chapitre 11, un fichier `.py` par thème, numérotés selon la section du cours (`01_*` → 11.1, `02_*` → 11.2, … `06_*` → 11.6).
 
-**Chaque fichier est autonome.** Les applications FastAPI et Flask se démontrent elles-mêmes via `TestClient` / `test_client` (aucun serveur à lancer manuellement) ; `04_01` démarre un petit serveur FastAPI local dans un thread pour illustrer `requests` sans dépendre d'Internet ; les exemples SQLAlchemy utilisent une base SQLite en mémoire ou temporaire. Sorties vérifiées avec FastAPI, Pydantic v2, SQLAlchemy 2.0, Flask et requests sur Python 3.12.
+**Chaque fichier est autonome.** Les applications FastAPI et Flask se démontrent elles-mêmes via `TestClient` / `test_client` (aucun serveur à lancer manuellement) ; `04_01` démarre un petit serveur FastAPI local dans un thread pour illustrer `requests` sans dépendre d'Internet ; les exemples SQLAlchemy utilisent une base SQLite en mémoire ou temporaire. Sorties vérifiées avec FastAPI, Pydantic v2, SQLAlchemy 2.0, Flask et requests ; tous les exemples s'exécutent de Python 3.10 à 3.14.
 
 ## Fichiers d'exemples
 

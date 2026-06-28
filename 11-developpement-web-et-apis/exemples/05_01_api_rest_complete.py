@@ -8,7 +8,7 @@
 
 """API REST complete pour un blog avec client de consommation."""
 
-from fastapi import FastAPI, HTTPException, Query, Path, status
+from fastapi import FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 from fastapi.testclient import TestClient

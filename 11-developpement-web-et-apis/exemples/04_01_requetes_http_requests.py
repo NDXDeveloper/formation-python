@@ -86,8 +86,6 @@ def slow_endpoint():
 
 @api.get("/echo-headers")
 def echo_headers(request_obj=None):
-    from starlette.requests import Request
-    from fastapi import Request as FRequest
     # Access via dependency
     return {"note": "headers echoes"}
 
@@ -178,7 +176,7 @@ if __name__ == "__main__":
     }
     response = requests.get(f"{BASE}/users", headers=headers)
     print(f"  Status: {response.status_code}")
-    print(f"  Request headers envoyes: User-Agent, Accept, X-Custom-Header")
+    print("  Request headers envoyes: User-Agent, Accept, X-Custom-Header")
 
     # === Session (partage headers/cookies) ===
     print("\n=== Session requests ===")

@@ -84,10 +84,10 @@ C'est tout ! Flask est installé et prêt à l'emploi. Le package est léger et 
 ### Vérifier l'installation
 
 ```bash
-python -c "import flask; print(flask.__version__)"
+pip show flask
 ```
 
-Vous devriez voir la version de Flask s'afficher (par exemple, 3.0.0).
+La version installée de Flask apparaîtra sur la ligne `Version:` (par exemple, `Version: 3.1.0`). On évite `flask.__version__`, **déprécié depuis Flask 3.1** (et retiré en 3.2) ; pour récupérer la version depuis du code Python, la méthode pérenne est `importlib.metadata.version("flask")`.
 
 ## Votre première application Flask
 

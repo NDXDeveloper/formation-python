@@ -46,9 +46,11 @@ FastAPI génère deux interfaces de documentation :
 - **Swagger UI** (accessible via `/docs`) - Interface moderne et interactive
 - **ReDoc** (accessible via `/redoc`) - Documentation alternative plus épurée
 
+> **Comment cette « magie » fonctionne-t-elle ?** FastAPI lit les **annotations de type** de vos routes et de vos modèles Pydantic, et en déduit un document **OpenAPI** : un fichier JSON standard (servi sur `/openapi.json`) qui décrit toute votre API — chemins, paramètres, formats d'entrée/sortie, codes d'erreur. Ce document unique alimente ensuite les deux interfaces `/docs` (Swagger UI) et `/redoc`, qui ne sont que des **visualiseurs** de ce schéma. Vous n'écrivez donc jamais la documentation : elle est *déduite* de vos types. Changez une annotation, et la doc se met à jour instantanément.
+
 ### 4. Type hints Python natifs
 
-FastAPI exploite pleinement les **annotations de type** Python (type hints) introduites dans Python 3.6+. Cela signifie que vous utilisez la syntaxe Python standard, et FastAPI fait le reste :
+FastAPI exploite pleinement les **annotations de type** Python (type hints) standardisées par la PEP 484 (Python 3.5). Cela signifie que vous utilisez la syntaxe Python standard, et FastAPI fait le reste :
 
 ```python
 @app.get("/items/{item_id}")
@@ -104,7 +106,7 @@ Si vous avez déjà de l'expérience, FastAPI offre :
 - ⚡ **Performances de production** : Prêt pour des applications à haute charge
 - 🔧 **Flexibilité** : Architecture modulaire et extensible
 - 🛡️ **Sécurité** : Mécanismes de sécurité intégrés
-- 📊 **Type safety** : Détection des erreurs à la compilation
+- 📊 **Type safety** : Détection des erreurs en amont, *avant* l'exécution (analyse statique des types, par exemple avec mypy) — Python n'a pas de phase de compilation au sens de C ou Java
 - 🔄 **Async/await** : Support complet de la programmation asynchrone
 
 ### Pour les projets professionnels
@@ -309,7 +311,7 @@ FastAPI est idéal comme backend pour applications iOS/Android :
 ### Popularité croissante
 
 FastAPI a connu une croissance explosive depuis sa sortie :
-- ⭐ Plus de 70 000 étoiles sur GitHub
+- ⭐ Près de 100 000 étoiles sur GitHub (il rivalise désormais avec Django, le framework historique)
 - 📈 Adoption rapide par les entreprises
 - 📚 Documentation traduite en plusieurs langues
 - 🎓 Nombreux tutoriels et cours

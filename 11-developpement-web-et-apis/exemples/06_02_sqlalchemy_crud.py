@@ -95,7 +95,7 @@ with get_session() as session:
     ]
     session.add_all(produits)
 
-print(f"  3 produits crees")
+print("  3 produits crees")
 
 
 # === READ ===
@@ -172,7 +172,7 @@ try:
         session.add(User(nom="Test2", email="test@example.com", age=25))
 except Exception as e:
     print(f"  Erreur capturee: {type(e).__name__}")
-    print(f"  Transaction annulee (rollback automatique)")
+    print("  Transaction annulee (rollback automatique)")
 
 with get_session() as session:
     test_user = session.query(User).filter(User.nom == "Test").first()

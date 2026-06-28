@@ -617,6 +617,8 @@ response3 = session.get('https://api.example.com/comments')
 2. **Persistance des cookies** : Maintient automatiquement les cookies
 3. **Configuration partagée** : Headers, auth, etc. définis une fois
 
+> **Pourquoi est-ce « plus rapide » ?** Sans session, chaque appel à `requests.get(...)` ouvre une **nouvelle connexion** TCP (et, en HTTPS, refait toute la poignée de main TLS), puis la referme — un coût non négligeable, surtout répété. Une `Session` garde la connexion **ouverte** et la **réutilise** pour les requêtes suivantes vers le même hôte (mécanisme *keep-alive*, ou *connection pooling*). Sur une série d'appels à la même API, le gain de temps est très net.
+
 ### Exemple complet avec session
 
 ```python
