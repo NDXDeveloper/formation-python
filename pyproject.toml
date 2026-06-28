@@ -13,8 +13,8 @@ keywords = ["python", "formation", "tutorial", "fastapi", "data-science"]
 python = "^3.12"
 
 # Web Frameworks
-fastapi = {version = "^0.109.0", optional = true}
-uvicorn = {extras = ["standard"], version = "^0.27.0", optional = true}
+fastapi = {version = ">=0.109.0", optional = true}
+uvicorn = {extras = ["standard"], version = ">=0.27.0", optional = true}
 flask = {version = "^3.0.0", optional = true}
 requests = {version = "^2.31.0", optional = true}
 
@@ -23,24 +23,24 @@ sqlalchemy = {version = "^2.0.25", optional = true}
 pydantic = {version = "^2.5.0", optional = true}
 
 # HTTP & Auth
-httpx = {version = "^0.27.0", optional = true}
+httpx = {version = ">=0.27.0", optional = true}
 email-validator = {version = "^2.1.0", optional = true}
 pyjwt = {version = "^2.8.0", optional = true}
 
 # Data Science
-numpy = {version = "^1.24.0", optional = true}
-pandas = {version = "^2.1.0", optional = true}
+numpy = {version = ">=2.0.0", optional = true}
+pandas = {version = ">=3.0.0", optional = true}
 matplotlib = {version = "^3.8.0", optional = true}
-plotly = {version = "^5.18.0", optional = true}
+plotly = {version = ">=5.18.0", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 # Type Checking
-mypy = "^1.8.0"
+mypy = ">=1.8.0"
 
 # Testing
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-pytest-asyncio = "^0.23.0"
+pytest = ">=8.0.0"
+pytest-cov = ">=5.0.0"
+pytest-asyncio = ">=0.23.0"
 
 # Code Quality
 ruff = ">=0.4.0"
