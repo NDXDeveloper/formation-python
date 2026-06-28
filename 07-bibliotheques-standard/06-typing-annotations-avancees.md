@@ -659,6 +659,8 @@ dessiner_forme(carre)   # OK
 # Pas besoin d'héritage explicite!
 ```
 
+> 📝 **Le `...` dans le corps d'une méthode.** Les `...` (l'objet `Ellipsis`) que vous voyez dans `def draw(self) -> str: ...` forment un **corps vide** : ils signifient « cette méthode n'a pas d'implémentation ici, on ne décrit que sa signature ». C'est la convention pour les `Protocol`, les surcharges `@overload` et les *stubs* de types. On pourrait écrire `pass` à la place, mais `...` est l'usage idiomatique pour signaler « signature seulement ». (À ne pas confondre avec `tuple[int, ...]`, où `...` signifie « longueur variable ».)
+
 ### Exemple pratique : Protocol pour un système de stockage
 
 ```python
@@ -738,6 +740,62 @@ stockage_memoire = StockageMemoire()
 traiter_donnees(stockage_fichier, "test", "valeur")  
 traiter_donnees(stockage_memoire, "test", "valeur")  
 ```
+
+---
+
+## TypedDict - Dictionnaires structurés
+
+Un dictionnaire annoté `dict[str, X]` impose **le même** type de valeur pour **toutes** les clés. Or beaucoup de dictionnaires réels ont des clés **connues à l'avance**, chacune avec son propre type — typiquement un enregistrement ou une réponse JSON. `TypedDict` (PEP 589, Python 3.8+) décrit précisément cette structure.
+
+```python
+from typing import TypedDict
+
+class Film(TypedDict):
+    titre: str
+    annee: int
+    note: float
+
+# À l'exécution, c'est un dictionnaire ordinaire ; ce sont les outils
+# (mypy, IDE) qui vérifient les clés présentes et le type de chaque valeur.
+inception: Film = {"titre": "Inception", "annee": 2010, "note": 8.8}
+
+def resumer(film: Film) -> str:
+    return f"{film['titre']} ({film['annee']}) - {film['note']}/10"
+
+print(resumer(inception))  # Inception (2010) - 8.8/10
+
+# Erreurs repérées par mypy (mais acceptées par Python à l'exécution) :
+# {"titre": "X", "annee": "2010", "note": 7.0}              # annee : str au lieu de int
+# {"titre": "X", "annee": 2010}                             # clé 'note' manquante
+# {"titre": "X", "annee": 2010, "note": 7.0, "duree": 148}  # clé 'duree' inconnue
+```
+
+Par défaut, **toutes les clés sont obligatoires**. Pour les rendre facultatives, on passe `total=False` :
+
+```python
+from typing import TypedDict
+
+class Preferences(TypedDict, total=False):
+    couleur: str
+    taille: int
+
+p1: Preferences = {"couleur": "rouge"}                 # OK : taille absente
+p2: Preferences = {"couleur": "bleu", "taille": 42}    # OK
+p3: Preferences = {}                                   # OK : tout est facultatif
+```
+
+> 🆕 **Python 3.11+ — granularité par clé (`NotRequired` / `Required`, PEP 655) :** au lieu de tout obligatoire ou tout facultatif, on mélange les deux dans une même classe :
+>
+> ```python
+> from typing import TypedDict, NotRequired
+>
+> class Utilisateur(TypedDict):
+>     nom: str                     # requis
+>     email: str                   # requis
+>     telephone: NotRequired[str]  # facultatif
+> ```
+
+> **`TypedDict` ou `@dataclass` ?** Les deux décrivent une structure à champs nommés. On choisit `TypedDict` quand les données **sont déjà des dictionnaires** (issues de JSON, d'une API, d'une base de données) et qu'on veut les typer sans changer leur nature ; on choisit une `dataclass` quand on crée de **vrais objets**, avec méthodes, valeurs par défaut et comportement propre.
 
 ---
 

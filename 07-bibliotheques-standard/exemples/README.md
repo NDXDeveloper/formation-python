@@ -1,6 +1,6 @@
 # Exemples - Chapitre 07 : Bibliothèques standard
 
-Ce dossier contient **35 fichiers** d'exemples exécutables couvrant les 6 sections du chapitre 7.
+Ce dossier contient **36 fichiers** d'exemples exécutables couvrant les 6 sections du chapitre 7.
 
 ## Section 7.1 : os, sys et subprocess
 
@@ -66,6 +66,7 @@ Ce dossier contient **35 fichiers** d'exemples exécutables couvrant les 6 secti
 | `06_04_generic_classes.py` | Classes génériques avec Generic (Pile[T], Cache[K, V] avec expiration), Self (interface fluide, 3.11+) | `06-typing-annotations-avancees.md` |
 | `06_05_literal_final_protocol.py` | Literal, Final, Protocol (duck typing structurel), NewType, @overload | `06-typing-annotations-avancees.md` |
 | `06_06_exemple_complet_taches.py` | Système de gestion de tâches (dataclass, Literal, Protocol, TypeAlias, notifications) | `06-typing-annotations-avancees.md` |
+| `06_07_typeddict.py` | TypedDict (dictionnaires structurés) : clés requises, `total=False` (clés facultatives), `NotRequired` (3.11+) | `06-typing-annotations-avancees.md` |
 
 ## Sorties attendues
 
@@ -437,6 +438,25 @@ Tâches en retard: 1
   - Revue de code
 ```
 
+### 06_07 - TypedDict
+```
+=== TypedDict de base ===
+  Inception (2010) - 8.8/10
+  Matrix (1999) - 8.7/10
+  Clés de 'inception' : ['titre', 'annee', 'note']
+  Type réel : dict
+
+=== total=False (clés facultatives) ===
+  p1 = {'couleur': 'rouge'}
+  p2 = {'couleur': 'bleu', 'taille': 42}
+  p3 = {}
+
+=== NotRequired (granularité par clé, 3.11+) ===
+  u1 = {'nom': 'Alice', 'email': 'alice@example.com'}
+  u2 = {'nom': 'Bob', 'email': 'bob@example.com', 'telephone': '06 00 00 00 00'}
+```
+*(La dernière section requiert Python 3.11+ ; sur 3.10 elle affiche `NotRequired : nécessite Python 3.11+`.)*
+
 ## Notes
 
 - Les exemples `05_*` (logging) utilisent des dossiers temporaires pour les fichiers de log, nettoyés automatiquement à la fin de l'exécution.
@@ -445,4 +465,4 @@ Tâches en retard: 1
 - Les exemples `06_*` (typing) sont des annotations qui n'affectent pas l'exécution mais aident les outils d'analyse (mypy). `06_01` contient **volontairement** une affectation incompatible (`age_test = "vingt-cinq"`) pour illustrer que mypy la détecte alors que Python l'accepte à l'exécution — c'est la seule « erreur » mypy attendue des exemples typing.
 - La syntaxe **PEP 695** (Python 3.12+ : `type Alias = …`, `def f[T](...)`, `class C[T]`) est présentée dans le cours (`06-typing-annotations-avancees.md`) mais **pas** reprise dans ces exemples exécutables : c'est une syntaxe vérifiée *au parsing*, donc un fichier qui la contient échoue avec `SyntaxError` sur Python 3.10/3.11 — même placée derrière un test de version. Les exemples utilisent donc l'équivalent classique `TypeVar`/`Generic`, exécutable sur toutes les versions visées.
 - Tous les exemples créant des fichiers/dossiers temporaires nettoient leurs résidus à la fin.
-- Pour rester compatibles avec **Python 3.10** (version minimale du cours), quelques exemples gardent les fonctions récentes derrière un test de version : `math.cbrt` et `typing.Self` (Python 3.11+), `itertools.batched` (3.12+). Sur une version antérieure, ces blocs affichent un message de repli au lieu de planter. *(Vérifié : les 35 exemples s'exécutent sur Python 3.10, 3.12 et 3.13.)*
+- Pour rester compatibles avec **Python 3.10** (version minimale du cours), quelques exemples gardent les fonctions récentes derrière un test de version : `math.cbrt`, `typing.Self` et `typing.NotRequired` (Python 3.11+), `itertools.batched` (3.12+). Sur une version antérieure, ces blocs affichent un message de repli au lieu de planter. *(Vérifié : les 36 exemples s'exécutent sur Python 3.10, 3.12 et 3.14.)*

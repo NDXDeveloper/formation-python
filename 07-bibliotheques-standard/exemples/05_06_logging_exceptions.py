@@ -40,7 +40,7 @@ print("\n=== logging.exception() ===")
 
 def fonction_risquee():
     try:
-        resultat = 10 / 0
+        10 / 0  # déclenche une ZeroDivisionError (capturée ci-dessous)
     except Exception:
         # logging.exception() est équivalent à logging.error(..., exc_info=True)
         logging.exception("Une erreur s'est produite")

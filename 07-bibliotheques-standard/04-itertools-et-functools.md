@@ -246,6 +246,8 @@ for age, groupe in itertools.groupby(personnes_triees, key=lambda p: p['age']):
 # Âge 30: ['Charlie', 'David']
 ```
 
+> 📝 **Pourquoi faut-il trier avant `groupby` ?** `groupby` fait **un seul passage** sur la séquence et démarre un nouveau groupe **chaque fois que la clé change** par rapport à l'élément précédent : il ne regroupe donc que les éléments **consécutifs**. C'est pourquoi, dans le premier exemple, les `'A'` séparés par des `'B'`/`'C'` produisent **deux** groupes distincts. Pour obtenir un seul groupe par clé, il faut d'abord **trier** par cette même clé, ce qui rassemble toutes ses occurrences côte à côte.
+
 ### Exemple pratique : Traitement de logs
 
 ```python
@@ -477,6 +479,8 @@ mots = ['Hello', ' ', 'World', '!']
 concatenation = itertools.accumulate(mots, lambda a, b: a + b)  
 print(list(concatenation))  # ['Hello', 'Hello ', 'Hello World', 'Hello World!']  
 ```
+
+> 📝 **Le module `operator`.** `operator.mul` (ci-dessus), `operator.add`, `operator.sub`… sont simplement les opérateurs `*`, `+`, `-`… sous forme de **fonctions** — pratique pour les passer en argument à `accumulate`, `reduce`, `map`… (`operator.add` est plus lisible et un peu plus rapide que `lambda x, y: x + y`). Le module fournit aussi `itemgetter('cle')` / `itemgetter(0)` (extraire une clé de dictionnaire ou un index) et `attrgetter('attribut')`, très utiles comme `key=` de `sorted()` ou `groupby()` — on s'en sert dans l'exemple complet plus bas.
 
 ### tee() - Dupliquer un itérateur
 
@@ -735,6 +739,8 @@ print(f"\nInfos cache : {fibonacci_rapide.cache_info()}")
 # Vider le cache
 fibonacci_rapide.cache_clear()
 ```
+
+> 📝 **Pourquoi le cache change-t-il tout ici ?** Sans cache, `fibonacci_lent(30)` rappelle `fibonacci_lent(29)` **et** `fibonacci_lent(28)`, qui redemandent à leur tour les mêmes valeurs… Le même calcul est refait un nombre **exponentiel** de fois — **2 692 537 appels** pour `n=30` ! Avec `lru_cache`, chaque `fibonacci(k)` n'est calculé qu'**une seule fois** (ici 31 calculs, de `0` à `30`) puis relu depuis le cache : on passe d'un coût exponentiel à un coût **linéaire**. C'est le principe de la *mémorisation* (programmation dynamique), et `cache_info()` le confirme (`hits=28, misses=31`).
 
 ### Exemple pratique : Calcul de factorielles avec cache
 

@@ -106,9 +106,9 @@ print(f"factorial(0) = {math.factorial(0)}")
 print(f"comb(5, 2) = {math.comb(5, 2)}")
 print(f"perm(5, 2) = {math.perm(5, 2)}")
 
-nombres = [0.1] * 10
-print(f"\nsum([0.1]*10) = {sum(nombres)}")
-print(f"fsum([0.1]*10) = {math.fsum(nombres)}")
+nombres = [1e16, 1, -1e16]  # un petit nombre (1) noyé entre deux grands
+print(f"\nsum([1e16, 1, -1e16]) = {sum(nombres)}")    # 0.0 : le +1 est absorbé puis annulé
+print(f"fsum([1e16, 1, -1e16]) = {math.fsum(nombres)}")  # 1.0 : somme exacte
 print(f"prod([2, 3, 4]) = {math.prod([2, 3, 4])}")
 print(f"hypot(3, 4) = {math.hypot(3, 4)}")
 print(f"hypot(5, 12) = {math.hypot(5, 12)}")

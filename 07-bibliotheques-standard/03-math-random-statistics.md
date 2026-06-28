@@ -121,6 +121,8 @@ print(round(3.5))   # 4 (arrondi vers le pair)
 print(round(4.5))   # 4 (arrondi vers le pair, pas 5 !)  
 ```
 
+> 📝 **Pourquoi cet « arrondi vers le pair » ?** Arrondir systématiquement les `.5` vers le haut introduit un **biais** : sur une longue série de valeurs, les sommes sont régulièrement surestimées. En envoyant la moitié des cas vers le bas et l'autre moitié vers le haut (vers le chiffre **pair**), les erreurs se compensent en moyenne. C'est la règle définie par la norme **IEEE 754** et le comportement par défaut de `round()` en Python 3. Si vous avez besoin d'un autre arrondi (par exemple « toujours .5 vers le haut » pour de la comptabilité), utilisez le module `decimal` et ses modes comme `ROUND_HALF_UP`.
+
 ### Exemple pratique : Calculer une facture
 
 ```python
@@ -324,9 +326,9 @@ print(math.comb(5, 2))       # 10 (nombre de façons de choisir 2 éléments par
 print(math.perm(5, 2))       # 20 (arrangements de 2 éléments parmi 5)
 
 # Somme précise d'un itérable (évite les erreurs d'arrondi)
-nombres = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]  
-print(sum(nombres))          # 1.0 (peut varier selon la version de Python)  
-print(math.fsum(nombres))    # 1.0 (plus précis)  
+nombres = [1e16, 1, -1e16]  # un petit nombre (1) noyé entre deux grands  
+print(sum(nombres))          # 0.0  (le +1 est "absorbé" par l'arrondi de 1e16, puis annulé)  
+print(math.fsum(nombres))    # 1.0  (fsum calcule la somme exacte)  
 
 # Produit d'un itérable - Python 3.8+
 print(math.prod([2, 3, 4]))  # 24
@@ -870,6 +872,8 @@ analyser_performances(temps_reponse)
 ---
 
 ## Corrélation et covariance
+
+> 📝 `statistics.covariance()` et `statistics.correlation()` ont été ajoutées en **Python 3.10**.
 
 ```python
 import statistics

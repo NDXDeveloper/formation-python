@@ -221,6 +221,8 @@ logger.info("Message d'info - fichier ET console")
 logger.error("Message d'erreur - fichier ET console")  
 ```
 
+> 📝 **Deux niveaux qui se cumulent : logger puis handler.** Un message doit franchir **deux** filtres pour être émis : d'abord le niveau du **logger** (porte d'entrée globale), puis le niveau de **chaque handler** (filtre propre à chaque destination). Ici le logger est à `DEBUG` (il laisse tout passer), mais le handler console est à `INFO` : un `logger.debug(...)` traverse le logger, atteint les deux handlers, est écrit par le handler fichier (seuil `DEBUG`) et **rejeté** par le handler console (seuil `INFO`) — d'où « seulement dans le fichier ». ⚠️ Conséquence : si le niveau du *logger* est trop haut (ex. `WARNING`), le message est bloqué d'emblée et **aucun** handler ne le voit, même réglé plus bas.
+
 ---
 
 ## Loggers nommés
@@ -273,6 +275,8 @@ logger_fonction.info("Log de la fonction")
 # app.module - Log du module
 # app.module.fonction - Log de la fonction
 ```
+
+> 📝 **À quoi sert cette hiérarchie ? À la propagation.** Un message émis par un logger « enfant » **remonte** automatiquement vers ses parents : `app.module.fonction` → `app.module` → `app` → le logger racine, et **chaque ancêtre applique ses propres handlers**. C'est pratique (configurer les handlers une seule fois sur `app` couvre tous ses descendants), mais cela peut produire des messages **en double** si un enfant et un parent possèdent chacun un handler. Pour couper cette remontée sur un logger donné, on met `propagate = False` — c'est exactement le rôle de l'option `'propagate': False` que vous verrez dans les configurations par dictionnaire plus bas.
 
 ---
 
@@ -872,8 +876,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 def fonction_risquee():
     try:
-        # Code qui pourrait échouer
-        resultat = 10 / 0
+        # Code qui pourrait échouer (division par zéro volontaire)
+        10 / 0
     except Exception:
         # logging.exception() est équivalent à logging.error(..., exc_info=True)
         logging.exception("Une erreur s'est produite")
@@ -1261,7 +1265,7 @@ logger.debug("Valeurs: x=%d, y=%d", x, y)
 
 # Exceptions
 try:
-    resultat = 10 / 0
+    10 / 0
 except Exception:
     logger.exception("Erreur de division")
 ```

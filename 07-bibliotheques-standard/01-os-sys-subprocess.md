@@ -341,6 +341,7 @@ resultat = subprocess.run(["dir"], shell=True, capture_output=True, text=True)
 # text=True : Retourne des chaînes de caractères (pas des bytes)
 # shell=True : Exécute via le shell (nécessaire pour certaines commandes)
 # check=True : Lève une exception si la commande échoue
+# cwd="chemin" : Exécute la commande depuis ce répertoire (le répertoire de travail du programme Python n'est pas modifié)
 
 resultat = subprocess.run(
     ["echo", "Bonjour"],
@@ -351,6 +352,8 @@ resultat = subprocess.run(
 
 print(resultat.stdout)  # "Bonjour\n"
 ```
+
+> 💡 Un paramètre de plus, très utile pour la robustesse : **`timeout=<secondes>`**. Sans lui, `run()` attend **indéfiniment** que la commande se termine ; avec, une commande trop lente est interrompue et lève `subprocess.TimeoutExpired`. Indispensable pour les appels réseau ou tout processus susceptible de se bloquer.
 
 ### Gérer les erreurs
 
@@ -456,6 +459,8 @@ print(f"Nombre de fichiers Python : {resultat.stdout.strip()}")
 ```
 
 **⚠️ Avertissement de sécurité** : Utiliser `shell=True` avec des données provenant d'utilisateurs peut créer des failles de sécurité (injection de commandes). Préférez toujours passer les commandes sous forme de liste sans shell=True quand c'est possible.
+
+> 📝 **Pourquoi la liste protège-t-elle ?** Avec `shell=True`, c'est le **shell** qui reçoit votre chaîne et y interprète les caractères spéciaux (`;`, `|`, `$(...)`, `&&`…). Une donnée non fiable comme `"; rm -rf ~"` insérée dans la commande serait alors exécutée comme une **commande à part entière**. En passant une **liste** (`["ls", nom]`) sans `shell=True`, aucun shell n'intervient : Python transmet chaque élément **tel quel** au programme, comme un argument littéral — `"; rm -rf ~"` est simplement traité comme un nom de fichier (introuvable), jamais comme une commande. D'où la règle : liste + pas de `shell=True` dès qu'une entrée peut provenir de l'extérieur.
 
 ### Exemple pratique : Créer une sauvegarde
 

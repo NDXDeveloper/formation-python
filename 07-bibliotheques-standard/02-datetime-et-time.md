@@ -283,6 +283,18 @@ print(f"Jours totaux : {duree.days}")
 print(f"Secondes totales : {duree.total_seconds()}")  
 ```
 
+> 📝 **Les attributs d'un `timedelta` : composantes vs durée totale.** En interne, un `timedelta` ne stocke que **trois** nombres : `.days`, `.seconds` et `.microseconds`. Piège classique : `.seconds` n'est **pas** la durée totale, mais seulement la composante secondes comprise entre 0 et 86399 (ce qui reste *après* les jours entiers). Pour la durée totale, utilisez **`.total_seconds()`** :
+>
+> ```python
+> from datetime import timedelta
+> d = timedelta(days=1, hours=2)
+> print(d.days)             # 1
+> print(d.seconds)          # 7200     (les 2 heures, PAS la durée totale !)
+> print(d.total_seconds())  # 93600.0  (1 jour + 2 heures, en secondes)
+> ```
+>
+> C'est pourquoi, pour décomposer une durée en jours/heures/minutes, on extrait `.days` puis on applique `divmod()` à `.seconds` (voir l'exemple « temps restant » plus bas).
+
 ### Opérations arithmétiques avec les dates
 
 ```python
