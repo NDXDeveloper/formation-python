@@ -35,7 +35,7 @@ print(f"  Temps avec NumPy: {temps_numpy:.4f} secondes")
 print(f"  NumPy est {temps_liste/temps_numpy:.1f}x plus rapide!")
 
 # --- Simplicite du code ---
-print(f"\n  --- Simplicite ---")
+print("\n  --- Simplicite ---")
 liste1 = [1, 2, 3, 4, 5]
 liste2 = [10, 20, 30, 40, 50]
 resultat_liste = []
@@ -83,7 +83,7 @@ arr_3d = np.array([[[1, 2], [3, 4]],
 print(f"  Array 3D:\n{arr_3d}")
 
 # --- Fonctions de creation ---
-print(f"\n  --- Fonctions de creation ---")
+print("\n  --- Fonctions de creation ---")
 zeros = np.zeros(5)
 print(f"  Zeros: {zeros}")
 
@@ -104,7 +104,7 @@ random_arr = np.random.random((2, 3))
 print(f"  Random:\n{random_arr}")
 
 # --- Types de donnees ---
-print(f"\n  --- Types de donnees ---")
+print("\n  --- Types de donnees ---")
 arr_int = np.array([1, 2, 3], dtype=np.int32)
 print(f"  Type int32: {arr_int.dtype}")
 
@@ -162,7 +162,7 @@ print(f"  Division (/2): {arr / 2}")
 print(f"  Puissance (^2): {arr ** 2}")
 
 # --- Operations entre arrays ---
-print(f"\n  --- Operations entre arrays ---")
+print("\n  --- Operations entre arrays ---")
 arr1 = np.array([1, 2, 3, 4])
 arr2 = np.array([10, 20, 30, 40])
 
@@ -207,7 +207,7 @@ print(f"  Ecart-type: {np.std(arr):.10f}")
 print(f"  Mediane: {np.median(arr)}")
 
 # --- Agregations 2D ---
-print(f"\n  --- Agregations 2D ---")
+print("\n  --- Agregations 2D ---")
 arr_2d = np.array([[1, 2, 3],
                    [4, 5, 6],
                    [7, 8, 9]])
@@ -235,7 +235,7 @@ resultat = matrice + vecteur
 print(f"\n  Resultat du broadcasting:\n{resultat}")
 
 # --- Normalisation ---
-print(f"\n  --- Normalisation ---")
+print("\n  --- Normalisation ---")
 notes = np.array([[85, 90, 78],
                   [92, 88, 95],
                   [78, 85, 88]])
@@ -269,7 +269,7 @@ arr_copie[arr_copie < 10] = 0
 print(f"  Array modifie (< 10 -> 0): {arr_copie}")
 
 # --- Conditions multiples ---
-print(f"\n  --- Conditions multiples ---")
+print("\n  --- Conditions multiples ---")
 arr = np.array([1, 5, 10, 15, 20, 25, 30])
 
 masque = (arr >= 10) & (arr <= 20)
@@ -287,14 +287,14 @@ print("EXEMPLES PRATIQUES")
 print("=" * 50)
 
 # --- Temperatures ---
-print(f"\n  --- Conversion temperatures ---")
+print("\n  --- Conversion temperatures ---")
 temperatures_celsius = np.array([0, 10, 20, 25, 30, 35, 40])
 print(f"  Temperatures en Celsius: {temperatures_celsius}")
 
 temperatures_fahrenheit = temperatures_celsius * 9/5 + 32
 print(f"  Temperatures en Fahrenheit: {temperatures_fahrenheit}")
 
-print(f"\n  --- Statistiques ---")
+print("\n  --- Statistiques ---")
 print(f"  Temperature moyenne: {np.mean(temperatures_celsius):.1f} C")
 print(f"  Temperature minimale: {np.min(temperatures_celsius)} C")
 print(f"  Temperature maximale: {np.max(temperatures_celsius)} C")
@@ -305,19 +305,19 @@ print(f"\n  Jours chauds (>25 C): {jours_chauds}")
 print(f"  Nombre de jours chauds: {len(jours_chauds)}")
 
 # --- Normalisation ---
-print(f"\n  --- Normalisation de donnees ---")
+print("\n  --- Normalisation de donnees ---")
 donnees = np.array([10, 20, 30, 40, 50])
 donnees_normalisees = (donnees - np.mean(donnees)) / np.std(donnees)
 print(f"  Donnees normalisees: {donnees_normalisees}")
 
 # --- Analyse financiere ---
-print(f"\n  --- Analyse financiere ---")
+print("\n  --- Analyse financiere ---")
 prix = np.array([100, 102, 98, 105, 107])
 rendements = (prix[1:] - prix[:-1]) / prix[:-1] * 100
 print(f"  Rendements quotidiens (%): {rendements}")
 
 # --- Application remise ---
-print(f"\n  --- Application remise ---")
+print("\n  --- Application remise ---")
 prix = np.array([19.99, 49.99, 99.99, 149.99])
 prix_reduits = prix * 0.8
 print(f"  Prix originaux: {prix}")
@@ -326,7 +326,7 @@ prix_reduits_arrondis = np.round(prix_reduits, 2)
 print(f"  Prix arrondis: {prix_reduits_arrondis}")
 
 # --- Signal sinusoidal ---
-print(f"\n  --- Signal sinusoidal ---")
+print("\n  --- Signal sinusoidal ---")
 t = np.linspace(0, 1, 100)
 frequence = 5
 signal = np.sin(2 * np.pi * frequence * t)

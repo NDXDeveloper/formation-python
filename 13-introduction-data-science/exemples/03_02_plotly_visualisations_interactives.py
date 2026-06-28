@@ -47,7 +47,7 @@ fig = px.line(x=x, y=y,
               title='Fonction sinus',
               labels={'x': 'Angle (radians)', 'y': 'sin(x)'})
 fig.write_html(os.path.join(OUTPUT_DIR, '01_line_simple.html'))
-print(f"\n  01_line_simple.html sauvegarde")
+print("\n  01_line_simple.html sauvegarde")
 
 # --- Multi-lignes ---
 x = np.linspace(0, 10, 100)
@@ -64,7 +64,7 @@ fig = px.line(df_long, x='x', y='valeur', color='fonction',
               title='Fonctions trigonometriques',
               labels={'valeur': 'f(x)', 'x': 'Angle (radians)'})
 fig.write_html(os.path.join(OUTPUT_DIR, '02_line_multi.html'))
-print(f"  02_line_multi.html sauvegarde")
+print("  02_line_multi.html sauvegarde")
 
 # --- Avec markers ---
 x = np.arange(0, 10)
@@ -75,7 +75,7 @@ fig = px.line(x=x, y=y,
               title='Fonction quadratique')
 fig.update_traces(marker=dict(size=10))
 fig.write_html(os.path.join(OUTPUT_DIR, '03_line_markers.html'))
-print(f"  03_line_markers.html sauvegarde")
+print("  03_line_markers.html sauvegarde")
 
 
 # ============================================================
@@ -95,7 +95,7 @@ fig = px.scatter(x=x, y=y,
                  title='Nuage de points interactif',
                  labels={'x': 'Variable X', 'y': 'Variable Y'})
 fig.write_html(os.path.join(OUTPUT_DIR, '04_scatter_simple.html'))
-print(f"\n  04_scatter_simple.html sauvegarde")
+print("\n  04_scatter_simple.html sauvegarde")
 
 # --- Avec couleurs et tailles variables ---
 np.random.seed(42)
@@ -113,7 +113,7 @@ fig = px.scatter(df, x='x', y='y',
                  hover_data=['taille'],
                  title='Nuage de points avec couleurs et tailles')
 fig.write_html(os.path.join(OUTPUT_DIR, '05_scatter_avance.html'))
-print(f"  05_scatter_avance.html sauvegarde")
+print("  05_scatter_avance.html sauvegarde")
 
 # --- Dataset Iris ---
 df_iris = px.data.iris()
@@ -124,7 +124,7 @@ fig = px.scatter(df_iris, x='sepal_width', y='sepal_length',
                  hover_data=['petal_width'],
                  title='Dataset Iris - Analyse multidimensionnelle')
 fig.write_html(os.path.join(OUTPUT_DIR, '06_scatter_iris.html'))
-print(f"  06_scatter_iris.html sauvegarde")
+print("  06_scatter_iris.html sauvegarde")
 print(f"  Dataset Iris: {len(df_iris)} lignes, {len(df_iris.columns)} colonnes")
 print(f"  Especes: {list(df_iris['species'].unique())}")
 
@@ -146,7 +146,7 @@ fig = px.bar(x=produits, y=ventes,
              color=ventes,
              color_continuous_scale='blues')
 fig.write_html(os.path.join(OUTPUT_DIR, '07_bar_vertical.html'))
-print(f"\n  07_bar_vertical.html sauvegarde")
+print("\n  07_bar_vertical.html sauvegarde")
 
 # --- Barres groupees ---
 df = pd.DataFrame({
@@ -159,7 +159,7 @@ fig = px.bar(df, x='Trimestre', y='Ventes', color='Annee',
              barmode='group',
              title='Comparaison des ventes 2023 vs 2024')
 fig.write_html(os.path.join(OUTPUT_DIR, '08_bar_groupees.html'))
-print(f"  08_bar_groupees.html sauvegarde")
+print("  08_bar_groupees.html sauvegarde")
 
 # --- Barres empilees ---
 df = pd.DataFrame({
@@ -174,7 +174,7 @@ fig = px.bar(df, x='Mois', y='Ventes', color='Region',
              barmode='stack',
              title='Ventes par region et par mois')
 fig.write_html(os.path.join(OUTPUT_DIR, '09_bar_empilees.html'))
-print(f"  09_bar_empilees.html sauvegarde")
+print("  09_bar_empilees.html sauvegarde")
 
 # --- Barres horizontales ---
 langages = ['Python', 'JavaScript', 'Java', 'C#', 'C++', 'PHP', 'TypeScript']
@@ -187,7 +187,7 @@ fig = px.bar(y=langages, x=popularite,
              color=popularite,
              color_continuous_scale='viridis')
 fig.write_html(os.path.join(OUTPUT_DIR, '10_bar_horizontal.html'))
-print(f"  10_bar_horizontal.html sauvegarde")
+print("  10_bar_horizontal.html sauvegarde")
 
 
 # ============================================================
@@ -206,7 +206,7 @@ fig = px.histogram(x=data,
                    title='Distribution normale',
                    labels={'x': 'Valeur', 'y': 'Frequence'})
 fig.write_html(os.path.join(OUTPUT_DIR, '11_hist_simple.html'))
-print(f"\n  11_hist_simple.html sauvegarde")
+print("\n  11_hist_simple.html sauvegarde")
 
 # --- Superposes ---
 np.random.seed(42)
@@ -224,7 +224,7 @@ fig = px.histogram(df, x='valeur', color='groupe',
                    barmode='overlay',
                    opacity=0.6)
 fig.write_html(os.path.join(OUTPUT_DIR, '12_hist_superposes.html'))
-print(f"  12_hist_superposes.html sauvegarde")
+print("  12_hist_superposes.html sauvegarde")
 
 
 # ============================================================
@@ -248,7 +248,7 @@ fig = px.box(df, x='Categorie', y='Valeurs',
              title='Distribution des valeurs par categorie',
              color='Categorie')
 fig.write_html(os.path.join(OUTPUT_DIR, '13_boxplot.html'))
-print(f"\n  13_boxplot.html sauvegarde")
+print("\n  13_boxplot.html sauvegarde")
 print(f"  Medianes: A={df[df['Categorie']=='A']['Valeurs'].median():.1f}, "
       f"B={df[df['Categorie']=='B']['Valeurs'].median():.1f}, "
       f"C={df[df['Categorie']=='C']['Valeurs'].median():.1f}")
@@ -269,7 +269,7 @@ fig = px.pie(values=parts, names=langages,
              title='Langages de programmation les plus utilises',
              hole=0.3)
 fig.write_html(os.path.join(OUTPUT_DIR, '14_pie_donut.html'))
-print(f"\n  14_pie_donut.html sauvegarde")
+print("\n  14_pie_donut.html sauvegarde")
 
 # --- Pie avec Graph Objects ---
 labels = ['Python', 'JavaScript', 'Java', 'C++', 'Autres']
@@ -287,7 +287,7 @@ fig = go.Figure(data=[go.Pie(
 
 fig.update_layout(title='Langages de programmation')
 fig.write_html(os.path.join(OUTPUT_DIR, '15_pie_go.html'))
-print(f"  15_pie_go.html sauvegarde")
+print("  15_pie_go.html sauvegarde")
 
 
 # ============================================================
@@ -311,7 +311,7 @@ fig = px.scatter_3d(df, x='x', y='y', z='z',
                     color='couleur',
                     title='Nuage de points 3D interactif')
 fig.write_html(os.path.join(OUTPUT_DIR, '16_scatter_3d.html'))
-print(f"\n  16_scatter_3d.html sauvegarde")
+print("\n  16_scatter_3d.html sauvegarde")
 
 # --- Surface 3D ---
 x = np.linspace(-5, 5, 50)
@@ -329,7 +329,7 @@ fig.update_layout(
     )
 )
 fig.write_html(os.path.join(OUTPUT_DIR, '17_surface_3d.html'))
-print(f"  17_surface_3d.html sauvegarde")
+print("  17_surface_3d.html sauvegarde")
 
 
 # ============================================================
@@ -348,7 +348,7 @@ fig = px.imshow(data,
                 title='Carte de chaleur',
                 color_continuous_scale='RdBu')
 fig.write_html(os.path.join(OUTPUT_DIR, '18_heatmap_simple.html'))
-print(f"\n  18_heatmap_simple.html sauvegarde")
+print("\n  18_heatmap_simple.html sauvegarde")
 
 # --- Matrice de correlation ---
 df_iris = px.data.iris()
@@ -364,7 +364,7 @@ fig = px.imshow(corr_matrix,
                 zmin=-1, zmax=1,
                 text_auto=True)
 fig.write_html(os.path.join(OUTPUT_DIR, '19_heatmap_correlation.html'))
-print(f"  19_heatmap_correlation.html sauvegarde")
+print("  19_heatmap_correlation.html sauvegarde")
 print(f"\n  Matrice de correlation Iris:\n{corr_matrix.round(3)}")
 
 
@@ -392,7 +392,7 @@ fig = px.scatter(df_gap,
                  range_y=[25, 90],
                  title='Evolution mondiale : Esperance de vie vs PIB (1952-2007)')
 fig.write_html(os.path.join(OUTPUT_DIR, '20_scatter_anime.html'))
-print(f"\n  20_scatter_anime.html sauvegarde")
+print("\n  20_scatter_anime.html sauvegarde")
 print(f"  Dataset Gapminder: {len(df_gap)} lignes, {len(df_gap.columns)} colonnes")
 print(f"  Annees: {sorted(df_gap['year'].unique())}")
 print(f"  Continents: {list(df_gap['continent'].unique())}")
@@ -410,7 +410,7 @@ fig = px.bar(df_filtered,
              range_x=[0, 1.5e9],
              title='Evolution de la population des 10 pays les plus peuples')
 fig.write_html(os.path.join(OUTPUT_DIR, '21_bar_anime.html'))
-print(f"  21_bar_anime.html sauvegarde")
+print("  21_bar_anime.html sauvegarde")
 
 
 # ============================================================
@@ -428,7 +428,7 @@ fig = px.scatter(df_iris, x='sepal_width', y='sepal_length',
                  facet_col='species',
                  title='Iris - Analyse par espece')
 fig.write_html(os.path.join(OUTPUT_DIR, '22_facets.html'))
-print(f"\n  22_facets.html sauvegarde")
+print("\n  22_facets.html sauvegarde")
 
 # --- Subplots avec Graph Objects ---
 np.random.seed(42)
@@ -457,7 +457,7 @@ fig.add_trace(go.Histogram(x=np.random.randn(500), name='Distribution'),
 
 fig.update_layout(height=600, title_text='Tableau de bord multi-graphiques')
 fig.write_html(os.path.join(OUTPUT_DIR, '23_subplots_go.html'))
-print(f"  23_subplots_go.html sauvegarde")
+print("  23_subplots_go.html sauvegarde")
 
 
 # ============================================================
@@ -498,7 +498,7 @@ fig.update_layout(
 fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
 fig.write_html(os.path.join(OUTPUT_DIR, '24_personnalise.html'))
-print(f"  24_personnalise.html sauvegarde")
+print("  24_personnalise.html sauvegarde")
 
 # --- Annotations et formes ---
 x = np.linspace(0, 10, 100)
@@ -526,7 +526,7 @@ fig.add_shape(
 
 fig.update_layout(title='Graphique avec annotations et formes')
 fig.write_html(os.path.join(OUTPUT_DIR, '25_annotations.html'))
-print(f"  25_annotations.html sauvegarde")
+print("  25_annotations.html sauvegarde")
 
 
 # ============================================================
@@ -547,7 +547,7 @@ df = pd.DataFrame({
 fig = px.line(df, x='date', y=['ventes', 'visites'],
               title='Evolution des ventes et visites en 2024')
 fig.write_html(os.path.join(OUTPUT_DIR, '26_pandas_integration.html'))
-print(f"\n  26_pandas_integration.html sauvegarde")
+print("\n  26_pandas_integration.html sauvegarde")
 print(f"  Ventes finales: {df['ventes'].iloc[-1]:.1f}")
 print(f"  Visites finales: {df['visites'].iloc[-1]:.1f}")
 
@@ -644,7 +644,7 @@ fig.update_yaxes(title_text='Frequence', row=2, col=1)
 fig.write_html(os.path.join(OUTPUT_DIR, '27_dashboard_complet.html'))
 print(f"\n  Ventes par region: Nord={ventes_regions[0]}, Sud={ventes_regions[1]}, Est={ventes_regions[2]}")
 print(f"  Total: {sum(ventes_regions)}")
-print(f"  27_dashboard_complet.html sauvegarde")
+print("  27_dashboard_complet.html sauvegarde")
 
 
 # --- Resume des fichiers generes ---

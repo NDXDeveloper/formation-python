@@ -36,7 +36,7 @@ groupe = df.groupby('Ville')
 print(f"\n  Nombre de groupes: {groupe.ngroups}")
 print(f"  Noms des groupes: {list(groupe.groups.keys())}")
 
-print(f"\n  Contenu des groupes:")
+print("\n  Contenu des groupes:")
 for nom, groupe_df in groupe:
     print(f"  --- {nom} ---")
     print(f"{groupe_df}")
@@ -289,7 +289,7 @@ print("EXEMPLES PRATIQUES")
 print("=" * 50)
 
 # --- Analyse ventes par region ---
-print(f"\n  --- Analyse ventes par region ---")
+print("\n  --- Analyse ventes par region ---")
 ventes = pd.DataFrame({
     'Date': pd.date_range('2024-01-01', periods=12, freq='MS'),
     'Region': ['Nord', 'Sud', 'Est', 'Ouest'] * 3,
@@ -312,7 +312,7 @@ pct = (ventes.groupby('Region')['Ventes'].sum() / total_ventes * 100).round(2)
 print(f"\n  Pourcentage par region:\n{pct}")
 
 # --- Notes etudiants ---
-print(f"\n  --- Notes etudiants ---")
+print("\n  --- Notes etudiants ---")
 notes = pd.DataFrame({
     'Etudiant': ['Alice', 'Bob', 'Charlie', 'Alice', 'Bob', 'Charlie'] * 2,
     'Matiere': ['Math', 'Math', 'Math', 'Physique', 'Physique', 'Physique'] * 2,
@@ -337,7 +337,7 @@ notes_pivot['Progression'] = notes_pivot['T2'] - notes_pivot['T1']
 print(f"\n  Progression T1 -> T2:\n{notes_pivot}")
 
 # --- Analyse RH ---
-print(f"\n  --- Analyse RH ---")
+print("\n  --- Analyse RH ---")
 employes = pd.DataFrame({
     'Nom': ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Henry'],
     'Departement': ['IT', 'Ventes', 'IT', 'RH', 'Ventes', 'IT', 'RH', 'Ventes'],

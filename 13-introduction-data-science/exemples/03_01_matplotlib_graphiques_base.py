@@ -47,7 +47,7 @@ plt.ylabel('Axe Y')
 plt.title('Mon premier graphique')
 plt.savefig(os.path.join(OUTPUT_DIR, '01_line_simple.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  01_line_simple.png sauvegarde")
+print("\n  01_line_simple.png sauvegarde")
 
 # --- Personnalisation ---
 x = np.linspace(0, 10, 100)
@@ -63,7 +63,7 @@ plt.legend()
 plt.grid(True)
 plt.savefig(os.path.join(OUTPUT_DIR, '02_line_trigo.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  02_line_trigo.png sauvegarde")
+print("  02_line_trigo.png sauvegarde")
 
 
 # ============================================================
@@ -84,7 +84,7 @@ plt.ylabel('Ventes')
 plt.title('Ventes par produit')
 plt.savefig(os.path.join(OUTPUT_DIR, '03_bar_vertical.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  03_bar_vertical.png sauvegarde")
+print("\n  03_bar_vertical.png sauvegarde")
 
 # --- Barres horizontales ---
 plt.figure(figsize=(10, 6))
@@ -94,7 +94,7 @@ plt.ylabel('Produits')
 plt.title('Ventes par produit (horizontal)')
 plt.savefig(os.path.join(OUTPUT_DIR, '04_bar_horizontal.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  04_bar_horizontal.png sauvegarde")
+print("  04_bar_horizontal.png sauvegarde")
 
 # --- Barres groupees ---
 categories = ['Q1', 'Q2', 'Q3', 'Q4']
@@ -117,7 +117,7 @@ ax.legend()
 
 plt.savefig(os.path.join(OUTPUT_DIR, '05_bar_groupees.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  05_bar_groupees.png sauvegarde")
+print("  05_bar_groupees.png sauvegarde")
 
 
 # ============================================================
@@ -140,7 +140,7 @@ plt.title('Nuage de points')
 plt.grid(True, alpha=0.3)
 plt.savefig(os.path.join(OUTPUT_DIR, '06_scatter_simple.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  06_scatter_simple.png sauvegarde")
+print("\n  06_scatter_simple.png sauvegarde")
 
 # --- Couleurs et tailles variables ---
 np.random.seed(42)
@@ -158,7 +158,7 @@ plt.ylabel('Variable Y')
 plt.title('Nuage de points avec couleurs et tailles variables')
 plt.savefig(os.path.join(OUTPUT_DIR, '07_scatter_avance.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  07_scatter_avance.png sauvegarde")
+print("  07_scatter_avance.png sauvegarde")
 
 
 # ============================================================
@@ -180,7 +180,7 @@ plt.title("Histogramme d'une distribution normale")
 plt.grid(True, alpha=0.3)
 plt.savefig(os.path.join(OUTPUT_DIR, '08_hist_simple.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  08_hist_simple.png sauvegarde")
+print("\n  08_hist_simple.png sauvegarde")
 
 # --- Histogrammes multiples ---
 np.random.seed(42)
@@ -196,7 +196,7 @@ plt.title('Comparaison de deux distributions')
 plt.legend()
 plt.savefig(os.path.join(OUTPUT_DIR, '09_hist_multiples.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  09_hist_multiples.png sauvegarde")
+print("  09_hist_multiples.png sauvegarde")
 
 
 # ============================================================
@@ -215,7 +215,7 @@ plt.pie(tailles, labels=labels, autopct='%1.1f%%', startangle=90)
 plt.title('Langages de programmation les plus utilises')
 plt.savefig(os.path.join(OUTPUT_DIR, '10_pie_simple.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  10_pie_simple.png sauvegarde")
+print("\n  10_pie_simple.png sauvegarde")
 
 # --- Avec personnalisation ---
 couleurs = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#ff99cc']
@@ -228,7 +228,7 @@ plt.title('Langages de programmation les plus utilises', fontsize=16)
 plt.axis('equal')
 plt.savefig(os.path.join(OUTPUT_DIR, '11_pie_personnalise.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  11_pie_personnalise.png sauvegarde")
+print("  11_pie_personnalise.png sauvegarde")
 
 
 # ============================================================
@@ -262,7 +262,7 @@ axes[1, 1].set_title('Histogramme')
 plt.tight_layout()
 plt.savefig(os.path.join(OUTPUT_DIR, '12_subplots.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  12_subplots.png sauvegarde")
+print("\n  12_subplots.png sauvegarde")
 
 
 # ============================================================
@@ -286,7 +286,7 @@ with plt.style.context('ggplot'):
     plt.title('Graphique avec style ggplot')
     plt.savefig(os.path.join(OUTPUT_DIR, '13_style_ggplot.png'), dpi=100, bbox_inches='tight')
     plt.close()
-print(f"  13_style_ggplot.png sauvegarde")
+print("  13_style_ggplot.png sauvegarde")
 
 
 # ============================================================
@@ -303,7 +303,7 @@ plt.title('Mon graphique')
 
 plt.savefig(os.path.join(OUTPUT_DIR, '14_sauvegarde.png'), dpi=300, bbox_inches='tight')
 plt.close()
-print(f"\n  14_sauvegarde.png sauvegarde (dpi=300)")
+print("\n  14_sauvegarde.png sauvegarde (dpi=300)")
 
 
 # ============================================================
@@ -371,7 +371,7 @@ plt.close()
 print(f"\n  Ventes par trimestre: Q1={q1}, Q2={q2}, Q3={q3}, Q4={q4}")
 print(f"  Total annuel: {sum(ventes)}")
 print(f"  Mois au-dessus de l'objectif: {sum(1 for v in ventes if v >= 100)}/{len(ventes)}")
-print(f"\n  15_dashboard_complet.png sauvegarde")
+print("\n  15_dashboard_complet.png sauvegarde")
 
 # --- Resume des fichiers generes ---
 print(f"\n{'=' * 50}")

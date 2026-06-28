@@ -929,7 +929,7 @@ Avant de vous lancer dans le Deep Learning :
 
 ## Structure de ce chapitre
 
-Ce chapitre est organisé en trois sections principales qui couvrent les fondations de la Data Science en Python :
+Ce chapitre est organisé en quatre sections principales qui couvrent les fondations de la Data Science en Python :
 
 ### 13.1 Calcul numérique avec NumPy
 Vous apprendrez :
@@ -956,6 +956,15 @@ Vous maîtriserez :
 - Créer des visualisations percutantes
 
 **Pourquoi la visualisation ?** "Un graphique vaut mille mots". C'est essentiel pour explorer les données et communiquer les résultats.
+
+### 13.4 Analyse exploratoire des données (EDA)
+Vous saurez :
+- Explorer et résumer un jeu de données inconnu
+- Détecter les valeurs manquantes, les doublons et les valeurs aberrantes
+- Visualiser distributions, relations et corrélations
+- Synthétiser vos découvertes en insights exploitables
+
+**Pourquoi l'EDA ?** Avant de modéliser, il faut comprendre ses données. L'analyse exploratoire est l'étape qui transforme un fichier brut en connaissances utiles, et conditionne la réussite de tout ce qui suit.
 
 ## Conclusion de l'introduction
 

@@ -41,13 +41,13 @@ print(f"\n{'=' * 50}")
 print("PREMIERES OBSERVATIONS")
 print("=" * 50)
 
-print(f"\n  Premieres lignes:")
+print("\n  Premieres lignes:")
 print(df.head())
 
-print(f"\n  Dernieres lignes:")
+print("\n  Dernieres lignes:")
 print(df.tail())
 
-print(f"\n  Echantillon aleatoire:")
+print("\n  Echantillon aleatoire:")
 print(df.sample(5, random_state=42))
 
 
@@ -62,13 +62,13 @@ print(f"\n  Nombre de lignes: {df.shape[0]}")
 print(f"  Nombre de colonnes: {df.shape[1]}")
 print(f"  Dimensions: {df.shape}")
 
-print(f"\n  Types de donnees:")
+print("\n  Types de donnees:")
 print(df.dtypes)
 
-print(f"\n  Noms des colonnes:")
+print("\n  Noms des colonnes:")
 print(df.columns.tolist())
 
-print(f"\n  Informations:")
+print("\n  Informations:")
 df.info()
 
 
@@ -79,10 +79,10 @@ print(f"\n{'=' * 50}")
 print("VALEURS MANQUANTES")
 print("=" * 50)
 
-print(f"\n  Valeurs manquantes par colonne:")
+print("\n  Valeurs manquantes par colonne:")
 print(df.isnull().sum())
 
-print(f"\n  Pourcentage de valeurs manquantes:")
+print("\n  Pourcentage de valeurs manquantes:")
 print((df.isnull().sum() / len(df)) * 100)
 
 # Visualisation des valeurs manquantes
@@ -91,7 +91,7 @@ sns.heatmap(df.isnull(), cbar=False, yticklabels=False, cmap='viridis')
 plt.title('Carte des valeurs manquantes')
 plt.savefig(os.path.join(OUTPUT_DIR, '01_valeurs_manquantes.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  01_valeurs_manquantes.png sauvegarde")
+print("\n  01_valeurs_manquantes.png sauvegarde")
 
 
 # ============================================================
@@ -104,7 +104,7 @@ print("=" * 50)
 print(f"\n  Nombre de lignes dupliquees: {df.duplicated().sum()}")
 
 doublons = df[df.duplicated()]
-print(f"\n  Lignes dupliquees:")
+print("\n  Lignes dupliquees:")
 print(doublons)
 
 df_sans_doublons = df.drop_duplicates()
@@ -118,10 +118,10 @@ print(f"\n{'=' * 50}")
 print("STATISTIQUES DESCRIPTIVES")
 print("=" * 50)
 
-print(f"\n  Statistiques descriptives:")
+print("\n  Statistiques descriptives:")
 print(df.describe())
 
-print(f"\n  Statistiques pour sepal_length:")
+print("\n  Statistiques pour sepal_length:")
 print(df['sepal_length'].describe())
 
 moyenne = df['sepal_length'].mean()
@@ -157,10 +157,10 @@ print(f"\n{'=' * 50}")
 print("VARIABLES CATEGORIELLES")
 print("=" * 50)
 
-print(f"\n  Valeurs uniques:")
+print("\n  Valeurs uniques:")
 print(df['species'].value_counts())
 
-print(f"\n  Proportions:")
+print("\n  Proportions:")
 print(df['species'].value_counts(normalize=True))
 
 print(f"\n  Nombre de categories: {df['species'].nunique()}")
@@ -180,13 +180,13 @@ print(f"\n  Asymetrie (skewness): {asymetrie:.2f}")
 aplatissement = df['sepal_length'].kurtosis()
 print(f"  Aplatissement (kurtosis): {aplatissement:.2f}")
 
-print(f"\n  Interpretation:")
+print("\n  Interpretation:")
 if abs(asymetrie) < 0.5:
-    print(f"    - Distribution approximativement symetrique")
+    print("    - Distribution approximativement symetrique")
 elif asymetrie > 0:
-    print(f"    - Distribution asymetrique a droite (queue a droite)")
+    print("    - Distribution asymetrique a droite (queue a droite)")
 else:
-    print(f"    - Distribution asymetrique a gauche (queue a gauche)")
+    print("    - Distribution asymetrique a gauche (queue a gauche)")
 
 
 # ============================================================
@@ -209,7 +209,7 @@ plt.axvline(df['sepal_length'].mean(), color='red', linestyle='--',
 plt.legend()
 plt.savefig(os.path.join(OUTPUT_DIR, '02_histogramme.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  02_histogramme.png sauvegarde")
+print("\n  02_histogramme.png sauvegarde")
 
 # Histogramme + KDE
 plt.figure(figsize=(10, 6))
@@ -217,7 +217,7 @@ sns.histplot(df['sepal_length'], kde=True, bins=30)
 plt.title('Distribution avec courbe de densite')
 plt.savefig(os.path.join(OUTPUT_DIR, '03_hist_kde.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  03_hist_kde.png sauvegarde")
+print("  03_hist_kde.png sauvegarde")
 
 # Histogrammes multiples
 fig = df.hist(figsize=(15, 12), bins=30, edgecolor='black')
@@ -225,7 +225,7 @@ plt.suptitle('Distribution de toutes les variables numeriques')
 plt.tight_layout()
 plt.savefig(os.path.join(OUTPUT_DIR, '04_hist_multiples.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  04_hist_multiples.png sauvegarde")
+print("  04_hist_multiples.png sauvegarde")
 
 
 # ============================================================
@@ -241,7 +241,7 @@ sns.boxplot(data=df['sepal_length'])
 plt.title('Box plot - Longueur du sepale')
 plt.savefig(os.path.join(OUTPUT_DIR, '05_boxplot_simple.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  05_boxplot_simple.png sauvegarde")
+print("\n  05_boxplot_simple.png sauvegarde")
 
 # Box plots par categorie
 plt.figure(figsize=(12, 6))
@@ -249,7 +249,7 @@ sns.boxplot(x='species', y='sepal_length', data=df)
 plt.title('Distribution de la longueur du sepale par espece')
 plt.savefig(os.path.join(OUTPUT_DIR, '06_boxplot_espece.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  06_boxplot_espece.png sauvegarde")
+print("  06_boxplot_espece.png sauvegarde")
 
 # Violin plot
 plt.figure(figsize=(12, 6))
@@ -257,7 +257,7 @@ sns.violinplot(x='species', y='sepal_length', data=df)
 plt.title('Violin plot - Longueur du sepale par espece')
 plt.savefig(os.path.join(OUTPUT_DIR, '07_violin.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  07_violin.png sauvegarde")
+print("  07_violin.png sauvegarde")
 
 
 # ============================================================
@@ -276,7 +276,7 @@ plt.title('Distribution des especes')
 plt.xticks(rotation=45)
 plt.savefig(os.path.join(OUTPUT_DIR, '08_bar_especes.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  08_bar_especes.png sauvegarde")
+print("\n  08_bar_especes.png sauvegarde")
 
 # Diagramme circulaire
 plt.figure(figsize=(8, 8))
@@ -285,7 +285,7 @@ plt.title('Repartition des especes')
 plt.ylabel('')
 plt.savefig(os.path.join(OUTPUT_DIR, '09_pie_especes.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  09_pie_especes.png sauvegarde")
+print("  09_pie_especes.png sauvegarde")
 
 
 # ============================================================
@@ -299,7 +299,7 @@ sns.pairplot(df, hue='species', diag_kind='kde')
 plt.suptitle('Matrice de relations entre variables', y=1.02)
 plt.savefig(os.path.join(OUTPUT_DIR, '10_pairplot.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  10_pairplot.png sauvegarde")
+print("\n  10_pairplot.png sauvegarde")
 
 
 # ============================================================
@@ -311,7 +311,7 @@ print("=" * 50)
 
 correlation_matrix = df.select_dtypes(include=[np.number]).corr()
 
-print(f"\n  Matrice de correlation:")
+print("\n  Matrice de correlation:")
 print(correlation_matrix.round(3))
 
 plt.figure(figsize=(10, 8))
@@ -320,7 +320,7 @@ sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',
 plt.title('Matrice de correlation')
 plt.savefig(os.path.join(OUTPUT_DIR, '11_correlation.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  11_correlation.png sauvegarde")
+print("\n  11_correlation.png sauvegarde")
 
 
 # ============================================================
@@ -338,7 +338,7 @@ plt.ylabel('Largeur du sepale')
 plt.title('Relation entre longueur et largeur du sepale')
 plt.savefig(os.path.join(OUTPUT_DIR, '12_scatter_simple.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  12_scatter_simple.png sauvegarde")
+print("\n  12_scatter_simple.png sauvegarde")
 
 # Scatter par categorie
 plt.figure(figsize=(10, 6))
@@ -352,7 +352,7 @@ plt.title('Relation entre longueur et largeur par espece')
 plt.legend()
 plt.savefig(os.path.join(OUTPUT_DIR, '13_scatter_especes.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  13_scatter_especes.png sauvegarde")
+print("  13_scatter_especes.png sauvegarde")
 
 # Scatter avec regression
 sns.lmplot(x='sepal_length', y='sepal_width', data=df,
@@ -360,7 +360,7 @@ sns.lmplot(x='sepal_length', y='sepal_width', data=df,
 plt.title('Relation avec ligne de regression')
 plt.savefig(os.path.join(OUTPUT_DIR, '14_scatter_regression.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  14_scatter_regression.png sauvegarde")
+print("  14_scatter_regression.png sauvegarde")
 
 
 # ============================================================
@@ -375,10 +375,10 @@ stats_par_espece = df.groupby('species').agg({
     'sepal_width': ['mean', 'median', 'std', 'min', 'max']
 })
 
-print(f"\n  Statistiques par espece:")
+print("\n  Statistiques par espece:")
 print(stats_par_espece)
 
-print(f"\n  Moyennes par espece:")
+print("\n  Moyennes par espece:")
 print(df.groupby('species').mean(numeric_only=True))
 
 # Bar plot des moyennes
@@ -389,7 +389,7 @@ plt.title('Comparaison des moyennes par espece')
 plt.xticks(rotation=45)
 plt.savefig(os.path.join(OUTPUT_DIR, '15_bar_moyennes.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  15_bar_moyennes.png sauvegarde")
+print("\n  15_bar_moyennes.png sauvegarde")
 
 # Box plots cote a cote
 fig, axes = plt.subplots(2, 2, figsize=(15, 12))
@@ -409,7 +409,7 @@ axes[1, 1].set_title('Largeur du petale')
 plt.tight_layout()
 plt.savefig(os.path.join(OUTPUT_DIR, '16_boxplots_complets.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  16_boxplots_complets.png sauvegarde")
+print("  16_boxplots_complets.png sauvegarde")
 
 
 # ============================================================
@@ -451,17 +451,17 @@ print("=" * 80)
 titanic = sns.load_dataset('titanic')
 
 # 1. PREMIERES OBSERVATIONS
-print(f"\n1. PREMIERES OBSERVATIONS")
+print("\n1. PREMIERES OBSERVATIONS")
 print("-" * 80)
 print(f"  Dimensions: {titanic.shape[0]} lignes, {titanic.shape[1]} colonnes")
-print(f"\n  Premieres lignes:")
+print("\n  Premieres lignes:")
 print(titanic.head())
 
-print(f"\n  Types de donnees:")
+print("\n  Types de donnees:")
 print(titanic.dtypes)
 
 # 2. VALEURS MANQUANTES
-print(f"\n2. VALEURS MANQUANTES")
+print("\n2. VALEURS MANQUANTES")
 print("-" * 80)
 missing = titanic.isnull().sum()
 missing_percent = (missing / len(titanic)) * 100
@@ -477,15 +477,15 @@ sns.heatmap(titanic.isnull(), cbar=False, yticklabels=False, cmap='viridis')
 plt.title('Carte des valeurs manquantes - Titanic')
 plt.savefig(os.path.join(OUTPUT_DIR, '17_titanic_missing.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  17_titanic_missing.png sauvegarde")
+print("\n  17_titanic_missing.png sauvegarde")
 
 # 3. STATISTIQUES DESCRIPTIVES
-print(f"\n3. STATISTIQUES DESCRIPTIVES")
+print("\n3. STATISTIQUES DESCRIPTIVES")
 print("-" * 80)
 print(titanic.describe())
 
 # 4. ANALYSE DE LA SURVIE
-print(f"\n4. ANALYSE DE LA SURVIE")
+print("\n4. ANALYSE DE LA SURVIE")
 print("-" * 80)
 print(f"  Taux de survie global: {titanic['survived'].mean():.2%}")
 print(f"  Nombre de survivants: {titanic['survived'].sum()}")
@@ -509,10 +509,10 @@ axes[1].set_ylabel('')
 plt.tight_layout()
 plt.savefig(os.path.join(OUTPUT_DIR, '18_titanic_survie.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  18_titanic_survie.png sauvegarde")
+print("  18_titanic_survie.png sauvegarde")
 
 # 5. ANALYSE PAR SEXE
-print(f"\n5. ANALYSE PAR SEXE")
+print("\n5. ANALYSE PAR SEXE")
 print("-" * 80)
 print(titanic.groupby('sex')['survived'].agg(['count', 'sum', 'mean']))
 
@@ -523,10 +523,10 @@ plt.ylabel('Taux de survie')
 plt.xlabel('Sexe')
 plt.savefig(os.path.join(OUTPUT_DIR, '19_titanic_sexe.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  19_titanic_sexe.png sauvegarde")
+print("\n  19_titanic_sexe.png sauvegarde")
 
 # 6. ANALYSE PAR CLASSE
-print(f"\n6. ANALYSE PAR CLASSE")
+print("\n6. ANALYSE PAR CLASSE")
 print("-" * 80)
 print(titanic.groupby('pclass')['survived'].agg(['count', 'sum', 'mean']))
 
@@ -537,10 +537,10 @@ plt.ylabel('Taux de survie')
 plt.xlabel('Classe')
 plt.savefig(os.path.join(OUTPUT_DIR, '20_titanic_classe.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  20_titanic_classe.png sauvegarde")
+print("\n  20_titanic_classe.png sauvegarde")
 
 # 7. ANALYSE PAR AGE
-print(f"\n7. ANALYSE PAR AGE")
+print("\n7. ANALYSE PAR AGE")
 print("-" * 80)
 print(f"  Age moyen: {titanic['age'].mean():.2f} ans")
 print(f"  Age median: {titanic['age'].median():.2f} ans")
@@ -562,16 +562,16 @@ axes[1].set_xticklabels(['Decede', 'Survecu'])
 plt.tight_layout()
 plt.savefig(os.path.join(OUTPUT_DIR, '21_titanic_age.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  21_titanic_age.png sauvegarde")
+print("  21_titanic_age.png sauvegarde")
 
 # 8. ANALYSE CROISEE
-print(f"\n8. ANALYSE CROISEE")
+print("\n8. ANALYSE CROISEE")
 print("-" * 80)
 
 cross_tab = pd.crosstab([titanic['pclass'], titanic['sex']],
                         titanic['survived'],
                         margins=True)
-print(f"  Tableau croise Classe x Sexe x Survie:")
+print("  Tableau croise Classe x Sexe x Survie:")
 print(cross_tab)
 
 g = sns.catplot(x='pclass', y='survived', hue='sex', data=titanic,
@@ -579,10 +579,10 @@ g = sns.catplot(x='pclass', y='survived', hue='sex', data=titanic,
 g.fig.suptitle('Taux de survie par classe et par sexe', y=1.02)
 plt.savefig(os.path.join(OUTPUT_DIR, '22_titanic_croise.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"\n  22_titanic_croise.png sauvegarde")
+print("\n  22_titanic_croise.png sauvegarde")
 
 # 9. CORRELATIONS
-print(f"\n9. MATRICE DE CORRELATION")
+print("\n9. MATRICE DE CORRELATION")
 print("-" * 80)
 
 numeric_cols = titanic.select_dtypes(include=[np.number]).columns
@@ -594,13 +594,13 @@ sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm',
 plt.title('Matrice de correlation - Titanic')
 plt.savefig(os.path.join(OUTPUT_DIR, '23_titanic_correlation.png'), dpi=100, bbox_inches='tight')
 plt.close()
-print(f"  23_titanic_correlation.png sauvegarde")
+print("  23_titanic_correlation.png sauvegarde")
 
-print(f"\n  Correlations avec la survie:")
+print("\n  Correlations avec la survie:")
 print(correlation_matrix['survived'].sort_values(ascending=False).round(3))
 
 # 10. INSIGHTS PRINCIPAUX
-print(f"\n10. INSIGHTS PRINCIPAUX")
+print("\n10. INSIGHTS PRINCIPAUX")
 print("=" * 80)
 print("  1. Taux de survie global: ~38%")
 taux_femmes = titanic[titanic['sex'] == 'female']['survived'].mean()

@@ -683,7 +683,9 @@ plt.show()
 print("\n8. ANALYSE CROISÉE")  
 print("-" * 80)  
 
-# Tableau croisé
+# Tableau croisé (crosstab) : compte les passagers pour chaque combinaison
+# classe x sexe (en lignes) et survie (en colonnes). Contrairement à pivot_table
+# qui agrege une valeur, crosstab compte des effectifs ; margins=True ajoute les totaux.
 cross_tab = pd.crosstab([titanic['pclass'], titanic['sex']],
                         titanic['survived'],
                         margins=True)

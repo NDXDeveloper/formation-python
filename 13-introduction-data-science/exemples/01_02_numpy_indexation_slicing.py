@@ -271,7 +271,7 @@ matrice = np.array([[1, 2, 3],
                     [7, 8, 9]])
 
 lignes, colonnes = np.where(matrice > 5)
-print(f"\n  Positions ou valeur > 5:")
+print("\n  Positions ou valeur > 5:")
 print(f"  Lignes: {lignes}")
 print(f"  Colonnes: {colonnes}")
 print(f"  Valeurs: {matrice[lignes, colonnes]}")
@@ -362,7 +362,7 @@ print("EXEMPLES PRATIQUES")
 print("=" * 50)
 
 # --- Normalisation min-max ---
-print(f"\n  --- Normalisation min-max ---")
+print("\n  --- Normalisation min-max ---")
 donnees = np.array([10, 25, 15, 30, 20, 35])
 min_val = np.min(donnees)
 max_val = np.max(donnees)
@@ -370,7 +370,7 @@ donnees_normalisees = (donnees - min_val) / (max_val - min_val)
 print(f"  Donnees normalisees: {donnees_normalisees}")
 
 # --- Remplacement conditionnel ---
-print(f"\n  --- Remplacement conditionnel ---")
+print("\n  --- Remplacement conditionnel ---")
 donnees = np.array([15, 18, 200, 19, -50, 17, 20, 16], dtype=float)
 seuil_bas = 10
 seuil_haut = 100
@@ -381,7 +381,7 @@ print(f"  Donnees originales: {donnees}")
 print(f"  Donnees nettoyees: {donnees_clean}")
 
 # --- Extraction de sous-matrices ---
-print(f"\n  --- Scores etudiants ---")
+print("\n  --- Scores etudiants ---")
 scores = np.array([[85, 90, 78, 92],
                    [88, 75, 95, 87],
                    [70, 85, 80, 88],
@@ -401,7 +401,7 @@ elite = scores[moyennes > 85]
 print(f"\n  Etudiants d'elite (moyenne > 85):\n{elite}")
 
 # --- Grille de donnees ---
-print(f"\n  --- Grille de donnees ---")
+print("\n  --- Grille de donnees ---")
 x = np.arange(0, 5)
 y = np.arange(0, 3)
 X, Y = np.meshgrid(x, y)
@@ -412,6 +412,6 @@ distances = np.sqrt(X**2 + Y**2)
 print(f"  Distances:\n{np.round(distances, 2)}")
 
 masque = distances < 2.5
-print(f"\n  Points proches (distance < 2.5):")
+print("\n  Points proches (distance < 2.5):")
 print(f"  X: {X[masque]}")
 print(f"  Y: {Y[masque]}")

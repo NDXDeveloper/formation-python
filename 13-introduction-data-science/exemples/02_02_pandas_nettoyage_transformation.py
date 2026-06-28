@@ -35,7 +35,7 @@ print(f"  Total de valeurs manquantes: {df.isnull().sum().sum()}")
 print(f"  Lignes avec NaN: {len(df[df.isnull().any(axis=1)])}")
 
 # --- Suppression ---
-print(f"\n  --- Suppression ---")
+print("\n  --- Suppression ---")
 df = pd.DataFrame({
     'A': [1, 2, np.nan, 4],
     'B': [5, np.nan, np.nan, 8],
@@ -55,7 +55,7 @@ df = pd.DataFrame({
 print(f"\n  dropna(axis=1, how='all'):\n{df.dropna(axis=1, how='all')}")
 
 # --- Remplissage ---
-print(f"\n  --- Remplissage ---")
+print("\n  --- Remplissage ---")
 df = pd.DataFrame({
     'Nom': ['Alice', 'Bob', 'Charlie'],
     'Age': [25, np.nan, 35],
@@ -75,7 +75,7 @@ print(f"\n  fillna(mean):\n{df.fillna(df.mean())}")
 print(f"\n  fillna(median):\n{df.fillna(df.median())}")
 
 # --- Propagation ---
-print(f"\n  --- Propagation ---")
+print("\n  --- Propagation ---")
 df = pd.DataFrame({'Valeur': [1, np.nan, np.nan, 4, np.nan, 6]})
 print(f"  Original:\n{df}")
 print(f"\n  ffill:\n{df.ffill()}")
@@ -83,11 +83,11 @@ print(f"\n  bfill:\n{df.bfill()}")
 print(f"\n  ffill(limit=1):\n{df.ffill(limit=1)}")
 
 # --- Interpolation ---
-print(f"\n  --- Interpolation ---")
+print("\n  --- Interpolation ---")
 print(f"  Interpolation lineaire:\n{df.interpolate()}")
 
 # --- Remplacement valeurs invalides ---
-print(f"\n  --- Remplacement ---")
+print("\n  --- Remplacement ---")
 df = pd.DataFrame({
     'Age': [25, -1, 35, 999, 28],
     'Ville': ['Paris', 'N/A', 'Lyon', 'Inconnu', 'Marseille'],
@@ -409,7 +409,7 @@ print("EXEMPLES PRATIQUES")
 print("=" * 50)
 
 # --- Nettoyage ventes ---
-print(f"\n  --- Nettoyage dataset ventes ---")
+print("\n  --- Nettoyage dataset ventes ---")
 df = pd.DataFrame({
     'Date': ['2024-01-01', '2024-01-02', None, '2024-01-04', '2024-01-05'],
     'Produit': ['Laptop', 'Souris', 'Clavier', 'Laptop', 'Souris'],
@@ -432,7 +432,7 @@ print(f"\n  Total des ventes: {df['Montant'].sum():.2f} EUR")
 print(f"\n  Ventes par client:\n{df.groupby('Client')['Montant'].sum()}")
 
 # --- Combinaison sources ---
-print(f"\n  --- Combinaison de sources ---")
+print("\n  --- Combinaison de sources ---")
 ventes_jan = pd.DataFrame({
     'Produit': ['A', 'B', 'C'],
     'Ventes': [100, 150, 200],

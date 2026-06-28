@@ -44,7 +44,7 @@ serie_constante = pd.Series(100, index=['a', 'b', 'c', 'd'])
 print(f"\n  Series constante:\n{serie_constante}")
 
 # --- Acces ---
-print(f"\n  --- Acces ---")
+print("\n  --- Acces ---")
 temperatures = pd.Series([15, 18, 22, 20, 17],
                          index=['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'])
 
@@ -54,7 +54,7 @@ print(f"  Lundi et Vendredi:\n{temperatures[['Lundi', 'Vendredi']]}")
 print(f"  Lundi a Mercredi:\n{temperatures['Lundi':'Mercredi']}")
 
 # --- Proprietes ---
-print(f"\n  --- Proprietes ---")
+print("\n  --- Proprietes ---")
 print(f"  Valeurs: {temperatures.values}")
 print(f"  Index: {temperatures.index.tolist()}")
 print(f"  Type: {temperatures.dtype}")
@@ -62,7 +62,7 @@ print(f"  Taille: {temperatures.size}")
 print(f"  Forme: {temperatures.shape}")
 
 # --- Operations ---
-print(f"\n  --- Operations arithmetiques ---")
+print("\n  --- Operations arithmetiques ---")
 print(f"  Temperatures + 5:\n{temperatures + 5}")
 print(f"  En Fahrenheit:\n{temperatures * 9/5 + 32}")
 
@@ -76,7 +76,7 @@ evolution = ventes_fevrier - ventes_janvier
 print(f"  Evolution:\n{evolution}")
 
 # --- Statistiques ---
-print(f"\n  --- Statistiques ---")
+print("\n  --- Statistiques ---")
 temperatures = pd.Series([15, 18, 22, 20, 17, 19, 21])
 print(f"  Moyenne: {temperatures.mean():.6f}")
 print(f"  Mediane: {temperatures.median()}")
@@ -87,7 +87,7 @@ print(f"  Somme: {temperatures.sum()}")
 print(f"\n  describe():\n{temperatures.describe()}")
 
 # --- Filtrage ---
-print(f"\n  --- Filtrage ---")
+print("\n  --- Filtrage ---")
 temperatures = pd.Series([15, 18, 22, 20, 17],
                          index=['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'])
 
@@ -139,7 +139,7 @@ df = pd.DataFrame(donnees, index=['E001', 'E002', 'E003'])
 print(f"\n  Avec index personnalise:\n{df}")
 
 # --- Proprietes ---
-print(f"\n  --- Proprietes ---")
+print("\n  --- Proprietes ---")
 df = pd.DataFrame({
     'Nom': ['Alice', 'Bob', 'Charlie', 'David'],
     'Age': [25, 30, 35, 28],
@@ -357,7 +357,7 @@ print("EXEMPLES PRATIQUES")
 print("=" * 50)
 
 # --- Analyse de ventes ---
-print(f"\n  --- Analyse de ventes ---")
+print("\n  --- Analyse de ventes ---")
 ventes = pd.DataFrame({
     'Date': ['2024-01-01', '2024-01-02', '2024-01-03', '2024-01-04', '2024-01-05'],
     'Produit': ['Laptop', 'Souris', 'Clavier', 'Laptop', 'Ecran'],
@@ -375,7 +375,7 @@ ventes_par_produit = ventes.groupby('Produit')['Montant'].sum().sort_values(asce
 print(f"\n  Ventes par produit:\n{ventes_par_produit}")
 
 # --- Notes d'etudiants ---
-print(f"\n  --- Notes d'etudiants ---")
+print("\n  --- Notes d'etudiants ---")
 notes = pd.DataFrame({
     'Etudiant': ['Alice', 'Bob', 'Charlie', 'Diana', 'Eve'],
     'Math': [15, 12, 18, 14, 16],
@@ -396,7 +396,7 @@ mentions = notes[notes['Moyenne'] >= 15]
 print(f"\n  Etudiants avec mention (>=15):\n{mentions[['Etudiant', 'Moyenne']]}")
 
 # --- Suivi d'activite ---
-print(f"\n  --- Suivi d'activite physique ---")
+print("\n  --- Suivi d'activite physique ---")
 activite = pd.DataFrame({
     'Jour': ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
     'Sport': ['Course', 'Repos', 'Velo', 'Course', 'Repos', 'Natation', 'Randonnee'],
