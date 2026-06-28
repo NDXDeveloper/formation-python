@@ -375,7 +375,7 @@ def retry(nombre_essais=3, delai=1):
                 try:
                     print(f"🔄 Tentative {tentative}/{nombre_essais}")
                     resultat = fonction(*args, **kwargs)
-                    print(f"✅ Succès !")
+                    print("✅ Succès !")
                     return resultat
                 except Exception as e:
                     print(f"❌ Erreur : {e}")
@@ -456,6 +456,8 @@ resultat = calculer_factorielle(5)
 # ⏱️  calculer_factorielle a pris 0.0001 secondes
 # ✅ fonction_modifiee a retourné 120
 ```
+
+> 💡 **Pourquoi `fonction_modifiee` et non `calculer_factorielle` ?** `logger` est appliqué *au-dessus* de `mesurer_temps` : il décore donc le **wrapper** renvoyé par `mesurer_temps` (interne, nommé `fonction_modifiee`), et non la fonction d'origine — d'où ce nom dans ses messages. `mesurer_temps`, lui, décore directement `calculer_factorielle` et affiche le bon nom. C'est exactement le problème de perte d'identité que résout `functools.wraps`, présenté juste après.
 
 ---
 
@@ -628,6 +630,8 @@ print(config1 is config2)  # Affiche : True
 
 On peut aussi créer des décorateurs sous forme de classes :
 
+> 📚 Le mécanisme clé ici est la méthode spéciale **`__call__`** : elle rend une **instance** de classe *appelable* comme une fonction — écrire `instance(...)` exécute en réalité `instance.__call__(...)`. C'est ce qui permet à un objet de se comporter comme un décorateur. Cette méthode est détaillée en [3.3 Méthodes spéciales](/03-programmation-orientee-objet/03-methodes-speciales.md).
+
 ### Exemple basique
 
 ```python
@@ -720,6 +724,8 @@ print(personne1)  # {'nom': 'Alice', 'age': 30}
 # personne2 = creer_personne(nom="Bob", age="trente")
 # TypeError: age doit être de type int, pas str
 ```
+
+> ⚠️ **Limite de cet exemple : seuls les arguments passés par leur nom sont vérifiés.** Le wrapper n'inspecte que `kwargs` ; appelé en positionnel — `creer_personne("Bob", "trente")` — la validation est **contournée silencieusement**. Pour vérifier *tous* les arguments quelle que soit la manière de les passer, on relie positions et noms avec `inspect.signature(fonction).bind(*args, **kwargs)`, qui range chaque valeur sous son nom de paramètre.
 
 ### 2. Rate limiting (limitation du taux d'appel)
 

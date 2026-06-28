@@ -155,7 +155,7 @@ print(multiplier_par_5(7))   # Affiche : 35
 print(multiplier_par_10(7))  # Affiche : 70  
 ```
 
-Ici, `creer_multiplicateur` retourne une fonction lambda différente selon la valeur de `n`.
+Ici, `creer_multiplicateur` retourne une fonction lambda différente selon la valeur de `n`. La fonction retournée « se souvient » de `n` même après la fin de `creer_multiplicateur` : ce mécanisme s'appelle une **closure**, détaillée en [5.5 Closures](/05-programmation-fonctionnelle/05-closures-et-prog-fonctionnelle.md).
 
 ### Exemple pratique : Filtrer une liste
 

@@ -16,12 +16,12 @@ def retry(nombre_essais=3, delai=0):
                 try:
                     print(f"[retry] Tentative {tentative}/{nombre_essais}")
                     resultat = fonction(*args, **kwargs)
-                    print(f"[ok] Succès !")
+                    print("[ok] Succès !")
                     return resultat
                 except Exception as e:
                     print(f"[erreur] Erreur : {e}")
                     if tentative < nombre_essais:
-                        print(f"[attente] Nouvel essai...")
+                        print("[attente] Nouvel essai...")
                     else:
                         print(f"[echec] Échec après {nombre_essais} tentatives")
                         raise

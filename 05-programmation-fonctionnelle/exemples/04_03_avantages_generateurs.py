@@ -5,6 +5,8 @@
 #   Fichier source : 04-generateurs.md
 # ============================================================================
 
+import sys
+
 # --- Économie de mémoire ---
 print("=== Économie de mémoire ===")
 
@@ -14,7 +16,7 @@ def creer_grands_nombres():
     return [i for i in range(1000000)]
 
 liste = creer_grands_nombres()
-print(f"Liste - Taille en mémoire : ~{liste.__sizeof__()} bytes")
+print(f"Liste - taille : {sys.getsizeof(liste) / 1_000_000:.1f} Mo")
 
 # Avec un générateur (valeurs à la demande)
 def generer_grands_nombres():
@@ -23,7 +25,7 @@ def generer_grands_nombres():
         yield i
 
 gen = generer_grands_nombres()
-print(f"Générateur - Taille en mémoire : ~{gen.__sizeof__()} bytes")
+print(f"Générateur - taille : {sys.getsizeof(gen)} octets")
 
 # --- Évaluation paresseuse ---
 print("\n=== Évaluation paresseuse ===")

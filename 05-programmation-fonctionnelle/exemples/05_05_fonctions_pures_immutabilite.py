@@ -41,7 +41,7 @@ print("\n=== Style immuable ===")
 
 def augmenter_prix_immuable(produits, pourcentage):
     return [
-        {**produit, 'prix': produit['prix'] * (1 + pourcentage / 100)}
+        {**produit, 'prix': round(produit['prix'] * (1 + pourcentage / 100), 2)}
         for produit in produits
     ]
 

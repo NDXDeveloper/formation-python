@@ -538,13 +538,13 @@ dictionnaire['b'] = 2  # Modifie le dictionnaire original
 # ❌ Style mutable (modifie en place)
 def augmenter_prix_mutable(produits, pourcentage):
     for produit in produits:
-        produit['prix'] *= (1 + pourcentage / 100)
+        produit['prix'] = round(produit['prix'] * (1 + pourcentage / 100), 2)
     return produits
 
 # ✅ Style immuable (crée de nouveaux objets)
 def augmenter_prix_immuable(produits, pourcentage):
     return [
-        {**produit, 'prix': produit['prix'] * (1 + pourcentage / 100)}
+        {**produit, 'prix': round(produit['prix'] * (1 + pourcentage / 100), 2)}
         for produit in produits
     ]
 
@@ -559,6 +559,8 @@ nouveaux_produits = augmenter_prix_immuable(produits_originaux, 10)
 print("Originaux :", produits_originaux)  # Non modifiés  
 print("Nouveaux :", nouveaux_produits)    # Prix augmentés de 10%  
 ```
+
+> 💡 **L'idiome `{**ancien, 'clé': valeur}`** crée un **nouveau** dictionnaire : il copie toutes les paires de `ancien` (le `**` les *déballe*), puis ajoute ou remplace une clé — **sans toucher** à l'original. C'est l'outil de base pour manipuler des dictionnaires de façon immuable. La syntaxe de déballage `**` est présentée au chapitre [2.1 Listes, tuples, dictionnaires et sets](/02-structures-de-donnees/01-listes-tuples-dicts-sets.md).
 
 ### Créer des copies
 

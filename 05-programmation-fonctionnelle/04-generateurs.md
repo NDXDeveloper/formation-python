@@ -86,6 +86,30 @@ print(next(gen))
 # Lève : StopIteration
 ```
 
+### La valeur par défaut de `next()`
+
+Appeler `next()` sur un générateur épuisé lève `StopIteration`. Pour éviter cette erreur, on peut fournir une **valeur par défaut**, retournée à la place de l'exception :
+
+```python
+gen = (x for x in [10, 20])
+
+print(next(gen, None))   # 10
+print(next(gen, None))   # 20
+print(next(gen, None))   # None — épuisé, mais aucune erreur
+```
+
+C'est l'idiome idéal pour récupérer le **premier élément** correspondant à une condition, sans construire de liste intermédiaire :
+
+```python
+nombres = [1, 3, 5, 8, 9, 10]
+
+# Premier nombre pair (ou None s'il n'y en a aucun)
+premier_pair = next((x for x in nombres if x % 2 == 0), None)
+print(premier_pair)  # 8
+```
+
+Comme l'expression génératrice est paresseuse, la recherche **s'arrête dès le premier élément trouvé** — bien plus efficace que `[x for x in nombres if x % 2 == 0][0]`, qui parcourt et stocke toute la liste (et lève `IndexError` si aucun élément ne correspond).
+
 ---
 
 ## Créer des générateurs simples
@@ -142,19 +166,23 @@ for nombre in fibonacci(10):
 **Avec une liste (tout en mémoire) :**
 
 ```python
+import sys
+
 def creer_grands_nombres():
     """Crée une liste de 1 million de nombres."""
     return [i for i in range(1000000)]
 
 # Crée une liste de 1 million d'éléments en mémoire
 liste = creer_grands_nombres()  
-print(f"Taille en mémoire : ~{liste.__sizeof__()} bytes")  
-# Taille en mémoire : ~8000000 bytes (environ 8 MB)
+print(f"Taille de la liste : {sys.getsizeof(liste) / 1_000_000:.1f} Mo")  
+# environ 8 Mo : le million de valeurs est réellement stocké
 ```
 
 **Avec un générateur (valeurs à la demande) :**
 
 ```python
+import sys
+
 def generer_grands_nombres():
     """Génère 1 million de nombres à la demande."""
     for i in range(1000000):
@@ -162,8 +190,9 @@ def generer_grands_nombres():
 
 # Ne crée qu'un objet générateur, pas les valeurs
 gen = generer_grands_nombres()  
-print(f"Taille en mémoire : ~{gen.__sizeof__()} bytes")  
-# Taille en mémoire : ~200 bytes
+print(f"Taille du générateur : {sys.getsizeof(gen)} octets")  
+# ~100 à 200 octets selon la version : une taille fixe et minuscule,
+# quelle que soit la quantité générée
 ```
 
 ### 2. Évaluation paresseuse (lazy evaluation)

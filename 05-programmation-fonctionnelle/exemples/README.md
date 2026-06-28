@@ -1,6 +1,6 @@
 # Exemples - Chapitre 05 : Programmation fonctionnelle
 
-42 fichiers d'exemples exécutables, répartis sur 5 fichiers source.
+43 fichiers d'exemples exécutables, répartis sur 5 fichiers source.
 
 **Convention de nommage** : `SS_NN_description.py`, où `SS` est le numéro de section (01 à 05) et `NN` l'ordre de l'exemple. Exemple : `03_06_functools_wraps.py` = section 5.3, 6ᵉ exemple.
 
@@ -59,21 +59,22 @@ La **logique et les valeurs** restent identiques à celles du cours.
 
 **Fichier source** : `03-decorateurs-avances.md`
 
-## Fichier 04 : Générateurs et expressions génératrices (11 fichiers)
+## Fichier 04 : Générateurs et expressions génératrices (12 fichiers)
 
 | Fichier | Section | Description | Sortie attendue |
 |---------|---------|-------------|-----------------|
 | `04_01_generateur_base.py` | 5.4 | Fonction normale vs générateur, yield, next(), StopIteration | [0,1,2,3,4], generator object, 1/2/3 |
 | `04_02_generateurs_simples.py` | 5.4 | Carrés, nombres pairs, Fibonacci | 0 1 4 9 16, [2,4,6,8,10], 0 1 1 2 3 5 8 13 21 34 |
-| `04_03_avantages_generateurs.py` | 5.4 | Économie mémoire, évaluation paresseuse, séquence infinie | ~8MB vs ~176 bytes, traitement à la demande, 10..19 |
+| `04_03_avantages_generateurs.py` | 5.4 | Économie mémoire, évaluation paresseuse, séquence infinie | 8.4 Mo vs ~100-200 octets, traitement à la demande, 10..19 |
 | `04_04_expressions_generatrices.py` | 5.4 | Syntaxe compacte, comparaison, filtrage, somme, chaîner | [0,1,4,9,16], [4,8,12,16,20], [64,100,144,196,256,324] |
 | `04_05_fonctions_natives.py` | 5.4 | map(), filter(), zip(), enumerate(), reversed() | Doubles, pairs, Alice/Bob/Charlie, 1.pomme, 5 4 3 2 1 |
 | `04_06_cas_usage_pratiques.py` | 5.4 | Lecture fichier, pagination, pipeline, données de test | Lignes erreur, 5 pages, [20,40,60,80,100], 5 utilisateurs |
 | `04_07_generateurs_infinis.py` | 5.4 | Compteur infini avec pas, cycle, répétition | 10 12 14 16 18, rouge vert bleu..., Python x5 |
 | `04_08_methodes_avancees.py` | 5.4 | send(), close(), throw(), `return` dans un générateur | Total 0/10/15/18, fermé, capturée, [1,2,3] + return via yield from |
 | `04_09_yield_from.py` | 5.4 | Combiner générateurs, aplatir listes, parcourir arbre | [1,2,3,4], [1..9], [1,2,4,5,3] |
-| `04_10_comparaison_performance.py` | 5.4 | Mémoire liste vs générateur, épuisement, erreurs courantes | 8 MB vs 0.19 KB, [] après épuisement, TypeError |
+| `04_10_comparaison_performance.py` | 5.4 | Mémoire liste vs générateur, épuisement, erreurs courantes | 8 MB vs ~0.1-0.2 KB, [] après épuisement, TypeError |
 | `04_11_itertools.py` | 5.4 | count(), cycle(), repeat(), chain(), islice(), takewhile(), dropwhile(), accumulate() | 10 12 14 16 18, R G B..., 1 4, 6 4 1, [1,3,6,10,15] |
+| `04_12_next_avec_defaut.py` | 5.4 | `next(gen, defaut)` (évite StopIteration) ; premier élément correspondant | 10, 20, None ; premier pair 8 ; aucun match None |
 
 **Fichier source** : `04-generateurs.md`
 
