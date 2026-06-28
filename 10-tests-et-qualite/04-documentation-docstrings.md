@@ -1456,7 +1456,7 @@ Si un exemple ne correspond plus à la sortie réelle, le test **échoue** — c
 addopts = "--doctest-modules"
 ```
 
-> **Limite** : doctest compare la sortie **caractère par caractère**. Il est donc fragile pour les flottants (`0.1 + 0.2`), les `dict`/`set` dont l'ordre d'affichage peut varier, ou les adresses mémoire. Réservez-le aux exemples à sortie simple et déterministe ; pour le reste, écrivez de vrais tests pytest.
+> **Limite** : doctest compare la sortie **caractère par caractère**. Il est donc fragile pour les flottants (`0.1 + 0.2` ne s'affiche pas `0.3`), les `set` (dont l'ordre d'affichage n'est pas garanti), ou les adresses mémoire (`<... at 0x7f...>`). *(Les `dict`, eux, conservent leur ordre d'insertion depuis Python 3.7 : leur affichage est reproductible et convient au doctest.)* Réservez-le aux exemples à sortie simple et déterministe ; pour le reste, écrivez de vrais tests pytest.
 
 ---
 

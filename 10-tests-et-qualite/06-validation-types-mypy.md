@@ -55,6 +55,15 @@ def additionner(a: int, b: int) -> int:
 resultat = additionner("5", "3")  # Pas d'erreur à l'exécution !
 ```
 
+> **« Ignorés », pas « effacés » — le mécanisme.** Python ne *vérifie* pas les annotations, mais il ne les jette pas non plus : il les **évalue et les range** dans l'attribut `__annotations__` de la fonction (ou de la classe/du module). On peut donc les lire à l'exécution :
+>
+> ```python
+> print(additionner.__annotations__)
+> # {'a': <class 'int'>, 'b': <class 'int'>, 'return': <class 'int'>}
+> ```
+>
+> Python lui-même n'en fait **rien** (fidèle à son typage dynamique) — d'où la nécessité d'un outil **externe** comme mypy pour les contrôler. Mais d'autres bibliothèques les *exploitent* bel et bien à l'exécution : `dataclasses` génère `__init__` à partir des annotations, `pydantic` valide les données entrantes avec, etc. Une annotation n'est donc pas un commentaire inerte.
+
 ### Qu'est-ce que mypy ?
 
 **mypy** est un outil qui analyse votre code et vérifie que les types sont utilisés correctement, **avant** l'exécution.
@@ -864,12 +873,14 @@ def fonction_legacy(data: Any) -> Any:
     # Ignorer cette ligne
     return data.process()  # type: ignore
 
-# Ignorer avec raison
+# Ignorer UNIQUEMENT un code d'erreur précis (les autres restent vérifiés)
 resultat = fonction_externe()  # type: ignore[no-untyped-call]
 
 # Ignorer avec commentaire explicatif
 valeur = calcul_complexe()  # type: ignore  # TODO: Ajouter les types
 ```
+
+Le `[code]` entre crochets restreint l'ignore à **un seul type d'erreur** : `# type: ignore[no-untyped-call]` ne masque que cette erreur-là ; si une *autre* erreur apparaît sur la même ligne, mypy la signalera quand même. C'est bien plus sûr qu'un `# type: ignore` nu, qui masque **toutes** les erreurs de la ligne (y compris une future erreur introduite par mégarde). Le code à placer entre crochets est celui qu'affiche mypy avec l'option `--show-error-codes` (par exemple `[import]`, `[arg-type]`, `[return-value]`).
 
 ### Ignorer un fichier entier
 

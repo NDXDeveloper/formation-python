@@ -1,0 +1,308 @@
+diff --git a/10-tests-et-qualite/01-tests-unitaires-unittest-pytest.md b/10-tests-et-qualite/01-tests-unitaires-unittest-pytest.md
+index 18da9ed..b568f26 100644
+--- a/10-tests-et-qualite/01-tests-unitaires-unittest-pytest.md
++++ b/10-tests-et-qualite/01-tests-unitaires-unittest-pytest.md
+@@ -404,6 +404,51 @@ def test_approximation():
+     assert 3.141592 == pytest.approx(3.14, abs=0.01)
+ ```
+ 
++> **Pourquoi un simple `assert` suffit-il ?** En Python pur, un `assert a == b` qui échoue lève un `AssertionError` *sans aucun détail* sur les valeurs comparées. Si pytest parvient malgré tout à les afficher, c'est grâce à la **réécriture des assertions** (*assertion rewriting*) : au moment où il importe un fichier de test, pytest en réécrit le bytecode pour instrumenter chaque `assert` et mémoriser la valeur de ses sous-expressions. En cas d'échec, le rapport devient explicite :
++>
++> ```
++> >       assert additionner(2, 2) == 5
++> E       assert 4 == 5
++> E        +  where 4 = additionner(2, 2)
++> ```
++>
++> C'est pour cette raison que vous n'avez pas besoin des méthodes `assertEqual`, `assertIn`… de unittest : le `assert` natif, une fois réécrit, fournit déjà un diagnostic détaillé. (La réécriture ne s'applique qu'aux fichiers de test découverts par pytest ; pour instrumenter du code d'assertion situé dans un module utilitaire importé, on l'enregistre explicitement avec `pytest.register_assert_rewrite`.)
++
++### Tester les exceptions (et leur message)
++
++On a déjà vu `pytest.raises(...)` pour vérifier qu'une exception est bien levée. Deux compléments très courants méritent d'être connus.
++
++**Vérifier le message avec `match`** — le paramètre `match` contrôle que le message de l'exception correspond à une **expression régulière**, recherchée avec `re.search` (une simple sous-chaîne suffit donc). Le test échoue si l'exception est bien levée mais que son message ne correspond pas :
++
++```python
++import pytest
++
++def retirer(solde, montant):
++    if montant > solde:
++        raise ValueError("Solde insuffisant pour ce retrait")
++    return solde - montant
++
++def test_retrait_trop_grand():
++    # match : sous-chaîne (ou motif regex) attendue dans le message d'erreur
++    with pytest.raises(ValueError, match="insuffisant"):
++        retirer(100, 500)
++```
++
++C'est ce paramètre `match` que l'on retrouvera dans la suite du cours (par exemple `match="Email invalide"` ou `match="prix"`) : il rend le test plus précis en s'assurant que c'est *bien la bonne* erreur qui est levée, et pas une autre `ValueError`.
++
++**Inspecter l'exception avec `as excinfo`** — pour aller plus loin (type exact, message complet, attributs), capturez l'objet `ExceptionInfo` renvoyé par `pytest.raises` :
++
++```python
++def test_details_exception():
++    with pytest.raises(ValueError) as excinfo:
++        retirer(100, 500)
++
++    assert excinfo.type is ValueError            # le type effectivement levé
++    assert "insuffisant" in str(excinfo.value)   # excinfo.value = l'exception elle-même
++```
++
++> ⚠️ `match` est une **expression régulière**, pas une égalité de chaîne : des caractères comme `(`, `)`, `[`, `.`, `+`, `$` y ont une signification spéciale. Pour rechercher un message qui contient littéralement ces caractères, échappez-les (`\\(`) ou passez par `re.escape(...)`.
++
+ ### Fixtures : Préparer des données réutilisables
+ 
+ Les **fixtures** sont la façon dont pytest gère la préparation des données de test. Elles sont plus flexibles que `setUp()` et `tearDown()` :
+@@ -433,6 +478,8 @@ def test_avec_utilisateur(utilisateur_test):
+     assert utilisateur_test.actif is True
+ ```
+ 
++> **Comment la fixture arrive-t-elle dans le test ?** pytest fait correspondre le **nom du paramètre** de la fonction de test au **nom d'une fixture**. En voyant `def test_avec_liste(liste_nombres)`, il cherche une fixture appelée `liste_nombres`, l'exécute, et **injecte sa valeur de retour** dans le paramètre. C'est de l'*injection de dépendances* : le test déclare ce dont il a besoin (par le nom), pytest se charge de le construire et de le fournir. C'est aussi ce qui les rend plus flexibles que `setUp`/`tearDown` : un test ne reçoit **que** les fixtures qu'il nomme (pas un état partagé monolithique), et les fixtures peuvent elles-mêmes en demander d'autres. Un paramètre sans fixture correspondante déclenche une erreur `fixture '...' not found`.
++
+ ### Fixtures avec setup et teardown
+ 
+ Vous pouvez créer des fixtures qui font du nettoyage après utilisation :
+diff --git a/10-tests-et-qualite/02-mocking-et-fixtures.md b/10-tests-et-qualite/02-mocking-et-fixtures.md
+index ab77db7..afd3da7 100644
+--- a/10-tests-et-qualite/02-mocking-et-fixtures.md
++++ b/10-tests-et-qualite/02-mocking-et-fixtures.md
+@@ -924,6 +924,8 @@ print(resultats)  # [{'id': 1, 'nom': 'Alice'}]
+ print(len(db))  # 10  
+ ```
+ 
++> **Pourquoi deux classes (`Mock` et `MagicMock`) ?** Python cherche les méthodes spéciales (`__len__`, `__iter__`, `__enter__`…) sur le **type** de l'objet, jamais sur l'instance. Or un `Mock` crée ses attributs à la volée *sur l'instance* : `len(mock)` lèverait donc `TypeError`, car `__len__` n'est pas trouvé sur la classe. `MagicMock` règle le problème en **pré-configurant ces dunders** sur sa classe (avec des valeurs par défaut sensées : `__len__` → `0`, `__bool__` → `True`, etc.). Règle pratique : prenez `MagicMock` dès que le code testé fait `len(...)`, `for ... in ...`, `with ...`, `mock[clé]` ou une comparaison sur le mock ; un simple `Mock` suffit pour de simples appels de méthodes (`mock.faire(...)`).
++
+ ---
+ 
+ ## Patch : Remplacer temporairement
+@@ -1060,6 +1062,65 @@ def test_patch_attribut(monkeypatch):
+ 
+ Principales méthodes : `setattr`, `delattr`, `setenv`, `delenv`, `setitem`, `delitem`, `chdir`. En pratique : `monkeypatch` est plus concis pour les **variables d'environnement** et les **attributs** ; `unittest.mock.patch` reste préférable pour les mocks avec `return_value`/`side_effect` et les **assertions d'appel** (`assert_called_once`, etc.).
+ 
++### pytest-mock : la fixture `mocker`
++
++`monkeypatch` ne crée pas de `Mock` et ne vérifie pas les appels ; `unittest.mock.patch` le fait, mais impose un `with` ou un décorateur. Le plugin **`pytest-mock`** combine les deux avantages : il fournit une fixture **`mocker`** qui enveloppe tout `unittest.mock` et **annule automatiquement** les patches à la fin du test — sans gestionnaire de contexte ni décorateur.
++
++```bash
++pip install pytest-mock
++```
++
++L'API de `mocker` reprend exactement celle de `unittest.mock` (`mocker.patch`, `mocker.patch.object`, `mocker.Mock`, `mocker.MagicMock`...), mais sans imbrication :
++
++```python
++def obtenir_taux_change():
++    """Appel réseau coûteux que l'on ne veut pas exécuter dans un test."""
++    ...
++
++def convertir_en_euros(montant_usd):
++    return round(montant_usd * obtenir_taux_change(), 2)
++
++def test_conversion(mocker):
++    # Patch sans 'with' ni décorateur ; restauré automatiquement après le test
++    faux_taux = mocker.patch("banque.obtenir_taux_change", return_value=0.90)
++
++    assert convertir_en_euros(100) == 90.0
++    faux_taux.assert_called_once()
++```
++
++L'avantage est surtout net quand on patche **plusieurs cibles** : avec `unittest.mock`, les décorateurs s'empilent et leurs paramètres arrivent dans l'ordre **inversé** ; avec `mocker`, chaque patch est une ligne lue de haut en bas.
++
++```python
++# unittest.mock : ordre des décorateurs inversé par rapport aux paramètres
++@patch("module.b")
++@patch("module.a")
++def test_classique(mock_a, mock_b):   # attention : a puis b !
++    ...
++
++# pytest-mock : pas d'inversion, une ligne par cible
++def test_avec_mocker(mocker):
++    mock_a = mocker.patch("module.a")
++    mock_b = mocker.patch("module.b")
++    ...
++```
++
++`mocker` ajoute aussi `mocker.spy(objet, "methode")`, qui **espionne** un objet réel (enregistre les appels reçus) tout en **laissant la vraie fonction s'exécuter** — pratique pour vérifier qu'une dépendance est bien appelée sans pour autant la remplacer :
++
++```python
++def test_spy(mocker):
++    espion = mocker.spy(calculs, "additionner")
++    assert calculs.additionner(2, 3) == 5   # la vraie fonction tourne
++    espion.assert_called_once_with(2, 3)
++```
++
++**Quand utiliser quoi ?**
++
++- **`monkeypatch`** (natif pytest) : variables d'environnement, attributs simples, entrées de dictionnaire.
++- **`unittest.mock.patch`** : disponible partout (y compris hors pytest), standard de la bibliothèque.
++- **`mocker`** (pytest-mock) : la puissance complète de `unittest.mock` sans `with` ni décorateur — à privilégier au sein d'une suite pytest.
++
++> L'exemple exécutable complet (`return_value`, `side_effect`, `spy`) figure dans `exemples/02_15_pytest_mock.py`.
++
+ ---
+ 
+ ## Bonnes pratiques
+diff --git a/10-tests-et-qualite/04-documentation-docstrings.md b/10-tests-et-qualite/04-documentation-docstrings.md
+index 3ea3d38..03ce35a 100644
+--- a/10-tests-et-qualite/04-documentation-docstrings.md
++++ b/10-tests-et-qualite/04-documentation-docstrings.md
+@@ -1456,7 +1456,7 @@ Si un exemple ne correspond plus à la sortie réelle, le test **échoue** — c
+ addopts = "--doctest-modules"
+ ```
+ 
+-> **Limite** : doctest compare la sortie **caractère par caractère**. Il est donc fragile pour les flottants (`0.1 + 0.2`), les `dict`/`set` dont l'ordre d'affichage peut varier, ou les adresses mémoire. Réservez-le aux exemples à sortie simple et déterministe ; pour le reste, écrivez de vrais tests pytest.
++> **Limite** : doctest compare la sortie **caractère par caractère**. Il est donc fragile pour les flottants (`0.1 + 0.2` ne s'affiche pas `0.3`), les `set` (dont l'ordre d'affichage n'est pas garanti), ou les adresses mémoire (`<... at 0x7f...>`). *(Les `dict`, eux, conservent leur ordre d'insertion depuis Python 3.7 : leur affichage est reproductible et convient au doctest.)* Réservez-le aux exemples à sortie simple et déterministe ; pour le reste, écrivez de vrais tests pytest.
+ 
+ ---
+ 
+diff --git a/10-tests-et-qualite/05-pep8-et-linting.md b/10-tests-et-qualite/05-pep8-et-linting.md
+index 4e07272..b0c49a8 100644
+--- a/10-tests-et-qualite/05-pep8-et-linting.md
++++ b/10-tests-et-qualite/05-pep8-et-linting.md
+@@ -893,6 +893,8 @@ known-first-party = ["mon_package"]
+ 
+ Ruff est compatible avec les règles de flake8 et utilise les mêmes codes d'erreur, ce qui facilite la migration.
+ 
++> **Pourquoi un tel écart de vitesse ?** Ce n'est pas *seulement* le langage. flake8 orchestre plusieurs outils Python (pycodestyle, pyflakes, mccabe…) qui ré-analysent chacun le fichier de leur côté. Ruff, lui, **parse le fichier une seule fois** en un arbre syntaxique (AST) partagé par *toutes* ses règles — le tout en code natif (Rust, sans interpréteur Python à démarrer), avec parallélisme multi-cœur et mise en cache des résultats. C'est cette architecture « un seul passage » — bien plus que le seul choix de Rust — qui explique le facteur 10-100×.
++
+ ---
+ 
+ ## Configuration d'un projet complet
+@@ -1298,7 +1300,7 @@ Les imports sont organisés.
+ 
+ ### Étape 4 : Corrections manuelles
+ 
+-On finalise à la main ce que les outils ne font pas : ajout des docstrings, noms explicites, et **suppression des imports inutilisés** (`os`, `sys` et `datetime` n'étaient jamais utilisés — un linter les signale en `F401`).
++On finalise à la main ce que les outils ne font pas : ajout des docstrings, noms explicites, et **suppression des imports inutilisés** (`os` et `sys`, jamais utilisés, sont signalés en `F401` ; le `from datetime import *` — à proscrire — est quant à lui signalé en `F403`, comme à l'étape 1).
+ 
+ ```python
+ """Module de gestion d'utilisateurs."""
+diff --git a/10-tests-et-qualite/06-validation-types-mypy.md b/10-tests-et-qualite/06-validation-types-mypy.md
+index e842b0a..849339b 100644
+--- a/10-tests-et-qualite/06-validation-types-mypy.md
++++ b/10-tests-et-qualite/06-validation-types-mypy.md
+@@ -55,6 +55,15 @@ def additionner(a: int, b: int) -> int:
+ resultat = additionner("5", "3")  # Pas d'erreur à l'exécution !
+ ```
+ 
++> **« Ignorés », pas « effacés » — le mécanisme.** Python ne *vérifie* pas les annotations, mais il ne les jette pas non plus : il les **évalue et les range** dans l'attribut `__annotations__` de la fonction (ou de la classe/du module). On peut donc les lire à l'exécution :
++>
++> ```python
++> print(additionner.__annotations__)
++> # {'a': <class 'int'>, 'b': <class 'int'>, 'return': <class 'int'>}
++> ```
++>
++> Python lui-même n'en fait **rien** (fidèle à son typage dynamique) — d'où la nécessité d'un outil **externe** comme mypy pour les contrôler. Mais d'autres bibliothèques les *exploitent* bel et bien à l'exécution : `dataclasses` génère `__init__` à partir des annotations, `pydantic` valide les données entrantes avec, etc. Une annotation n'est donc pas un commentaire inerte.
++
+ ### Qu'est-ce que mypy ?
+ 
+ **mypy** est un outil qui analyse votre code et vérifie que les types sont utilisés correctement, **avant** l'exécution.
+@@ -864,13 +873,15 @@ def fonction_legacy(data: Any) -> Any:
+     # Ignorer cette ligne
+     return data.process()  # type: ignore
+ 
+-# Ignorer avec raison
++# Ignorer UNIQUEMENT un code d'erreur précis (les autres restent vérifiés)
+ resultat = fonction_externe()  # type: ignore[no-untyped-call]
+ 
+ # Ignorer avec commentaire explicatif
+ valeur = calcul_complexe()  # type: ignore  # TODO: Ajouter les types
+ ```
+ 
++Le `[code]` entre crochets restreint l'ignore à **un seul type d'erreur** : `# type: ignore[no-untyped-call]` ne masque que cette erreur-là ; si une *autre* erreur apparaît sur la même ligne, mypy la signalera quand même. C'est bien plus sûr qu'un `# type: ignore` nu, qui masque **toutes** les erreurs de la ligne (y compris une future erreur introduite par mégarde). Le code à placer entre crochets est celui qu'affiche mypy avec l'option `--show-error-codes` (par exemple `[import]`, `[arg-type]`, `[return-value]`).
++
+ ### Ignorer un fichier entier
+ 
+ ```python
+diff --git a/10-tests-et-qualite/exemples/04_03_fonctions_documentees.py b/10-tests-et-qualite/exemples/04_03_fonctions_documentees.py
+index 93dbd08..f23d460 100644
+--- a/10-tests-et-qualite/exemples/04_03_fonctions_documentees.py
++++ b/10-tests-et-qualite/exemples/04_03_fonctions_documentees.py
+@@ -99,7 +99,7 @@ def formater_prix(prix, devise="EUR"):
+         >>> formater_prix(100, "USD")
+         '100.00 $'
+     """
+-    symboles = {"EUR": "EUR", "USD": "$", "GBP": "£"}
++    symboles = {"EUR": "EUR", "USD": "$", "GBP": "GBP"}
+     symbole = symboles.get(devise, devise)
+     return f"{prix:.2f} {symbole}"
+ 
+diff --git a/10-tests-et-qualite/exemples/06_03_classes_typees.py b/10-tests-et-qualite/exemples/06_03_classes_typees.py
+index f2efe74..ff062de 100644
+--- a/10-tests-et-qualite/exemples/06_03_classes_typees.py
++++ b/10-tests-et-qualite/exemples/06_03_classes_typees.py
+@@ -5,6 +5,7 @@
+ #   Fichier source : 06-validation-types-mypy.md
+ # ============================================================================
+ 
++import sys
+ from typing import TypeAlias, TypeVar, Generic
+ 
+ # --- Classe avec annotations ---
+@@ -120,11 +121,16 @@ print(f"boite_liste.obtenir() = {boite_liste.obtenir()}")
+ # --- PEP 695 : syntaxe moderne (Python 3.12+) ---
+ print("\n=== PEP 695 (Python 3.12+) ===")
+ 
+-# Le mot-cle 'type' remplace TypeAlias (deprecie depuis 3.12)
++# La syntaxe PEP 695 (mot-cle 'type', 'class C[T]', 'def f[T]') est une
++# nouveaute SYNTAXIQUE : sur Python < 3.12 elle provoquerait une SyntaxError
++# des le chargement du fichier. On l'isole donc dans une chaine executee
++# seulement si l'interpreteur est assez recent ; le reste du fichier reste
++# ainsi portable (3.10+). Le .md, lui, montre cette syntaxe directement
++# (bloc illustratif non execute).
++_demo_pep695 = '''
+ type Identifiant = int
+ 
+ 
+-# Generiques sans declarer de TypeVar explicite
+ class BoiteMod[T]:
+     """Boite generique en syntaxe PEP 695."""
+ 
+@@ -146,3 +152,9 @@ boite_mod: BoiteMod[str] = BoiteMod("PEP 695")
+ print(f"identifiant (type Identifiant = int) = {identifiant}")
+ print(f"BoiteMod('PEP 695').obtenir() = {boite_mod.obtenir()}")
+ print(f"premier([10, 20, 30]) = {premier([10, 20, 30])}")
++'''
++
++if sys.version_info >= (3, 12):
++    exec(_demo_pep695)
++else:
++    print("  (syntaxe PEP 695 ignoree : necessite Python 3.12+)")
+diff --git a/10-tests-et-qualite/exemples/README.md b/10-tests-et-qualite/exemples/README.md
+index c6a29cc..9cacb5a 100644
+--- a/10-tests-et-qualite/exemples/README.md
++++ b/10-tests-et-qualite/exemples/README.md
+@@ -4,7 +4,7 @@ Ce dossier contient les exemples exécutables du chapitre 10, numérotés selon
+ 
+ **Exécution** : selon le fichier, on utilise `unittest`, `pytest` ou l'exécution directe `python3` (voir la commande dans chaque tableau). Les tests `pytest` ajoutent `-o "addopts="` pour ignorer une éventuelle configuration globale du dépôt.
+ 
+-> Les sorties annoncées (nombres de tests, pourcentages de couverture) ont été vérifiées avec pytest 9, coverage 7 et mypy sur Python 3.12.
++> Les sorties annoncées (nombres de tests, pourcentages de couverture) ont été vérifiées avec pytest 9, coverage 7 et mypy sur Python 3.12. Tous les exemples s'exécutent de Python 3.10 à 3.14 (la démo PEP 695 de `06_03` n'apparaît qu'à partir de 3.12 ; elle est ignorée avec un message en deçà). Un seul exemple (`02_15_pytest_mock.py`) requiert le plugin `pytest-mock` (`pip install pytest-mock`).
+ 
+ ## Modules source (utilisés par les tests)
+ 
+@@ -33,6 +33,7 @@ Source : `01-tests-unitaires-unittest-pytest.md`
+ | `01_03_test_utilisateur_unittest.py` | Tests unittest pour Utilisateur (création, activation, désactivation, changement d'email, représentation) | `python3 -m unittest 01_03_test_utilisateur_unittest -v` | 6 tests OK |
+ | `01_04_test_panier_unittest.py` | Tests unittest pour Panier (panier vide, ajout, total, prix négatif, quantité zéro, vidage, totaux paramétrés) | `python3 -m unittest 01_04_test_panier_unittest -v` | 9 tests OK |
+ | `01_05_skip_xfail_pytest.py` | Marqueurs pytest pour contrôler l'exécution : `skip`, `skipif`, `xfail` (et `xpass`) | `pytest 01_05_skip_xfail_pytest.py -v -o "addopts="` | 2 passed, 1 skipped, 1 xfailed, 1 xpassed |
++| `01_06_pytest_raises.py` | Tester les exceptions avec `pytest.raises` : exception levée, message via `match` (regex), inspection avec `as excinfo` | `pytest 01_06_pytest_raises.py -v -o "addopts="` | 4 tests OK |
+ 
+ ---
+ 
+@@ -56,6 +57,7 @@ Source : `02-mocking-et-fixtures.md`
+ | `02_12_test_paiement.py` | Cas pratique complet : service de paiement (API + DB + datetime mockés) | `pytest 02_12_test_paiement.py -v -o "addopts="` | 5 tests OK |
+ | `02_13_monkeypatch.py` | `monkeypatch` (setenv, delenv, setattr, setitem) avec restauration automatique | `pytest 02_13_monkeypatch.py -v -o "addopts="` | 4 tests OK |
+ | `02_14_conftest_demo/` | Partage de fixtures via `conftest.py` (sous-dossier : `compte.py`, `conftest.py`, `test_depot.py`) | `cd 02_14_conftest_demo && pytest -v -o "addopts="` | 2 tests OK (fixture trouvée sans import) |
++| `02_15_pytest_mock.py` | `pytest-mock` : la fixture `mocker` (patch sans `with`/décorateur, `return_value`, `side_effect`, `spy`) — **nécessite `pip install pytest-mock`** | `pytest 02_15_pytest_mock.py -v -o "addopts="` | 3 tests OK |
+ 
+ ---
+ 
+@@ -111,7 +113,7 @@ Source : `06-validation-types-mypy.md`
+ |---------|-------------|-----------|-----------------|
+ | `06_01_types_bases.py` | Types de base (typage dynamique, type hints, variables annotées) | `python3 06_01_types_bases.py` | Types, fonctions typées, TypeError |
+ | `06_02_types_complexes.py` | Types complexes (list, dict, Optional, Union, Callable, Iterable, Sequence, Mapping) | `python3 06_02_types_complexes.py` | Collections typées, fonctions génériques |
+-| `06_03_classes_typees.py` | Classes typées (annotations, TypeAlias, Generic[T]) **et syntaxe PEP 695** (`type`, `class C[T]`, 3.12+) | `python3 06_03_classes_typees.py` | Utilisateur, Boite générique, variante PEP 695 |
++| `06_03_classes_typees.py` | Classes typées (annotations, TypeAlias, Generic[T]) **et syntaxe PEP 695** (`type`, `class C[T]`, 3.12+) | `python3 06_03_classes_typees.py` | Utilisateur, Boite générique, variante PEP 695 (exécutée sur Python 3.12+ ; ignorée avec un message en deçà) |
+ | `06_04_types_avances.py` | Types avancés (Literal, TypedDict, Final, Protocol) | `python3 06_04_types_avances.py` | Démonstrations de chaque type avancé |
+ | `06_05_api_taches_typee.py` | Cas pratique complet : API tâches avec types (Enum, TypedDict) | `python3 06_05_api_taches_typee.py` | CRUD tâches typées, statistiques |
+ 

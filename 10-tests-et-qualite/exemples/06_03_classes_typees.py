@@ -5,6 +5,7 @@
 #   Fichier source : 06-validation-types-mypy.md
 # ============================================================================
 
+import sys
 from typing import TypeAlias, TypeVar, Generic
 
 # --- Classe avec annotations ---
@@ -120,11 +121,16 @@ print(f"boite_liste.obtenir() = {boite_liste.obtenir()}")
 # --- PEP 695 : syntaxe moderne (Python 3.12+) ---
 print("\n=== PEP 695 (Python 3.12+) ===")
 
-# Le mot-cle 'type' remplace TypeAlias (deprecie depuis 3.12)
+# La syntaxe PEP 695 (mot-cle 'type', 'class C[T]', 'def f[T]') est une
+# nouveaute SYNTAXIQUE : sur Python < 3.12 elle provoquerait une SyntaxError
+# des le chargement du fichier. On l'isole donc dans une chaine executee
+# seulement si l'interpreteur est assez recent ; le reste du fichier reste
+# ainsi portable (3.10+). Le .md, lui, montre cette syntaxe directement
+# (bloc illustratif non execute).
+_demo_pep695 = '''
 type Identifiant = int
 
 
-# Generiques sans declarer de TypeVar explicite
 class BoiteMod[T]:
     """Boite generique en syntaxe PEP 695."""
 
@@ -146,3 +152,9 @@ boite_mod: BoiteMod[str] = BoiteMod("PEP 695")
 print(f"identifiant (type Identifiant = int) = {identifiant}")
 print(f"BoiteMod('PEP 695').obtenir() = {boite_mod.obtenir()}")
 print(f"premier([10, 20, 30]) = {premier([10, 20, 30])}")
+'''
+
+if sys.version_info >= (3, 12):
+    exec(_demo_pep695)
+else:
+    print("  (syntaxe PEP 695 ignoree : necessite Python 3.12+)")

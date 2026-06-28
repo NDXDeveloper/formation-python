@@ -4,7 +4,7 @@ Ce dossier contient les exemples exécutables du chapitre 10, numérotés selon 
 
 **Exécution** : selon le fichier, on utilise `unittest`, `pytest` ou l'exécution directe `python3` (voir la commande dans chaque tableau). Les tests `pytest` ajoutent `-o "addopts="` pour ignorer une éventuelle configuration globale du dépôt.
 
-> Les sorties annoncées (nombres de tests, pourcentages de couverture) ont été vérifiées avec pytest 9, coverage 7 et mypy sur Python 3.12.
+> Les sorties annoncées (nombres de tests, pourcentages de couverture) ont été vérifiées avec pytest 9, coverage 7 et mypy sur Python 3.12. Tous les exemples s'exécutent de Python 3.10 à 3.14 (la démo PEP 695 de `06_03` n'apparaît qu'à partir de 3.12 ; elle est ignorée avec un message en deçà). Un seul exemple (`02_15_pytest_mock.py`) requiert le plugin `pytest-mock` (`pip install pytest-mock`).
 
 ## Modules source (utilisés par les tests)
 
@@ -33,6 +33,7 @@ Source : `01-tests-unitaires-unittest-pytest.md`
 | `01_03_test_utilisateur_unittest.py` | Tests unittest pour Utilisateur (création, activation, désactivation, changement d'email, représentation) | `python3 -m unittest 01_03_test_utilisateur_unittest -v` | 6 tests OK |
 | `01_04_test_panier_unittest.py` | Tests unittest pour Panier (panier vide, ajout, total, prix négatif, quantité zéro, vidage, totaux paramétrés) | `python3 -m unittest 01_04_test_panier_unittest -v` | 9 tests OK |
 | `01_05_skip_xfail_pytest.py` | Marqueurs pytest pour contrôler l'exécution : `skip`, `skipif`, `xfail` (et `xpass`) | `pytest 01_05_skip_xfail_pytest.py -v -o "addopts="` | 2 passed, 1 skipped, 1 xfailed, 1 xpassed |
+| `01_06_pytest_raises.py` | Tester les exceptions avec `pytest.raises` : exception levée, message via `match` (regex), inspection avec `as excinfo` | `pytest 01_06_pytest_raises.py -v -o "addopts="` | 4 tests OK |
 
 ---
 
@@ -56,6 +57,7 @@ Source : `02-mocking-et-fixtures.md`
 | `02_12_test_paiement.py` | Cas pratique complet : service de paiement (API + DB + datetime mockés) | `pytest 02_12_test_paiement.py -v -o "addopts="` | 5 tests OK |
 | `02_13_monkeypatch.py` | `monkeypatch` (setenv, delenv, setattr, setitem) avec restauration automatique | `pytest 02_13_monkeypatch.py -v -o "addopts="` | 4 tests OK |
 | `02_14_conftest_demo/` | Partage de fixtures via `conftest.py` (sous-dossier : `compte.py`, `conftest.py`, `test_depot.py`) | `cd 02_14_conftest_demo && pytest -v -o "addopts="` | 2 tests OK (fixture trouvée sans import) |
+| `02_15_pytest_mock.py` | `pytest-mock` : la fixture `mocker` (patch sans `with`/décorateur, `return_value`, `side_effect`, `spy`) — **nécessite `pip install pytest-mock`** | `pytest 02_15_pytest_mock.py -v -o "addopts="` | 3 tests OK |
 
 ---
 
@@ -111,7 +113,7 @@ Source : `06-validation-types-mypy.md`
 |---------|-------------|-----------|-----------------|
 | `06_01_types_bases.py` | Types de base (typage dynamique, type hints, variables annotées) | `python3 06_01_types_bases.py` | Types, fonctions typées, TypeError |
 | `06_02_types_complexes.py` | Types complexes (list, dict, Optional, Union, Callable, Iterable, Sequence, Mapping) | `python3 06_02_types_complexes.py` | Collections typées, fonctions génériques |
-| `06_03_classes_typees.py` | Classes typées (annotations, TypeAlias, Generic[T]) **et syntaxe PEP 695** (`type`, `class C[T]`, 3.12+) | `python3 06_03_classes_typees.py` | Utilisateur, Boite générique, variante PEP 695 |
+| `06_03_classes_typees.py` | Classes typées (annotations, TypeAlias, Generic[T]) **et syntaxe PEP 695** (`type`, `class C[T]`, 3.12+) | `python3 06_03_classes_typees.py` | Utilisateur, Boite générique, variante PEP 695 (exécutée sur Python 3.12+ ; ignorée avec un message en deçà) |
 | `06_04_types_avances.py` | Types avancés (Literal, TypedDict, Final, Protocol) | `python3 06_04_types_avances.py` | Démonstrations de chaque type avancé |
 | `06_05_api_taches_typee.py` | Cas pratique complet : API tâches avec types (Enum, TypedDict) | `python3 06_05_api_taches_typee.py` | CRUD tâches typées, statistiques |
 

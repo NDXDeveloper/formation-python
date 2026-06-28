@@ -404,6 +404,51 @@ def test_approximation():
     assert 3.141592 == pytest.approx(3.14, abs=0.01)
 ```
 
+> **Pourquoi un simple `assert` suffit-il ?** En Python pur, un `assert a == b` qui échoue lève un `AssertionError` *sans aucun détail* sur les valeurs comparées. Si pytest parvient malgré tout à les afficher, c'est grâce à la **réécriture des assertions** (*assertion rewriting*) : au moment où il importe un fichier de test, pytest en réécrit le bytecode pour instrumenter chaque `assert` et mémoriser la valeur de ses sous-expressions. En cas d'échec, le rapport devient explicite :
+>
+> ```
+> >       assert additionner(2, 2) == 5
+> E       assert 4 == 5
+> E        +  where 4 = additionner(2, 2)
+> ```
+>
+> C'est pour cette raison que vous n'avez pas besoin des méthodes `assertEqual`, `assertIn`… de unittest : le `assert` natif, une fois réécrit, fournit déjà un diagnostic détaillé. (La réécriture ne s'applique qu'aux fichiers de test découverts par pytest ; pour instrumenter du code d'assertion situé dans un module utilitaire importé, on l'enregistre explicitement avec `pytest.register_assert_rewrite`.)
+
+### Tester les exceptions (et leur message)
+
+On a déjà vu `pytest.raises(...)` pour vérifier qu'une exception est bien levée. Deux compléments très courants méritent d'être connus.
+
+**Vérifier le message avec `match`** — le paramètre `match` contrôle que le message de l'exception correspond à une **expression régulière**, recherchée avec `re.search` (une simple sous-chaîne suffit donc). Le test échoue si l'exception est bien levée mais que son message ne correspond pas :
+
+```python
+import pytest
+
+def retirer(solde, montant):
+    if montant > solde:
+        raise ValueError("Solde insuffisant pour ce retrait")
+    return solde - montant
+
+def test_retrait_trop_grand():
+    # match : sous-chaîne (ou motif regex) attendue dans le message d'erreur
+    with pytest.raises(ValueError, match="insuffisant"):
+        retirer(100, 500)
+```
+
+C'est ce paramètre `match` que l'on retrouvera dans la suite du cours (par exemple `match="Email invalide"` ou `match="prix"`) : il rend le test plus précis en s'assurant que c'est *bien la bonne* erreur qui est levée, et pas une autre `ValueError`.
+
+**Inspecter l'exception avec `as excinfo`** — pour aller plus loin (type exact, message complet, attributs), capturez l'objet `ExceptionInfo` renvoyé par `pytest.raises` :
+
+```python
+def test_details_exception():
+    with pytest.raises(ValueError) as excinfo:
+        retirer(100, 500)
+
+    assert excinfo.type is ValueError            # le type effectivement levé
+    assert "insuffisant" in str(excinfo.value)   # excinfo.value = l'exception elle-même
+```
+
+> ⚠️ `match` est une **expression régulière**, pas une égalité de chaîne : des caractères comme `(`, `)`, `[`, `.`, `+`, `$` y ont une signification spéciale. Pour rechercher un message qui contient littéralement ces caractères, échappez-les (`\\(`) ou passez par `re.escape(...)`.
+
 ### Fixtures : Préparer des données réutilisables
 
 Les **fixtures** sont la façon dont pytest gère la préparation des données de test. Elles sont plus flexibles que `setUp()` et `tearDown()` :
@@ -432,6 +477,8 @@ def test_avec_utilisateur(utilisateur_test):
     assert utilisateur_test.nom == "Bob"
     assert utilisateur_test.actif is True
 ```
+
+> **Comment la fixture arrive-t-elle dans le test ?** pytest fait correspondre le **nom du paramètre** de la fonction de test au **nom d'une fixture**. En voyant `def test_avec_liste(liste_nombres)`, il cherche une fixture appelée `liste_nombres`, l'exécute, et **injecte sa valeur de retour** dans le paramètre. C'est de l'*injection de dépendances* : le test déclare ce dont il a besoin (par le nom), pytest se charge de le construire et de le fournir. C'est aussi ce qui les rend plus flexibles que `setUp`/`tearDown` : un test ne reçoit **que** les fixtures qu'il nomme (pas un état partagé monolithique), et les fixtures peuvent elles-mêmes en demander d'autres. Un paramètre sans fixture correspondante déclenche une erreur `fixture '...' not found`.
 
 ### Fixtures avec setup et teardown
 

@@ -924,6 +924,8 @@ print(resultats)  # [{'id': 1, 'nom': 'Alice'}]
 print(len(db))  # 10  
 ```
 
+> **Pourquoi deux classes (`Mock` et `MagicMock`) ?** Python cherche les méthodes spéciales (`__len__`, `__iter__`, `__enter__`…) sur le **type** de l'objet, jamais sur l'instance. Or un `Mock` crée ses attributs à la volée *sur l'instance* : `len(mock)` lèverait donc `TypeError`, car `__len__` n'est pas trouvé sur la classe. `MagicMock` règle le problème en **pré-configurant ces dunders** sur sa classe (avec des valeurs par défaut sensées : `__len__` → `0`, `__bool__` → `True`, etc.). Règle pratique : prenez `MagicMock` dès que le code testé fait `len(...)`, `for ... in ...`, `with ...`, `mock[clé]` ou une comparaison sur le mock ; un simple `Mock` suffit pour de simples appels de méthodes (`mock.faire(...)`).
+
 ---
 
 ## Patch : Remplacer temporairement
@@ -1059,6 +1061,65 @@ def test_patch_attribut(monkeypatch):
 ```
 
 Principales méthodes : `setattr`, `delattr`, `setenv`, `delenv`, `setitem`, `delitem`, `chdir`. En pratique : `monkeypatch` est plus concis pour les **variables d'environnement** et les **attributs** ; `unittest.mock.patch` reste préférable pour les mocks avec `return_value`/`side_effect` et les **assertions d'appel** (`assert_called_once`, etc.).
+
+### pytest-mock : la fixture `mocker`
+
+`monkeypatch` ne crée pas de `Mock` et ne vérifie pas les appels ; `unittest.mock.patch` le fait, mais impose un `with` ou un décorateur. Le plugin **`pytest-mock`** combine les deux avantages : il fournit une fixture **`mocker`** qui enveloppe tout `unittest.mock` et **annule automatiquement** les patches à la fin du test — sans gestionnaire de contexte ni décorateur.
+
+```bash
+pip install pytest-mock
+```
+
+L'API de `mocker` reprend exactement celle de `unittest.mock` (`mocker.patch`, `mocker.patch.object`, `mocker.Mock`, `mocker.MagicMock`...), mais sans imbrication :
+
+```python
+def obtenir_taux_change():
+    """Appel réseau coûteux que l'on ne veut pas exécuter dans un test."""
+    ...
+
+def convertir_en_euros(montant_usd):
+    return round(montant_usd * obtenir_taux_change(), 2)
+
+def test_conversion(mocker):
+    # Patch sans 'with' ni décorateur ; restauré automatiquement après le test
+    faux_taux = mocker.patch("banque.obtenir_taux_change", return_value=0.90)
+
+    assert convertir_en_euros(100) == 90.0
+    faux_taux.assert_called_once()
+```
+
+L'avantage est surtout net quand on patche **plusieurs cibles** : avec `unittest.mock`, les décorateurs s'empilent et leurs paramètres arrivent dans l'ordre **inversé** ; avec `mocker`, chaque patch est une ligne lue de haut en bas.
+
+```python
+# unittest.mock : ordre des décorateurs inversé par rapport aux paramètres
+@patch("module.b")
+@patch("module.a")
+def test_classique(mock_a, mock_b):   # attention : a puis b !
+    ...
+
+# pytest-mock : pas d'inversion, une ligne par cible
+def test_avec_mocker(mocker):
+    mock_a = mocker.patch("module.a")
+    mock_b = mocker.patch("module.b")
+    ...
+```
+
+`mocker` ajoute aussi `mocker.spy(objet, "methode")`, qui **espionne** un objet réel (enregistre les appels reçus) tout en **laissant la vraie fonction s'exécuter** — pratique pour vérifier qu'une dépendance est bien appelée sans pour autant la remplacer :
+
+```python
+def test_spy(mocker):
+    espion = mocker.spy(calculs, "additionner")
+    assert calculs.additionner(2, 3) == 5   # la vraie fonction tourne
+    espion.assert_called_once_with(2, 3)
+```
+
+**Quand utiliser quoi ?**
+
+- **`monkeypatch`** (natif pytest) : variables d'environnement, attributs simples, entrées de dictionnaire.
+- **`unittest.mock.patch`** : disponible partout (y compris hors pytest), standard de la bibliothèque.
+- **`mocker`** (pytest-mock) : la puissance complète de `unittest.mock` sans `with` ni décorateur — à privilégier au sein d'une suite pytest.
+
+> L'exemple exécutable complet (`return_value`, `side_effect`, `spy`) figure dans `exemples/02_15_pytest_mock.py`.
 
 ---
 

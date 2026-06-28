@@ -893,6 +893,8 @@ known-first-party = ["mon_package"]
 
 Ruff est compatible avec les règles de flake8 et utilise les mêmes codes d'erreur, ce qui facilite la migration.
 
+> **Pourquoi un tel écart de vitesse ?** Ce n'est pas *seulement* le langage. flake8 orchestre plusieurs outils Python (pycodestyle, pyflakes, mccabe…) qui ré-analysent chacun le fichier de leur côté. Ruff, lui, **parse le fichier une seule fois** en un arbre syntaxique (AST) partagé par *toutes* ses règles — le tout en code natif (Rust, sans interpréteur Python à démarrer), avec parallélisme multi-cœur et mise en cache des résultats. C'est cette architecture « un seul passage » — bien plus que le seul choix de Rust — qui explique le facteur 10-100×.
+
 ---
 
 ## Configuration d'un projet complet
@@ -1298,7 +1300,7 @@ Les imports sont organisés.
 
 ### Étape 4 : Corrections manuelles
 
-On finalise à la main ce que les outils ne font pas : ajout des docstrings, noms explicites, et **suppression des imports inutilisés** (`os`, `sys` et `datetime` n'étaient jamais utilisés — un linter les signale en `F401`).
+On finalise à la main ce que les outils ne font pas : ajout des docstrings, noms explicites, et **suppression des imports inutilisés** (`os` et `sys`, jamais utilisés, sont signalés en `F401` ; le `from datetime import *` — à proscrire — est quant à lui signalé en `F403`, comme à l'étape 1).
 
 ```python
 """Module de gestion d'utilisateurs."""

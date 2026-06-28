@@ -99,7 +99,7 @@ def formater_prix(prix, devise="EUR"):
         >>> formater_prix(100, "USD")
         '100.00 $'
     """
-    symboles = {"EUR": "EUR", "USD": "$", "GBP": "£"}
+    symboles = {"EUR": "EUR", "USD": "$", "GBP": "GBP"}
     symbole = symboles.get(devise, devise)
     return f"{prix:.2f} {symbole}"
 
